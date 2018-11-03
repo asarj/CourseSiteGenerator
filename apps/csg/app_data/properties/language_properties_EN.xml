@@ -157,11 +157,11 @@
         <property name="SITE_215_TEXT"                  value="215"></property>
         <property name="SITE_216_TEXT"                  value="216"></property>
         <property name="SITE_219_TEXT"                  value="219"></property>
-        <property name="DEFAULT_IMAGES_PATH_TEXT"                  value=".\images\"></property>
+        <property name="DEFAULT_IMAGES_PATH_TEXT"                  value="./images/"></property>
         <property name="DEFAULT_FAVICON_TEXT"                  value="sbusheath.jpg"></property>
         <property name="DEFAULT_NAVBAR_TEXT"                  value="sbunavbar.png"></property>
         <property name="DEFAULT_LFIMG_TEXT"                  value="sbuleftfooter.jpg"></property>
-        <property name="DEFAULT_RFIMG_TEXT"                  value="sburighttfooter.png"></property>
+        <property name="DEFAULT_RFIMG_TEXT"                  value="sburightfooter.png"></property>
 
         <property name="WORK_FILE_EXT"          value="*.json"></property>
 	      <property name="WORK_FILE_EXT_DESC"     value="Teaching Assistant Files"></property>

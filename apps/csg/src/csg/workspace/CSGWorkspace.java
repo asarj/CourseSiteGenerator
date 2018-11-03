@@ -187,13 +187,52 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         Button navbarButton = new Button(props.getProperty(SITE_NAVBAR_BUTTON));
         Button lfimg = new Button(props.getProperty(SITE_LFIMG_BUTTON));
         Button rfimg = new Button(props.getProperty(SITE_RFIMG_BUTTON));
-        ImageView fviImgView = new ImageView(props.getProperty(DEFAULT_IMAGES_PATH_TEXT) + props.getProperty(DEFAULT_FAVICON_TEXT));
-        ImageView navImgView = new ImageView(props.getProperty(DEFAULT_IMAGES_PATH_TEXT) + props.getProperty(DEFAULT_NAVBAR_TEXT));
-        ImageView leftImgView = new ImageView(props.getProperty(DEFAULT_IMAGES_PATH_TEXT) + props.getProperty(DEFAULT_LFIMG_TEXT));
-        ImageView rightImgView = new ImageView(props.getProperty(DEFAULT_IMAGES_PATH_TEXT) + props.getProperty(DEFAULT_RFIMG_TEXT));
+        ImageView fviImgView = new ImageView(/**props.getProperty(DEFAULT_IMAGES_PATH_TEXT) + props.getProperty(DEFAULT_FAVICON_TEXT)**/);
+        ImageView navImgView = new ImageView(/**props.getProperty(DEFAULT_IMAGES_PATH_TEXT) + props.getProperty(DEFAULT_NAVBAR_TEXT)**/);
+        ImageView leftImgView = new ImageView(/**props.getProperty(DEFAULT_IMAGES_PATH_TEXT) + props.getProperty(DEFAULT_LFIMG_TEXT)**/);
+        ImageView rightImgView = new ImageView(/**props.getProperty(DEFAULT_IMAGES_PATH_TEXT) + props.getProperty(DEFAULT_RFIMG_TEXT)**/);
         ComboBox css = new ComboBox(styleSheets);
         css.getSelectionModel().selectFirst();
+        HBox favHBox = new HBox();
+        HBox navHBox = new HBox();
+        HBox leftHBox = new HBox();
+        HBox rightHBox = new HBox();
+        HBox cssHBox = new HBox();
+        rightHBox.getChildren().addAll(rfimg, rightImgView);
+        favHBox.getChildren().addAll(fviButton, fviImgView);
+        navHBox.getChildren().addAll(navbarButton, navImgView);
+        leftHBox.getChildren().addAll(lfimg, leftImgView);
+        cssHBox.getChildren().addAll(fontLabel, css);
+//        VBox styleContainer = new VBox();
+//        styleContainer.getChildren().addAll(styleLabel, navHBox, leftHBox, rightHBox, cssHBox, fontWarningLabel);
+        styleBox.add(styleLabel, 0, 0);
+        styleBox.add(favHBox, 0, 1);
+//        styleBox.add(fviImgView, 1, 1);
+        styleBox.add(navHBox, 0, 2);
+//        styleBox.add(navImgView, 1, 2);
+        styleBox.add(leftHBox, 0, 3);
+//        styleBox.add(leftImgView, 1, 3);
+        styleBox.add(rightHBox, 0, 4);
+//        styleBox.add(rightImgView, 1, 4);
+        styleBox.add(cssHBox, 0, 5);
+//        styleBox.add(css, 1, 5);
+        styleBox.add(fontWarningLabel, 0, 6);
+        siteTabVBox.getChildren().add(styleBox);
         
+        
+//        pageStyleDataBox.add(pageStyleLabel, 0, 0);
+//        pageStyleDataBox.add(bannerSchoolLabel, 0, 1);
+//        pageStyleDataBox.add(bannerSchoolImage, 1, 1);
+//        pageStyleDataBox.add(changeBannerSchoolImageButton, 2, 1);
+//        pageStyleDataBox.add(leftFooterLabel, 0, 2);
+//        pageStyleDataBox.add(leftFooterImage, 1, 2);
+//        pageStyleDataBox.add(changeLeftFooterImageButton, 2, 2);
+//        pageStyleDataBox.add(rightFooterLabel, 0, 3);
+//        pageStyleDataBox.add(rightFooterImage, 1, 3);
+//        pageStyleDataBox.add(changeRightFooterImageButton, 2, 3);
+//        pageStyleDataBox.add(stylesheetLabel, 0, 4);
+//        pageStyleDataBox.add(stylesheetSelect, 1, 4);
+//        pageStyleDataBox.add(stylesheetNote, 0, 5);
         
         GridPane instructorBox = new GridPane();
         
