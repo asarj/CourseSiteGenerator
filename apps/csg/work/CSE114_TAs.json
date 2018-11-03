@@ -1,0 +1,596 @@
+
+{
+    "startHour":"8",
+    "endHour":"20",
+    "grad_tas":[
+    ],
+    "undergrad_tas":[
+        {
+            "name":"Alvin Jung",
+            "email":"calvin.yuen@stonybrook.edu",
+            "type":"Undergraduate"
+        },
+        {
+            "name":"Ammar Chishti",
+            "email":"ammar.chishti@stonybrook.edu",
+            "type":"Undergraduate"
+        },
+        {
+            "name":"Avik Kadakia",
+            "email":"avik.kadakia@stonybrook.edu",
+            "type":"Undergraduate"
+        },
+        {
+            "name":"Daniel DeLayo",
+            "email":"daniel.delayo@stonybrook.edu",
+            "type":"Undergraduate"
+        },
+        {
+            "name":"Elaine Liu",
+            "email":"Elaine.liu@stonybrook.edu",
+            "type":"Undergraduate"
+        },
+        {
+            "name":"Elizabeth Albano",
+            "email":"elizabeth.albano@stonybrook.edu",
+            "type":"Undergraduate"
+        },
+        {
+            "name":"Enrui Shi",
+            "email":"enrui.shi@stonybrook.edu",
+            "type":"Undergraduate"
+        },
+        {
+            "name":"Hangchao Chen",
+            "email":"hangchao.chen@stonybrook.edu",
+            "type":"Undergraduate"
+        },
+        {
+            "name":"Itai Flam",
+            "email":"itai.flam@stonybrook.edu",
+            "type":"Undergraduate"
+        },
+        {
+            "name":"Jay Verma",
+            "email":"jay.verma@stonybrook.edu",
+            "type":"Undergraduate"
+        },
+        {
+            "name":"Kelvin Wong",
+            "email":"kelvin.wong@stonybrook.edu",
+            "type":"Undergraduate"
+        },
+        {
+            "name":"Michalina Haczynska",
+            "email":"michalina.haczynska@stonybrook.edu",
+            "type":"Undergraduate"
+        },
+        {
+            "name":"Rohit Singh",
+            "email":"rohit.singh@stonybrook.edu",
+            "type":"Undergraduate"
+        },
+        {
+            "name":"Ruiqi Zhu",
+            "email":"ruiqi.zhu@stonybrook.edu",
+            "type":"Undergraduate"
+        },
+        {
+            "name":"Thomas Lee",
+            "email":"thomas.lee.3@stonybrook.edu",
+            "type":"Undergraduate"
+        },
+        {
+            "name":"Weifeng Lin",
+            "email":"weifeng.lin@stonybrook.edu",
+            "type":"Undergraduate"
+        },
+        {
+            "name":"Xiaohan Chen",
+            "email":"xiaohan.chen@stonybrook.edu",
+            "type":"Undergraduate"
+        },
+        {
+            "name":"Yifan Wang",
+            "email":"yifan.wang.2@stonybrook.edu",
+            "type":"Undergraduate"
+        }
+    ],
+    "officeHours":[
+        {
+            "time":"8_00am",
+            "day":"FRIDAY",
+            "name":"Michalina Haczynska"
+        },
+        {
+            "time":"8_30am",
+            "day":"MONDAY",
+            "name":"Xiaohan Chen"
+        },
+        {
+            "time":"8_30am",
+            "day":"TUESDAY",
+            "name":"Xiaohan Chen"
+        },
+        {
+            "time":"8_30am",
+            "day":"WEDNESDAY",
+            "name":"Xiaohan Chen"
+        },
+        {
+            "time":"8_30am",
+            "day":"THURSDAY",
+            "name":"Xiaohan Chen"
+        },
+        {
+            "time":"8_30am",
+            "day":"FRIDAY",
+            "name":"Michalina Haczynska"
+        },
+        {
+            "time":"9_00am",
+            "day":"MONDAY",
+            "name":"Xiaohan Chen"
+        },
+        {
+            "time":"9_00am",
+            "day":"TUESDAY",
+            "name":"Xiaohan Chen"
+        },
+        {
+            "time":"9_00am",
+            "day":"WEDNESDAY",
+            "name":"Xiaohan Chen"
+        },
+        {
+            "time":"9_00am",
+            "day":"THURSDAY",
+            "name":"Xiaohan Chen"
+        },
+        {
+            "time":"9_00am",
+            "day":"FRIDAY",
+            "name":"Itai Flam"
+        },
+        {
+            "time":"9_00am",
+            "day":"FRIDAY",
+            "name":"Michalina Haczynska"
+        },
+        {
+            "time":"9_30am",
+            "day":"TUESDAY",
+            "name":"Xiaohan Chen"
+        },
+        {
+            "time":"9_30am",
+            "day":"WEDNESDAY",
+            "name":"Thomas Lee"
+        },
+        {
+            "time":"9_30am",
+            "day":"THURSDAY",
+            "name":"Xiaohan Chen"
+        },
+        {
+            "time":"9_30am",
+            "day":"FRIDAY",
+            "name":"Itai Flam"
+        },
+        {
+            "time":"9_30am",
+            "day":"FRIDAY",
+            "name":"Michalina Haczynska"
+        },
+        {
+            "time":"10_00am",
+            "day":"TUESDAY",
+            "name":"Daniel DeLayo"
+        },
+        {
+            "time":"10_00am",
+            "day":"WEDNESDAY",
+            "name":"Thomas Lee"
+        },
+        {
+            "time":"10_00am",
+            "day":"THURSDAY",
+            "name":"Daniel DeLayo"
+        },
+        {
+            "time":"10_00am",
+            "day":"FRIDAY",
+            "name":"Alvin Jung"
+        },
+        {
+            "time":"10_00am",
+            "day":"FRIDAY",
+            "name":"Elaine Liu"
+        },
+        {
+            "time":"10_30am",
+            "day":"MONDAY",
+            "name":"Elizabeth Albano"
+        },
+        {
+            "time":"10_30am",
+            "day":"TUESDAY",
+            "name":"Daniel DeLayo"
+        },
+        {
+            "time":"10_30am",
+            "day":"WEDNESDAY",
+            "name":"Thomas Lee"
+        },
+        {
+            "time":"10_30am",
+            "day":"THURSDAY",
+            "name":"Daniel DeLayo"
+        },
+        {
+            "time":"10_30am",
+            "day":"FRIDAY",
+            "name":"Alvin Jung"
+        },
+        {
+            "time":"10_30am",
+            "day":"FRIDAY",
+            "name":"Elaine Liu"
+        },
+        {
+            "time":"11_00am",
+            "day":"MONDAY",
+            "name":"Elizabeth Albano"
+        },
+        {
+            "time":"11_00am",
+            "day":"TUESDAY",
+            "name":"Daniel DeLayo"
+        },
+        {
+            "time":"11_00am",
+            "day":"WEDNESDAY",
+            "name":"Thomas Lee"
+        },
+        {
+            "time":"11_00am",
+            "day":"THURSDAY",
+            "name":"Daniel DeLayo"
+        },
+        {
+            "time":"11_00am",
+            "day":"FRIDAY",
+            "name":"Alvin Jung"
+        },
+        {
+            "time":"11_00am",
+            "day":"FRIDAY",
+            "name":"Elaine Liu"
+        },
+        {
+            "time":"11_30am",
+            "day":"MONDAY",
+            "name":"Elizabeth Albano"
+        },
+        {
+            "time":"11_30am",
+            "day":"WEDNESDAY",
+            "name":"Thomas Lee"
+        },
+        {
+            "time":"11_30am",
+            "day":"FRIDAY",
+            "name":"Alvin Jung"
+        },
+        {
+            "time":"11_30am",
+            "day":"FRIDAY",
+            "name":"Elaine Liu"
+        },
+        {
+            "time":"12_00pm",
+            "day":"MONDAY",
+            "name":"Rohit Singh"
+        },
+        {
+            "time":"12_00pm",
+            "day":"WEDNESDAY",
+            "name":"Jay Verma"
+        },
+        {
+            "time":"12_00pm",
+            "day":"FRIDAY",
+            "name":"Elaine Liu"
+        },
+        {
+            "time":"12_00pm",
+            "day":"FRIDAY",
+            "name":"Hangchao Chen"
+        },
+        {
+            "time":"12_30pm",
+            "day":"MONDAY",
+            "name":"Rohit Singh"
+        },
+        {
+            "time":"12_30pm",
+            "day":"WEDNESDAY",
+            "name":"Jay Verma"
+        },
+        {
+            "time":"12_30pm",
+            "day":"FRIDAY",
+            "name":"Hangchao Chen"
+        },
+        {
+            "time":"1_00pm",
+            "day":"MONDAY",
+            "name":"Weifeng Lin"
+        },
+        {
+            "time":"1_00pm",
+            "day":"TUESDAY",
+            "name":"Jay Verma"
+        },
+        {
+            "time":"1_00pm",
+            "day":"WEDNESDAY",
+            "name":"Hangchao Chen"
+        },
+        {
+            "time":"1_00pm",
+            "day":"WEDNESDAY",
+            "name":"Thomas Lee"
+        },
+        {
+            "time":"1_00pm",
+            "day":"THURSDAY",
+            "name":"Rohit Singh"
+        },
+        {
+            "time":"1_00pm",
+            "day":"FRIDAY",
+            "name":"Hangchao Chen"
+        },
+        {
+            "time":"1_30pm",
+            "day":"MONDAY",
+            "name":"Weifeng Lin"
+        },
+        {
+            "time":"1_30pm",
+            "day":"TUESDAY",
+            "name":"Jay Verma"
+        },
+        {
+            "time":"1_30pm",
+            "day":"WEDNESDAY",
+            "name":"Hangchao Chen"
+        },
+        {
+            "time":"1_30pm",
+            "day":"WEDNESDAY",
+            "name":"Thomas Lee"
+        },
+        {
+            "time":"1_30pm",
+            "day":"THURSDAY",
+            "name":"Rohit Singh"
+        },
+        {
+            "time":"1_30pm",
+            "day":"FRIDAY",
+            "name":"Hangchao Chen"
+        },
+        {
+            "time":"2_00pm",
+            "day":"MONDAY",
+            "name":"Alvin Jung"
+        },
+        {
+            "time":"2_00pm",
+            "day":"TUESDAY",
+            "name":"Jay Verma"
+        },
+        {
+            "time":"2_00pm",
+            "day":"WEDNESDAY",
+            "name":"Thomas Lee"
+        },
+        {
+            "time":"2_00pm",
+            "day":"THURSDAY",
+            "name":"Rohit Singh"
+        },
+        {
+            "time":"2_00pm",
+            "day":"FRIDAY",
+            "name":"Hangchao Chen"
+        },
+        {
+            "time":"2_30pm",
+            "day":"MONDAY",
+            "name":"Kelvin Wong"
+        },
+        {
+            "time":"2_30pm",
+            "day":"TUESDAY",
+            "name":"Kelvin Wong"
+        },
+        {
+            "time":"2_30pm",
+            "day":"WEDNESDAY",
+            "name":"Thomas Lee"
+        },
+        {
+            "time":"2_30pm",
+            "day":"THURSDAY",
+            "name":"Kelvin Wong"
+        },
+        {
+            "time":"3_00pm",
+            "day":"MONDAY",
+            "name":"Kelvin Wong"
+        },
+        {
+            "time":"3_00pm",
+            "day":"TUESDAY",
+            "name":"Kelvin Wong"
+        },
+        {
+            "time":"3_00pm",
+            "day":"WEDNESDAY",
+            "name":"Elizabeth Albano"
+        },
+        {
+            "time":"3_00pm",
+            "day":"WEDNESDAY",
+            "name":"Thomas Lee"
+        },
+        {
+            "time":"3_00pm",
+            "day":"THURSDAY",
+            "name":"Kelvin Wong"
+        },
+        {
+            "time":"3_30pm",
+            "day":"MONDAY",
+            "name":"Elizabeth Albano"
+        },
+        {
+            "time":"3_30pm",
+            "day":"TUESDAY",
+            "name":"Kelvin Wong"
+        },
+        {
+            "time":"3_30pm",
+            "day":"WEDNESDAY",
+            "name":"Elizabeth Albano"
+        },
+        {
+            "time":"3_30pm",
+            "day":"THURSDAY",
+            "name":"Kelvin Wong"
+        },
+        {
+            "time":"3_30pm",
+            "day":"FRIDAY",
+            "name":"Hangchao Chen"
+        },
+        {
+            "time":"4_00pm",
+            "day":"MONDAY",
+            "name":"Elizabeth Albano"
+        },
+        {
+            "time":"4_00pm",
+            "day":"TUESDAY",
+            "name":"Kelvin Wong"
+        },
+        {
+            "time":"4_00pm",
+            "day":"WEDNESDAY",
+            "name":"Itai Flam"
+        },
+        {
+            "time":"4_00pm",
+            "day":"THURSDAY",
+            "name":"Kelvin Wong"
+        },
+        {
+            "time":"4_00pm",
+            "day":"FRIDAY",
+            "name":"Daniel DeLayo"
+        },
+        {
+            "time":"4_00pm",
+            "day":"FRIDAY",
+            "name":"Hangchao Chen"
+        },
+        {
+            "time":"4_30pm",
+            "day":"MONDAY",
+            "name":"Elizabeth Albano"
+        },
+        {
+            "time":"4_30pm",
+            "day":"WEDNESDAY",
+            "name":"Itai Flam"
+        },
+        {
+            "time":"4_30pm",
+            "day":"FRIDAY",
+            "name":"Daniel DeLayo"
+        },
+        {
+            "time":"4_30pm",
+            "day":"FRIDAY",
+            "name":"Hangchao Chen"
+        },
+        {
+            "time":"5_00pm",
+            "day":"MONDAY",
+            "name":"Elizabeth Albano"
+        },
+        {
+            "time":"5_00pm",
+            "day":"TUESDAY",
+            "name":"Ammar Chishti"
+        },
+        {
+            "time":"5_00pm",
+            "day":"WEDNESDAY",
+            "name":"Itai Flam"
+        },
+        {
+            "time":"5_00pm",
+            "day":"FRIDAY",
+            "name":"Daniel DeLayo"
+        },
+        {
+            "time":"5_30pm",
+            "day":"MONDAY",
+            "name":"Elizabeth Albano"
+        },
+        {
+            "time":"5_30pm",
+            "day":"TUESDAY",
+            "name":"Ammar Chishti"
+        },
+        {
+            "time":"5_30pm",
+            "day":"THURSDAY",
+            "name":"Weifeng Lin"
+        },
+        {
+            "time":"5_30pm",
+            "day":"FRIDAY",
+            "name":"Daniel DeLayo"
+        },
+        {
+            "time":"6_00pm",
+            "day":"TUESDAY",
+            "name":"Ammar Chishti"
+        },
+        {
+            "time":"6_00pm",
+            "day":"THURSDAY",
+            "name":"Weifeng Lin"
+        },
+        {
+            "time":"6_30pm",
+            "day":"TUESDAY",
+            "name":"Ammar Chishti"
+        },
+        {
+            "time":"6_30pm",
+            "day":"THURSDAY",
+            "name":"Weifeng Lin"
+        },
+        {
+            "time":"7_00pm",
+            "day":"TUESDAY",
+            "name":"Ammar Chishti"
+        }
+    ]
+}

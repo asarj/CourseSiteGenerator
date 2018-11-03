@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    This XML file provides all the text to be used when the application
+    is to be displayed in English.
+-->
+<properties>
+    <property_list>
+
+        <!-- ENGLISH LANGUAGE SETTINGS FOR DESKTOP JAVA FRAMEWORK CONTROLS -->
+
+        <!-- WELCOME DIALOG TEXT -->
+        <property name="WELCOME_DIALOG_TITLE"               value="Welcome to the Course Site Generator"></property>
+        <property name="WELCOME_DIALOG_RECENT_WORK_LABEL"   value="Recent Work"></property>
+        <property name="WELCOME_DIALOG_NEW_BUTTON_TEXT"  value="Create New Course Website"></property>
+
+        <!-- GENERIC APP ERROR MESSAGES -->
+        <property name="APP_ERROR_TITLE"            value="Application Error"></property>
+        <property name="APP_ERROR_CONTENT"          value="An Error Occured in the Application"></property>
+
+        <!-- PROPERTIES ERROR MESSAGES -->
+        <property name="PROPERTIES_ERROR_TITLE"     value="Properties File Error"></property>
+        <property name="PROPERTIES_ERROR_CONTENT"   value="There was an Error Loading a Properties File"></property>
+
+        <!-- FILE TOOLBAR TOOLTIPS -->
+        <property name="NEW_BUTTON_TOOLTIP"         value="New Course Website"></property>
+        <property name="LOAD_BUTTON_TOOLTIP"        value="Load Course Website"></property>
+        <property name="CLOSE_BUTTON_TOOLTIP"       value="Close Course Website"></property>
+        <property name="SAVE_BUTTON_TOOLTIP"        value="Save Course Website"></property>
+        <property name="EXPORT_BUTTON_TOOLTIP"      value="Export Course Website"></property>
+        <property name="EXIT_BUTTON_TOOLTIP"        value="Exit"></property>
+
+        <!-- CLIPBOARD TOOLBAR TOOLTIPS -->
+        <property name="CUT_BUTTON_TOOLTIP"         value="Cut"></property>
+        <property name="COPY_BUTTON_TOOLTIP"        value="Copy"></property>
+        <property name="PASTE_BUTTON_TOOLTIP"       value="Paste"></property>
+
+        <!-- UNDO TOOLBAR TOOLTIPS -->
+        <property name="UNDO_BUTTON_TOOLTIP"        value="Undo"></property>
+        <property name="REDO_BUTTON_TOOLTIP"        value="Redo"></property>
+
+        <!-- HELP TOOLBAR TOOLTIPS -->
+        <property name="HELP_BUTTON_TOOLTIP"        value="Help"></property>
+        <property name="LANGUAGE_BUTTON_TOOLTIP"    value="Change Langauge"></property>
+        <property name="ABOUT_BUTTON_TOOLTIP"       value="About"></property>
+
+        <!-- NEW FEEDBACK DIALOGS -->
+        <property name="NEW_SUCCESS_TITLE"      value="New Complete"></property>
+        <property name="NEW_SUCCESS_CONTENT"	value="Work Created but not yet Saved"></property>
+        <property name="NEW_ERROR_TITLE"        value="Warning: Error"></property>
+        <property name="NEW_ERROR_CONTENT"      value="An error occured creating new work"></property>
+
+        <!-- LOAD FEEDBACK DIALOGS -->
+        <property name="LOAD_WORK_TITLE"        value="Load Work"></property>
+        <property name="LOAD_SUCCESS_TITLE"     value="Load Complete"></property>
+        <property name="LOAD_SUCCESS_CONTENT"   value="The File has Loaded Successfully and can now be edited."></property>
+        <property name="LOAD_ERROR_TITLE"       value="Loading Error"></property>
+        <property name="LOAD_ERROR_CONTENT"     value="Loading has Failed. Likely there is a File Formating problem."></property>
+
+        <!-- SAVE FEEDBACK DIALOGS -->
+        <property name="SAVE_WORK_TITLE"        value="Save Work"></property>
+        <property name="SAVE_SUCCESS_TITLE"     value="Save Complete"></property>
+        <property name="SAVE_SUCCESS_CONTENT"   value="The file is saved."></property>
+        <property name="SAVE_ERROR_TITLE"       value="Save Error"></property>
+        <property name="SAVE_ERROR_CONTENT"     value="Saving has Failed. Likely due to a file access problem."></property>
+        <property name="SAVE_VERIFY_TITLE"	value="Save unsaved work?"></property>
+        <property name="SAVE_VERIFY_CONTENT"	value="Would you like to save your unsaved work first?"></property>
+
+        <!-- ABOUT DIALOG -->
+        <property name="ABOUT_TITLE"            value="About CSG"></property>
+        <property name="ABOUT_CONTENT"          value="CSG, the Course Site Generator Manager - Debugging Enterprises - © 2018"></property>
+
+
+        <!-- ENGLISH LANGUAGE SETTINGS SPECIFICALLY FOR TDLM CONTROLS -->
+
+        <!-- LANGUAGE-DEPENDENT TEXT FOR OH WORKSPACE CONTROLS -->
+        <property name="OH_TAS_HEADER_LABEL_TEXT"           value="Teaching Assistants"></property>
+        <property name="OH_ALL_RADIO_BUTTON_TEXT"                value="All"></property>
+        <property name="OH_GRAD_RADIO_BUTTON_TEXT"               value="Graduate"></property>
+        <property name="OH_UNDERGRAD_RADIO_BUTTON_TEXT"          value="Undergraduate"></property>
+        <property name="OH_NAME_TEXT_FIELD_PROMPT_TEXT"     value="Name"></property>
+        <property name="OH_EMAIL_TEXT_FIELD_PROMPT_TEXT"    value="Email"></property>
+        <property name="OH_ADD_TA_BUTTON_TEXT"              value="Add TA"></property>
+        <property name="OH_OFFICE_HOURS_HEADER_LABEL_TEXT"  value="Office Hours"></property>
+        <property name="OH_NAME_TABLE_COLUMN_TEXT"          value="Name"></property>
+        <property name="OH_EMAIL_TABLE_COLUMN_TEXT"         value="Email"></property>
+        <property name="OH_SLOTS_TABLE_COLUMN_TEXT"         value="Time Slots"></property>
+        <property name="OH_TYPE_TABLE_COLUMN_TEXT"          value="Type"></property>
+        <property name="OH_START_TIME_TABLE_COLUMN_TEXT"    value="Start Time"></property>
+        <property name="OH_END_TIME_TABLE_COLUMN_TEXT"      value="End Time"></property>
+        <property name="OH_MONDAY_TABLE_COLUMN_TEXT"        value="Monday"></property>
+        <property name="OH_TUESDAY_TABLE_COLUMN_TEXT"       value="Tuesday"></property>
+        <property name="OH_WEDNESDAY_TABLE_COLUMN_TEXT"     value="Wednesday"></property>
+        <property name="OH_THURSDAY_TABLE_COLUMN_TEXT"      value="Thursday"></property>
+        <property name="OH_FRIDAY_TABLE_COLUMN_TEXT"        value="Friday"></property>
+
+        <!-- ERROR DIALOG -->
+        <property name="OH_NO_TA_SELECTED_TITLE"        value="No TA Selected"></property>
+        <property name="OH_NO_TA_SELECTED_CONTENT"      value="Toggle only possible if TA Selected"></property>
+
+        <!-- EDIT TA DIALOG -->
+        <property name="OH_TA_DIALOG_HEADER_LABEL_TEXT" value="Edit Teaching Assistant"></property>
+        <property name="OH_TA_DIALOG_NAME_LABEL_TEXT" value="Name: "></property>
+        <property name="OH_TA_DIALOG_EMAIL_LABEL_TEXT" value="Email: "></property>
+        <property name="OH_TA_DIALOG_TYPE_LABEL_TEXT" value="Type: "></property>
+        <property name="OH_TA_DIALOG_GRAD_RADIO_BUTTON_TEXT" value="Graduate"></property>
+        <property name="OH_TA_DIALOG_UNDERGRAD_RADIO_BUTTON_TEXT" value="Undergraduate"></property>
+        <property name="OH_TA_DIALOG_OK_BUTTON_TEXT" value="OK"></property>
+        <property name="OH_TA_DIALOG_CANCEL_BUTTON_TEXT" value="Cancel"></property>
+
+        <!-- TO SWITCH BACK TO ANOTHER LANGUAGE -->
+        <property name="LANGUAGE_DIALOG_TITLE"          value="App Language Selection"></property>
+        <property name="LANGUAGE_DIALOG_HEADER_TEXT"    value="Choose a Language"></property>
+        <property name="LANGUAGE_DIALOG_CONTENT_TEXT"   value="Select a Language for the User Interface."></property>
+
+        <!-- THESE ARE FOR THE TABS -->
+        <property name="SITE_TAB_TEXT"                  value="Site"></property>
+        <property name="SYLLABUS_TAB_TEXT"                  value="Syllabus"></property>
+        <property name="MT_TAB_TEXT"                  value="Meeting Times"></property>
+        <property name="OH_TAB_TEXT"                  value="Office Hours"></property>
+        <property name="SCH_TAB_TEXT"                  value="Schedule"></property>
+
+        <!-- THESE ARE FOR THE SITE TAB CONTROLS -->
+        <property name="SITE_BANNER_LABEL"                  value="Banner"></property>
+        <property name="SITE_SUBJECT_LABEL"                  value="Subject:"></property>
+        <property name="SITE_SEMESTER_LABEL"                  value="Semester:"></property>
+        <property name="SITE_NUMBER_LABEL"                  value="Number:"></property>
+        <property name="SITE_YEAR_LABEL"                  value="Year:"></property>
+        <property name="SITE_TITLE_LABEL"                  value="Title:"></property>
+        <property name="SITE_EXPDIR_LABEL"                  value="Export Directory:"></property>
+        <property name="SITE_PAGES_LABEL"                  value="Pages"></property>
+        <property name="SITE_HOME_LABEL"                  value="Home"></property>
+        <property name="SITE_SYLLABUS_LABEL"                  value="Syllabus"></property>
+        <property name="SITE_SCHEDULE_LABEL"                  value="Schedule"></property>
+        <property name="SITE_HWS_LABEL"                  value="HWs"></property>
+        <property name="SITE_STYLE_LABEL"                  value="Style"></property>
+        <property name="SITE_FAVICON_BUTTON"                  value="Favicon:"></property>
+        <property name="SITE_NAVBAR_BUTTON"                  value="Navbar:"></property>
+        <property name="SITE_LFIMG_BUTTON"                  value="Left Footer Image:"></property>
+        <property name="SITE_RFIMG_BUTTON"                  value="Right Footer Image:"></property>
+        <property name="SITE_FONTSTYLE_LABEL"                  value="Font Colors and Style Sheets:"></property>
+        <property name="SITE_FONTSTYLENOTE_LABEL"                  value="Note: stylesheets should be placed inside work/css to be selectable"></property>
+        <property name="SITE_INSTRUCTOR_LABEL"                  value="Instructor"></property>
+        <property name="SITE_NAME_LABEL"                  value="Name:"></property>
+        <property name="SITE_EMAIL_LABEL"                  value="Email:"></property>
+        <property name="SITE_ROOM_LABEL"                  value="Room:"></property>
+        <property name="SITE_HP_LABEL"                  value="Home Page:"></property>
+        <property name="SITE_EXPAND_BUTTON"                  value="+"></property>
+        <property name="SITE_OH_LABEL"                  value="Office Hours"></property>
+        <property name="SITE_FALL_TEXT"                  value="Fall"></property>
+        <property name="SITE_SPRING_TEXT"                  value="Spring"></property>
+        <property name="SITE_SUMMER_TEXT"                  value="Summer"></property>
+        <property name="SITE_WINTER_TEXT"                  value="Winter"></property>
+        <property name="SITE_CSE_TEXT"                  value="CSE"></property>
+        <property name="SITE_101_TEXT"                  value="101"></property>
+        <property name="SITE_114_TEXT"                  value="114"></property>
+        <property name="SITE_214_TEXT"                  value="214"></property>
+        <property name="SITE_215_TEXT"                  value="215"></property>
+        <property name="SITE_216_TEXT"                  value="216"></property>
+        <property name="SITE_219_TEXT"                  value="219"></property>
+        <property name="DEFAULT_IMAGES_PATH_TEXT"                  value=".\images\"></property>
+        <property name="DEFAULT_FAVICON_TEXT"                  value="sbusheath.jpg"></property>
+        <property name="DEFAULT_NAVBAR_TEXT"                  value="sbunavbar.png"></property>
+        <property name="DEFAULT_LFIMG_TEXT"                  value="sbuleftfooter.jpg"></property>
+        <property name="DEFAULT_RFIMG_TEXT"                  value="sburighttfooter.png"></property>
+
+        <property name="WORK_FILE_EXT"          value="*.json"></property>
+	      <property name="WORK_FILE_EXT_DESC"     value="Teaching Assistant Files"></property>
+
+    </property_list>
+
+    <!-- TDLM COMBO BOX CHOICES -->
+    <property_options_list>
+        <property_options name="LANGUAGE_OPTIONS">
+            <option>English</option>
+            <option>Klingon</option>
+        </property_options>
+    </property_options_list>
+</properties>
