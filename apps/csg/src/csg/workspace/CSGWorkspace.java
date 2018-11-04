@@ -235,15 +235,18 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         TextField siteEmailTF = new TextField();
         TextField siteRoomTF = new TextField();
         TextField siteHPTF = new TextField();
-        Button expanded = new Button(props.getProperty(SITE_EXPAND_BUTTON));
+        Button siteInstructorOHExpandButton = new Button(props.getProperty(SITE_EXPAND_BUTTON));
         TextArea instructorOHJsonArea = new TextArea();
+        instructorOHJsonArea.setText("["
+                                    + "\n\t{\"Day\": \"\"\t\"Time\": \"\"}"
+                                 + "\n]");
         instructorOHJsonArea.setVisible(false);
         instructorOHJsonArea.setManaged(false);
         
-        expanded.setOnAction(e->{
-            expanded.setText(expanded.getText().equals("+") ? "-": "+");
-            instructorOHJsonArea.setManaged(expanded.getText().equals("-")? true: false);
-            instructorOHJsonArea.setVisible(expanded.getText().equals("-")? true: false);
+        siteInstructorOHExpandButton.setOnAction(e->{
+            siteInstructorOHExpandButton.setText(siteInstructorOHExpandButton.getText().equals("+") ? "-": "+");
+            instructorOHJsonArea.setManaged(siteInstructorOHExpandButton.getText().equals("-")? true: false);
+            instructorOHJsonArea.setVisible(siteInstructorOHExpandButton.getText().equals("-")? true: false);
         });
         HBox instDetail = new HBox();
         HBox emailDetail = new HBox();
@@ -257,7 +260,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         emailDetail.getChildren().addAll(emailLabel, siteEmailTF);
         roomDetail.getChildren().addAll(roomLabel, siteRoomTF);
         hpDetail.getChildren().addAll(hpLabel, siteHPTF);
-        ohDetail.getChildren().addAll(expanded, ohLabel);
+        ohDetail.getChildren().addAll(siteInstructorOHExpandButton, ohLabel);
         hiddenTA.getChildren().addAll(emptyLbl, instructorOHJsonArea);
         instructorBox.add(instructorLabel, 0, 0);
         instructorBox.add(instDetail, 0, 1);
@@ -277,7 +280,187 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         
         
         //----------------------------------------------SETS UP THE SYLLABUS TAB--------------------------------------------------//
+        VBox syllabusTabVBox = new VBox();
+        GridPane descBox = new GridPane();
+        Label sylDesc = new Label(props.getProperty(SYL_DESC_LABEL));
+        Button sylDescExpandButton = new Button("+");
+        TextArea descTA = new TextArea();
+        descTA.setVisible(false);
+        descTA.setManaged(false);
+        sylDescExpandButton.setOnAction(e->{
+            sylDescExpandButton.setText(sylDescExpandButton.getText().equals("+") ? "-": "+");
+            descTA.setManaged(sylDescExpandButton.getText().equals("-")? true: false);
+            descTA.setVisible(sylDescExpandButton.getText().equals("-")? true: false);
+        });
+        HBox descDetail = new HBox();
+        descDetail.getChildren().addAll(sylDescExpandButton, sylDesc);
+        descBox.add(descDetail, 0, 1);
+        descBox.add(descTA, 0, 2);
+        syllabusTabVBox.getChildren().add(descBox);
         
+        GridPane topicBox = new GridPane();
+        Label sylTopic = new Label(props.getProperty(SYL_TOPICS_LABEL));
+        Button sylTopicExpandButton = new Button("+");
+        TextArea topicTA = new TextArea();
+        topicTA.setText("["
+                        + "\n\t\"\""
+                    + "\n],");
+        topicTA.setVisible(false);
+        topicTA.setManaged(false);
+        sylTopicExpandButton.setOnAction(e->{
+            sylTopicExpandButton.setText(sylTopicExpandButton.getText().equals("+") ? "-": "+");
+            topicTA.setManaged(sylTopicExpandButton.getText().equals("-")? true: false);
+            topicTA.setVisible(sylTopicExpandButton.getText().equals("-")? true: false);
+        });
+        HBox topicDetail = new HBox();
+        topicDetail.getChildren().addAll(sylTopicExpandButton, sylTopic);
+        topicBox.add(topicDetail, 0, 1);
+        topicBox.add(topicTA, 0, 2);
+        syllabusTabVBox.getChildren().add(topicBox);
+        
+        GridPane prereqBox = new GridPane();
+        Label prereqLabel = new Label(props.getProperty(SYL_PREREQ_LABEL));
+        Button sylPrereqExpandButton = new Button("+");
+        TextArea prereqTA = new TextArea();
+        prereqTA.setVisible(false);
+        prereqTA.setManaged(false);
+        sylPrereqExpandButton.setOnAction(e->{
+            sylPrereqExpandButton.setText(sylPrereqExpandButton.getText().equals("+") ? "-": "+");
+            prereqTA.setManaged(sylPrereqExpandButton.getText().equals("-")? true: false);
+            prereqTA.setVisible(sylPrereqExpandButton.getText().equals("-")? true: false);
+        });
+        HBox prereqDetail = new HBox();
+        prereqDetail.getChildren().addAll(sylPrereqExpandButton, prereqLabel);
+        prereqBox.add(prereqDetail, 0, 1);
+        prereqBox.add(prereqTA, 0, 2);
+        syllabusTabVBox.getChildren().add(prereqBox);
+        
+        GridPane outcomesBox = new GridPane();
+        Label outcomesLabel = new Label(props.getProperty(SYL_OUTCOMES_LABEL));
+        Button sylOutcomesExpandButton = new Button("+");
+        TextArea outcomesTA = new TextArea();
+        outcomesTA.setText("["
+                            + "\n\t\"\""
+                        + "\n],");
+        outcomesTA.setVisible(false);
+        outcomesTA.setManaged(false);
+        sylOutcomesExpandButton.setOnAction(e->{
+            sylOutcomesExpandButton.setText(sylOutcomesExpandButton.getText().equals("+") ? "-": "+");
+            outcomesTA.setManaged(sylOutcomesExpandButton.getText().equals("-")? true: false);
+            outcomesTA.setVisible(sylOutcomesExpandButton.getText().equals("-")? true: false);
+        });
+        HBox outcomesDetail = new HBox();
+        outcomesDetail.getChildren().addAll(sylOutcomesExpandButton, outcomesLabel);
+        outcomesBox.add(outcomesDetail, 0, 1);
+        outcomesBox.add(outcomesTA, 0, 2);
+        syllabusTabVBox.getChildren().add(outcomesBox);
+        
+        GridPane textbookBox = new GridPane();
+        Label textbookLabel = new Label(props.getProperty(SYL_TBOOK_LABEL));
+        Button sylTextbooksExpandButton = new Button("+");
+        TextArea textbooksTA = new TextArea();
+        textbooksTA.setText("[\n\t{"
+                             + "\n\t\t\"title\":\"\","
+                             + "\n\t\t\"link\":\"\","
+                             + "\n\t\t\"photo\":\"\","
+                             + "\n\t\t\"authors\":["
+                                + "\n\t\t\t\"\""
+                             + "],"
+                             + "\n\t\t\"publisher\":\"\","
+                             + "\n\t\t\"year\":\"\","
+                        + "\n\t}\n]");
+        textbooksTA.setVisible(false);
+        textbooksTA.setManaged(false);
+        sylTextbooksExpandButton.setOnAction(e->{
+            sylTextbooksExpandButton.setText(sylTextbooksExpandButton.getText().equals("+") ? "-": "+");
+            textbooksTA.setManaged(sylTextbooksExpandButton.getText().equals("-")? true: false);
+            textbooksTA.setVisible(sylTextbooksExpandButton.getText().equals("-")? true: false);
+        });
+        HBox textbooksDetail = new HBox();
+        textbooksDetail.getChildren().addAll(sylTextbooksExpandButton, textbookLabel);
+        textbookBox.add(textbooksDetail, 0, 1);
+        textbookBox.add(textbooksTA, 0, 2);
+        syllabusTabVBox.getChildren().add(textbookBox); 
+        
+        GridPane gradedComponentsBox = new GridPane();
+        Label gradedComponentsLabel = new Label(props.getProperty(SYL_GRADED_LABEL));
+        Button sylGCExpandButton = new Button("+");
+        TextArea gcTA = new TextArea();
+        gcTA.setText("["
+                    + "\n\t{"
+                            + "\n\t\t\"Name\": \"\""
+                            + "\n\t\t\"Description\": \"\""
+                            + "\n\t\t\"Weight\": \"\""
+                        + "\n\t}"
+                 + "\n],");
+        gcTA.setVisible(false);
+        gcTA.setManaged(false);
+        sylGCExpandButton.setOnAction(e->{
+            sylGCExpandButton.setText(sylGCExpandButton.getText().equals("+") ? "-": "+");
+            gcTA.setManaged(sylGCExpandButton.getText().equals("-")? true: false);
+            gcTA.setVisible(sylGCExpandButton.getText().equals("-")? true: false);
+        });
+        HBox gcDetail = new HBox();
+        gcDetail.getChildren().addAll(sylGCExpandButton, gradedComponentsLabel);
+        gradedComponentsBox.add(gcDetail, 0, 1);
+        gradedComponentsBox.add(gcTA, 0, 2);
+        syllabusTabVBox.getChildren().add(gradedComponentsBox);
+        
+        GridPane gradingNoteBox = new GridPane();
+        Label gradingNoteLabel = new Label(props.getProperty(SYL_GRADINGNOTE_LABEL));
+        Button sylGradingNoteExpandButton = new Button("+");
+        TextArea gradingNoteTA = new TextArea();
+        gradingNoteTA.setVisible(false);
+        gradingNoteTA.setManaged(false);
+        sylGradingNoteExpandButton.setOnAction(e->{
+            sylGradingNoteExpandButton.setText(sylGradingNoteExpandButton.getText().equals("+") ? "-": "+");
+            gradingNoteTA.setManaged(sylGradingNoteExpandButton.getText().equals("-")? true: false);
+            gradingNoteTA.setVisible(sylGradingNoteExpandButton.getText().equals("-")? true: false);
+        });
+        HBox gradingNoteDetail = new HBox();
+        gradingNoteDetail.getChildren().addAll(sylGradingNoteExpandButton, gradingNoteLabel);
+        gradingNoteBox.add(gradingNoteDetail, 0, 1);
+        gradingNoteBox.add(gradingNoteTA, 0, 2);
+        syllabusTabVBox.getChildren().add(gradingNoteBox);
+        
+        GridPane adBox = new GridPane();
+        Label adLabel = new Label(props.getProperty(SYL_AD_LABEL));
+        Button sylADExpandButton = new Button("+");
+        TextArea adTA = new TextArea();
+        adTA.setVisible(false);
+        adTA.setManaged(false);
+        sylADExpandButton.setOnAction(e->{
+            sylADExpandButton.setText(sylADExpandButton.getText().equals("+") ? "-": "+");
+            adTA.setManaged(sylADExpandButton.getText().equals("-")? true: false);
+            adTA.setVisible(sylADExpandButton.getText().equals("-")? true: false);
+        });
+        HBox adDetail = new HBox();
+        adDetail.getChildren().addAll(sylADExpandButton, adLabel);
+        adBox.add(adDetail, 0, 1);
+        adBox.add(adTA, 0, 2);
+        syllabusTabVBox.getChildren().add(adBox);
+        
+        GridPane saBox = new GridPane();
+        Label saLabel = new Label(props.getProperty(SYL_SA_LABEL));
+        Button sylSAExpandButton = new Button("+");
+        TextArea saTA = new TextArea();
+        saTA.setVisible(false);
+        saTA.setManaged(false);
+        sylSAExpandButton.setOnAction(e->{
+            sylSAExpandButton.setText(sylSAExpandButton.getText().equals("+") ? "-": "+");
+            saTA.setManaged(sylSAExpandButton.getText().equals("-")? true: false);
+            saTA.setVisible(sylSAExpandButton.getText().equals("-")? true: false);
+        });
+        HBox saDetail = new HBox();
+        saDetail.getChildren().addAll(sylSAExpandButton, saLabel);
+        saBox.add(saDetail, 0, 1);
+        saBox.add(saTA, 0, 2);
+        syllabusTabVBox.getChildren().add(saBox);  
+       
+        ScrollPane syllabusTabScrollPane = new ScrollPane();
+        syllabusTabScrollPane.setContent(syllabusTabVBox);
+        syllabusTabScrollPane.setFitToHeight(true);
+        syllabusTabScrollPane.setFitToWidth(true);
         //------------------------------------------------------------------------------------------------------------------------//        
         
         
@@ -353,6 +536,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         
         //----------------------------------------------SETS UP THE CONTENT IN EACH TAB--------------------------------------------------//
         siteTab.setContent(siteTabScrollPane);
+        syllabusTab.setContent(syllabusTabScrollPane);
         ohTab.setContent(sPane);
         
         //-------------------------------------------------------------------------------------------------------------------------------//
