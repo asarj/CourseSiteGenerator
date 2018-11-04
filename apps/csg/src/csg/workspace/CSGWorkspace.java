@@ -5,6 +5,7 @@ import djf.modules.AppFoolproofModule;
 import djf.modules.AppGUIModule;
 import static djf.modules.AppGUIModule.ENABLED;
 import djf.ui.AppNodesBuilder;
+import static djf.AppPropertyType.APP_PATH_IMAGES;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.SelectionMode;
@@ -25,12 +26,16 @@ import properties_manager.PropertiesManager;
 import csg.CSGApp;
 import csg.CSGPropertyType;
 import static csg.CSGPropertyType.*;
+import csg.data.Lab;
+import csg.data.Lecture;
+import csg.data.Recitation;
 import csg.data.TeachingAssistantPrototype;
 import csg.data.TimeSlot;
 import csg.workspace.controllers.CSGController;
 import csg.workspace.dialogs.TADialog;
 import csg.workspace.foolproof.CSGFoolproofDesign;
 import static csg.workspace.style.OHStyle.*;
+import static djf.modules.AppLanguageModule.FILE_PROTOCOL;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.CheckBox;
@@ -48,7 +53,7 @@ import javafx.scene.layout.GridPane;
  * @author McKillaGorilla
  */
 public class CSGWorkspace extends AppWorkspaceComponent {
-
+    
     public CSGWorkspace(CSGApp app) {
         super(app);
 
@@ -77,7 +82,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
 
         // THIS WILL BUILD ALL OF OUR JavaFX COMPONENTS FOR US
         AppNodesBuilder ohBuilder = app.getGUIModule().getNodesBuilder();
-        
+        AppNodesBuilder mtBuilder = app.getGUIModule().getNodesBuilder();
         
         
         //----------------------------------------------SETS UP THE TABS--------------------------------------------------//
@@ -149,6 +154,8 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         bannerBox.add(yearsCBox, 3, 2);
         bannerBox.add(titleLabel, 0, 3);
         bannerBox.add(titleTF, 1, 3);
+        bannerBox.add(expDirLabel, 0, 4);
+        bannerBox.add(expDirOutputLabel, 1, 4);
         siteTabVBox.getChildren().add(bannerBox);
         
         GridPane pagesBox = new GridPane();
@@ -190,10 +197,10 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         Button rfimg = new Button(props.getProperty(SITE_RFIMG_BUTTON));
         
         // FIX THIS ///////////////////////////
-        ImageView fviImgView = new ImageView(/**getClass().getResource(props.getProperty(DEFAULT_IMAGES_PATH_TEXT) + props.getProperty(DEFAULT_FAVICON_TEXT)).toExternalForm()**/);
-        ImageView navImgView = new ImageView(/**getClass().getResource(props.getProperty(DEFAULT_IMAGES_PATH_TEXT) + props.getProperty(DEFAULT_NAVBAR_TEXT)).toExternalForm()**/);
-        ImageView leftImgView = new ImageView(/**getClass().getResource(props.getProperty(DEFAULT_IMAGES_PATH_TEXT) + props.getProperty(DEFAULT_LFIMG_TEXT)).toExternalForm()**/);
-        ImageView rightImgView = new ImageView(/**getClass().getResource(props.getProperty(DEFAULT_IMAGES_PATH_TEXT) + props.getProperty(DEFAULT_RFIMG_TEXT)).toExternalForm()**/);
+        ImageView fviImgView = new ImageView(/**props.getProperty(FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_FAVICON_TEXT)**/);
+        ImageView navImgView = new ImageView(/**props.getProperty(FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_NAVBAR_TEXT)**/);
+        ImageView leftImgView = new ImageView(/**props.getProperty(FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_LFIMG_TEXT)**/);
+        ImageView rightImgView = new ImageView(/**props.getProperty(FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_RFIMG_TEXT)**/);
         // FIX THIS ///////////////////////////
         ComboBox css = new ComboBox(styleSheets);
         css.getSelectionModel().selectFirst();
@@ -274,7 +281,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         
         ScrollPane siteTabScrollPane = new ScrollPane();
         siteTabScrollPane.setContent(siteTabVBox);
-        siteTabScrollPane.setFitToHeight(true);
+//        siteTabScrollPane.setFitToHeight(true);
         siteTabScrollPane.setFitToWidth(true);
         //--------------------------------------------------------------------------------------------------------------------//
         
@@ -459,12 +466,89 @@ public class CSGWorkspace extends AppWorkspaceComponent {
        
         ScrollPane syllabusTabScrollPane = new ScrollPane();
         syllabusTabScrollPane.setContent(syllabusTabVBox);
-        syllabusTabScrollPane.setFitToHeight(true);
+//        syllabusTabScrollPane.setFitToHeight(true);
         syllabusTabScrollPane.setFitToWidth(true);
         //------------------------------------------------------------------------------------------------------------------------//        
         
         
         //----------------------------------------------SETS UP THE MEETING TIMES TAB--------------------------------------------------//
+        ScrollPane mtTabScrollPane = new ScrollPane();
+        VBox mtContent = new VBox();
+        VBox lecturePane = mtBuilder.buildVBox(MT_LECTURE_PANE, null, CLASS_OH_PANE, ENABLED);
+        HBox lectureHeaderBox = mtBuilder.buildHBox(MT_LECTURE_HEADER_BOX, lecturePane, CLASS_OH_BOX, ENABLED);
+        mtBuilder.buildTextButton(MT_LECTURE_ADD_BUTTON, lectureHeaderBox, CLASS_OH_BUTTON, ENABLED);
+        mtBuilder.buildTextButton(MT_LECTURE_REMOVE_BUTTON, lectureHeaderBox, CLASS_OH_BUTTON, ENABLED);
+        mtBuilder.buildLabel(CSGPropertyType.MT_LECTURE_HEADER_LABEL, lectureHeaderBox, CLASS_OH_HEADER_LABEL, ENABLED); 
+        
+        TableView<Lecture> lectureTable = mtBuilder.buildTableView(MT_LECTURE_TABLE_VIEW, lecturePane, CLASS_OH_TABLE_VIEW, ENABLED);
+        lectureTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        TableColumn lectureSectionColumn = mtBuilder.buildTableColumn(MT_LECTURE_SECTION_TABLE_COLUMN, lectureTable, CLASS_OH_COLUMN);
+        TableColumn lectureDayColumn = mtBuilder.buildTableColumn(MT_LECTURE_DAY_TABLE_COLUMN, lectureTable, CLASS_OH_COLUMN);
+        TableColumn lectureTimeColumn = mtBuilder.buildTableColumn(MT_LECTURE_TIME_TABLE_COLUMN, lectureTable, CLASS_OH_COLUMN);
+        TableColumn lectureRoomColumn = mtBuilder.buildTableColumn(MT_LECTURE_ROOM_TABLE_COLUMN, lectureTable, CLASS_OH_COLUMN);
+        lectureSectionColumn.setCellValueFactory(new PropertyValueFactory<String, String>("section"));
+        lectureDayColumn.setCellValueFactory(new PropertyValueFactory<String, String>("day"));
+        lectureTimeColumn.setCellValueFactory(new PropertyValueFactory<String, String>("time"));
+        lectureRoomColumn.setCellValueFactory(new PropertyValueFactory<String, String>("room"));
+        lectureSectionColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
+        lectureDayColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(2.0 / 5.0));
+        lectureTimeColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
+        lectureRoomColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
+        mtContent.getChildren().add(lecturePane);
+        
+        VBox recitationPane = mtBuilder.buildVBox(MT_RECITATION_PANE, null, CLASS_OH_PANE, ENABLED);
+        HBox recitationHeaderBox = mtBuilder.buildHBox(MT_RECITATION_HEADER_BOX, recitationPane, CLASS_OH_BOX, ENABLED);
+        mtBuilder.buildTextButton(MT_RECITATION_ADD_BUTTON, recitationHeaderBox, CLASS_OH_BUTTON, ENABLED);
+        mtBuilder.buildTextButton(MT_RECITATION_REMOVE_BUTTON, recitationHeaderBox, CLASS_OH_BUTTON, ENABLED);
+        mtBuilder.buildLabel(CSGPropertyType.MT_RECITATIONS_HEADER_LABEL, recitationHeaderBox, CLASS_OH_HEADER_LABEL, ENABLED); 
+        
+        TableView<Recitation> recitationTable = mtBuilder.buildTableView(MT_RECITATION_TABLE_VIEW, recitationPane, CLASS_OH_TABLE_VIEW, ENABLED);
+        recitationTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        TableColumn recitationSectionColumn = mtBuilder.buildTableColumn(MT_RECITATION_SECTION_TABLE_COLUMN, recitationTable, CLASS_OH_COLUMN);
+        TableColumn recitationDayTimeColumn = mtBuilder.buildTableColumn(MT_RECITATION_DAYANDTIME_TABLE_COLUMN, recitationTable, CLASS_OH_COLUMN);
+        TableColumn recitationRoomColumn = mtBuilder.buildTableColumn(MT_RECITATION_ROOM_TABLE_COLUMN, recitationTable, CLASS_OH_COLUMN);
+        TableColumn recitationTA1Column = mtBuilder.buildTableColumn(MT_RECITATION_TA1_TABLE_COLUMN, recitationTable, CLASS_OH_COLUMN);
+        TableColumn recitationTA2Column = mtBuilder.buildTableColumn(MT_RECITATION_TA2_TABLE_COLUMN, recitationTable, CLASS_OH_COLUMN);
+        recitationSectionColumn.setCellValueFactory(new PropertyValueFactory<String, String>("section"));
+        recitationDayTimeColumn.setCellValueFactory(new PropertyValueFactory<String, String>("day"));
+        recitationRoomColumn.setCellValueFactory(new PropertyValueFactory<String, String>("room"));
+        recitationTA1Column.setCellValueFactory(new PropertyValueFactory<String, String>("TA1"));
+        recitationTA2Column.setCellValueFactory(new PropertyValueFactory<String, String>("TA2"));
+        recitationSectionColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
+        recitationDayTimeColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
+        lectureRoomColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
+        recitationTA1Column.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
+        recitationTA2Column.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
+        mtContent.getChildren().add(recitationPane);
+        
+        VBox labPane = mtBuilder.buildVBox(MT_LAB_PANE, null, CLASS_OH_PANE, ENABLED);
+        HBox labHeaderBox = mtBuilder.buildHBox(MT_LAB_HEADER_BOX, labPane, CLASS_OH_BOX, ENABLED);
+        mtBuilder.buildTextButton(MT_LAB_ADD_BUTTON, labHeaderBox, CLASS_OH_BUTTON, ENABLED);
+        mtBuilder.buildTextButton(MT_LAB_REMOVE_BUTTON, labHeaderBox, CLASS_OH_BUTTON, ENABLED);
+        mtBuilder.buildLabel(CSGPropertyType.MT_LABS_HEADER_LABEL, labHeaderBox, CLASS_OH_HEADER_LABEL, ENABLED); 
+        
+        TableView<Lab> labTable = mtBuilder.buildTableView(MT_LAB_TABLE_VIEW, labPane, CLASS_OH_TABLE_VIEW, ENABLED);
+        labTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        TableColumn labSectionColumn = mtBuilder.buildTableColumn(MT_LAB_SECTION_TABLE_COLUMN, labTable, CLASS_OH_COLUMN);
+        TableColumn labDayTimeColumn = mtBuilder.buildTableColumn(MT_LAB_DAYANDTIME_TABLE_COLUMN, labTable, CLASS_OH_COLUMN);
+        TableColumn labRoomColumn = mtBuilder.buildTableColumn(MT_LAB_ROOM_TABLE_COLUMN, labTable, CLASS_OH_COLUMN);
+        TableColumn labTA1Column = mtBuilder.buildTableColumn(MT_LAB_TA1_TABLE_COLUMN, labTable, CLASS_OH_COLUMN);
+        TableColumn labTA2Column = mtBuilder.buildTableColumn(MT_LAB_TA2_TABLE_COLUMN, labTable, CLASS_OH_COLUMN);
+        labSectionColumn.setCellValueFactory(new PropertyValueFactory<String, String>("section"));
+        labDayTimeColumn.setCellValueFactory(new PropertyValueFactory<String, String>("day"));
+        labRoomColumn.setCellValueFactory(new PropertyValueFactory<String, String>("room"));
+        labTA1Column.setCellValueFactory(new PropertyValueFactory<String, String>("TA1"));
+        labTA2Column.setCellValueFactory(new PropertyValueFactory<String, String>("TA2"));
+        labSectionColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
+        labDayTimeColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
+        lectureRoomColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
+        labTA1Column.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
+        labTA2Column.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
+        mtContent.getChildren().add(labPane);
+        
+        mtTabScrollPane.setFitToWidth(true);
+        mtTabScrollPane.setContent(mtContent);
+
         
         //-----------------------------------------------------------------------------------------------------------------------------//
         
@@ -537,6 +621,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         //----------------------------------------------SETS UP THE CONTENT IN EACH TAB--------------------------------------------------//
         siteTab.setContent(siteTabScrollPane);
         syllabusTab.setContent(syllabusTabScrollPane);
+        mtTab.setContent(mtTabScrollPane);
         ohTab.setContent(sPane);
         
         //-------------------------------------------------------------------------------------------------------------------------------//

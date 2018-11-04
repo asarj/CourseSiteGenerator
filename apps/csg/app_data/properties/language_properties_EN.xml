@@ -174,8 +174,35 @@
         <property name="SYL_AD_LABEL"                       value="Academic Honesty:"></property>
         <property name="SYL_SA_LABEL"                       value="Special Assistance:"></property>
 
+        <!-- THESE ARE FOR THE MEETING TIMES TAB CONTROLS -->
+        <property name="MT_LECTURE_HEADER_LABEL_TEXT"                       value="Lectures"></property>
+        <property name="MT_RECITATIONS_HEADER_LABEL_TEXT"                       value="Recitations"></property>
+        <property name="MT_LABS_HEADER_LABEL_TEXT"                       value="Labs"></property>
+        <property name="MT_LECTURE_SECTION_TABLE_COLUMN_TEXT"                       value="Section"></property>
+        <property name="MT_LECTURE_DAY_TABLE_COLUMN_TEXT"                       value="Day"></property>
+        <property name="MT_LECTURE_TIME_TABLE_COLUMN_TEXT"                       value="Time"></property>
+        <property name="MT_RECITATION_SECTION_TABLE_COLUMN_TEXT"                       value="Section"></property>
+        <property name="MT_LAB_SECTION_TABLE_COLUMN_TEXT"                       value="Section"></property>
+        <property name="MT_RECITATION_DAYANDTIME_TABLE_COLUMN_TEXT"                       value="Day and Time"></property>
+        <property name="MT_LAB_DAYANDTIME_TABLE_COLUMN_TEXT"                       value="Day and Time"></property>
+        <property name="MT_LECTURE_ROOM_TABLE_COLUMN_TEXT"                       value="Room"></property>
+        <property name="MT_RECITATION_ROOM_TABLE_COLUMN_TEXT"                       value="Room"></property>
+        <property name="MT_LAB_ROOM_TABLE_COLUMN_TEXT"                       value="Room"></property>
+        <property name="MT_RECITATION_TA1_TABLE_COLUMN_TEXT"                       value="TA1"></property>
+        <property name="MT_RECITATION_TA2_TABLE_COLUMN_TEXT"                       value="TA2"></property>
+        <property name="MT_LAB_TA1_TABLE_COLUMN_TEXT"                       value="TA1"></property>
+        <property name="MT_LAB_TA2_TABLE_COLUMN_TEXT"                       value="TA2"></property>
+        <property name="MT_DEFAULT_TEXT"                       value="?"></property>
+        <property name="MT_LECTURE_ADD_BUTTON_TEXT"                       value="+"></property>
+        <property name="MT_LECTURE_REMOVE_BUTTON_TEXT"                       value="-"></property>
+        <property name="MT_RECITATION_ADD_BUTTON_TEXT"                       value="+"></property>
+        <property name="MT_RECITATION_REMOVE_BUTTON_TEXT"                       value="-"></property>
+        <property name="MT_LAB_ADD_BUTTON_TEXT"                       value="+"></property>
+        <property name="MT_LAB_REMOVE_BUTTON_TEXT"                       value="-"></property>
+
+
         <property name="WORK_FILE_EXT"          value="*.json"></property>
-	      <property name="WORK_FILE_EXT_DESC"     value="Teaching Assistant Files"></property>
+	      <property name="WORK_FILE_EXT_DESC"     value="Course Site Data File"></property>
 
     </property_list>
 
