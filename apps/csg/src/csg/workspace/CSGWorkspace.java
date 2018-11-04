@@ -39,6 +39,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
@@ -187,10 +188,13 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         Button navbarButton = new Button(props.getProperty(SITE_NAVBAR_BUTTON));
         Button lfimg = new Button(props.getProperty(SITE_LFIMG_BUTTON));
         Button rfimg = new Button(props.getProperty(SITE_RFIMG_BUTTON));
-        ImageView fviImgView = new ImageView(/**props.getProperty(DEFAULT_IMAGES_PATH_TEXT) + props.getProperty(DEFAULT_FAVICON_TEXT)**/);
-        ImageView navImgView = new ImageView(/**props.getProperty(DEFAULT_IMAGES_PATH_TEXT) + props.getProperty(DEFAULT_NAVBAR_TEXT)**/);
-        ImageView leftImgView = new ImageView(/**props.getProperty(DEFAULT_IMAGES_PATH_TEXT) + props.getProperty(DEFAULT_LFIMG_TEXT)**/);
-        ImageView rightImgView = new ImageView(/**props.getProperty(DEFAULT_IMAGES_PATH_TEXT) + props.getProperty(DEFAULT_RFIMG_TEXT)**/);
+        
+        // FIX THIS ///////////////////////////
+        ImageView fviImgView = new ImageView(/**getClass().getResource(props.getProperty(DEFAULT_IMAGES_PATH_TEXT) + props.getProperty(DEFAULT_FAVICON_TEXT)).toExternalForm()**/);
+        ImageView navImgView = new ImageView(/**getClass().getResource(props.getProperty(DEFAULT_IMAGES_PATH_TEXT) + props.getProperty(DEFAULT_NAVBAR_TEXT)).toExternalForm()**/);
+        ImageView leftImgView = new ImageView(/**getClass().getResource(props.getProperty(DEFAULT_IMAGES_PATH_TEXT) + props.getProperty(DEFAULT_LFIMG_TEXT)).toExternalForm()**/);
+        ImageView rightImgView = new ImageView(/**getClass().getResource(props.getProperty(DEFAULT_IMAGES_PATH_TEXT) + props.getProperty(DEFAULT_RFIMG_TEXT)).toExternalForm()**/);
+        // FIX THIS ///////////////////////////
         ComboBox css = new ComboBox(styleSheets);
         css.getSelectionModel().selectFirst();
         HBox favHBox = new HBox();
@@ -220,21 +224,50 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         siteTabVBox.getChildren().add(styleBox);
         
         
-//        pageStyleDataBox.add(pageStyleLabel, 0, 0);
-//        pageStyleDataBox.add(bannerSchoolLabel, 0, 1);
-//        pageStyleDataBox.add(bannerSchoolImage, 1, 1);
-//        pageStyleDataBox.add(changeBannerSchoolImageButton, 2, 1);
-//        pageStyleDataBox.add(leftFooterLabel, 0, 2);
-//        pageStyleDataBox.add(leftFooterImage, 1, 2);
-//        pageStyleDataBox.add(changeLeftFooterImageButton, 2, 2);
-//        pageStyleDataBox.add(rightFooterLabel, 0, 3);
-//        pageStyleDataBox.add(rightFooterImage, 1, 3);
-//        pageStyleDataBox.add(changeRightFooterImageButton, 2, 3);
-//        pageStyleDataBox.add(stylesheetLabel, 0, 4);
-//        pageStyleDataBox.add(stylesheetSelect, 1, 4);
-//        pageStyleDataBox.add(stylesheetNote, 0, 5);
-        
         GridPane instructorBox = new GridPane();
+        Label instructorLabel = new Label(props.getProperty(SITE_INSTRUCTOR_LABEL));
+        Label nameLabel = new Label(props.getProperty(SITE_NAME_LABEL));
+        Label emailLabel = new Label(props.getProperty(SITE_EMAIL_LABEL));
+        Label roomLabel = new Label(props.getProperty(SITE_ROOM_LABEL));
+        Label hpLabel = new Label(props.getProperty(SITE_HP_LABEL));
+        Label ohLabel = new Label(props.getProperty(SITE_OH_LABEL));
+        TextField siteNameTF = new TextField();
+        TextField siteEmailTF = new TextField();
+        TextField siteRoomTF = new TextField();
+        TextField siteHPTF = new TextField();
+        Button expanded = new Button(props.getProperty(SITE_EXPAND_BUTTON));
+        TextArea instructorOHJsonArea = new TextArea();
+        instructorOHJsonArea.setVisible(false);
+        instructorOHJsonArea.setManaged(false);
+        
+        expanded.setOnAction(e->{
+            expanded.setText(expanded.getText().equals("+") ? "-": "+");
+            instructorOHJsonArea.setManaged(expanded.getText().equals("-")? true: false);
+            instructorOHJsonArea.setVisible(expanded.getText().equals("-")? true: false);
+        });
+        HBox instDetail = new HBox();
+        HBox emailDetail = new HBox();
+        HBox roomDetail = new HBox();
+        HBox hpDetail = new HBox();
+        HBox ohDetail = new HBox();
+        VBox hiddenTA = new VBox();
+        Label emptyLbl = new Label();
+        
+        instDetail.getChildren().addAll(nameLabel, siteNameTF);
+        emailDetail.getChildren().addAll(emailLabel, siteEmailTF);
+        roomDetail.getChildren().addAll(roomLabel, siteRoomTF);
+        hpDetail.getChildren().addAll(hpLabel, siteHPTF);
+        ohDetail.getChildren().addAll(expanded, ohLabel);
+        hiddenTA.getChildren().addAll(emptyLbl, instructorOHJsonArea);
+        instructorBox.add(instructorLabel, 0, 0);
+        instructorBox.add(instDetail, 0, 1);
+        instructorBox.add(emailDetail, 0, 2);
+        instructorBox.add(roomDetail, 1, 1);
+        instructorBox.add(hpDetail, 1, 2);
+        instructorBox.add(ohDetail, 0, 3);
+        instructorBox.add(hiddenTA, 0, 4);
+        siteTabVBox.getChildren().add(instructorBox);
+        
         
         ScrollPane siteTabScrollPane = new ScrollPane();
         siteTabScrollPane.setContent(siteTabVBox);
