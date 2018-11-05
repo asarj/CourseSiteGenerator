@@ -401,8 +401,12 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         HBox descDetail = new HBox();
         descDetail.getChildren().addAll(sylDescExpandButton, sylDesc);
         descBox.add(descDetail, 0, 1);
-//        descBox.add(descTA, 0, 2);
-        syllabusTabVBox.getChildren().addAll(descBox, descTA);
+        descBox.setPadding(new Insets(10, 10, 10, 10));
+        descBox.setVgap(5);
+        HBox blank4 = new HBox();
+        blank4.setStyle("-fx-background-color: #ffc581;");
+        blank4.setPadding(new Insets(5,5,5,5));
+        syllabusTabVBox.getChildren().addAll(descBox, descTA, blank4);
         
         GridPane topicBox = new GridPane();
         topicBox.setStyle("-fx-background-color: #ebebeb;");
@@ -423,8 +427,13 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         HBox topicDetail = new HBox();
         topicDetail.getChildren().addAll(sylTopicExpandButton, sylTopic);
         topicBox.add(topicDetail, 0, 1);
-//        topicBox.add(topicTA, 0, 2);
-        syllabusTabVBox.getChildren().addAll(topicBox, topicTA);
+        topicBox.setPadding(new Insets(10, 10, 10, 10));
+        topicBox.setVgap(5);
+        HBox blank5 = new HBox();
+        blank5.setStyle("-fx-background-color: #ffc581;");
+        blank5.setPadding(new Insets(5,5,5,5));
+        
+        syllabusTabVBox.getChildren().addAll(topicBox, topicTA, blank5);
         
         GridPane prereqBox = new GridPane();
         prereqBox.setStyle("-fx-background-color: #ebebeb;");
@@ -442,8 +451,12 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         HBox prereqDetail = new HBox();
         prereqDetail.getChildren().addAll(sylPrereqExpandButton, prereqLabel);
         prereqBox.add(prereqDetail, 0, 1);
-//        prereqBox.add(prereqTA, 0, 2);
-        syllabusTabVBox.getChildren().addAll(prereqBox, prereqTA);
+        prereqBox.setPadding(new Insets(10, 10, 10, 10));
+        prereqBox.setVgap(5);
+        HBox blank6 = new HBox();
+        blank6.setStyle("-fx-background-color: #ffc581;");
+        blank6.setPadding(new Insets(5,5,5,5));
+        syllabusTabVBox.getChildren().addAll(prereqBox, prereqTA, blank6);
         
         GridPane outcomesBox = new GridPane();
         outcomesBox.setStyle("-fx-background-color: #ebebeb;");
@@ -464,8 +477,12 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         HBox outcomesDetail = new HBox();
         outcomesDetail.getChildren().addAll(sylOutcomesExpandButton, outcomesLabel);
         outcomesBox.add(outcomesDetail, 0, 1);
-//        outcomesBox.add(outcomesTA, 0, 2);
-        syllabusTabVBox.getChildren().addAll(outcomesBox, outcomesTA);
+        outcomesBox.setPadding(new Insets(10, 10, 10, 10));
+        outcomesBox.setVgap(5);
+        HBox blank7 = new HBox();
+        blank7.setStyle("-fx-background-color: #ffc581;");
+        blank7.setPadding(new Insets(5,5,5,5));
+        syllabusTabVBox.getChildren().addAll(outcomesBox, outcomesTA, blank7);
         
         GridPane textbookBox = new GridPane();
         textbookBox.setStyle("-fx-background-color: #ebebeb;");
@@ -479,7 +496,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
                              + "\n\t\t\"photo\":\"\","
                              + "\n\t\t\"authors\":["
                                 + "\n\t\t\t\"\""
-                             + "],"
+                             + "\n\t\t],"
                              + "\n\t\t\"publisher\":\"\","
                              + "\n\t\t\"year\":\"\","
                         + "\n\t}\n]");
@@ -493,8 +510,12 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         HBox textbooksDetail = new HBox();
         textbooksDetail.getChildren().addAll(sylTextbooksExpandButton, textbookLabel);
         textbookBox.add(textbooksDetail, 0, 1);
-//        textbookBox.add(textbooksTA, 0, 2);
-        syllabusTabVBox.getChildren().addAll(textbookBox, textbooksTA); 
+        textbookBox.setPadding(new Insets(10, 10, 10, 10));
+        textbookBox.setVgap(5);
+        HBox blank8 = new HBox();
+        blank8.setStyle("-fx-background-color: #ffc581;");
+        blank8.setPadding(new Insets(5,5,5,5));
+        syllabusTabVBox.getChildren().addAll(textbookBox, textbooksTA, blank8); 
         
         GridPane gradedComponentsBox = new GridPane();
         gradedComponentsBox.setStyle("-fx-background-color: #ebebeb;");
@@ -519,8 +540,12 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         HBox gcDetail = new HBox();
         gcDetail.getChildren().addAll(sylGCExpandButton, gradedComponentsLabel);
         gradedComponentsBox.add(gcDetail, 0, 1);
-//        gradedComponentsBox.add(gcTA, 0, 2);
-        syllabusTabVBox.getChildren().addAll(gradedComponentsBox, gcTA);
+        gradedComponentsBox.setPadding(new Insets(10, 10, 10, 10));
+        gradedComponentsBox.setVgap(5);
+        HBox blank9 = new HBox();
+        blank9.setStyle("-fx-background-color: #ffc581;");
+        blank9.setPadding(new Insets(5,5,5,5));
+        syllabusTabVBox.getChildren().addAll(gradedComponentsBox, gcTA, blank9);
         
         GridPane gradingNoteBox = new GridPane();
         gradingNoteBox.setStyle("-fx-background-color: #ebebeb;");
@@ -538,8 +563,12 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         HBox gradingNoteDetail = new HBox();
         gradingNoteDetail.getChildren().addAll(sylGradingNoteExpandButton, gradingNoteLabel);
         gradingNoteBox.add(gradingNoteDetail, 0, 1);
-//        gradingNoteBox.add(gradingNoteTA, 0, 2);
-        syllabusTabVBox.getChildren().addAll(gradingNoteBox, gradingNoteTA);
+        gradingNoteBox.setPadding(new Insets(10, 10, 10, 10));
+        gradingNoteBox.setVgap(5);
+        HBox blank10 = new HBox();
+        blank10.setStyle("-fx-background-color: #ffc581;");
+        blank10.setPadding(new Insets(5,5,5,5));
+        syllabusTabVBox.getChildren().addAll(gradingNoteBox, gradingNoteTA, blank10);
         
         GridPane adBox = new GridPane();
         adBox.setStyle("-fx-background-color: #ebebeb;");
@@ -557,8 +586,12 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         HBox adDetail = new HBox();
         adDetail.getChildren().addAll(sylADExpandButton, adLabel);
         adBox.add(adDetail, 0, 1);
-//        adBox.add(adTA, 0, 2);
-        syllabusTabVBox.getChildren().addAll(adBox, adTA);
+        adBox.setPadding(new Insets(10, 10, 10, 10));
+        adBox.setVgap(5);
+        HBox blank11 = new HBox();
+        blank11.setStyle("-fx-background-color: #ffc581;");
+        blank11.setPadding(new Insets(5,5,5,5));
+        syllabusTabVBox.getChildren().addAll(adBox, adTA, blank11);
         
         GridPane saBox = new GridPane();
         saBox.setStyle("-fx-background-color: #ebebeb;");
@@ -576,14 +609,17 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         HBox saDetail = new HBox();
         saDetail.getChildren().addAll(sylSAExpandButton, saLabel);
         saBox.add(saDetail, 0, 1);
-//        saBox.add(saTA, 0, 2);
+        saBox.setPadding(new Insets(10, 10, 10, 10));
+        saBox.setVgap(5);
         syllabusTabVBox.getChildren().addAll(saBox, saTA);  
        
         syllabusTabVBox.setStyle("-fx-background-color: #ffc581;");
+        syllabusTabVBox.setPadding(new Insets(10, 10, 10, 10));
         ScrollPane syllabusTabScrollPane = new ScrollPane();
         syllabusTabScrollPane.setContent(syllabusTabVBox);
 //        syllabusTabScrollPane.setFitToHeight(true);
         syllabusTabScrollPane.setFitToWidth(true);
+        syllabusTabScrollPane.setStyle("-fx-background-color: #ffc581;");
         //------------------------------------------------------------------------------------------------------------------------//        
         
         

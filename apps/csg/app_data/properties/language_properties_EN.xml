@@ -200,7 +200,7 @@
         <property name="SITE_ROOM_LABEL"                  value="Room:"></property>
         <property name="SITE_HP_LABEL"                  value="Home Page:"></property>
         <property name="SITE_EXPAND_BUTTON"                  value="+"></property>
-        <property name="SITE_OH_LABEL"                  value="Office Hours"></property>
+        <property name="SITE_OH_LABEL"                  value=" Office Hours"></property>
         <property name="SITE_FALL_TEXT"                  value="Fall"></property>
         <property name="SITE_SPRING_TEXT"                  value="Spring"></property>
         <property name="SITE_SUMMER_TEXT"                  value="Summer"></property>
@@ -223,15 +223,15 @@
         <property name="SITE_HP_TEXT_FIELD_TEXT"    value="Home Page"></property>
 
         <!-- THESE ARE FOR THE SYLLABUS TAB CONTROLS -->
-        <property name="SYL_DESC_LABEL"                       value="Description:"></property>
-        <property name="SYL_TOPICS_LABEL"                       value="Topics:"></property>
-        <property name="SYL_PREREQ_LABEL"                       value="Prerequisites:"></property>
-        <property name="SYL_OUTCOMES_LABEL"                       value="Outcomes:"></property>
-        <property name="SYL_TBOOK_LABEL"                       value="Textbooks:"></property>
-        <property name="SYL_GRADED_LABEL"                       value="Graded Components:"></property>
-        <property name="SYL_GRADINGNOTE_LABEL"                       value="Grading Note:"></property>
-        <property name="SYL_AD_LABEL"                       value="Academic Honesty:"></property>
-        <property name="SYL_SA_LABEL"                       value="Special Assistance:"></property>
+        <property name="SYL_DESC_LABEL"                       value=" Description:"></property>
+        <property name="SYL_TOPICS_LABEL"                       value=" Topics:"></property>
+        <property name="SYL_PREREQ_LABEL"                       value=" Prerequisites:"></property>
+        <property name="SYL_OUTCOMES_LABEL"                       value=" Outcomes:"></property>
+        <property name="SYL_TBOOK_LABEL"                       value=" Textbooks:"></property>
+        <property name="SYL_GRADED_LABEL"                       value=" Graded Components:"></property>
+        <property name="SYL_GRADINGNOTE_LABEL"                       value=" Grading Note:"></property>
+        <property name="SYL_AD_LABEL"                       value=" Academic Honesty:"></property>
+        <property name="SYL_SA_LABEL"                       value=" Special Assistance:"></property>
 
         <!-- THESE ARE FOR THE MEETING TIMES TAB CONTROLS -->
         <property name="MT_LECTURE_HEADER_LABEL_TEXT"                       value="Lectures"></property>
