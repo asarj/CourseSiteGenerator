@@ -73,7 +73,7 @@
         <!-- ENGLISH LANGUAGE SETTINGS SPECIFICALLY FOR TDLM CONTROLS -->
 
         <!-- LANGUAGE-DEPENDENT TEXT FOR OH WORKSPACE CONTROLS -->
-        <property name="OH_TAS_HEADER_LABEL_TEXT"           value="Teaching Assistants"></property>
+        <property name="OH_TAS_HEADER_LABEL_TEXT"           value=" Teaching Assistants"></property>
         <property name="OH_ALL_RADIO_BUTTON_TEXT"                value="All"></property>
         <property name="OH_GRAD_RADIO_BUTTON_TEXT"               value="Graduate"></property>
         <property name="OH_UNDERGRAD_RADIO_BUTTON_TEXT"          value="Undergraduate"></property>
@@ -81,7 +81,7 @@
         <property name="OH_EMAIL_TEXT_FIELD_PROMPT_TEXT"    value="Email"></property>
         <property name="OH_ADD_TA_BUTTON_TEXT"              value="Add TA"></property>
         <property name="OH_REMOVE_TA_BUTTON_TEXT"           value="-"></property>
-        <property name="OH_OFFICE_HOURS_HEADER_LABEL_TEXT"  value="Office Hours                                      "></property>
+        <property name="OH_OFFICE_HOURS_HEADER_LABEL_TEXT"  value="Office Hours                                  "></property>
         <property name="OH_NAME_TABLE_COLUMN_TEXT"          value="Name"></property>
         <property name="OH_EMAIL_TABLE_COLUMN_TEXT"         value="Email"></property>
         <property name="OH_SLOTS_TABLE_COLUMN_TEXT"         value="Time Slots"></property>
@@ -93,8 +93,8 @@
         <property name="OH_WEDNESDAY_TABLE_COLUMN_TEXT"     value="Wednesday"></property>
         <property name="OH_THURSDAY_TABLE_COLUMN_TEXT"      value="Thursday"></property>
         <property name="OH_FRIDAY_TABLE_COLUMN_TEXT"        value="Friday"></property>
-        <property name="OH_STARTTIME_LABEL_TEXT"        value="Start Time:"></property>
-        <property name="OH_ENDTIME_LABEL_TEXT"        value="End Time:"></property>
+        <property name="OH_STARTTIME_LABEL_TEXT"        value="Start Time: "></property>
+        <property name="OH_ENDTIME_LABEL_TEXT"        value=" End Time: "></property>
         <property name="OH_START_12AM"                      value="12:00 am"></property>
         <property name="OH_START_1AM"                      value="1:00 am"></property>
         <property name="OH_START_2AM"                      value="2:00 am"></property>
@@ -234,9 +234,9 @@
         <property name="SYL_SA_LABEL"                       value=" Special Assistance:"></property>
 
         <!-- THESE ARE FOR THE MEETING TIMES TAB CONTROLS -->
-        <property name="MT_LECTURE_HEADER_LABEL_TEXT"                       value="Lectures"></property>
-        <property name="MT_RECITATIONS_HEADER_LABEL_TEXT"                       value="Recitations"></property>
-        <property name="MT_LABS_HEADER_LABEL_TEXT"                       value="Labs"></property>
+        <property name="MT_LECTURE_HEADER_LABEL_TEXT"                       value=" Lectures"></property>
+        <property name="MT_RECITATIONS_HEADER_LABEL_TEXT"                       value=" Recitations"></property>
+        <property name="MT_LABS_HEADER_LABEL_TEXT"                       value=" Labs"></property>
         <property name="MT_LECTURE_SECTION_TABLE_COLUMN_TEXT"                       value="Section"></property>
         <property name="MT_LECTURE_DAY_TABLE_COLUMN_TEXT"                       value="Day"></property>
         <property name="MT_LECTURE_TIME_TABLE_COLUMN_TEXT"                       value="Time"></property>

@@ -15,14 +15,14 @@ import javafx.beans.property.StringProperty;
 public class Lecture {
     private StringProperty section;
     private StringProperty day;
-    private StringProperty room;
     private StringProperty time;
+    private StringProperty room;
     
     public Lecture(String section, String day, String time, String room) {
         this.section = new SimpleStringProperty(section);
         this.day = new SimpleStringProperty(day);
-        this.room = new SimpleStringProperty(room);
         this.time = new SimpleStringProperty(time);
+        this.room = new SimpleStringProperty(room);
     }
 
     public StringProperty getSection() {

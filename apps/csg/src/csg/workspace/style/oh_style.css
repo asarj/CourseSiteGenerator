@@ -242,5 +242,11 @@
     -fx-border-radius: 10 10 10 10;
     -fx-background-radius: 10 10 10 10; 
 }
+.app_button {
+    -fx-font-size: 10pt;
+    -fx-font-weight: bold;
+    -fx-border-radius: 10 10 10 10;
+    -fx-background-radius: 10 10 10 10; 
+}
 /*THIS IS WHERE I PUT THE CUSTOM CSS STYLING*/
 

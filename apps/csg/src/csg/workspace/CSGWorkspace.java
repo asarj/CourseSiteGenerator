@@ -628,8 +628,8 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         VBox mtContent = new VBox();
         VBox lecturePane = mtBuilder.buildVBox(MT_LECTURE_PANE, null, CLASS_OH_PANE, ENABLED);
         HBox lectureHeaderBox = mtBuilder.buildHBox(MT_LECTURE_HEADER_BOX, lecturePane, CLASS_OH_BOX, ENABLED);
-        mtBuilder.buildTextButton(MT_LECTURE_ADD_BUTTON, lectureHeaderBox, CLASS_OH_BUTTON, ENABLED);
-        mtBuilder.buildTextButton(MT_LECTURE_REMOVE_BUTTON, lectureHeaderBox, CLASS_OH_BUTTON, ENABLED);
+        mtBuilder.buildTextButton(MT_LECTURE_ADD_BUTTON, lectureHeaderBox, CLASS_APP_BUTTON, ENABLED);
+        mtBuilder.buildTextButton(MT_LECTURE_REMOVE_BUTTON, lectureHeaderBox, CLASS_APP_BUTTON, ENABLED);
         mtBuilder.buildLabel(CSGPropertyType.MT_LECTURE_HEADER_LABEL, lectureHeaderBox, CLASS_OH_HEADER_LABEL, ENABLED); 
         
         TableView<Lecture> lectureTable = mtBuilder.buildTableView(MT_LECTURE_TABLE_VIEW, lecturePane, CLASS_OH_TABLE_VIEW, ENABLED);
@@ -642,17 +642,24 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         lectureDayColumn.setCellValueFactory(new PropertyValueFactory<String, String>("day"));
         lectureTimeColumn.setCellValueFactory(new PropertyValueFactory<String, String>("time"));
         lectureRoomColumn.setCellValueFactory(new PropertyValueFactory<String, String>("room"));
-        lectureSectionColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
-        lectureDayColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(2.0 / 5.0));
-        lectureTimeColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
-        lectureRoomColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
+        lectureSectionColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(.25));
+        lectureDayColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(.25));
+        lectureTimeColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(.25));
+        lectureRoomColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(.25));
+        lecturePane.setSpacing(5);
         lecturePane.setStyle("-fx-background-color: #ebebeb;");
-        mtContent.getChildren().add(lecturePane);
+        
+        
+        lecturePane.setPadding(new Insets(10, 10, 10, 10));
+        HBox blank12 = new HBox();
+        blank12.setStyle("-fx-background-color: #ffc581;");
+        blank12.setPadding(new Insets(5,5,5,5));
+        mtContent.getChildren().addAll(lecturePane, blank12);
         
         VBox recitationPane = mtBuilder.buildVBox(MT_RECITATION_PANE, null, CLASS_OH_PANE, ENABLED);
         HBox recitationHeaderBox = mtBuilder.buildHBox(MT_RECITATION_HEADER_BOX, recitationPane, CLASS_OH_BOX, ENABLED);
-        mtBuilder.buildTextButton(MT_RECITATION_ADD_BUTTON, recitationHeaderBox, CLASS_OH_BUTTON, ENABLED);
-        mtBuilder.buildTextButton(MT_RECITATION_REMOVE_BUTTON, recitationHeaderBox, CLASS_OH_BUTTON, ENABLED);
+        mtBuilder.buildTextButton(MT_RECITATION_ADD_BUTTON, recitationHeaderBox, CLASS_APP_BUTTON, ENABLED);
+        mtBuilder.buildTextButton(MT_RECITATION_REMOVE_BUTTON, recitationHeaderBox, CLASS_APP_BUTTON, ENABLED);
         mtBuilder.buildLabel(CSGPropertyType.MT_RECITATIONS_HEADER_LABEL, recitationHeaderBox, CLASS_OH_HEADER_LABEL, ENABLED); 
         
         TableView<Recitation> recitationTable = mtBuilder.buildTableView(MT_RECITATION_TABLE_VIEW, recitationPane, CLASS_OH_TABLE_VIEW, ENABLED);
@@ -667,18 +674,23 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         recitationRoomColumn.setCellValueFactory(new PropertyValueFactory<String, String>("room"));
         recitationTA1Column.setCellValueFactory(new PropertyValueFactory<String, String>("TA1"));
         recitationTA2Column.setCellValueFactory(new PropertyValueFactory<String, String>("TA2"));
-        recitationSectionColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
-        recitationDayTimeColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
-        lectureRoomColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
-        recitationTA1Column.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
-        recitationTA2Column.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
+        recitationSectionColumn.prefWidthProperty().bind(recitationTable.widthProperty().multiply(.15));
+        recitationDayTimeColumn.prefWidthProperty().bind(recitationTable.widthProperty().multiply(.4));
+        lectureRoomColumn.prefWidthProperty().bind(recitationTable.widthProperty().multiply(.15));
+        recitationTA1Column.prefWidthProperty().bind(recitationTable.widthProperty().multiply(.15));
+        recitationTA2Column.prefWidthProperty().bind(recitationTable.widthProperty().multiply(.15));
         recitationPane.setStyle("-fx-background-color: #ebebeb;");
-        mtContent.getChildren().add(recitationPane);
+        recitationPane.setPadding(new Insets(10, 10, 10, 10));
+        HBox blank13 = new HBox();
+        blank13.setStyle("-fx-background-color: #ffc581;");
+        blank13.setPadding(new Insets(5,5,5,5));
+        recitationPane.setSpacing(5);
+        mtContent.getChildren().addAll(recitationPane, blank13);
         
         VBox labPane = mtBuilder.buildVBox(MT_LAB_PANE, null, CLASS_OH_PANE, ENABLED);
         HBox labHeaderBox = mtBuilder.buildHBox(MT_LAB_HEADER_BOX, labPane, CLASS_OH_BOX, ENABLED);
-        mtBuilder.buildTextButton(MT_LAB_ADD_BUTTON, labHeaderBox, CLASS_OH_BUTTON, ENABLED);
-        mtBuilder.buildTextButton(MT_LAB_REMOVE_BUTTON, labHeaderBox, CLASS_OH_BUTTON, ENABLED);
+        mtBuilder.buildTextButton(MT_LAB_ADD_BUTTON, labHeaderBox, CLASS_APP_BUTTON, ENABLED);
+        mtBuilder.buildTextButton(MT_LAB_REMOVE_BUTTON, labHeaderBox, CLASS_APP_BUTTON, ENABLED);
         mtBuilder.buildLabel(CSGPropertyType.MT_LABS_HEADER_LABEL, labHeaderBox, CLASS_OH_HEADER_LABEL, ENABLED); 
         
         TableView<Lab> labTable = mtBuilder.buildTableView(MT_LAB_TABLE_VIEW, labPane, CLASS_OH_TABLE_VIEW, ENABLED);
@@ -693,15 +705,18 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         labRoomColumn.setCellValueFactory(new PropertyValueFactory<String, String>("room"));
         labTA1Column.setCellValueFactory(new PropertyValueFactory<String, String>("TA1"));
         labTA2Column.setCellValueFactory(new PropertyValueFactory<String, String>("TA2"));
-        labSectionColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
-        labDayTimeColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
-        lectureRoomColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
-        labTA1Column.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
-        labTA2Column.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
+        labSectionColumn.prefWidthProperty().bind(labTable.widthProperty().multiply(.15));
+        labDayTimeColumn.prefWidthProperty().bind(labTable.widthProperty().multiply(.4));
+        lectureRoomColumn.prefWidthProperty().bind(labTable.widthProperty().multiply(.15));
+        labTA1Column.prefWidthProperty().bind(labTable.widthProperty().multiply(.15));
+        labTA2Column.prefWidthProperty().bind(labTable.widthProperty().multiply(.15));
         labPane.setStyle("-fx-background-color: #ebebeb;");
+        labPane.setPadding(new Insets(10, 10, 10, 10));
+        labPane.setSpacing(5);
         mtContent.getChildren().add(labPane);
         
         mtContent.setStyle("-fx-background-color: #ffc581;");
+        mtContent.setPadding(new Insets(10, 10, 10, 10));
         mtTabScrollPane.setFitToWidth(true);
         mtTabScrollPane.setContent(mtContent);
 
@@ -713,7 +728,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         // INIT THE HEADER ON THE LEFT
         VBox leftPane = ohBuilder.buildVBox(OH_LEFT_PANE, null, CLASS_OH_PANE, ENABLED);
         HBox tasHeaderBox = ohBuilder.buildHBox(OH_TAS_HEADER_PANE, leftPane, CLASS_OH_BOX, ENABLED);
-        ohBuilder.buildTextButton(OH_REMOVE_TA_BUTTON, tasHeaderBox, CLASS_OH_BUTTON, !ENABLED);
+        ohBuilder.buildTextButton(OH_REMOVE_TA_BUTTON, tasHeaderBox, CLASS_APP_BUTTON, !ENABLED);
         ohBuilder.buildLabel(CSGPropertyType.OH_TAS_HEADER_LABEL, tasHeaderBox, CLASS_OH_HEADER_LABEL, ENABLED);
         HBox typeHeaderBox = ohBuilder.buildHBox(OH_GRAD_UNDERGRAD_TAS_PANE, tasHeaderBox, CLASS_OH_RADIO_BOX, ENABLED);
         ToggleGroup tg = new ToggleGroup();
@@ -732,10 +747,10 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         emailColumn.setCellValueFactory(new PropertyValueFactory<String, String>("email"));
         slotsColumn.setCellValueFactory(new PropertyValueFactory<String, String>("slots"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<String, String>("type"));
-        nameColumn.prefWidthProperty().bind(taTable.widthProperty().multiply(1.0 / 5.0));
-        emailColumn.prefWidthProperty().bind(taTable.widthProperty().multiply(2.0 / 5.0));
-        slotsColumn.prefWidthProperty().bind(taTable.widthProperty().multiply(1.0 / 5.0));
-        typeColumn.prefWidthProperty().bind(taTable.widthProperty().multiply(1.0 / 5.0));
+        nameColumn.prefWidthProperty().bind(taTable.widthProperty().multiply(1.0 / 4.0));
+        emailColumn.prefWidthProperty().bind(taTable.widthProperty().multiply(1.0 / 4.0));
+        slotsColumn.prefWidthProperty().bind(taTable.widthProperty().multiply(1.0 / 4.0));
+        typeColumn.prefWidthProperty().bind(taTable.widthProperty().multiply(1.0 / 4.0));
 
         // ADD BOX FOR ADDING A TA
         HBox taBox = ohBuilder.buildHBox(OH_ADD_TA_PANE, leftPane, CLASS_OH_PANE, ENABLED);
@@ -745,7 +760,8 @@ public class CSGWorkspace extends AppWorkspaceComponent {
 
         // MAKE SURE IT'S THE TABLE THAT ALWAYS GROWS IN THE LEFT PANE
         VBox.setVgrow(taTable, Priority.ALWAYS);
-
+        leftPane.setPadding(new Insets(10, 10, 10, 10));
+        leftPane.setSpacing(5);
         // INIT THE HEADER ON THE RIGHT
         ObservableList startTimes = FXCollections.observableArrayList(
                                                                         props.getProperty(OH_START_12AM),
@@ -828,10 +844,13 @@ public class CSGWorkspace extends AppWorkspaceComponent {
 
         // MAKE SURE IT'S THE TABLE THAT ALWAYS GROWS IN THE LEFT PANE
         VBox.setVgrow(officeHoursTable, Priority.ALWAYS);
+        rightPane.setPadding(new Insets(10, 10, 10, 10));
+        rightPane.setSpacing(5);
         rightPane.setStyle("-fx-background-color: #ebebeb;");
         // BOTH PANES WILL NOW GO IN A SPLIT PANE
         SplitPane sPane = new SplitPane(leftPane, rightPane);
         sPane.setStyle("-fx-background-color: #ffc581;");
+        sPane.setPadding(new Insets(10, 10, 10, 10));
         sPane.setDividerPositions(.4);
         //----------------------------------------------------------------------------------------------------------------------------------//
         

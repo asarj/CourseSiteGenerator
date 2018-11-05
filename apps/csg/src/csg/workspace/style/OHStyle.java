@@ -27,6 +27,7 @@ public class OHStyle {
     public static final String CLASS_OH_COMBO_BOX    = "oh_combo_box";
     public static final String CLASS_OH_TEXT_FIELD_ERROR = "oh_text_field_error";
     public static final String CLASS_OH_BUTTON        = "oh_button";
+    public static final String CLASS_APP_BUTTON        = "app_button";
     public static final String CLASS_OH_RADIO_BOX     = "oh_radio_box";
     public static final String CLASS_OH_RADIO_BUTTON  = "oh_radio_button";
     public static final String CLASS_OH_TAB_PANE      = "oh_tab_pane";
