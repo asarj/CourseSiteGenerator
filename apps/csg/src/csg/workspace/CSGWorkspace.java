@@ -348,6 +348,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         //----------------------------------------------SETS UP THE SYLLABUS TAB--------------------------------------------------//
         VBox syllabusTabVBox = new VBox();
         GridPane descBox = new GridPane();
+        descBox.setStyle("-fx-background-color: #ebebeb;");
         Label sylDesc = new Label(props.getProperty(SYL_DESC_LABEL));
         sylDesc.setId("section_header_label");
         Button sylDescExpandButton = new Button("+");
@@ -362,10 +363,11 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         HBox descDetail = new HBox();
         descDetail.getChildren().addAll(sylDescExpandButton, sylDesc);
         descBox.add(descDetail, 0, 1);
-        descBox.add(descTA, 0, 2);
-        syllabusTabVBox.getChildren().add(descBox);
+//        descBox.add(descTA, 0, 2);
+        syllabusTabVBox.getChildren().addAll(descBox, descTA);
         
         GridPane topicBox = new GridPane();
+        topicBox.setStyle("-fx-background-color: #ebebeb;");
         Label sylTopic = new Label(props.getProperty(SYL_TOPICS_LABEL));
         sylTopic.setId("section_header_label");
         Button sylTopicExpandButton = new Button("+");
@@ -383,10 +385,11 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         HBox topicDetail = new HBox();
         topicDetail.getChildren().addAll(sylTopicExpandButton, sylTopic);
         topicBox.add(topicDetail, 0, 1);
-        topicBox.add(topicTA, 0, 2);
-        syllabusTabVBox.getChildren().add(topicBox);
+//        topicBox.add(topicTA, 0, 2);
+        syllabusTabVBox.getChildren().addAll(topicBox, topicTA);
         
         GridPane prereqBox = new GridPane();
+        prereqBox.setStyle("-fx-background-color: #ebebeb;");
         Label prereqLabel = new Label(props.getProperty(SYL_PREREQ_LABEL));
         prereqLabel.setId("section_header_label");
         Button sylPrereqExpandButton = new Button("+");
@@ -401,10 +404,11 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         HBox prereqDetail = new HBox();
         prereqDetail.getChildren().addAll(sylPrereqExpandButton, prereqLabel);
         prereqBox.add(prereqDetail, 0, 1);
-        prereqBox.add(prereqTA, 0, 2);
-        syllabusTabVBox.getChildren().add(prereqBox);
+//        prereqBox.add(prereqTA, 0, 2);
+        syllabusTabVBox.getChildren().addAll(prereqBox, prereqTA);
         
         GridPane outcomesBox = new GridPane();
+        outcomesBox.setStyle("-fx-background-color: #ebebeb;");
         Label outcomesLabel = new Label(props.getProperty(SYL_OUTCOMES_LABEL));
         outcomesLabel.setId("section_header_label");
         Button sylOutcomesExpandButton = new Button("+");
@@ -422,10 +426,11 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         HBox outcomesDetail = new HBox();
         outcomesDetail.getChildren().addAll(sylOutcomesExpandButton, outcomesLabel);
         outcomesBox.add(outcomesDetail, 0, 1);
-        outcomesBox.add(outcomesTA, 0, 2);
-        syllabusTabVBox.getChildren().add(outcomesBox);
+//        outcomesBox.add(outcomesTA, 0, 2);
+        syllabusTabVBox.getChildren().addAll(outcomesBox, outcomesTA);
         
         GridPane textbookBox = new GridPane();
+        textbookBox.setStyle("-fx-background-color: #ebebeb;");
         Label textbookLabel = new Label(props.getProperty(SYL_TBOOK_LABEL));
         textbookLabel.setId("section_header_label");
         Button sylTextbooksExpandButton = new Button("+");
@@ -450,10 +455,11 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         HBox textbooksDetail = new HBox();
         textbooksDetail.getChildren().addAll(sylTextbooksExpandButton, textbookLabel);
         textbookBox.add(textbooksDetail, 0, 1);
-        textbookBox.add(textbooksTA, 0, 2);
-        syllabusTabVBox.getChildren().add(textbookBox); 
+//        textbookBox.add(textbooksTA, 0, 2);
+        syllabusTabVBox.getChildren().addAll(textbookBox, textbooksTA); 
         
         GridPane gradedComponentsBox = new GridPane();
+        gradedComponentsBox.setStyle("-fx-background-color: #ebebeb;");
         Label gradedComponentsLabel = new Label(props.getProperty(SYL_GRADED_LABEL));
         gradedComponentsLabel.setId("section_header_label");
         Button sylGCExpandButton = new Button("+");
@@ -475,10 +481,11 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         HBox gcDetail = new HBox();
         gcDetail.getChildren().addAll(sylGCExpandButton, gradedComponentsLabel);
         gradedComponentsBox.add(gcDetail, 0, 1);
-        gradedComponentsBox.add(gcTA, 0, 2);
-        syllabusTabVBox.getChildren().add(gradedComponentsBox);
+//        gradedComponentsBox.add(gcTA, 0, 2);
+        syllabusTabVBox.getChildren().addAll(gradedComponentsBox, gcTA);
         
         GridPane gradingNoteBox = new GridPane();
+        gradingNoteBox.setStyle("-fx-background-color: #ebebeb;");
         Label gradingNoteLabel = new Label(props.getProperty(SYL_GRADINGNOTE_LABEL));
         gradingNoteLabel.setId("section_header_label");
         Button sylGradingNoteExpandButton = new Button("+");
@@ -493,10 +500,11 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         HBox gradingNoteDetail = new HBox();
         gradingNoteDetail.getChildren().addAll(sylGradingNoteExpandButton, gradingNoteLabel);
         gradingNoteBox.add(gradingNoteDetail, 0, 1);
-        gradingNoteBox.add(gradingNoteTA, 0, 2);
-        syllabusTabVBox.getChildren().add(gradingNoteBox);
+//        gradingNoteBox.add(gradingNoteTA, 0, 2);
+        syllabusTabVBox.getChildren().addAll(gradingNoteBox, gradingNoteTA);
         
         GridPane adBox = new GridPane();
+        adBox.setStyle("-fx-background-color: #ebebeb;");
         Label adLabel = new Label(props.getProperty(SYL_AD_LABEL));
         adLabel.setId("section_header_label");
         Button sylADExpandButton = new Button("+");
@@ -511,10 +519,11 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         HBox adDetail = new HBox();
         adDetail.getChildren().addAll(sylADExpandButton, adLabel);
         adBox.add(adDetail, 0, 1);
-        adBox.add(adTA, 0, 2);
-        syllabusTabVBox.getChildren().add(adBox);
+//        adBox.add(adTA, 0, 2);
+        syllabusTabVBox.getChildren().addAll(adBox, adTA);
         
         GridPane saBox = new GridPane();
+        saBox.setStyle("-fx-background-color: #ebebeb;");
         Label saLabel = new Label(props.getProperty(SYL_SA_LABEL));
         saLabel.setId("section_header_label");
         Button sylSAExpandButton = new Button("+");
@@ -529,9 +538,10 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         HBox saDetail = new HBox();
         saDetail.getChildren().addAll(sylSAExpandButton, saLabel);
         saBox.add(saDetail, 0, 1);
-        saBox.add(saTA, 0, 2);
-        syllabusTabVBox.getChildren().add(saBox);  
+//        saBox.add(saTA, 0, 2);
+        syllabusTabVBox.getChildren().addAll(saBox, saTA);  
        
+        syllabusTabVBox.setStyle("-fx-background-color: #ffc581;");
         ScrollPane syllabusTabScrollPane = new ScrollPane();
         syllabusTabScrollPane.setContent(syllabusTabVBox);
 //        syllabusTabScrollPane.setFitToHeight(true);
@@ -562,6 +572,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         lectureDayColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(2.0 / 5.0));
         lectureTimeColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
         lectureRoomColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
+        lecturePane.setStyle("-fx-background-color: #ebebeb;");
         mtContent.getChildren().add(lecturePane);
         
         VBox recitationPane = mtBuilder.buildVBox(MT_RECITATION_PANE, null, CLASS_OH_PANE, ENABLED);
@@ -587,6 +598,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         lectureRoomColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
         recitationTA1Column.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
         recitationTA2Column.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
+        recitationPane.setStyle("-fx-background-color: #ebebeb;");
         mtContent.getChildren().add(recitationPane);
         
         VBox labPane = mtBuilder.buildVBox(MT_LAB_PANE, null, CLASS_OH_PANE, ENABLED);
@@ -612,8 +624,10 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         lectureRoomColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
         labTA1Column.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
         labTA2Column.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
+        labPane.setStyle("-fx-background-color: #ebebeb;");
         mtContent.getChildren().add(labPane);
         
+        mtContent.setStyle("-fx-background-color: #ffc581;");
         mtTabScrollPane.setFitToWidth(true);
         mtTabScrollPane.setContent(mtContent);
 
@@ -711,6 +725,10 @@ public class CSGWorkspace extends AppWorkspaceComponent {
                                                                         props.getProperty(OH_END_10PM),
                                                                         props.getProperty(OH_END_11PM)
         );
+        
+        leftPane.setStyle("-fx-background-color: #ebebeb;");
+        
+        
         VBox rightPane = ohBuilder.buildVBox(OH_RIGHT_PANE, null, CLASS_OH_PANE, ENABLED);
         HBox officeHoursHeaderBox = ohBuilder.buildHBox(OH_OFFICE_HOURS_HEADER_PANE, rightPane, CLASS_OH_PANE, ENABLED);
         ohBuilder.buildLabel(OH_OFFICE_HOURS_HEADER_LABEL, officeHoursHeaderBox, CLASS_OH_HEADER_LABEL, ENABLED);
@@ -736,9 +754,10 @@ public class CSGWorkspace extends AppWorkspaceComponent {
 
         // MAKE SURE IT'S THE TABLE THAT ALWAYS GROWS IN THE LEFT PANE
         VBox.setVgrow(officeHoursTable, Priority.ALWAYS);
-
+        rightPane.setStyle("-fx-background-color: #ebebeb;");
         // BOTH PANES WILL NOW GO IN A SPLIT PANE
         SplitPane sPane = new SplitPane(leftPane, rightPane);
+        sPane.setStyle("-fx-background-color: #ffc581;");
         sPane.setDividerPositions(.4);
         //----------------------------------------------------------------------------------------------------------------------------------//
         
@@ -751,10 +770,10 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         VBox schBoundariesPane = schBuilder.buildVBox(SCH_BOUNDARIES_PANE, schPane, CLASS_OH_PANE, ENABLED);
         schBuilder.buildLabel(SCH_CALENDAR_BOUNDARIES_LABEL, schBoundariesPane, CLASS_OH_HEADER_LABEL, ENABLED);
         HBox schBoundariesBox = schBuilder.buildHBox(SCH_BOUNDARIES_OPTIONS_HEADER_BOX, schBoundariesPane, CLASS_OH_BOX, ENABLED);
-        schBuilder.buildLabel(SCH_STARTING_MONDAY_LABEL, schBoundariesBox, CLASS_OH_BOX, ENABLED);
+        schBuilder.buildLabel(SCH_STARTING_MONDAY_LABEL, schBoundariesBox, CLASS_OH_LABEL, ENABLED);
         DatePicker startDate = new DatePicker();
         schBoundariesBox.getChildren().add(startDate);
-        schBuilder.buildLabel(SCH_ENDING_FRIDAY_LABEL, schBoundariesBox, CLASS_OH_BOX, ENABLED);
+        schBuilder.buildLabel(SCH_ENDING_FRIDAY_LABEL, schBoundariesBox, CLASS_OH_LABEL, ENABLED);
         DatePicker endDate = new DatePicker();
         schBoundariesBox.getChildren().add(endDate);
         
@@ -785,7 +804,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
                                                                         props.getProperty(SCH_HW), 
                                                                         props.getProperty(SCH_REFERENCE));
         VBox schAddEditPane = schBuilder.buildVBox(SCH_ADD_EDIT_PANE, schPane, CLASS_OH_PANE, ENABLED);
-        schBuilder.buildLabel(SCH_ADD_EDIT_LABEL, schAddEditPane, CLASS_OH_LABEL, ENABLED);
+        schBuilder.buildLabel(SCH_ADD_EDIT_LABEL, schAddEditPane, CLASS_OH_HEADER_LABEL, ENABLED);
         HBox typeBox = schBuilder.buildHBox(SCH_TYPE_HBOX, schAddEditPane, CLASS_OH_BOX, ENABLED);
         schBuilder.buildLabel(SCH_TYPE_LABEL, typeBox, CLASS_OH_LABEL, ENABLED);
         schBuilder.buildComboBox(SCH_TYPE_COMBO_BOX, typesOfEvents, typesOfEvents.get(0), typeBox, CLASS_OH_COMBO_BOX, ENABLED);
@@ -805,6 +824,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         HBox buttonBox = schBuilder.buildHBox(SCH_BUTTON_HBOX, schAddEditPane, CLASS_OH_BOX, ENABLED);
         schBuilder.buildTextButton(SCH_ADD_UPDATE_BUTTON, buttonBox, CLASS_OH_BUTTON, ENABLED);
         schBuilder.buildTextButton(SCH_CLEAR_BUTTON, buttonBox, CLASS_OH_BUTTON, ENABLED);
+        
         
         
         schContent.getChildren().add(schPane);
