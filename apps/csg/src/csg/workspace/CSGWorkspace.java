@@ -36,9 +36,11 @@ import csg.workspace.controllers.CSGController;
 import csg.workspace.dialogs.TADialog;
 import csg.workspace.foolproof.CSGFoolproofDesign;
 import static csg.workspace.style.OHStyle.*;
+import static djf.AppPropertyType.APP_FILE_PROTOCOL;
 import static djf.modules.AppLanguageModule.FILE_PROTOCOL;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -174,7 +176,12 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         bannerBox.add(expDirLabel, 0, 4);
         bannerBox.add(expDirOutputLabel, 1, 4);
         bannerBox.setStyle("-fx-background-color: #ebebeb;");
-        siteTabVBox.getChildren().add(bannerBox);
+        bannerBox.setPadding(new Insets(10, 10, 10, 10));
+        bannerBox.setVgap(5);
+        HBox blank1 = new HBox();
+        blank1.setStyle("-fx-background-color: #ffc581;");
+        blank1.setPadding(new Insets(5, 5, 5, 5));
+        siteTabVBox.getChildren().addAll(bannerBox, blank1);
         
         GridPane pagesBox = new GridPane();
         CheckBox homeCB = new CheckBox();
@@ -208,7 +215,12 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         pagesBox.add(pagesLabel, 0, 0);
         pagesBox.add(checkBoxHBox, 0, 1);
         pagesBox.setStyle("-fx-background-color: #ebebeb;");
-        siteTabVBox.getChildren().add(pagesBox);
+        pagesBox.setPadding(new Insets(10, 10, 10, 10));
+        pagesBox.setVgap(5);
+        HBox blank2 = new HBox();
+        blank2.setStyle("-fx-background-color: #ffc581;");
+        blank2.setPadding(new Insets(5,5,5,5));
+        siteTabVBox.getChildren().addAll(pagesBox, blank2);
         
         GridPane styleBox = new GridPane();
         ObservableList styleSheets = FXCollections.observableArrayList("seawolf.css");
@@ -229,39 +241,62 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         rfimg.setId("app_button");
         
         // FIX THIS ///////////////////////////
-        ImageView fviImgView = new ImageView(/**props.getProperty(FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_FAVICON_TEXT)**/);
-        ImageView navImgView = new ImageView(/**props.getProperty(FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_NAVBAR_TEXT)**/);
-        ImageView leftImgView = new ImageView(/**props.getProperty(FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_LFIMG_TEXT)**/);
-        ImageView rightImgView = new ImageView(/**props.getProperty(FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_RFIMG_TEXT)**/);
+        ImageView fviImgView = new ImageView(
+                props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_FAVICON_TEXT)
+        );
+        fviImgView.setFitWidth(25);
+        fviImgView.setFitHeight(25);
+        fviImgView.setPreserveRatio(true);
+        fviImgView.setSmooth(true);
+        fviImgView.setCache(true);
+        ImageView navImgView = new ImageView(
+                props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_NAVBAR_TEXT)
+        );
+        navImgView.setFitWidth(300);
+        navImgView.setFitHeight(25);
+        navImgView.setPreserveRatio(true);
+        navImgView.setSmooth(true);
+        navImgView.setCache(true);
+        ImageView leftImgView = new ImageView(
+                props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_LFIMG_TEXT)
+        );
+        leftImgView.setFitWidth(300);
+        leftImgView.setFitHeight(25);
+        leftImgView.setPreserveRatio(true);
+        leftImgView.setSmooth(true);
+        leftImgView.setCache(true);
+        ImageView rightImgView = new ImageView(
+               props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_RFIMG_TEXT)
+        );
+        rightImgView.setFitWidth(300);
+        rightImgView.setFitHeight(25);
+        rightImgView.setPreserveRatio(true);
+        rightImgView.setSmooth(true);
+        rightImgView.setCache(true);
         // FIX THIS ///////////////////////////
         ComboBox css = new ComboBox(styleSheets);
         css.getSelectionModel().selectFirst();
-        HBox favHBox = new HBox();
-        HBox navHBox = new HBox();
-        HBox leftHBox = new HBox();
-        HBox rightHBox = new HBox();
-        HBox cssHBox = new HBox();
-        rightHBox.getChildren().addAll(rfimg, rightImgView);
-        favHBox.getChildren().addAll(fviButton, fviImgView);
-        navHBox.getChildren().addAll(navbarButton, navImgView);
-        leftHBox.getChildren().addAll(lfimg, leftImgView);
-        cssHBox.getChildren().addAll(fontLabel, css);
 //        VBox styleContainer = new VBox();
 //        styleContainer.getChildren().addAll(styleLabel, navHBox, leftHBox, rightHBox, cssHBox, fontWarningLabel);
         styleBox.add(styleLabel, 0, 0);
-        styleBox.add(favHBox, 0, 1);
-//        styleBox.add(fviImgView, 1, 1);
-        styleBox.add(navHBox, 0, 2);
-//        styleBox.add(navImgView, 1, 2);
-        styleBox.add(leftHBox, 0, 3);
-//        styleBox.add(leftImgView, 1, 3);
-        styleBox.add(rightHBox, 0, 4);
-//        styleBox.add(rightImgView, 1, 4);
-        styleBox.add(cssHBox, 0, 5);
-//        styleBox.add(css, 1, 5);
+        styleBox.add(fviButton, 0, 1);
+        styleBox.add(fviImgView, 1, 1);
+        styleBox.add(navbarButton, 0, 2);
+        styleBox.add(navImgView, 1, 2);
+        styleBox.add(lfimg, 0, 3);
+        styleBox.add(leftImgView, 1, 3);
+        styleBox.add(rfimg, 0, 4);
+        styleBox.add(rightImgView, 1, 4);
+        styleBox.add(fontLabel, 0, 5);
+        styleBox.add(css, 1, 5);
         styleBox.add(fontWarningLabel, 0, 6);
         styleBox.setStyle("-fx-background-color: #ebebeb;");
-        siteTabVBox.getChildren().add(styleBox);
+        styleBox.setPadding(new Insets(10, 10, 10, 10));
+        styleBox.setVgap(5);
+        HBox blank3 = new HBox();
+        blank3.setStyle("-fx-background-color: #ffc581;");
+        blank3.setPadding(new Insets(5,5,5,5));
+        siteTabVBox.getChildren().addAll(styleBox, blank3);
         
         
         GridPane instructorBox = new GridPane();
@@ -315,6 +350,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
 //        hpDetail.getChildren().addAll(hpLabel, siteHPTF);
         ohDetail.getChildren().addAll(siteInstructorOHExpandButton, ohLabel);
         ohDetail.setStyle("-fx-background-color: #ebebeb;");
+        ohDetail.setPadding(new Insets(10, 10, 10, 10));
         hiddenTA.getChildren().addAll(emptyLbl, instructorOHJsonArea);
         hiddenTA.setStyle("-fx-background-color: #ebebeb;");
 //        instructorBox.add(instructorLabel, 0, 0);
@@ -333,11 +369,13 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         instructorBox.add(hpLabel, 2, 2);
         instructorBox.add(siteHPTF, 3, 2);
         instructorBox.setStyle("-fx-background-color: #ebebeb;");
+        instructorBox.setPadding(new Insets(10, 10, 10, 10));
         siteTabVBox.getChildren().addAll(instructorBox, ohDetail, hiddenTA);
         
 
 
         siteTabVBox.setStyle("-fx-background-color: #ffc581;");
+        siteTabVBox.setPadding(new Insets(10, 10, 10, 10));
         ScrollPane siteTabScrollPane = new ScrollPane();
         siteTabScrollPane.setContent(siteTabVBox);
 //        siteTabScrollPane.setFitToHeight(true);

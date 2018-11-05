@@ -212,10 +212,9 @@
         <property name="SITE_215_TEXT"                  value="215"></property>
         <property name="SITE_216_TEXT"                  value="216"></property>
         <property name="SITE_219_TEXT"                  value="219"></property>
-        <property name="DEFAULT_IMAGES_PATH_TEXT"                  value="./csg/images/"></property>
-        <property name="DEFAULT_FAVICON_TEXT"                  value="sbusheath.jpg"></property>
+        <property name="DEFAULT_FAVICON_TEXT"                  value="sbusheath.jpeg"></property>
         <property name="DEFAULT_NAVBAR_TEXT"                  value="sbunavbar.png"></property>
-        <property name="DEFAULT_LFIMG_TEXT"                  value="sbuleftfooter.jpg"></property>
+        <property name="DEFAULT_LFIMG_TEXT"                  value="sbuleftfooter.jpeg"></property>
         <property name="DEFAULT_RFIMG_TEXT"                  value="sburightfooter.png"></property>
         <property name="SITE_TITLE_TEXT_FIELD_TEXT"    value="Title"></property>
         <property name="SITE_NAME_TEXT_FIELD_TEXT"    value="Name"></property>

@@ -40,6 +40,7 @@ public enum AppPropertyType {
     APP_PATH_CSS,
     APP_PATH_EXPORT,
     APP_PATH_IMAGES,
+    APP_FILE_PROTOCOL,
     APP_PATH_ICONS,
     APP_PATH_WEB,
     WORK_FILE_EXT,

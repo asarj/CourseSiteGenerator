@@ -21,6 +21,7 @@
         <property name="APP_PATH_ICONS"     value="./images/icons/"></property>
         <property name="APP_PATH_IMAGES"    value="./images/"></property>
         <property name="APP_PATH_WEB"       value="./app_data/web/"></property>
+        <property name="APP_FILE_PROTOCOL"       value="file:"></property>
         <property name="PREF_WIDTH"         value="800"></property>
         <property name="PREF_HEIGHT"        value="600"></property>
         <property name="START_MAXIMIZED"    value="true"></property>
