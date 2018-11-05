@@ -36,7 +36,8 @@ public class CSGData implements AppDataComponent {
     // NOTE THAT THIS DATA STRUCTURE WILL DIRECTLY STORE THE
     // DATA IN THE ROWS OF THE TABLE VIEW
     ObservableList<TeachingAssistantPrototype> teachingAssistants;
-    ObservableList<TimeSlot> officeHours;    
+    ObservableList<TimeSlot> officeHours;
+    HashMap<String, String> militarySlots = new HashMap<>();
 
     // THESE ARE THE TIME BOUNDS FOR THE OFFICE HOURS GRID. NOTE
     // THAT THESE VALUES CAN BE DIFFERENT FOR DIFFERENT FILES, BUT
@@ -46,8 +47,8 @@ public class CSGData implements AppDataComponent {
     int endHour;
     
     // DEFAULT VALUES FOR START AND END HOURS IN MILITARY HOURS
-    public static final int MIN_START_HOUR = 9;
-    public static final int MAX_END_HOUR = 20;
+    public static int MIN_START_HOUR = 9;
+    public static int MAX_END_HOUR = 20;
 
     /**
      * This constructor will setup the required data structures for
@@ -73,7 +74,7 @@ public class CSGData implements AppDataComponent {
         // THESE ARE THE DEFAULT OFFICE HOURS
         startHour = MIN_START_HOUR;
         endHour = MAX_END_HOUR;
-        
+
         resetOfficeHours();
     }
     

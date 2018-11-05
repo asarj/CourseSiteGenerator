@@ -8,9 +8,13 @@ import csg.CSGApp;
 import static csg.CSGPropertyType.OH_ADD_TA_BUTTON;
 import static csg.CSGPropertyType.OH_EMAIL_TEXT_FIELD;
 import static csg.CSGPropertyType.OH_NAME_TEXT_FIELD;
+import static csg.CSGPropertyType.OH_OFFICE_HOURS_TABLE_VIEW;
+import static csg.CSGPropertyType.OH_REMOVE_TA_BUTTON;
 import csg.data.CSGData;
+import csg.data.TimeSlot;
 import static csg.workspace.style.OHStyle.CLASS_OH_TEXT_FIELD;
 import static csg.workspace.style.OHStyle.CLASS_OH_TEXT_FIELD_ERROR;
+import javafx.scene.control.TableView;
 
 public class CSGFoolproofDesign implements FoolproofDesign {
 
@@ -24,6 +28,7 @@ public class CSGFoolproofDesign implements FoolproofDesign {
     public void updateControls() {
         updateAddTAFoolproofDesign();
         updateEditTAFoolproofDesign();
+        updateRemoveTAFoolproofDesign();
     }
 
     private void updateAddTAFoolproofDesign() {
@@ -87,6 +92,24 @@ public class CSGFoolproofDesign implements FoolproofDesign {
             if (!textField.getStyleClass().contains(CLASS_OH_TEXT_FIELD_ERROR)) {
                 textField.getStyleClass().add(CLASS_OH_TEXT_FIELD_ERROR);
             }
+        }
+    }
+
+    private void updateRemoveTAFoolproofDesign() {
+        AppGUIModule gui = app.getGUIModule();
+        CSGData data = (CSGData) app.getDataComponent();
+        TableView<TimeSlot> officeHoursTableView = (TableView) gui.getGUINode(OH_OFFICE_HOURS_TABLE_VIEW);
+        Button removeTAButton = (Button) gui.getGUINode(OH_REMOVE_TA_BUTTON);
+        boolean isTypeSelected = data.isTATypeSelected();
+        if (!isTypeSelected) {
+            removeTAButton.setDisable(true);
+            officeHoursTableView.refresh();
+            return;
+        } // A TYPE IS SELECTED SO WE'LL CONTINUE
+        else {
+            removeTAButton.setDisable(false);
+            officeHoursTableView.refresh();
+            return;
         }
     }
 }

@@ -25,10 +25,10 @@
     
     /*  THE NEURAL SWATCH IS USED FOR THE BACKGROUNDS IN PLACES WHERE
         THERE ARE NO OTHER CONTROLS*/
-    SWATCH_NEUTRAL:             #DDE9E8;
+    SWATCH_NEUTRAL:             #ffc581;
     /*  THE COMPLEMENT SWATCH IS USED FOR BACKGROUND AREAS OF THINGS
         LAYERED ON TOP OF THE BACKGROUND */
-    SWATCH_COMPLEMENT:          #CAE9FF;
+    SWATCH_COMPLEMENT:          #fefac0;
     /*  THE ACCENT SWATCH IS USED FOR BORDERS OF THINGS LIKE TOOLBAR
         THAT ARE USED FOR ORGANIZING GROUPS OF COMPONENTS */
     SWATCH_ACCENT:              #1B4965;
@@ -36,7 +36,7 @@
     /*  THIS BLEND SWATCH IS USED FOR GRADIENT TRANSITIONS */
     SWATCH_BLEND:               #5FA8D3;
     
-    -fx-font-family: "Roboto";
+    -fx-font-family: "Arial";
 }
 
 /* FIRST WE HAVE THE CONTROLS THAT THE DESKTOP JAVA FRAMEWORK USES */
@@ -110,6 +110,19 @@
 }
 .oh_box {
 
+}
+.oh_combo_box{
+    
+}
+.oh_label{
+    
+}
+.tab-pane 
+{
+    -fx-background-color: #ffc581;
+}
+.tab:selected{
+    -fx-background-color: #ffc581;
 }
 .oh_header_label {
     -fx-font-size: 16pt;
@@ -214,4 +227,20 @@
     -fx-background-radius: 50 50 50 50;
     -fx-background-color:SWATCH_ACCENT;
 }
+
+/*THIS IS WHERE I PUT THE CUSTOM CSS STYLING*/
+#section_header_label {
+    -fx-font-size: 16pt;
+    -fx-font-weight: bold;
+}
+#reg_label {
+    -fx-font-size: 13pt;
+}
+#app_button {
+    -fx-font-size: 10pt;
+    -fx-font-weight: bold;
+    -fx-border-radius: 10 10 10 10;
+    -fx-background-radius: 10 10 10 10; 
+}
+/*THIS IS WHERE I PUT THE CUSTOM CSS STYLING*/
 

@@ -22,9 +22,12 @@ import csg.data.TeachingAssistantPrototype;
 import csg.data.TimeSlot;
 import csg.data.TimeSlot.DayOfWeek;
 import csg.transactions.AddTA_Transaction;
+import csg.transactions.CutTA_Transaction;
 import csg.transactions.EditTA_Transaction;
 import csg.transactions.ToggleOfficeHours_Transaction;
 import csg.workspace.dialogs.TADialog;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -127,5 +130,20 @@ public class CSGController {
         AppGUIModule gui = app.getGUIModule();
         TableView<TimeSlot> officeHoursTableView = (TableView) gui.getGUINode(OH_OFFICE_HOURS_TABLE_VIEW);
         officeHoursTableView.refresh();
+    }
+
+    public void processRemoveTA() {
+        AppGUIModule gui = app.getGUIModule();
+        CSGData data = (CSGData)app.getDataComponent();
+        TableView<TimeSlot> officeHoursTableView = (TableView) gui.getGUINode(OH_OFFICE_HOURS_TABLE_VIEW);
+        if (data.isTASelected()) {
+            TeachingAssistantPrototype taToRemove = data.getSelectedTA();
+            HashMap<TimeSlot, ArrayList<DayOfWeek>> officeHours = data.getTATimeSlots(taToRemove);
+            CutTA_Transaction transaction = new CutTA_Transaction((CSGApp)app, taToRemove, officeHours);
+            app.processTransaction(transaction);
+            officeHoursTableView.refresh();
+        }
+        app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
+        
     }
 }

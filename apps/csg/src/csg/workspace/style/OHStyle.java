@@ -21,8 +21,10 @@ public class OHStyle {
     public static final String CLASS_OH_PANE          = "oh_pane";
     public static final String CLASS_OH_BOX           = "oh_box";            
     public static final String CLASS_OH_HEADER_LABEL  = "oh_header_label";
+    public static final String CLASS_OH_LABEL  = "oh_label";
     public static final String CLASS_OH_PROMPT        = "oh_prompt";
     public static final String CLASS_OH_TEXT_FIELD    = "oh_text_field";
+    public static final String CLASS_OH_COMBO_BOX    = "oh_combo_box";
     public static final String CLASS_OH_TEXT_FIELD_ERROR = "oh_text_field_error";
     public static final String CLASS_OH_BUTTON        = "oh_button";
     public static final String CLASS_OH_RADIO_BOX     = "oh_radio_box";

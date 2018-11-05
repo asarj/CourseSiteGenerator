@@ -80,7 +80,8 @@
         <property name="OH_NAME_TEXT_FIELD_PROMPT_TEXT"     value="Name"></property>
         <property name="OH_EMAIL_TEXT_FIELD_PROMPT_TEXT"    value="Email"></property>
         <property name="OH_ADD_TA_BUTTON_TEXT"              value="Add TA"></property>
-        <property name="OH_OFFICE_HOURS_HEADER_LABEL_TEXT"  value="Office Hours"></property>
+        <property name="OH_REMOVE_TA_BUTTON_TEXT"           value="-"></property>
+        <property name="OH_OFFICE_HOURS_HEADER_LABEL_TEXT"  value="Office Hours                                      "></property>
         <property name="OH_NAME_TABLE_COLUMN_TEXT"          value="Name"></property>
         <property name="OH_EMAIL_TABLE_COLUMN_TEXT"         value="Email"></property>
         <property name="OH_SLOTS_TABLE_COLUMN_TEXT"         value="Time Slots"></property>
@@ -92,6 +93,60 @@
         <property name="OH_WEDNESDAY_TABLE_COLUMN_TEXT"     value="Wednesday"></property>
         <property name="OH_THURSDAY_TABLE_COLUMN_TEXT"      value="Thursday"></property>
         <property name="OH_FRIDAY_TABLE_COLUMN_TEXT"        value="Friday"></property>
+        <property name="OH_STARTTIME_LABEL_TEXT"        value="Start Time:"></property>
+        <property name="OH_ENDTIME_LABEL_TEXT"        value="End Time:"></property>
+        <property name="OH_START_12AM"                      value="12:00 am"></property>
+        <property name="OH_START_1AM"                      value="1:00 am"></property>
+        <property name="OH_START_2AM"                      value="2:00 am"></property>
+        <property name="OH_START_3AM"                      value="3:00 am"></property>
+        <property name="OH_START_4AM"                      value="4:00 am"></property>
+        <property name="OH_START_5AM"                      value="5:00 am"></property>
+        <property name="OH_START_6AM"                      value="6:00 am"></property>
+        <property name="OH_START_7AM"                      value="7:00 am"></property>
+        <property name="OH_START_8AM"                      value="8:00 am"></property>
+        <property name="OH_START_9AM"                      value="9:00 am"></property>
+        <property name="OH_START_10AM"                      value="10:00 am"></property>
+        <property name="OH_START_11AM"                      value="11:00 am"></property>
+        <property name="OH_START_12PM"                      value="12:00 pm"></property>
+        <property name="OH_START_1PM"                      value="1:00 pm"></property>
+        <property name="OH_START_2PM"                      value="2:00 pm"></property>
+        <property name="OH_START_3PM"                      value="3:00 pm"></property>
+        <property name="OH_START_4PM"                      value="4:00 pm"></property>
+        <property name="OH_START_5PM"                      value="5:00 pm"></property>
+        <property name="OH_START_6PM"                      value="6:00 pm"></property>
+        <property name="OH_START_7PM"                      value="7:00 pm"></property>
+        <property name="OH_START_8PM"                      value="8:00 pm"></property>
+        <property name="OH_START_9PM"                      value="9:00 pm"></property>
+        <property name="OH_START_10PM"                      value="10:00 pm"></property>
+        <property name="OH_START_11PM"                      value="11:00 pm"></property>
+
+        <property name="OH_END_12AM"                      value="12:00 am"></property>
+        <property name="OH_END_1AM"                      value="1:00 am"></property>
+        <property name="OH_END_2AM"                      value="2:00 am"></property>
+        <property name="OH_END_3AM"                      value="3:00 am"></property>
+        <property name="OH_END_4AM"                      value="4:00 am"></property>
+        <property name="OH_END_5AM"                      value="5:00 am"></property>
+        <property name="OH_END_6AM"                      value="6:00 am"></property>
+        <property name="OH_END_7AM"                      value="7:00 am"></property>
+        <property name="OH_END_8AM"                      value="8:00 am"></property>
+        <property name="OH_END_9AM"                      value="9:00 am"></property>
+        <property name="OH_END_10AM"                      value="10:00 am"></property>
+        <property name="OH_END_11AM"                      value="11:00 am"></property>
+        <property name="OH_END_12PM"                      value="12:00 pm"></property>
+        <property name="OH_END_1PM"                      value="1:00 pm"></property>
+        <property name="OH_END_2PM"                      value="2:00 pm"></property>
+        <property name="OH_END_3PM"                      value="3:00 pm"></property>
+        <property name="OH_END_4PM"                      value="4:00 pm"></property>
+        <property name="OH_END_5PM"                      value="5:00 pm"></property>
+        <property name="OH_END_6PM"                      value="6:00 pm"></property>
+        <property name="OH_END_7PM"                      value="7:00 pm"></property>
+        <property name="OH_END_8PM"                      value="8:00 pm"></property>
+        <property name="OH_END_9PM"                      value="9:00 pm"></property>
+        <property name="OH_END_10PM"                      value="10:00 pm"></property>
+        <property name="OH_END_11PM"                      value="11:00 pm"></property>
+
+
+
 
         <!-- ERROR DIALOG -->
         <property name="OH_NO_TA_SELECTED_TITLE"        value="No TA Selected"></property>
@@ -126,7 +181,7 @@
         <property name="SITE_NUMBER_LABEL"                  value="Number:"></property>
         <property name="SITE_YEAR_LABEL"                  value="Year:"></property>
         <property name="SITE_TITLE_LABEL"                  value="Title:"></property>
-        <property name="SITE_EXPDIR_LABEL"                  value="Export Directory:"></property>
+        <property name="SITE_EXPDIR_LABEL"                  value="Export Directory: "></property>
         <property name="SITE_PAGES_LABEL"                  value="Pages"></property>
         <property name="SITE_HOME_LABEL"                  value="Home"></property>
         <property name="SITE_SYLLABUS_LABEL"                  value="Syllabus"></property>
@@ -162,6 +217,11 @@
         <property name="DEFAULT_NAVBAR_TEXT"                  value="sbunavbar.png"></property>
         <property name="DEFAULT_LFIMG_TEXT"                  value="sbuleftfooter.jpg"></property>
         <property name="DEFAULT_RFIMG_TEXT"                  value="sburightfooter.png"></property>
+        <property name="SITE_TITLE_TEXT_FIELD_TEXT"    value="Title"></property>
+        <property name="SITE_NAME_TEXT_FIELD_TEXT"    value="Name"></property>
+        <property name="SITE_EMAIL_TEXT_FIELD_TEXT"    value="Email"></property>
+        <property name="SITE_ROOM_TEXT_FIELD_TEXT"    value="Room"></property>
+        <property name="SITE_HP_TEXT_FIELD_TEXT"    value="Home Page"></property>
 
         <!-- THESE ARE FOR THE SYLLABUS TAB CONTROLS -->
         <property name="SYL_DESC_LABEL"                       value="Description:"></property>
@@ -199,6 +259,36 @@
         <property name="MT_RECITATION_REMOVE_BUTTON_TEXT"                       value="-"></property>
         <property name="MT_LAB_ADD_BUTTON_TEXT"                       value="+"></property>
         <property name="MT_LAB_REMOVE_BUTTON_TEXT"                       value="-"></property>
+
+
+        <!-- THESE ARE FOR THE SCHEDULE TAB CONTROLS -->
+        <property name="SCH_CALENDAR_BOUNDARIES_LABEL_TEXT"                       value="Calendar Boundaries"></property>
+        <property name="SCH_STARTING_MONDAY_LABEL_TEXT"                       value="Starting Monday:"></property>
+        <property name="SCH_ENDING_FRIDAY_LABEL_TEXT"                       value="Ending Friday:"></property>
+        <property name="SCH_REMOVE_ITEM_BUTTON_TEXT"                       value="-"></property>
+        <property name="SCH_SCHEDULE_ITEMS_LABEL_TEXT"                       value="Schedule Items"></property>
+        <property name="SCH_TYPE_TABLE_COLUMN_TEXT"                       value="Type"></property>
+        <property name="SCH_DATE_TABLE_COLUMN_TEXT"                       value="Date"></property>
+        <property name="SCH_TITLE_TABLE_COLUMN_TEXT"                       value="Title"></property>
+        <property name="SCH_TOPIC_TABLE_COLUMN_TEXT"                       value="Topic"></property>
+        <property name="SCH_ADD_EDIT_LABEL_TEXT"                       value="Add/Edit"></property>
+        <property name="SCH_TYPE_LABEL_TEXT"                       value="Type:"></property>
+        <property name="SCH_DATE_LABEL_TEXT"                       value="Date:"></property>
+        <property name="SCH_TITLE_LABEL_TEXT"                       value="Title:"></property>
+        <property name="SCH_TOPIC_LABEL_TEXT"                       value="Topic:"></property>
+        <property name="SCH_LINK_LABEL_TEXT"                       value="Link:"></property>
+        <property name="SCH_ADD_UPDATE_BUTTON_TEXT"                       value="Add/Update"></property>
+        <property name="SCH_CLEAR_BUTTON_TEXT"                       value="Clear"></property>
+        <property name="SCH_HOLIDAY"                       value="Holiday"></property>
+        <property name="SCH_LECTURE"                       value="Lecture"></property>
+        <property name="SCH_HW"                       value="HW"></property>
+        <property name="SCH_RECITATION"                       value="Recitation"></property>
+        <property name="SCH_LAB"                       value="Lab"></property>
+        <property name="SCH_REFERENCE"                       value="Reference"></property>
+        <property name="SCH_TITLE_TEXT_FIELD_PROMPT_TEXT"     value="Title"></property>
+        <property name="SCH_TOPIC_TEXT_FIELD_PROMPT_TEXT"    value="Topic"></property>
+        <property name="SCH_LINK_TEXT_FIELD_PROMPT_TEXT"    value="Link"></property>
+
 
 
         <property name="WORK_FILE_EXT"          value="*.json"></property>
