@@ -132,7 +132,7 @@ public class CSGFoolproofDesign implements FoolproofDesign {
         int ts = timeStart.getSelectionModel().getSelectedIndex();
         int te = timeEnd.getSelectionModel().getSelectedIndex();
         if(ts <= te){
-            data.resetOfficeHours(ts, te);
+            
         }
         else{
             Alert alert = new Alert(AlertType.ERROR, "Start Date cannot be greater than the end date!", ButtonType.OK);

@@ -242,8 +242,8 @@
         <property name="MT_LECTURE_TIME_TABLE_COLUMN_TEXT"                       value="Time"></property>
         <property name="MT_RECITATION_SECTION_TABLE_COLUMN_TEXT"                       value="Section"></property>
         <property name="MT_LAB_SECTION_TABLE_COLUMN_TEXT"                       value="Section"></property>
-        <property name="MT_RECITATION_DAYANDTIME_TABLE_COLUMN_TEXT"                       value="Day and Time"></property>
-        <property name="MT_LAB_DAYANDTIME_TABLE_COLUMN_TEXT"                       value="Day and Time"></property>
+        <property name="MT_RECITATION_DAYANDTIME_TABLE_COLUMN_TEXT"                       value="Day &amp; Time"></property>
+        <property name="MT_LAB_DAYANDTIME_TABLE_COLUMN_TEXT"                       value="Day &amp; Time"></property>
         <property name="MT_LECTURE_ROOM_TABLE_COLUMN_TEXT"                       value="Room"></property>
         <property name="MT_RECITATION_ROOM_TABLE_COLUMN_TEXT"                       value="Room"></property>
         <property name="MT_LAB_ROOM_TABLE_COLUMN_TEXT"                       value="Room"></property>

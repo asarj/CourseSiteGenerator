@@ -158,7 +158,7 @@ public class CSGController {
         int ts = timeStart.getSelectionModel().getSelectedIndex();
         int te = timeEnd.getSelectionModel().getSelectedIndex();
         if(ts <= te){
-            
+            data.resetOHTable(ts, te);
         }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }

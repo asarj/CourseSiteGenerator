@@ -36,6 +36,7 @@ public class CSGData implements AppDataComponent {
     // NOTE THAT THIS DATA STRUCTURE WILL DIRECTLY STORE THE
     // DATA IN THE ROWS OF THE TABLE VIEW
     ObservableList<TeachingAssistantPrototype> teachingAssistants;
+    ArrayList<TimeSlot> heldTs;
     ObservableList<TimeSlot> officeHours;
     HashMap<String, String> militarySlots = new HashMap<>();
 
@@ -47,8 +48,8 @@ public class CSGData implements AppDataComponent {
     int endHour;
     
     // DEFAULT VALUES FOR START AND END HOURS IN MILITARY HOURS
-    public static int MIN_START_HOUR = 9;
-    public static int MAX_END_HOUR = 20;
+    public static int MIN_START_HOUR = 0;
+    public static int MAX_END_HOUR = 23;
 
     /**
      * This constructor will setup the required data structures for
@@ -70,6 +71,8 @@ public class CSGData implements AppDataComponent {
         // GET THE LIST OF TAs FOR THE LEFT TABLE
         TableView<TeachingAssistantPrototype> taTableView = (TableView)gui.getGUINode(OH_TAS_TABLE_VIEW);
         teachingAssistants = taTableView.getItems();
+        heldTs = new ArrayList<>();
+        
 
         // THESE ARE THE DEFAULT OFFICE HOURS
         startHour = MIN_START_HOUR;
@@ -109,7 +112,50 @@ public class CSGData implements AppDataComponent {
                                                     this.getTimeString(i+1, true));
             officeHours.add(halfTimeSlot);
         }
+        for(TimeSlot t: officeHours){
+            heldTs.add(t);
+        }
         officeHoursTableView.refresh();
+    }
+    
+    public void resetOHTable(int start, int end){
+        AppGUIModule gui = app.getGUIModule();
+        TableView<TimeSlot> officeHoursTableView = (TableView)gui.getGUINode(OH_OFFICE_HOURS_TABLE_VIEW);
+        officeHours = officeHoursTableView.getItems(); 
+        officeHours.clear();
+        for (int i = 0; i < heldTs.size(); i++) {
+            TimeSlot timeSlot = heldTs.get(i);
+            if(getMilitaryHour(timeSlot.getStartTime()) == end){
+                break;
+            }
+            if(getMilitaryHour(timeSlot.getStartTime()) >= start && getMilitaryHour(timeSlot.getEndTime()) <= end){
+                officeHours.add(timeSlot);
+            }
+//            officeHours.add(timeSlot);
+            
+//            TimeSlot halfTimeSlot = new TimeSlot(   this.getTimeString(i, false),
+//                                                    this.getTimeString(i+1, true));
+//            officeHours.add(halfTimeSlot);
+        }
+//        heldTs.clear();
+//        for(TimeSlot t: officeHours){
+//            heldTs.add(t);
+//        }
+        officeHoursTableView.refresh();
+    }
+    
+    private int getMilitaryHour(String time){
+        int t = Integer.parseInt(time.substring(0, time.indexOf(":")));
+        if(t == 12 && time.contains("am")){
+            t = 0;
+        }
+        else if(t == 12 && time.contains("pm")){
+            t = 12;
+        }
+        else if(time.contains("pm")){
+            t = t + 12;
+        }
+        return t;
     }
     
     private String getTimeString(int militaryHour, boolean onHour) {

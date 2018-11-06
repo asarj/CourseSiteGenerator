@@ -116,6 +116,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         
         tabs.getTabs().addAll(siteTab, syllabusTab, mtTab, ohTab, scheduleTab);
         VBox.setVgrow(tabs, Priority.ALWAYS);
+        
         //-----------------------------------------------------------------------------------------------------------------//
         
         
@@ -693,10 +694,10 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         lectureDayColumn.setCellValueFactory(new PropertyValueFactory<String, String>("day"));
         lectureTimeColumn.setCellValueFactory(new PropertyValueFactory<String, String>("time"));
         lectureRoomColumn.setCellValueFactory(new PropertyValueFactory<String, String>("room"));
-        lectureSectionColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(.25));
-        lectureDayColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(.25));
-        lectureTimeColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(.25));
-        lectureRoomColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(.25));
+        lectureSectionColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(.2));
+        lectureDayColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(.4));
+        lectureTimeColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(.2));
+        lectureRoomColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(.2));
         lecturePane.setSpacing(5);
         lecturePane.setStyle("-fx-background-color: #ebebeb;");
         
@@ -1009,7 +1010,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         
         //----------------------------------------------PUTS EVERYTHING TOGETHER--------------------------------------------------//
         workspace = new BorderPane();
-
+//        tabs.minWidthProperty().bind(workspace.widthProperty().divide(5));
         // AND PUT EVERYTHING IN THE WORKSPACE
         ((BorderPane) workspace).setCenter(tabs);
         //------------------------------------------------------------------------------------------------------------------------------//
