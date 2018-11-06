@@ -9,11 +9,13 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import csg.CSGApp;
 import static csg.CSGPropertyType.OH_EMAIL_TEXT_FIELD;
+import static csg.CSGPropertyType.OH_ENDTIME_COMBO_BOX;
 import static csg.CSGPropertyType.OH_FOOLPROOF_SETTINGS;
 import static csg.CSGPropertyType.OH_NAME_TEXT_FIELD;
 import static csg.CSGPropertyType.OH_NO_TA_SELECTED_CONTENT;
 import static csg.CSGPropertyType.OH_NO_TA_SELECTED_TITLE;
 import static csg.CSGPropertyType.OH_OFFICE_HOURS_TABLE_VIEW;
+import static csg.CSGPropertyType.OH_STARTTIME_COMBO_BOX;
 import static csg.CSGPropertyType.OH_TAS_TABLE_VIEW;
 import static csg.CSGPropertyType.OH_TA_EDIT_DIALOG;
 import csg.data.CSGData;
@@ -28,6 +30,7 @@ import csg.transactions.ToggleOfficeHours_Transaction;
 import csg.workspace.dialogs.TADialog;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javafx.scene.control.ComboBox;
 
 /**
  *
@@ -145,5 +148,18 @@ public class CSGController {
         }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
         
+    }
+
+    public void processUpdateOHTable() {
+        AppGUIModule gui = app.getGUIModule();
+        CSGData data = (CSGData)app.getDataComponent();
+        ComboBox timeStart = (ComboBox)gui.getGUINode(OH_STARTTIME_COMBO_BOX);
+        ComboBox timeEnd = (ComboBox)gui.getGUINode(OH_ENDTIME_COMBO_BOX);
+        int ts = timeStart.getSelectionModel().getSelectedIndex();
+        int te = timeEnd.getSelectionModel().getSelectedIndex();
+        if(ts <= te){
+            
+        }
+        app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 }

@@ -275,4 +275,5 @@ public enum CSGPropertyType {
     SCH_TOPIC_HBOX,
     SCH_LINK_HBOX,
     SCH_BUTTON_HBOX,
+    SCH_BLANK14_HBOX
 }

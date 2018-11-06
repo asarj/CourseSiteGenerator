@@ -81,7 +81,7 @@
         <property name="OH_EMAIL_TEXT_FIELD_PROMPT_TEXT"    value="Email"></property>
         <property name="OH_ADD_TA_BUTTON_TEXT"              value="Add TA"></property>
         <property name="OH_REMOVE_TA_BUTTON_TEXT"           value="-"></property>
-        <property name="OH_OFFICE_HOURS_HEADER_LABEL_TEXT"  value="Office Hours                                  "></property>
+        <property name="OH_OFFICE_HOURS_HEADER_LABEL_TEXT"  value="Office Hours             "></property>
         <property name="OH_NAME_TABLE_COLUMN_TEXT"          value="Name"></property>
         <property name="OH_EMAIL_TABLE_COLUMN_TEXT"         value="Email"></property>
         <property name="OH_SLOTS_TABLE_COLUMN_TEXT"         value="Time Slots"></property>
@@ -94,7 +94,7 @@
         <property name="OH_THURSDAY_TABLE_COLUMN_TEXT"      value="Thursday"></property>
         <property name="OH_FRIDAY_TABLE_COLUMN_TEXT"        value="Friday"></property>
         <property name="OH_STARTTIME_LABEL_TEXT"        value="Start Time: "></property>
-        <property name="OH_ENDTIME_LABEL_TEXT"        value=" End Time: "></property>
+        <property name="OH_ENDTIME_LABEL_TEXT"        value="    End Time: "></property>
         <property name="OH_START_12AM"                      value="12:00 am"></property>
         <property name="OH_START_1AM"                      value="1:00 am"></property>
         <property name="OH_START_2AM"                      value="2:00 am"></property>
@@ -262,20 +262,20 @@
 
         <!-- THESE ARE FOR THE SCHEDULE TAB CONTROLS -->
         <property name="SCH_CALENDAR_BOUNDARIES_LABEL_TEXT"                       value="Calendar Boundaries"></property>
-        <property name="SCH_STARTING_MONDAY_LABEL_TEXT"                       value="Starting Monday:"></property>
-        <property name="SCH_ENDING_FRIDAY_LABEL_TEXT"                       value="Ending Friday:"></property>
+        <property name="SCH_STARTING_MONDAY_LABEL_TEXT"                       value="Starting Monday: "></property>
+        <property name="SCH_ENDING_FRIDAY_LABEL_TEXT"                       value=" Ending Friday: "></property>
         <property name="SCH_REMOVE_ITEM_BUTTON_TEXT"                       value="-"></property>
-        <property name="SCH_SCHEDULE_ITEMS_LABEL_TEXT"                       value="Schedule Items"></property>
+        <property name="SCH_SCHEDULE_ITEMS_LABEL_TEXT"                       value=" Schedule Items"></property>
         <property name="SCH_TYPE_TABLE_COLUMN_TEXT"                       value="Type"></property>
         <property name="SCH_DATE_TABLE_COLUMN_TEXT"                       value="Date"></property>
         <property name="SCH_TITLE_TABLE_COLUMN_TEXT"                       value="Title"></property>
         <property name="SCH_TOPIC_TABLE_COLUMN_TEXT"                       value="Topic"></property>
         <property name="SCH_ADD_EDIT_LABEL_TEXT"                       value="Add/Edit"></property>
-        <property name="SCH_TYPE_LABEL_TEXT"                       value="Type:"></property>
-        <property name="SCH_DATE_LABEL_TEXT"                       value="Date:"></property>
-        <property name="SCH_TITLE_LABEL_TEXT"                       value="Title:"></property>
-        <property name="SCH_TOPIC_LABEL_TEXT"                       value="Topic:"></property>
-        <property name="SCH_LINK_LABEL_TEXT"                       value="Link:"></property>
+        <property name="SCH_TYPE_LABEL_TEXT"                       value="Type: "></property>
+        <property name="SCH_DATE_LABEL_TEXT"                       value="Date: "></property>
+        <property name="SCH_TITLE_LABEL_TEXT"                       value="Title: "></property>
+        <property name="SCH_TOPIC_LABEL_TEXT"                       value="Topic: "></property>
+        <property name="SCH_LINK_LABEL_TEXT"                       value="Link: "></property>
         <property name="SCH_ADD_UPDATE_BUTTON_TEXT"                       value="Add/Update"></property>
         <property name="SCH_CLEAR_BUTTON_TEXT"                       value="Clear"></property>
         <property name="SCH_HOLIDAY"                       value="Holiday"></property>

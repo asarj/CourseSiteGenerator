@@ -112,7 +112,7 @@
 
 }
 .oh_combo_box{
-    
+    -fx-pref-width: 110;
 }
 .oh_label{
     -fx-font-size: 13pt;

@@ -38,6 +38,8 @@ import csg.workspace.foolproof.CSGFoolproofDesign;
 import static csg.workspace.style.OHStyle.*;
 import static djf.AppPropertyType.APP_FILE_PROTOCOL;
 import static djf.modules.AppLanguageModule.FILE_PROTOCOL;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -136,10 +138,15 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         ComboBox subjectNumsCBox = new ComboBox(subjectNums);
         ComboBox semestersCBox = new ComboBox(semesters);
         ComboBox yearsCBox = new ComboBox(years);
+        subjectCBox.setEditable(true);
+        subjectNumsCBox.setEditable(true);
+        semestersCBox.setEditable(true);
+        yearsCBox.setEditable(true);
         subjectCBox.getSelectionModel().selectFirst();
         subjectNumsCBox.getSelectionModel().selectFirst();
         semestersCBox.getSelectionModel().selectFirst();
         yearsCBox.getSelectionModel().selectFirst();
+        
         Label bannerLabel = new Label(props.getProperty(SITE_BANNER_LABEL));
         bannerLabel.setId("section_header_label");
         Label subjectLabel = new Label(props.getProperty(SITE_SUBJECT_LABEL));
@@ -160,6 +167,50 @@ public class CSGWorkspace extends AppWorkspaceComponent {
                                                 "_" + yearsCBox.getSelectionModel().getSelectedItem().toString() 
                                                  + "\\public.html");
         expDirOutputLabel.setId("reg_label");
+        subjectCBox.valueProperty().addListener(new ChangeListener<String>() {
+            @Override 
+            public void changed(ObservableValue ov, String t, String t1) {                
+                subjects.add(t1);
+                expDirOutputLabel.setText(".\\export\\" + subjectCBox.getSelectionModel().getSelectedItem().toString() + 
+                                                "_" + subjectNumsCBox.getSelectionModel().getSelectedItem().toString() +
+                                                "_" + semestersCBox.getSelectionModel().getSelectedItem().toString() +
+                                                "_" + yearsCBox.getSelectionModel().getSelectedItem().toString() 
+                                                 + "\\public.html");
+            }    
+        });
+        subjectNumsCBox.valueProperty().addListener(new ChangeListener<String>() {
+            @Override 
+            public void changed(ObservableValue ov, String t, String t1) {                
+                subjectNums.add(t1);
+                expDirOutputLabel.setText(".\\export\\" + subjectCBox.getSelectionModel().getSelectedItem().toString() + 
+                                                "_" + subjectNumsCBox.getSelectionModel().getSelectedItem().toString() +
+                                                "_" + semestersCBox.getSelectionModel().getSelectedItem().toString() +
+                                                "_" + yearsCBox.getSelectionModel().getSelectedItem().toString() 
+                                                 + "\\public.html");
+            }    
+        });
+        semestersCBox.valueProperty().addListener(new ChangeListener<String>() {
+            @Override 
+            public void changed(ObservableValue ov, String t, String t1) {                
+                semesters.add(t1);
+                expDirOutputLabel.setText(".\\export\\" + subjectCBox.getSelectionModel().getSelectedItem().toString() + 
+                                                "_" + subjectNumsCBox.getSelectionModel().getSelectedItem().toString() +
+                                                "_" + semestersCBox.getSelectionModel().getSelectedItem().toString() +
+                                                "_" + yearsCBox.getSelectionModel().getSelectedItem().toString() 
+                                                 + "\\public.html");
+            }    
+        });
+        yearsCBox.valueProperty().addListener(new ChangeListener<String>() {
+            @Override 
+            public void changed(ObservableValue ov, String t, String t1) {                
+                years.add(t1);
+                expDirOutputLabel.setText(".\\export\\" + subjectCBox.getSelectionModel().getSelectedItem().toString() + 
+                                                "_" + subjectNumsCBox.getSelectionModel().getSelectedItem().toString() +
+                                                "_" + semestersCBox.getSelectionModel().getSelectedItem().toString() +
+                                                "_" + yearsCBox.getSelectionModel().getSelectedItem().toString() 
+                                                 + "\\public.html");
+            }    
+        });
         TextField titleTF = new TextField();
         titleTF.setPromptText(props.getProperty(SITE_TITLE_TEXT_FIELD_TEXT));
         bannerBox.add(bannerLabel, 0, 0);
@@ -763,7 +814,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         leftPane.setPadding(new Insets(10, 10, 10, 10));
         leftPane.setSpacing(5);
         // INIT THE HEADER ON THE RIGHT
-        ObservableList startTimes = FXCollections.observableArrayList(
+        ObservableList<String> startTimes = FXCollections.observableArrayList(
                                                                         props.getProperty(OH_START_12AM),
                                                                         props.getProperty(OH_START_1AM),
                                                                         props.getProperty(OH_START_2AM),
@@ -789,7 +840,8 @@ public class CSGWorkspace extends AppWorkspaceComponent {
                                                                         props.getProperty(OH_START_10PM),
                                                                         props.getProperty(OH_START_11PM)
         );
-        ObservableList endTimes = FXCollections.observableArrayList(
+        
+        ObservableList<String> endTimes = FXCollections.observableArrayList(
                                                                         props.getProperty(OH_END_12AM),
                                                                         props.getProperty(OH_END_1AM),
                                                                         props.getProperty(OH_END_2AM),
@@ -826,9 +878,12 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         // FIX THIS PART ///////////////////////
         ohBuilder.buildLabel(OH_STARTTIME_LABEL, officeHoursHeaderBox, CLASS_OH_HEADER_LABEL, ENABLED);
         ComboBox start = ohBuilder.buildComboBox(OH_STARTTIME_COMBO_BOX, startTimes, startTimes.get(0), officeHoursHeaderBox, CLASS_OH_COMBO_BOX, ENABLED);
+        
+        start.setItems(startTimes);
         start.getSelectionModel().selectFirst();
         ohBuilder.buildLabel(OH_ENDTIME_LABEL, officeHoursHeaderBox, CLASS_OH_HEADER_LABEL, ENABLED);
         ComboBox end = ohBuilder.buildComboBox(OH_ENDTIME_COMBO_BOX, endTimes, endTimes.get(endTimes.size() - 1), officeHoursHeaderBox, CLASS_OH_COMBO_BOX, ENABLED);
+        end.setItems(endTimes);
         end.getSelectionModel().selectLast();
         // FIX THIS PART ///////////////////////
 
@@ -868,11 +923,16 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         schBoundariesBox.getChildren().add(startDate);
         schBuilder.buildLabel(SCH_ENDING_FRIDAY_LABEL, schBoundariesBox, CLASS_OH_LABEL, ENABLED);
         DatePicker endDate = new DatePicker();
-        schBoundariesBox.getChildren().add(endDate);
+        schBoundariesPane.setStyle("-fx-background-color: #ebebeb;");
+        schBoundariesPane.setSpacing(5);
+        HBox blank14 = schBuilder.buildHBox(SCH_BLANK14_HBOX, schPane, CLASS_OH_BOX, ENABLED);
+        blank14.setStyle("-fx-background-color: #ffc581;");
+        blank14.setPadding(new Insets(5,5,5,5));
+        schBoundariesBox.getChildren().addAll(endDate);
         
         VBox schItemsPane = schBuilder.buildVBox(SCH_ITEMS_PANE, schPane, CLASS_OH_PANE, ENABLED);
         HBox schItemsPaneHeaderBox = schBuilder.buildHBox(SCH_ITEMS_PANE_HEADER_BOX, schItemsPane, CLASS_OH_PANE, ENABLED);
-        schBuilder.buildTextButton(SCH_REMOVE_ITEM_BUTTON, schItemsPaneHeaderBox, CLASS_OH_BUTTON, ENABLED);
+        schBuilder.buildTextButton(SCH_REMOVE_ITEM_BUTTON, schItemsPaneHeaderBox, CLASS_APP_BUTTON, ENABLED);
         schBuilder.buildLabel(SCH_SCHEDULE_ITEMS_LABEL, schItemsPaneHeaderBox, CLASS_OH_HEADER_LABEL, ENABLED);
         
         TableView<ScheduleItem> itemTable = schBuilder.buildTableView(SCH_ITEMS_TABLE_VIEW, schItemsPane, CLASS_OH_TABLE_VIEW, ENABLED);
@@ -885,42 +945,54 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         schDateColumn.setCellValueFactory(new PropertyValueFactory<String, String>("date"));
         schTitleColumn.setCellValueFactory(new PropertyValueFactory<String, String>("title"));
         schTopicColumn.setCellValueFactory(new PropertyValueFactory<String, String>("topic"));
-        schTypeColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
-        schDateColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(2.0 / 5.0));
-        schTitleColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
-        schTopicColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0 / 5.0));
-
+        schTypeColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(.2));
+        schDateColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(.4));
+        schTitleColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(.2));
+        schTopicColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(.2));
+        schItemsPane.setStyle("-fx-background-color: #ebebeb;");
+        schItemsPane.setSpacing(5);
+        HBox blank15 = schBuilder.buildHBox(SCH_BLANK14_HBOX, schPane, CLASS_OH_BOX, ENABLED);
+        blank15.setStyle("-fx-background-color: #ffc581;");
+        blank15.setPadding(new Insets(5,5,5,5));
+        
         ObservableList typesOfEvents = FXCollections.observableArrayList(props.getProperty(SCH_HOLIDAY), 
                                                                         props.getProperty(SCH_LECTURE), 
                                                                         props.getProperty(SCH_LAB), 
                                                                         props.getProperty(SCH_RECITATION), 
                                                                         props.getProperty(SCH_HW), 
                                                                         props.getProperty(SCH_REFERENCE));
-        VBox schAddEditPane = schBuilder.buildVBox(SCH_ADD_EDIT_PANE, schPane, CLASS_OH_PANE, ENABLED);
-        schBuilder.buildLabel(SCH_ADD_EDIT_LABEL, schAddEditPane, CLASS_OH_HEADER_LABEL, ENABLED);
-        HBox typeBox = schBuilder.buildHBox(SCH_TYPE_HBOX, schAddEditPane, CLASS_OH_BOX, ENABLED);
-        schBuilder.buildLabel(SCH_TYPE_LABEL, typeBox, CLASS_OH_LABEL, ENABLED);
-        schBuilder.buildComboBox(SCH_TYPE_COMBO_BOX, typesOfEvents, typesOfEvents.get(0), typeBox, CLASS_OH_COMBO_BOX, ENABLED);
-        HBox dateBox = schBuilder.buildHBox(SCH_DATE_HBOX, schAddEditPane, CLASS_OH_BOX, ENABLED);
-        schBuilder.buildLabel(SCH_DATE_LABEL, dateBox, CLASS_OH_LABEL, ENABLED);
-        DatePicker editDatePicker = new DatePicker();
-        dateBox.getChildren().add(editDatePicker);
-        HBox titleBox = schBuilder.buildHBox(SCH_TITLE_HBOX, schAddEditPane, CLASS_OH_BOX, ENABLED);
-        schBuilder.buildLabel(SCH_TITLE_LABEL, titleBox, CLASS_OH_LABEL, ENABLED);
-        schBuilder.buildTextField(SCH_TITLE_TEXT_FIELD, titleBox, CLASS_OH_TEXT_FIELD, ENABLED);
-        HBox schTopicBox = schBuilder.buildHBox(SCH_TOPIC_HBOX, schAddEditPane, CLASS_OH_BOX, ENABLED);
-        schBuilder.buildLabel(SCH_TOPIC_LABEL, schTopicBox, CLASS_OH_LABEL, ENABLED);
-        schBuilder.buildTextField(SCH_TOPIC_TEXT_FIELD, schTopicBox, CLASS_OH_TEXT_FIELD, ENABLED);
-        HBox schLinkBox = schBuilder.buildHBox(SCH_LINK_HBOX, schAddEditPane, CLASS_OH_BOX, ENABLED);
-        schBuilder.buildLabel(SCH_LINK_LABEL, schLinkBox, CLASS_OH_LABEL, ENABLED);
-        schBuilder.buildTextField(SCH_LINK_TEXT_FIELD, schLinkBox, CLASS_OH_TEXT_FIELD, ENABLED);
-        HBox buttonBox = schBuilder.buildHBox(SCH_BUTTON_HBOX, schAddEditPane, CLASS_OH_BOX, ENABLED);
-        schBuilder.buildTextButton(SCH_ADD_UPDATE_BUTTON, buttonBox, CLASS_OH_BUTTON, ENABLED);
-        schBuilder.buildTextButton(SCH_CLEAR_BUTTON, buttonBox, CLASS_OH_BUTTON, ENABLED);
         
+        GridPane schAddEditPane = schBuilder.buildGridPane(SCH_ADD_EDIT_PANE, schPane, CLASS_OH_PANE, ENABLED);
+        schBuilder.buildLabel(SCH_ADD_EDIT_LABEL, schAddEditPane, 0, 1, 1, 1, CLASS_OH_HEADER_LABEL, ENABLED);
+//        schBuilder.buildLabel(SCH_ADD_EDIT_LABEL, schAddEditPane, CLASS_OH_HEADER_LABEL, ENABLED);
+//        HBox typeBox = schBuilder.buildHBox(SCH_TYPE_HBOX, schAddEditPane, 0, 2, 2, 1, CLASS_OH_BOX, ENABLED);
+        schBuilder.buildLabel(SCH_TYPE_LABEL, schAddEditPane, 0, 2, 2, 1, CLASS_OH_LABEL, ENABLED);
+        ComboBox eventBox = schBuilder.buildComboBox(SCH_TYPE_COMBO_BOX, schAddEditPane, 1, 2, 2, 1, CLASS_OH_COMBO_BOX, ENABLED, typesOfEvents, typesOfEvents.get(0));
+        eventBox.setItems(typesOfEvents);
+        eventBox.getSelectionModel().selectFirst();
+//        schBuilder.buildComboBox(end, saBox, BUTTON_TAG_WIDTH, BUTTON_TAG_WIDTH, BUTTON_TAG_WIDTH, BUTTON_TAG_WIDTH, EMPTY_TEXT, ENABLED, mtContent, DEFAULT_NAVBAR_TEXT)
+//        HBox dateBox = schBuilder.buildHBox(SCH_DATE_HBOX, schAddEditPane, 0, 3, 2, 1, CLASS_OH_BOX, ENABLED);
+        schBuilder.buildLabel(SCH_DATE_LABEL, schAddEditPane, 0, 3, 2, 1, CLASS_OH_LABEL, ENABLED);
+        DatePicker editDatePicker = new DatePicker();
+        schAddEditPane.add(editDatePicker, 1, 3, 2, 1);
+//        HBox titleBox = schBuilder.buildHBox(SCH_TITLE_HBOX, schAddEditPane, 0, 4, 2, 1, CLASS_OH_BOX, ENABLED);
+        schBuilder.buildLabel(SCH_TITLE_LABEL, schAddEditPane, 0 ,4, 2, 1, CLASS_OH_LABEL, ENABLED);
+        schBuilder.buildTextField(SCH_TITLE_TEXT_FIELD, schAddEditPane, 1, 4, 2, 1, CLASS_OH_TEXT_FIELD, ENABLED);
+//        HBox schTopicBox = schBuilder.buildHBox(SCH_TOPIC_HBOX, schAddEditPane, 0, 5, 2, 1, CLASS_OH_BOX, ENABLED);
+        schBuilder.buildLabel(SCH_TOPIC_LABEL, schAddEditPane, 0, 5, 2, 1, CLASS_OH_LABEL, ENABLED);
+        schBuilder.buildTextField(SCH_TOPIC_TEXT_FIELD, schAddEditPane, 1, 5, 2, 1, CLASS_OH_TEXT_FIELD, ENABLED);
+//        HBox schLinkBox = schBuilder.buildHBox(SCH_LINK_HBOX, schAddEditPane, 0, 6, 2, 1, CLASS_OH_BOX, ENABLED);
+        schBuilder.buildLabel(SCH_LINK_LABEL, schAddEditPane, 0, 6, 2, 1, CLASS_OH_LABEL, ENABLED);
+        schBuilder.buildTextField(SCH_LINK_TEXT_FIELD, schAddEditPane, 1, 6, 2, 1, CLASS_OH_TEXT_FIELD, ENABLED);
+        schBuilder.buildTextButton(SCH_ADD_UPDATE_BUTTON, schAddEditPane, 0, 7, 1, 1, CLASS_OH_BUTTON, ENABLED);
+        schBuilder.buildTextButton(SCH_CLEAR_BUTTON, schAddEditPane, 2, 7, 2, 1, CLASS_OH_BUTTON, ENABLED);
+        schAddEditPane.setStyle("-fx-background-color: #ebebeb;");
+        schAddEditPane.setVgap(5);
         
         
         schContent.getChildren().add(schPane);
+        schContent.setPadding(new Insets(1, 1, 1, 1));
+        schContent.setStyle("-fx-background-color: #ffc581;");
         schTabScrollPane.setContent(schContent);
         //------------------------------------------------------------------------------------------------------------------------//
         
@@ -1038,6 +1110,15 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         RadioButton undergradRadio = (RadioButton) gui.getGUINode(OH_UNDERGRAD_RADIO_BUTTON);
         undergradRadio.setOnAction(e -> {
             controller.processSelectUndergradTAs();
+        });
+        
+        ComboBox timeStart = (ComboBox)gui.getGUINode(OH_STARTTIME_COMBO_BOX);
+        ComboBox timeEnd = (ComboBox)gui.getGUINode(OH_ENDTIME_COMBO_BOX);
+        timeStart.setOnAction(e->{
+            controller.processUpdateOHTable();
+        });
+        timeEnd.setOnAction(ev->{
+            controller.processUpdateOHTable();
         });
     }
 

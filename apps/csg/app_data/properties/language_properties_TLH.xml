@@ -43,7 +43,7 @@
         <property name="LANGUAGE_BUTTON_TOOLTIP"    value="choH langauge"></property>
         <property name="ABOUT_BUTTON_TOOLTIP"       value="umqu' ghot"></property>
 
-        <!-- NEW FEEDBACK DIALOGS -->	
+        <!-- NEW FEEDBACK DIALOGS -->
         <property name="NEW_SUCCESS_TITLE"      value="chu' naQ"></property>
         <property name="NEW_SUCCESS_CONTENT"	value="Qap chenmoH 'ach wej toD"></property>
         <property name="NEW_ERROR_TITLE"        value="ghuHmoH: Qagh"></property>
@@ -53,7 +53,7 @@
         <property name="LOAD_WORK_TITLE"        value="Qap load"></property>
         <property name="LOAD_SUCCESS_TITLE"     value="load naQmoH wanI'mey"></property>
         <property name="LOAD_SUCCESS_CONTENT"   value="chaq Loaded Successfully 'ej laH DaH edited teywI'."></property>
-        <property name="LOAD_ERROR_TITLE"       value="Qagh loading"></property>        
+        <property name="LOAD_ERROR_TITLE"       value="Qagh loading"></property>
         <property name="LOAD_ERROR_CONTENT"     value="luj loading. ghaytan pa' qay' teywI' Formating."></property>
 
         <!-- SAVE FEEDBACK DIALOGS -->
@@ -88,7 +88,7 @@
         <property name="OH_WEDNESDAY_TABLE_COLUMN_TEXT"     value="wednesday"></property>
         <property name="OH_THURSDAY_TABLE_COLUMN_TEXT"      value="thursday"></property>
         <property name="OH_FRIDAY_TABLE_COLUMN_TEXT"        value="friday"></property>
-        
+
         <!-- ERROR DIALOG -->
         <property name="OH_NO_TA_SELECTED_TITLE"        value="pagh ta wIv"></property>
         <property name="OH_NO_TA_SELECTED_CONTENT"      value="qIt neH toggle vaj wIv ta"></property>
@@ -102,7 +102,7 @@
 	<property name="WORK_FILE_EXT_DESC"     value="ghojmoH boQwI' teywI'"></property>
 
     </property_list>
-    
+
     <!-- TDLM COMBO BOX CHOICES -->
     <property_options_list>
         <property_options name="LANGUAGE_OPTIONS">

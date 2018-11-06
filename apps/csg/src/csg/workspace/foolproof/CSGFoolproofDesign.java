@@ -7,14 +7,22 @@ import javafx.scene.control.TextField;
 import csg.CSGApp;
 import static csg.CSGPropertyType.OH_ADD_TA_BUTTON;
 import static csg.CSGPropertyType.OH_EMAIL_TEXT_FIELD;
+import static csg.CSGPropertyType.OH_ENDTIME_COMBO_BOX;
 import static csg.CSGPropertyType.OH_NAME_TEXT_FIELD;
 import static csg.CSGPropertyType.OH_OFFICE_HOURS_TABLE_VIEW;
 import static csg.CSGPropertyType.OH_REMOVE_TA_BUTTON;
+import static csg.CSGPropertyType.OH_STARTTIME_COMBO_BOX;
 import csg.data.CSGData;
 import csg.data.TimeSlot;
 import static csg.workspace.style.OHStyle.CLASS_OH_TEXT_FIELD;
 import static csg.workspace.style.OHStyle.CLASS_OH_TEXT_FIELD_ERROR;
+import java.awt.Color;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.Background;
 
 public class CSGFoolproofDesign implements FoolproofDesign {
 
@@ -29,6 +37,7 @@ public class CSGFoolproofDesign implements FoolproofDesign {
         updateAddTAFoolproofDesign();
         updateEditTAFoolproofDesign();
         updateRemoveTAFoolproofDesign();
+        updateOHTable();
     }
 
     private void updateAddTAFoolproofDesign() {
@@ -37,6 +46,7 @@ public class CSGFoolproofDesign implements FoolproofDesign {
         // FOOLPROOF DESIGN STUFF FOR ADD TA BUTTON
         TextField nameTextField = ((TextField) gui.getGUINode(OH_NAME_TEXT_FIELD));
         TextField emailTextField = ((TextField) gui.getGUINode(OH_EMAIL_TEXT_FIELD));
+        TableView<TimeSlot> officeHoursTableView = (TableView) gui.getGUINode(OH_OFFICE_HOURS_TABLE_VIEW);
         String name = nameTextField.getText();
         String email = emailTextField.getText();
         CSGData data = (CSGData) app.getDataComponent();
@@ -75,6 +85,7 @@ public class CSGFoolproofDesign implements FoolproofDesign {
         boolean isLegalNewEmail = data.isLegalNewEmail(email);
         foolproofTextField(nameTextField, isLegalNewName);
         foolproofTextField(emailTextField, isLegalNewEmail);
+        officeHoursTableView.refresh();
     }
     
     private void updateEditTAFoolproofDesign() {
@@ -110,6 +121,26 @@ public class CSGFoolproofDesign implements FoolproofDesign {
             removeTAButton.setDisable(false);
             officeHoursTableView.refresh();
             return;
+        }
+    }
+
+    private void updateOHTable() {
+        AppGUIModule gui = app.getGUIModule();
+        CSGData data = (CSGData)app.getDataComponent();
+        ComboBox timeStart = (ComboBox)gui.getGUINode(OH_STARTTIME_COMBO_BOX);
+        ComboBox timeEnd = (ComboBox)gui.getGUINode(OH_ENDTIME_COMBO_BOX);
+        int ts = timeStart.getSelectionModel().getSelectedIndex();
+        int te = timeEnd.getSelectionModel().getSelectedIndex();
+        if(ts <= te){
+            data.resetOfficeHours(ts, te);
+        }
+        else{
+            Alert alert = new Alert(AlertType.ERROR, "Start Date cannot be greater than the end date!", ButtonType.OK);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.OK) {
+                alert.close();
+            }
         }
     }
 }

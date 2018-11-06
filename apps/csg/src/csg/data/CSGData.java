@@ -75,7 +75,7 @@ public class CSGData implements AppDataComponent {
         startHour = MIN_START_HOUR;
         endHour = MAX_END_HOUR;
 
-        resetOfficeHours();
+        resetOfficeHours(startHour, endHour);
     }
     
     // ACCESSOR METHODS
@@ -94,13 +94,13 @@ public class CSGData implements AppDataComponent {
         Collections.sort(teachingAssistants);
     }
     
-    private void resetOfficeHours() {
+    public void resetOfficeHours(int startHour, int endHour) {
         //THIS WILL STORE OUR OFFICE HOURS
         AppGUIModule gui = app.getGUIModule();
         TableView<TimeSlot> officeHoursTableView = (TableView)gui.getGUINode(OH_OFFICE_HOURS_TABLE_VIEW);
         officeHours = officeHoursTableView.getItems(); 
         officeHours.clear();
-        for (int i = startHour; i <= endHour; i++) {
+        for (int i = startHour; i < endHour; i++) {
             TimeSlot timeSlot = new TimeSlot(   this.getTimeString(i, true),
                                                 this.getTimeString(i, false));
             officeHours.add(timeSlot);
@@ -109,6 +109,7 @@ public class CSGData implements AppDataComponent {
                                                     this.getTimeString(i+1, true));
             officeHours.add(halfTimeSlot);
         }
+        officeHoursTableView.refresh();
     }
     
     private String getTimeString(int militaryHour, boolean onHour) {
@@ -122,7 +123,7 @@ public class CSGData implements AppDataComponent {
         if (hour > 12) {
             hour -= 12;
         }
-        String cellText = "" + hour + ":" + minutesText;
+        String cellText = "" + (militaryHour == 0? 12: hour) + ":" + minutesText;
         if (militaryHour < 12) {
             cellText += "am";
         } else {
@@ -159,7 +160,7 @@ public class CSGData implements AppDataComponent {
             startHour = initStartHour;
             endHour = initEndHour;
         }
-        resetOfficeHours();
+        resetOfficeHours(startHour, endHour);
     }
     
     public void addTA(TeachingAssistantPrototype ta) {
