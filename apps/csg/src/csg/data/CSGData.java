@@ -16,6 +16,7 @@ import static csg.CSGPropertyType.OH_ALL_RADIO_BUTTON;
 import static csg.CSGPropertyType.OH_GRAD_RADIO_BUTTON;
 import static csg.CSGPropertyType.OH_OFFICE_HOURS_TABLE_VIEW;
 import static csg.CSGPropertyType.OH_TAS_TABLE_VIEW;
+import static csg.CSGPropertyType.OH_TA_DIALOG_UNDERGRAD_RADIO_BUTTON;
 import csg.data.TimeSlot.DayOfWeek;
 
 /**
@@ -297,6 +298,14 @@ public class CSGData implements AppDataComponent {
         else
             return TAType.Undergraduate;
     }
+    
+    public TAType getSelectedTypeFromDialog() {
+        RadioButton ugradRadio = (RadioButton)app.getGUIModule().getGUINode(OH_TA_DIALOG_UNDERGRAD_RADIO_BUTTON);
+        if (ugradRadio.isSelected())
+            return TAType.Undergraduate;
+        else
+            return TAType.Graduate;
+    }
 
     public TeachingAssistantPrototype getSelectedTA() {
         AppGUIModule gui = app.getGUIModule();
@@ -406,8 +415,19 @@ public class CSGData implements AppDataComponent {
     }    
 
     public void updateTAs() {
+        AppGUIModule gui = app.getGUIModule();
+        TableView tasTable = (TableView)gui.getGUINode(OH_TAS_TABLE_VIEW);
         TAType type = getSelectedType();
         selectTAs(type);
+        tasTable.refresh();
+    }
+    
+    public void updateTAsFromDialog() {
+        AppGUIModule gui = app.getGUIModule();
+        TableView tasTable = (TableView)gui.getGUINode(OH_TAS_TABLE_VIEW);
+        TAType type = getSelectedTypeFromDialog();
+        selectTAs(type);
+        tasTable.refresh();
     }
     
     public void selectTAs(TAType type) {

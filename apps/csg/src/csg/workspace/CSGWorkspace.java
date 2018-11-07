@@ -38,6 +38,8 @@ import csg.workspace.foolproof.CSGFoolproofDesign;
 import static csg.workspace.style.OHStyle.*;
 import static djf.AppPropertyType.APP_FILE_PROTOCOL;
 import static djf.modules.AppLanguageModule.FILE_PROTOCOL;
+import java.io.File;
+import java.util.ArrayList;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -51,8 +53,11 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.stage.FileChooser;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -87,6 +92,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         PropertiesManager props = PropertiesManager.getPropertiesManager();
 
         // THIS WILL BUILD ALL OF OUR JavaFX COMPONENTS FOR US
+        AppNodesBuilder tabBuilder = app.getGUIModule().getNodesBuilder();
         AppNodesBuilder siteBuilder = app.getGUIModule().getNodesBuilder();
         AppNodesBuilder syllabusBuilder = app.getGUIModule().getNodesBuilder();
         AppNodesBuilder mtBuilder = app.getGUIModule().getNodesBuilder();
@@ -121,7 +127,9 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         
         
         //----------------------------------------------SETS UP THE SITE TAB--------------------------------------------------//
-        VBox siteTabVBox= new VBox();
+        VBox siteContent= new VBox();
+        ScrollPane siteTabScrollPane = new ScrollPane();
+        VBox siteTabVBox = siteBuilder.buildVBox(SITE_MAIN_VBOX, null, CLASS_OH_PANE, ENABLED);
         ObservableList subjects = FXCollections.observableArrayList(props.getProperty(SITE_CSE_TEXT));
         ObservableList subjectNums = FXCollections.observableArrayList(props.getProperty(SITE_101_TEXT), 
                                                                         props.getProperty(SITE_114_TEXT), 
@@ -133,41 +141,48 @@ public class CSGWorkspace extends AppWorkspaceComponent {
                                                                       props.getProperty(SITE_WINTER_TEXT), 
                                                                       props.getProperty(SITE_SPRING_TEXT), 
                                                                       props.getProperty(SITE_SUMMER_TEXT));
-        ObservableList years = FXCollections.observableArrayList(2018, 2019, 2020, 2021, 2022);
-        GridPane bannerBox = new GridPane();
-        ComboBox subjectCBox = new ComboBox(subjects);
-        ComboBox subjectNumsCBox = new ComboBox(subjectNums);
-        ComboBox semestersCBox = new ComboBox(semesters);
-        ComboBox yearsCBox = new ComboBox(years);
+        ObservableList years = FXCollections.observableArrayList("2018");
+        GridPane bannerBox = siteBuilder.buildGridPane(SITE_BANNERBOX_GRID_PANE, siteTabVBox, CLASS_OH_PANE, ENABLED);
+        Label bannerLabel = siteBuilder.buildLabel(SITE_BANNER_LABEL, bannerBox, 0, 0, 1, 1, CLASS_OH_HEADER_LABEL, ENABLED);
+
+        Label subjectLabel = siteBuilder.buildLabel(SITE_SUBJECT_LABEL, bannerBox, 0, 1, 1, 1, CLASS_REG_LABEL, ENABLED);
+        ComboBox subjectCBox = siteBuilder.buildComboBox(SITE_SUBJECT_COMBO_BOX, bannerBox, 1, 1, 1, 1, CLASS_OH_BOX, ENABLED, subjects, subjects.get(0));
+        
+
+        Label subjectNumberLabel = siteBuilder.buildLabel(SITE_NUMBER_LABEL, bannerBox, 2, 1, 1, 1, CLASS_REG_LABEL, ENABLED);
+        ComboBox subjectNumsCBox = siteBuilder.buildComboBox(SITE_SUBJECTNUM_COMBO_BOX, bannerBox, 3, 1, 1, 1, CLASS_OH_BOX, ENABLED, subjectNums, subjectNums.get(0));
+
+        
+        Label semesterLabel = siteBuilder.buildLabel(SITE_SEMESTER_LABEL, bannerBox, 0, 2, 1, 1, CLASS_REG_LABEL, ENABLED);
+        ComboBox semestersCBox = siteBuilder.buildComboBox(SITE_SEMESTERS_COMBO_BOX, bannerBox, 1, 2, 1, 1, CLASS_OH_BOX, ENABLED, semesters, semesters.get(0));
+
+        
+        Label yearLabel = siteBuilder.buildLabel(SITE_YEAR_LABEL, bannerBox, 2, 2, 1, 1, CLASS_REG_LABEL, ENABLED);
+        ComboBox yearsCBox = siteBuilder.buildComboBox(SITE_YEARS_COMBO_BOX, bannerBox, 3, 2, 1, 1, CLASS_OH_BOX, ENABLED, years, years.get(0));
+        
+        
         subjectCBox.setEditable(true);
         subjectNumsCBox.setEditable(true);
         semestersCBox.setEditable(true);
         yearsCBox.setEditable(true);
+        subjectCBox.setItems(subjects);
         subjectCBox.getSelectionModel().selectFirst();
+        subjectNumsCBox.setItems(subjectNums);
         subjectNumsCBox.getSelectionModel().selectFirst();
+        semestersCBox.setItems(semesters);
         semestersCBox.getSelectionModel().selectFirst();
+        yearsCBox.setItems(years);
         yearsCBox.getSelectionModel().selectFirst();
         
-        Label bannerLabel = new Label(props.getProperty(SITE_BANNER_LABEL));
-        bannerLabel.setId("section_header_label");
-        Label subjectLabel = new Label(props.getProperty(SITE_SUBJECT_LABEL));
-        subjectLabel.setId("reg_label");
-        Label semesterLabel = new Label(props.getProperty(SITE_SEMESTER_LABEL));
-        semesterLabel.setId("reg_label");
-        Label subjectNumberLabel = new Label(props.getProperty(SITE_NUMBER_LABEL));
-        subjectNumberLabel.setId("reg_label");
-        Label yearLabel = new Label(props.getProperty(SITE_YEAR_LABEL));
-        yearLabel.setId("reg_label");
-        Label titleLabel = new Label(props.getProperty(SITE_TITLE_LABEL));
-        titleLabel.setId("reg_label");
-        Label expDirLabel = new Label(props.getProperty(SITE_EXPDIR_LABEL));
-        expDirLabel.setId("reg_label");
-        Label expDirOutputLabel = new Label(".\\export\\" + subjectCBox.getSelectionModel().getSelectedItem().toString() + 
-                                                "_" + subjectNumsCBox.getSelectionModel().getSelectedItem().toString() +
-                                                "_" + semestersCBox.getSelectionModel().getSelectedItem().toString() +
-                                                "_" + yearsCBox.getSelectionModel().getSelectedItem().toString() 
-                                                 + "\\public.html");
-        expDirOutputLabel.setId("reg_label");
+        
+        Label titleLabel = siteBuilder.buildLabel(SITE_TITLE_LABEL, bannerBox, 0, 3, 1, 1, CLASS_REG_LABEL, ENABLED);
+        TextField titleTF = siteBuilder.buildTextField(SITE_TITLE_TEXT_FIELD, bannerBox, 1, 3, 1, 1, CLASS_OH_TEXT_FIELD, ENABLED);
+        
+        GridPane expVBox = siteBuilder.buildGridPane(SITE_EXP_HBOX, siteTabVBox, CLASS_OH_PANE, ENABLED);
+        expVBox.setStyle("-fx-background-color: #ebebeb;");
+        Label expDirLabel = siteBuilder.buildLabel(SITE_EXPDIR_LABEL, expVBox, 0, 0, 1, 1, CLASS_REG_LABEL, ENABLED);
+        Label expDirOutputLabel = siteBuilder.buildLabel(SITE_EXPORT_LABEL, expVBox, 1, 0, 1, 1, CLASS_REG_LABEL, ENABLED);
+
         subjectCBox.valueProperty().addListener(new ChangeListener<String>() {
             @Override 
             public void changed(ObservableValue ov, String t, String t1) {                
@@ -208,52 +223,41 @@ public class CSGWorkspace extends AppWorkspaceComponent {
                 expDirOutputLabel.setText(".\\export\\" + subjectCBox.getSelectionModel().getSelectedItem().toString() + 
                                                 "_" + subjectNumsCBox.getSelectionModel().getSelectedItem().toString() +
                                                 "_" + semestersCBox.getSelectionModel().getSelectedItem().toString() +
-                                                "_" + yearsCBox.getSelectionModel().getSelectedItem().toString() 
+                                                "_" + yearsCBox.getSelectionModel().getSelectedItem().toString()
                                                  + "\\public.html");
             }    
         });
-        TextField titleTF = new TextField();
-        titleTF.setPromptText(props.getProperty(SITE_TITLE_TEXT_FIELD_TEXT));
-        bannerBox.add(bannerLabel, 0, 0);
-        bannerBox.add(subjectLabel, 0, 1);
-        bannerBox.add(subjectCBox, 1, 1);
-        bannerBox.add(subjectNumberLabel, 2, 1);
-        bannerBox.add(subjectNumsCBox, 3, 1);
-        bannerBox.add(semesterLabel, 0, 2);
-        bannerBox.add(semestersCBox, 1, 2);
-        bannerBox.add(yearLabel, 2, 2);
-        bannerBox.add(yearsCBox, 3, 2);
-        bannerBox.add(titleLabel, 0, 3);
-        bannerBox.add(titleTF, 1, 3);
-        bannerBox.add(expDirLabel, 0, 4);
-        bannerBox.add(expDirOutputLabel, 1, 4);
+
+//        bannerBox.add(expDirOutputLabel, 1, 4);
         bannerBox.setStyle("-fx-background-color: #ebebeb;");
         bannerBox.setPadding(new Insets(10, 10, 10, 10));
         bannerBox.setVgap(5);
         HBox blank1 = new HBox();
         blank1.setStyle("-fx-background-color: #ffc581;");
         blank1.setPadding(new Insets(5, 5, 5, 5));
-        siteTabVBox.getChildren().addAll(bannerBox, blank1);
+        siteTabVBox.getChildren().addAll(blank1);
         
-        GridPane pagesBox = new GridPane();
-        CheckBox homeCB = new CheckBox();
-        CheckBox syllabusCB = new CheckBox();
-        CheckBox schCB = new CheckBox();
-        CheckBox hwCB = new CheckBox();
+        VBox pagesVBox = siteBuilder.buildVBox(SITE_PAGES_VBOX, null, CLASS_OH_PANE, ENABLED);
+        GridPane pagesBox = siteBuilder.buildGridPane(SITE_PAGESBOX_GRID_PANE, pagesVBox, CLASS_OH_PANE, ENABLED);
+        
+        Label pagesLabel = siteBuilder.buildLabel(SITE_PAGES_LABEL, pagesBox, 0, 0, 1, 1, CLASS_OH_HEADER_LABEL, ENABLED);
+        
+        Label homeLabel = siteBuilder.buildLabel(SITE_HOME_LABEL, pagesBox, 0, 1, 1, 1, CLASS_REG_LABEL, ENABLED);
+        CheckBox homeCB = siteBuilder.buildCheckBox(SITE_HOME_CHECK_BOX, pagesBox, 1, 1, 1, 1, CLASS_OH_CB, ENABLED);
+        
+        Label syllabusLabel = siteBuilder.buildLabel(SITE_SYLLABUS_LABEL, pagesBox, 2, 1, 1, 1, CLASS_REG_LABEL, ENABLED);
+        CheckBox syllabusCB = siteBuilder.buildCheckBox(SITE_SYLLABUS_CHECK_BOX, pagesBox, 3, 1, 1, 1, CLASS_OH_CB, ENABLED);
+        
+        Label scheduleLabel = siteBuilder.buildLabel(SITE_SCHEDULE_LABEL, pagesBox, 4, 1, 1, 1, CLASS_REG_LABEL, ENABLED);
+        CheckBox schCB = siteBuilder.buildCheckBox(SITE_SCHEDULE_CHECK_BOX, pagesBox, 5, 1, 1, 1, CLASS_OH_CB, ENABLED);
+        
+        Label hwLabel = siteBuilder.buildLabel(SITE_HWS_LABEL, pagesBox, 6, 1, 1, 1, CLASS_REG_LABEL, ENABLED);
+        CheckBox hwCB = siteBuilder.buildCheckBox(SITE_HW_CHECK_BOX, pagesBox, 7, 1, 1, 1, CLASS_OH_CB, ENABLED);
         homeCB.setIndeterminate(false);
         syllabusCB.setIndeterminate(false);
         schCB.setIndeterminate(false);
         hwCB.setIndeterminate(false);
-        Label pagesLabel = new Label(props.getProperty(SITE_PAGES_LABEL));
-        pagesLabel.setId("section_header_label");
-        Label homeLabel = new Label(props.getProperty(SITE_HOME_LABEL));
-        homeLabel.setId("reg_label");
-        Label syllabusLabel = new Label(props.getProperty(SITE_SYLLABUS_LABEL));
-        syllabusLabel.setId("reg_label");
-        Label scheduleLabel = new Label(props.getProperty(SITE_SCHEDULE_LABEL));
-        scheduleLabel.setId("reg_label");
-        Label hwLabel = new Label(props.getProperty(SITE_HWS_LABEL));
-        hwLabel.setId("reg_label");
+        
         HBox homeHB = new HBox();
         HBox sylHB = new HBox();
         HBox schHB = new HBox();
@@ -264,7 +268,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         hwHB.getChildren().addAll(hwLabel, hwCB);
         HBox checkBoxHBox = new HBox();
         checkBoxHBox.getChildren().addAll(homeHB, sylHB, schHB, hwHB);
-        pagesBox.add(pagesLabel, 0, 0);
+//        pagesBox.add(pagesLabel, 0, 0);
         pagesBox.add(checkBoxHBox, 0, 1);
         pagesBox.setStyle("-fx-background-color: #ebebeb;");
         pagesBox.setPadding(new Insets(10, 10, 10, 10));
@@ -274,27 +278,35 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         blank2.setPadding(new Insets(5,5,5,5));
         siteTabVBox.getChildren().addAll(pagesBox, blank2);
         
-        GridPane styleBox = new GridPane();
-        ObservableList styleSheets = FXCollections.observableArrayList("seawolf.css");
-        Label styleLabel = new Label(props.getProperty(SITE_STYLE_LABEL));
-        styleLabel.setId("section_header_label");
-        Label fontLabel = new Label(props.getProperty(SITE_FONTSTYLE_LABEL));
-        fontLabel.setId("reg_label");
-        Label fontWarningLabel = new Label(props.getProperty(SITE_FONTSTYLENOTE_LABEL));
-        fontWarningLabel.setId("reg_label");
-        fontWarningLabel.setStyle("-fx-font-weight: bold");
-        Button fviButton = new Button(props.getProperty(SITE_FAVICON_BUTTON));
-        fviButton.setId("app_button");
-        Button navbarButton = new Button(props.getProperty(SITE_NAVBAR_BUTTON));
-        navbarButton.setId("app_button");
-        Button lfimg = new Button(props.getProperty(SITE_LFIMG_BUTTON));
-        lfimg.setId("app_button");
-        Button rfimg = new Button(props.getProperty(SITE_RFIMG_BUTTON));
-        rfimg.setId("app_button");
+        VBox styleVBox = siteBuilder.buildVBox(SITE_STYLE_VBOX, null, CLASS_OH_PANE, ENABLED);
+        GridPane styleBox = siteBuilder.buildGridPane(SITE_STYLEBOX_GRID_PANE, styleVBox, CLASS_OH_PANE, ENABLED);
+        ObservableList styleSheets = FXCollections.observableArrayList();
+
+        File[] files = new File("./work/css/").listFiles();
+        ArrayList<String> fns = new ArrayList<>();
+        int x = 0;
+        for(File file: files){
+            if(file.getPath().contains(".css")){
+                String fileTemp = file.toString();
+                fileTemp = fileTemp.substring(fileTemp.lastIndexOf("/") + 1);
+                fns.add(fileTemp);
+                x++;
+            }
+        }
+        styleSheets.clear();
+        styleSheets.addAll(fns);
         
-        // FIX THIS ///////////////////////////
+        Label styleLabel = siteBuilder.buildLabel(SITE_STYLE_LABEL, styleBox, 0, 0, 1, 1, CLASS_OH_HEADER_LABEL, ENABLED);
+        Button fviButton = siteBuilder.buildTextButton(SITE_FAVICON_BUTTON, styleBox, 0, 1, 1, 1, CLASS_APP_BUTTON, ENABLED);
+        Button navbarButton = siteBuilder.buildTextButton(SITE_NAVBAR_BUTTON, styleBox, 0, 2, 1, 1, CLASS_APP_BUTTON, ENABLED);
+        Button lfimg = siteBuilder.buildTextButton(SITE_LFIMG_BUTTON, styleBox, 0, 3, 1, 1, CLASS_APP_BUTTON, ENABLED);
+        Button rfimg = siteBuilder.buildTextButton(SITE_RFIMG_BUTTON, styleBox, 0, 4, 1, 1, CLASS_APP_BUTTON, ENABLED);
+
+        Label fontLabel = siteBuilder.buildLabel(SITE_FONTSTYLE_LABEL, styleBox, 0, 5, 1, 1, CLASS_REG_LABEL, ENABLED);
+        
+
         ImageView fviImgView = new ImageView(
-                props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_FAVICON_TEXT)
+                props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_FAVICON_TEXT)
         );
         fviImgView.setFitWidth(25);
         fviImgView.setFitHeight(25);
@@ -302,7 +314,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         fviImgView.setSmooth(true);
         fviImgView.setCache(true);
         ImageView navImgView = new ImageView(
-                props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_NAVBAR_TEXT)
+                props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_NAVBAR_TEXT)
         );
         navImgView.setFitWidth(300);
         navImgView.setFitHeight(25);
@@ -310,7 +322,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         navImgView.setSmooth(true);
         navImgView.setCache(true);
         ImageView leftImgView = new ImageView(
-                props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_LFIMG_TEXT)
+                props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_LFIMG_TEXT)
         );
         leftImgView.setFitWidth(300);
         leftImgView.setFitHeight(25);
@@ -318,63 +330,130 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         leftImgView.setSmooth(true);
         leftImgView.setCache(true);
         ImageView rightImgView = new ImageView(
-               props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_RFIMG_TEXT)
+               props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_RFIMG_TEXT)
         );
         rightImgView.setFitWidth(300);
         rightImgView.setFitHeight(25);
         rightImgView.setPreserveRatio(true);
         rightImgView.setSmooth(true);
         rightImgView.setCache(true);
-        // FIX THIS ///////////////////////////
-        ComboBox css = new ComboBox(styleSheets);
+           
+        fviButton.setOnAction(e->{
+            FileChooser imgSelect = new FileChooser();
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpeg");
+            imgSelect.getExtensionFilters().add(extFilter);
+            imgSelect.setInitialDirectory(new java.io.File("./images/styleicons/"));
+            imgSelect.setTitle(props.getProperty(SITE_CHOOSE_IMAGE_TITLE));
+            File f = imgSelect.showOpenDialog(styleBox.getScene().getWindow());
+            if(f != null){
+                fviImgView.setImage(new Image("file:" + f.getAbsolutePath()));
+                fviImgView.setFitWidth(25);
+                fviImgView.setFitHeight(25);
+                fviImgView.setPreserveRatio(true);
+                fviImgView.setSmooth(true);
+                fviImgView.setCache(true);
+            }
+            
+            
+        });
+        
+        navbarButton.setOnAction(e->{
+            FileChooser imgSelect = new FileChooser();
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpeg");
+            imgSelect.getExtensionFilters().add(extFilter);
+            imgSelect.setInitialDirectory(new java.io.File("./images/styleicons/"));
+            imgSelect.setTitle(props.getProperty(SITE_CHOOSE_IMAGE_TITLE));
+            File f = imgSelect.showOpenDialog(styleBox.getScene().getWindow());
+            if(f != null){
+                navImgView.setImage(new Image("file:" + f.getAbsolutePath()));
+                navImgView.setFitWidth(300);
+                navImgView.setFitHeight(25);
+                navImgView.setPreserveRatio(true);
+                navImgView.setSmooth(true);
+                navImgView.setCache(true);
+            }
+            
+            
+        });
+        
+        lfimg.setOnAction(e->{
+            FileChooser imgSelect = new FileChooser();
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpeg");
+            imgSelect.getExtensionFilters().add(extFilter);
+            imgSelect.setInitialDirectory(new java.io.File("./images/styleicons/"));
+            imgSelect.setTitle(props.getProperty(SITE_CHOOSE_IMAGE_TITLE));
+            File f = imgSelect.showOpenDialog(styleBox.getScene().getWindow());
+            if(f != null){
+                leftImgView.setImage(new Image("file:" + f.getAbsolutePath()));
+                leftImgView.setFitWidth(300);
+                leftImgView.setFitHeight(25);
+                leftImgView.setPreserveRatio(true);
+                leftImgView.setSmooth(true);
+                leftImgView.setCache(true);
+            }
+            
+            
+        });
+        
+        rfimg.setOnAction(e->{
+            FileChooser imgSelect = new FileChooser();
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpeg");
+            imgSelect.getExtensionFilters().add(extFilter);
+            imgSelect.setInitialDirectory(new java.io.File("./images/styleicons/"));
+            imgSelect.setTitle(props.getProperty(SITE_CHOOSE_IMAGE_TITLE));
+            File f = imgSelect.showOpenDialog(styleBox.getScene().getWindow());
+            if(f != null){
+                rightImgView.setImage(new Image("file:" + f.getAbsolutePath()));
+                rightImgView.setFitWidth(300);
+                rightImgView.setFitHeight(25);
+                rightImgView.setPreserveRatio(true);
+                rightImgView.setSmooth(true);
+                rightImgView.setCache(true);
+            }
+            
+            
+        });
+
+        ComboBox css = siteBuilder.buildComboBox(SITE_CSS_COMBO_BOX, styleBox, 1, 5, 1, 1, CLASS_OH_CB, ENABLED, styleSheets, styleSheets.get(0));
+        css.setItems(styleSheets);
         css.getSelectionModel().selectFirst();
-//        VBox styleContainer = new VBox();
-//        styleContainer.getChildren().addAll(styleLabel, navHBox, leftHBox, rightHBox, cssHBox, fontWarningLabel);
-        styleBox.add(styleLabel, 0, 0);
-        styleBox.add(fviButton, 0, 1);
+        VBox styleContainer = new VBox();
+        GridPane warningVBox = siteBuilder.buildGridPane(SITE_EXP_HBOX, styleVBox, CLASS_OH_PANE_EXTRA, ENABLED);
+        warningVBox.setStyle("-fx-background-color: #ebebeb;");
+        Label warningLabel = siteBuilder.buildLabel(SITE_FONTSTYLENOTE_LABEL, warningVBox, 0, 0, 1, 1, CLASS_REG_LABEL, ENABLED);
+        warningLabel.setStyle("-fx-font-weight: bold");
+        warningLabel.setPadding(new Insets(5, 5, 5, 5));
+
         styleBox.add(fviImgView, 1, 1);
-        styleBox.add(navbarButton, 0, 2);
         styleBox.add(navImgView, 1, 2);
-        styleBox.add(lfimg, 0, 3);
         styleBox.add(leftImgView, 1, 3);
-        styleBox.add(rfimg, 0, 4);
         styleBox.add(rightImgView, 1, 4);
-        styleBox.add(fontLabel, 0, 5);
-        styleBox.add(css, 1, 5);
-        styleBox.add(fontWarningLabel, 0, 6);
         styleBox.setStyle("-fx-background-color: #ebebeb;");
-        styleBox.setPadding(new Insets(10, 10, 10, 10));
+        styleBox.setPadding(new Insets(1, 1, 1, 1));
         styleBox.setVgap(5);
+        styleContainer.setStyle("-fx-background-color: #ebebeb;");
+        styleContainer.getChildren().addAll(styleBox, warningVBox);
         HBox blank3 = new HBox();
         blank3.setStyle("-fx-background-color: #ffc581;");
         blank3.setPadding(new Insets(5,5,5,5));
-        siteTabVBox.getChildren().addAll(styleBox, blank3);
+        siteTabVBox.getChildren().addAll(styleContainer, blank3);
         
-        
-        GridPane instructorBox = new GridPane();
-        Label instructorLabel = new Label(props.getProperty(SITE_INSTRUCTOR_LABEL));
-        instructorLabel.setId("section_header_label");
-        Label nameLabel = new Label(props.getProperty(SITE_NAME_LABEL));
-        nameLabel.setId("reg_label");
-        Label emailLabel = new Label(props.getProperty(SITE_EMAIL_LABEL));
-        emailLabel.setId("reg_label");
-        Label roomLabel = new Label(props.getProperty(SITE_ROOM_LABEL));
-        roomLabel.setId("reg_label");
-        Label hpLabel = new Label(props.getProperty(SITE_HP_LABEL));
-        hpLabel.setId("reg_label");
-        Label ohLabel = new Label(props.getProperty(SITE_OH_LABEL));
-        ohLabel.setId("section_header_label");
-        TextField siteNameTF = new TextField();
-        siteNameTF.setPromptText(props.getProperty(SITE_NAME_TEXT_FIELD_TEXT));
-        TextField siteEmailTF = new TextField();
-        siteEmailTF.setPromptText(props.getProperty(SITE_EMAIL_TEXT_FIELD_TEXT));
-        TextField siteRoomTF = new TextField();
-        siteRoomTF.setPromptText(props.getProperty(SITE_ROOM_TEXT_FIELD_TEXT));
-        TextField siteHPTF = new TextField();
-        siteHPTF.setPromptText(props.getProperty(SITE_HP_TEXT_FIELD_TEXT));
-        
-        Button siteInstructorOHExpandButton = new Button(props.getProperty(SITE_EXPAND_BUTTON));
-        siteInstructorOHExpandButton.setId("app_button");
+        VBox instructorVBox = siteBuilder.buildVBox(SITE_INST_VBOX, null, CLASS_OH_PANE, ENABLED);
+        GridPane instructorBox = siteBuilder.buildGridPane(SITE_INSTBOX_GRID_PANE, instructorVBox, CLASS_OH_PANE, ENABLED);
+        Label instructorLabel = siteBuilder.buildLabel(SITE_INSTRUCTOR_LABEL, instructorBox, 0, 0, 1, 1, CLASS_OH_HEADER_LABEL, ENABLED);
+        Label nameLabel = siteBuilder.buildLabel(SITE_NAME_LABEL, instructorBox, 0, 1, 1, 1, CLASS_REG_LABEL, ENABLED);
+        TextField siteNameTF = siteBuilder.buildTextField(SITE_NAME_TEXT_FIELD, instructorBox, 1, 1, 1, 1, CLASS_REG_LABEL, ENABLED);
+        Label emailLabel = siteBuilder.buildLabel(SITE_EMAIL_LABEL, instructorBox, 0, 2, 1, 1, CLASS_REG_LABEL, ENABLED);
+        TextField siteEmailTF = siteBuilder.buildTextField(SITE_EMAIL_TEXT_FIELD, instructorBox, 1, 2, 1, 1, CLASS_REG_LABEL, ENABLED);
+        Label roomLabel = siteBuilder.buildLabel(SITE_ROOM_LABEL, instructorBox, 2, 1, 1, 1, CLASS_REG_LABEL, ENABLED);
+        TextField siteRoomTF = siteBuilder.buildTextField(SITE_ROOM_TEXT_FIELD, instructorBox, 3, 1, 1, 1, CLASS_REG_LABEL, ENABLED);
+        Label hpLabel = siteBuilder.buildLabel(SITE_HP_LABEL, instructorBox, 2, 2, 1, 1, CLASS_REG_LABEL, ENABLED);
+        TextField siteHPTF = siteBuilder.buildTextField(SITE_HP_TEXT_FIELD, instructorBox, 3, 2, 1, 1, CLASS_REG_LABEL, ENABLED);
+
+        HBox ohDetail = siteBuilder.buildHBox(SITE_INST_OH_DETAILS, siteTabVBox, CLASS_OH_PANE, ENABLED);
+        Button siteInstructorOHExpandButton = siteBuilder.buildTextButton(SITE_EXPAND_BUTTON, ohDetail, CLASS_APP_BUTTON, ENABLED);
+        Label ohLabel = siteBuilder.buildLabel(SITE_OH_LABEL, ohDetail, CLASS_OH_HEADER_LABEL, ENABLED);
+        VBox hiddenTA = siteBuilder.buildVBox(SITE_INST_TA_DETAILS, siteTabVBox, CLASS_OH_PANE, ENABLED);
         TextArea instructorOHJsonArea = new TextArea();
 
         instructorOHJsonArea.setText("["
@@ -388,47 +467,21 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             instructorOHJsonArea.setManaged(siteInstructorOHExpandButton.getText().equals("-")? true: false);
             instructorOHJsonArea.setVisible(siteInstructorOHExpandButton.getText().equals("-")? true: false);
         });
-//        HBox instDetail = new HBox();
-//        HBox emailDetail = new HBox();
-//        HBox roomDetail = new HBox();
-//        HBox hpDetail = new HBox();
-        HBox ohDetail = new HBox();
-        VBox hiddenTA = new VBox();
+
         Label emptyLbl = new Label();
-//        
-//        instDetail.getChildren().addAll(nameLabel, siteNameTF);
-//        emailDetail.getChildren().addAll(emailLabel, siteEmailTF);
-//        roomDetail.getChildren().addAll(roomLabel, siteRoomTF);
-//        hpDetail.getChildren().addAll(hpLabel, siteHPTF);
-        ohDetail.getChildren().addAll(siteInstructorOHExpandButton, ohLabel);
+
         ohDetail.setStyle("-fx-background-color: #ebebeb;");
         ohDetail.setPadding(new Insets(10, 10, 10, 10));
         hiddenTA.getChildren().addAll(emptyLbl, instructorOHJsonArea);
         hiddenTA.setStyle("-fx-background-color: #ebebeb;");
-//        instructorBox.add(instructorLabel, 0, 0);
-//        instructorBox.add(instDetail, 0, 1);
-//        instructorBox.add(emailDetail, 0, 2);
-//        instructorBox.add(roomDetail, 1, 1);
-//        instructorBox.add(hpDetail, 1, 2);
-//        instructorBox.add(ohDetail, 0, 3);
-        instructorBox.add(instructorLabel, 0, 0);
-        instructorBox.add(nameLabel, 0, 1);
-        instructorBox.add(siteNameTF, 1, 1);
-        instructorBox.add(roomLabel, 2, 1);
-        instructorBox.add(siteRoomTF, 3, 1);
-        instructorBox.add(emailLabel, 0, 2);
-        instructorBox.add(siteEmailTF, 1, 2);
-        instructorBox.add(hpLabel, 2, 2);
-        instructorBox.add(siteHPTF, 3, 2);
         instructorBox.setStyle("-fx-background-color: #ebebeb;");
         instructorBox.setPadding(new Insets(10, 10, 10, 10));
-        siteTabVBox.getChildren().addAll(instructorBox, ohDetail, hiddenTA);
         
 
 
         siteTabVBox.setStyle("-fx-background-color: #ffc581;");
         siteTabVBox.setPadding(new Insets(10, 10, 10, 10));
-        ScrollPane siteTabScrollPane = new ScrollPane();
+        
         siteTabScrollPane.setContent(siteTabVBox);
 //        siteTabScrollPane.setFitToHeight(true);
         siteTabScrollPane.setFitToWidth(true);
@@ -436,12 +489,13 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         
         
         //----------------------------------------------SETS UP THE SYLLABUS TAB--------------------------------------------------//
-        VBox syllabusTabVBox = new VBox();
-        GridPane descBox = new GridPane();
+        VBox syllabusTabVBox = syllabusBuilder.buildVBox(SYL_MAIN_VBOX, null, CLASS_OH_PANE, ENABLED);
+        GridPane descBox = syllabusBuilder.buildGridPane(SYL_DESCBOX_GRID_PANE, syllabusTabVBox, CLASS_OH_PANE, ENABLED);
         descBox.setStyle("-fx-background-color: #ebebeb;");
-        Label sylDesc = new Label(props.getProperty(SYL_DESC_LABEL));
-        sylDesc.setId("section_header_label");
-        Button sylDescExpandButton = new Button("+");
+        HBox descDetail = syllabusBuilder.buildHBox(SYL_DESC_HBOX, descBox, 0, 0, 1, 2, CLASS_OH_PANE, ENABLED);
+        Button sylDescExpandButton = syllabusBuilder.buildTextButton(SYL_DESC_BUTTON, descDetail, CLASS_APP_BUTTON, ENABLED);
+        Label sylDesc = syllabusBuilder.buildLabel(SYL_DESC_LABEL, descDetail, CLASS_OH_HEADER_LABEL, ENABLED);
+        
         TextArea descTA = new TextArea();
         descTA.setVisible(false);
         descTA.setManaged(false);
@@ -450,15 +504,15 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             descTA.setManaged(sylDescExpandButton.getText().equals("-")? true: false);
             descTA.setVisible(sylDescExpandButton.getText().equals("-")? true: false);
         });
-        HBox descDetail = new HBox();
-        descDetail.getChildren().addAll(sylDescExpandButton, sylDesc);
-        descBox.add(descDetail, 0, 1);
+//        descDetail.getChildren().addAll(sylDescExpandButton, sylDesc);
+//        descBox.add(descDetail, 0, 1);
         descBox.setPadding(new Insets(10, 10, 10, 10));
         descBox.setVgap(5);
         HBox blank4 = new HBox();
         blank4.setStyle("-fx-background-color: #ffc581;");
         blank4.setPadding(new Insets(5,5,5,5));
-        syllabusTabVBox.getChildren().addAll(descBox, descTA, blank4);
+        syllabusTabVBox.getChildren().addAll(descTA, blank4);
+//        syllabusTabVBox.getChildren().addAll(descBox, descTA, blank4);
         
         GridPane topicBox = new GridPane();
         topicBox.setStyle("-fx-background-color: #ebebeb;");

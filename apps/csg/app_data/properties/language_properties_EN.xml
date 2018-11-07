@@ -175,32 +175,33 @@
         <property name="SCH_TAB_TEXT"                  value="Schedule"></property>
 
         <!-- THESE ARE FOR THE SITE TAB CONTROLS -->
-        <property name="SITE_BANNER_LABEL"                  value="Banner"></property>
-        <property name="SITE_SUBJECT_LABEL"                  value="Subject:"></property>
-        <property name="SITE_SEMESTER_LABEL"                  value="Semester:"></property>
-        <property name="SITE_NUMBER_LABEL"                  value="Number:"></property>
-        <property name="SITE_YEAR_LABEL"                  value="Year:"></property>
-        <property name="SITE_TITLE_LABEL"                  value="Title:"></property>
-        <property name="SITE_EXPDIR_LABEL"                  value="Export Directory: "></property>
-        <property name="SITE_PAGES_LABEL"                  value="Pages"></property>
-        <property name="SITE_HOME_LABEL"                  value="Home"></property>
-        <property name="SITE_SYLLABUS_LABEL"                  value="Syllabus"></property>
-        <property name="SITE_SCHEDULE_LABEL"                  value="Schedule"></property>
-        <property name="SITE_HWS_LABEL"                  value="HWs"></property>
-        <property name="SITE_STYLE_LABEL"                  value="Style"></property>
-        <property name="SITE_FAVICON_BUTTON"                  value="Favicon:"></property>
-        <property name="SITE_NAVBAR_BUTTON"                  value="Navbar:"></property>
-        <property name="SITE_LFIMG_BUTTON"                  value="Left Footer Image:"></property>
-        <property name="SITE_RFIMG_BUTTON"                  value="Right Footer Image:"></property>
-        <property name="SITE_FONTSTYLE_LABEL"                  value="Font Colors and Style Sheets:"></property>
-        <property name="SITE_FONTSTYLENOTE_LABEL"                  value="Note: stylesheets should be placed inside work/css to be selectable"></property>
-        <property name="SITE_INSTRUCTOR_LABEL"                  value="Instructor"></property>
-        <property name="SITE_NAME_LABEL"                  value="Name:"></property>
-        <property name="SITE_EMAIL_LABEL"                  value="Email:"></property>
-        <property name="SITE_ROOM_LABEL"                  value="Room:"></property>
-        <property name="SITE_HP_LABEL"                  value="Home Page:"></property>
-        <property name="SITE_EXPAND_BUTTON"                  value="+"></property>
-        <property name="SITE_OH_LABEL"                  value=" Office Hours"></property>
+        <property name="SITE_BANNER_LABEL_TEXT"                  value="Banner"></property>
+        <property name="SITE_SUBJECT_LABEL_TEXT"                  value="Subject:"></property>
+        <property name="SITE_SEMESTER_LABEL_TEXT"                  value="Semester:"></property>
+        <property name="SITE_NUMBER_LABEL_TEXT"                  value="Number:"></property>
+        <property name="SITE_YEAR_LABEL_TEXT"                  value="Year:"></property>
+        <property name="SITE_TITLE_LABEL_TEXT"                  value="Title:"></property>
+        <property name="SITE_EXPDIR_LABEL_TEXT"                  value="Export Directory: "></property>
+        <property name="SITE_EXPORT_LABEL_TEXT"                 value=".\\export\\CSE_101_Fall_2018\\public.html"></property>
+        <property name="SITE_PAGES_LABEL_TEXT"                  value="Pages"></property>
+        <property name="SITE_HOME_LABEL_TEXT"                  value="Home"></property>
+        <property name="SITE_SYLLABUS_LABEL_TEXT"                  value="Syllabus"></property>
+        <property name="SITE_SCHEDULE_LABEL_TEXT"                  value="Schedule"></property>
+        <property name="SITE_HWS_LABEL_TEXT"                  value="HWs"></property>
+        <property name="SITE_STYLE_LABEL_TEXT"                  value="Style"></property>
+        <property name="SITE_FAVICON_BUTTON_TEXT"                  value="Favicon:"></property>
+        <property name="SITE_NAVBAR_BUTTON_TEXT"                  value="Navbar:"></property>
+        <property name="SITE_LFIMG_BUTTON_TEXT"                  value="Left Footer Image:"></property>
+        <property name="SITE_RFIMG_BUTTON_TEXT"                  value="Right Footer Image:"></property>
+        <property name="SITE_FONTSTYLE_LABEL_TEXT"                  value="Font Colors and Style Sheets:"></property>
+        <property name="SITE_FONTSTYLENOTE_LABEL_TEXT"                  value="Note: stylesheets should be placed inside work/css to be selectable"></property>
+        <property name="SITE_INSTRUCTOR_LABEL_TEXT"                  value="Instructor"></property>
+        <property name="SITE_NAME_LABEL_TEXT"                  value="Name:"></property>
+        <property name="SITE_EMAIL_LABEL_TEXT"                  value="Email:"></property>
+        <property name="SITE_ROOM_LABEL_TEXT"                  value="Room:"></property>
+        <property name="SITE_HP_LABEL_TEXT"                  value="Home Page:"></property>
+        <property name="SITE_EXPAND_BUTTON_TEXT"                  value="+"></property>
+        <property name="SITE_OH_LABEL_TEXT"                  value=" Office Hours"></property>
         <property name="SITE_FALL_TEXT"                  value="Fall"></property>
         <property name="SITE_SPRING_TEXT"                  value="Spring"></property>
         <property name="SITE_SUMMER_TEXT"                  value="Summer"></property>
@@ -216,22 +217,24 @@
         <property name="DEFAULT_NAVBAR_TEXT"                  value="sbunavbar.png"></property>
         <property name="DEFAULT_LFIMG_TEXT"                  value="sbuleftfooter.jpeg"></property>
         <property name="DEFAULT_RFIMG_TEXT"                  value="sburightfooter.png"></property>
-        <property name="SITE_TITLE_TEXT_FIELD_TEXT"    value="Title"></property>
-        <property name="SITE_NAME_TEXT_FIELD_TEXT"    value="Name"></property>
-        <property name="SITE_EMAIL_TEXT_FIELD_TEXT"    value="Email"></property>
-        <property name="SITE_ROOM_TEXT_FIELD_TEXT"    value="Room"></property>
-        <property name="SITE_HP_TEXT_FIELD_TEXT"    value="Home Page"></property>
+        <property name="SITE_TITLE_TEXT_FIELD_PROMPT_TEXT"    value="Title"></property>
+        <property name="SITE_NAME_TEXT_FIELD_PROMPT_TEXT"    value="Name"></property>
+        <property name="SITE_EMAIL_TEXT_FIELD_PROMPT_TEXT"    value="Email"></property>
+        <property name="SITE_ROOM_TEXT_FIELD_PROMPT_TEXT"    value="Room"></property>
+        <property name="SITE_HP_TEXT_FIELD_PROMPT_TEXT"    value="Home Page"></property>
+        <property name="SITE_CHOOSE_IMAGE_TITLE"    value="Choose an Image"></property>
 
         <!-- THESE ARE FOR THE SYLLABUS TAB CONTROLS -->
-        <property name="SYL_DESC_LABEL"                       value=" Description:"></property>
-        <property name="SYL_TOPICS_LABEL"                       value=" Topics:"></property>
-        <property name="SYL_PREREQ_LABEL"                       value=" Prerequisites:"></property>
-        <property name="SYL_OUTCOMES_LABEL"                       value=" Outcomes:"></property>
-        <property name="SYL_TBOOK_LABEL"                       value=" Textbooks:"></property>
-        <property name="SYL_GRADED_LABEL"                       value=" Graded Components:"></property>
-        <property name="SYL_GRADINGNOTE_LABEL"                       value=" Grading Note:"></property>
-        <property name="SYL_AD_LABEL"                       value=" Academic Honesty:"></property>
-        <property name="SYL_SA_LABEL"                       value=" Special Assistance:"></property>
+        <property name="SYL_DESC_LABEL_TEXT"                       value=" Description:"></property>
+        <property name="SYL_DESC_BUTTON_TEXT"                       value="+"></property>
+        <property name="SYL_TOPICS_LABEL_TEXT"                       value=" Topics:"></property>
+        <property name="SYL_PREREQ_LABEL_TEXT"                       value=" Prerequisites:"></property>
+        <property name="SYL_OUTCOMES_LABEL_TEXT"                       value=" Outcomes:"></property>
+        <property name="SYL_TBOOK_LABEL_TEXT"                       value=" Textbooks:"></property>
+        <property name="SYL_GRADED_LABEL_TEXT"                       value=" Graded Components:"></property>
+        <property name="SYL_GRADINGNOTE_LABEL_TEXT"                       value=" Grading Note:"></property>
+        <property name="SYL_AD_LABEL_TEXT"                       value=" Academic Honesty:"></property>
+        <property name="SYL_SA_LABEL_TEXT"                       value=" Special Assistance:"></property>
 
         <!-- THESE ARE FOR THE MEETING TIMES TAB CONTROLS -->
         <property name="MT_LECTURE_HEADER_LABEL_TEXT"                       value=" Lectures"></property>
@@ -241,7 +244,7 @@
         <property name="MT_LECTURE_DAY_TABLE_COLUMN_TEXT"                       value="Day"></property>
         <property name="MT_LECTURE_TIME_TABLE_COLUMN_TEXT"                       value="Time"></property>
         <property name="MT_RECITATION_SECTION_TABLE_COLUMN_TEXT"                       value="Section"></property>
-        <property name="MT_LAB_SECTION_TABLE_COLUMN_TEXT"                       value="Section"></property>
+        <property name="MT_LAB_SECTION_TABLE_COLUMN_TEXT"                       value="Lab"></property>
         <property name="MT_RECITATION_DAYANDTIME_TABLE_COLUMN_TEXT"                       value="Day &amp; Time"></property>
         <property name="MT_LAB_DAYANDTIME_TABLE_COLUMN_TEXT"                       value="Day &amp; Time"></property>
         <property name="MT_LECTURE_ROOM_TABLE_COLUMN_TEXT"                       value="Room"></property>
@@ -299,7 +302,7 @@
     <property_options_list>
         <property_options name="LANGUAGE_OPTIONS">
             <option>English</option>
-            <option>Klingon</option>
+            <option>Spanish</option>
         </property_options>
     </property_options_list>
 </properties>

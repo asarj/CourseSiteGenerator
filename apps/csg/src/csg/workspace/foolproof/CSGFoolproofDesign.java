@@ -12,7 +12,9 @@ import static csg.CSGPropertyType.OH_NAME_TEXT_FIELD;
 import static csg.CSGPropertyType.OH_OFFICE_HOURS_TABLE_VIEW;
 import static csg.CSGPropertyType.OH_REMOVE_TA_BUTTON;
 import static csg.CSGPropertyType.OH_STARTTIME_COMBO_BOX;
+import static csg.CSGPropertyType.OH_TAS_TABLE_VIEW;
 import csg.data.CSGData;
+import csg.data.TeachingAssistantPrototype;
 import csg.data.TimeSlot;
 import static csg.workspace.style.OHStyle.CLASS_OH_TEXT_FIELD;
 import static csg.workspace.style.OHStyle.CLASS_OH_TEXT_FIELD_ERROR;
@@ -110,15 +112,18 @@ public class CSGFoolproofDesign implements FoolproofDesign {
         AppGUIModule gui = app.getGUIModule();
         CSGData data = (CSGData) app.getDataComponent();
         TableView<TimeSlot> officeHoursTableView = (TableView) gui.getGUINode(OH_OFFICE_HOURS_TABLE_VIEW);
+        TableView<TeachingAssistantPrototype> tasTableView = (TableView) gui.getGUINode(OH_TAS_TABLE_VIEW);
         Button removeTAButton = (Button) gui.getGUINode(OH_REMOVE_TA_BUTTON);
         boolean isTypeSelected = data.isTATypeSelected();
         if (!isTypeSelected) {
             removeTAButton.setDisable(true);
+            tasTableView.refresh();
             officeHoursTableView.refresh();
             return;
         } // A TYPE IS SELECTED SO WE'LL CONTINUE
         else {
             removeTAButton.setDisable(false);
+            tasTableView.refresh();
             officeHoursTableView.refresh();
             return;
         }

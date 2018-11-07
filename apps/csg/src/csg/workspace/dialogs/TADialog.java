@@ -170,12 +170,12 @@ public class TADialog extends Stage {
 
         // WE NOW KNOW SOMETHING HAS CHANGED
         // WE NEED A TRANSACTION FOR THE EDIT
-        EditTA_Transaction transaction = new EditTA_Transaction(taToEdit, name, email, type.toString());
+        EditTA_Transaction transaction = new EditTA_Transaction(app, taToEdit, name, email, type.toString());
         app.processTransaction(transaction);
         
         // MAKE SURE THE TABLES ARE USING THE CORRECT TYPES
         CSGData data = (CSGData)app.getDataComponent();
-        data.updateTAs();
+        data.updateTAsFromDialog();
         
         // CLOSE THE DIALOG
         this.hide();

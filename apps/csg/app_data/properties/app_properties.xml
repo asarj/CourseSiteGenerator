@@ -10,8 +10,8 @@
     <property_list>
         <!-- DESKTOP JAVA FRAMEWORK CONTROLS SETTINGS -->
         <property name="APP_TITLE"	    value="Course Site Generator"></property>
-        <property name="APP_BANNER"         value="OfficeHoursWelcomeBanner.png"></property>
-	<property name="APP_LOGO"	    value="OfficeHoursLogo.png"></property>
+        <property name="APP_BANNER"         value="CSGWelcomeBanner.png"></property>
+	<property name="APP_LOGO"	    value="CSGLogo.png"></property>
         <property name="APP_EXPORT_PAGE"    value="index.html"></property>
         <property name="APP_HELP_PAGE"      value="Help.html"></property>
         <property name="APP_ABOUT_PAGE"     value="About.html"></property>
@@ -74,13 +74,13 @@
         <!-- ENGLISH IS THE DEFAULT -->
         <property name="DEFAULT_LANGUAGE"               value="English"></property>
         <property name="ENGLISH_ABBREVIATION"           value="EN"></property>
-        <property name="KLINGON_ABBREVIATION"           value="TLH"></property>
+        <property name="SPANISH_ABBREVIATION"           value="ES"></property>
 
     </property_list>
     <property_options_list>
         <property_options name="LANGUAGE_OPTIONS">
             <option>English</option>
-            <option>Klingon</option>
+            <option>Spanish</option>
         </property_options>
     </property_options_list>
 </properties>

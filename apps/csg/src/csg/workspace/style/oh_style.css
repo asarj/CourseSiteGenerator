@@ -108,6 +108,9 @@
 .oh_pane {
     -fx-padding: 10;
 }
+.oh_pane_extra{
+    -fx-padding: 5;
+}
 .oh_box {
 
 }
@@ -233,7 +236,7 @@
     -fx-font-size: 16pt;
     -fx-font-weight: bold;
 }
-#reg_label {
+.reg_label {
     -fx-font-size: 13pt;
 }
 #app_button {
@@ -247,6 +250,13 @@
     -fx-font-weight: bold;
     -fx-border-radius: 10 10 10 10;
     -fx-background-radius: 10 10 10 10; 
+}
+.card_divider{
+    -fx-background-color: #ebebeb;
+    -fx-padding: 5 5 5 5;
+}
+.oh_cb{
+    
 }
 /*THIS IS WHERE I PUT THE CUSTOM CSS STYLING*/
 

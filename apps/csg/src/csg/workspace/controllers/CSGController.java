@@ -108,7 +108,7 @@ public class CSGController {
             taDialog.showEditDialog(taToEdit);
             TeachingAssistantPrototype editTA = taDialog.getEditTA();
             if (editTA != null) {
-                EditTA_Transaction transaction = new EditTA_Transaction(taToEdit, editTA.getName(), editTA.getEmail(), editTA.getType());
+                EditTA_Transaction transaction = new EditTA_Transaction(app, taToEdit, editTA.getName(), editTA.getEmail(), editTA.getType());
                 app.processTransaction(transaction);
             }
         }
@@ -139,11 +139,13 @@ public class CSGController {
         AppGUIModule gui = app.getGUIModule();
         CSGData data = (CSGData)app.getDataComponent();
         TableView<TimeSlot> officeHoursTableView = (TableView) gui.getGUINode(OH_OFFICE_HOURS_TABLE_VIEW);
+        TableView<TeachingAssistantPrototype> tasTableView = (TableView) gui.getGUINode(OH_TAS_TABLE_VIEW);
         if (data.isTASelected()) {
             TeachingAssistantPrototype taToRemove = data.getSelectedTA();
             HashMap<TimeSlot, ArrayList<DayOfWeek>> officeHours = data.getTATimeSlots(taToRemove);
             CutTA_Transaction transaction = new CutTA_Transaction((CSGApp)app, taToRemove, officeHours);
             app.processTransaction(transaction);
+            tasTableView.refresh();
             officeHoursTableView.refresh();
         }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
