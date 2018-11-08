@@ -422,12 +422,21 @@ public class CSGData implements AppDataComponent {
         tasTable.refresh();
     }
     
-    public void updateTAsFromDialog(TeachingAssistantPrototype oldta, TeachingAssistantPrototype newta) {
+    public void updateTAsFromDialog(TeachingAssistantPrototype oldta, String name, String email, String type) {
         AppGUIModule gui = app.getGUIModule();
         TableView tasTable = (TableView)gui.getGUINode(OH_TAS_TABLE_VIEW);
-        TAType type = getSelectedTypeFromDialog();
-        selectTAs(type);
-        allTAs.remove(oldta.getType(), oldta);
+        TeachingAssistantPrototype newTA = new TeachingAssistantPrototype(name, email, type.equals(TAType.Undergraduate.toString()) ? TAType.Undergraduate : TAType.Graduate);
+//        selectTAs(type);
+            TAType oldtaType = TAType.valueOf(oldta.getType());
+            ArrayList<TeachingAssistantPrototype> tas = allTAs.get(oldtaType);
+            tas.remove(oldta);
+//            teachingAssistants.remove(oldta);
+            this.updateTAs();
+            TAType newtaType = TAType.valueOf(newTA.getType());
+            ArrayList<TeachingAssistantPrototype> tas1 = allTAs.get(newtaType);
+            tas1.add(newTA);
+            this.updateTAs();
+//        allTAs.remove(oldta.getType(), oldta);
         
         tasTable.refresh();
     }

@@ -1,3 +1,4 @@
+cse-work/cse.json
 CSE114_TAs-work/CSE114_TAs.json
 CSE219F18-work/CSE219_TAs.json
 CSE114F18-work/CSE114_TAs.json

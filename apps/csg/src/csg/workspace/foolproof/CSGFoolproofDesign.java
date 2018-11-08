@@ -114,18 +114,18 @@ public class CSGFoolproofDesign implements FoolproofDesign {
         TableView<TimeSlot> officeHoursTableView = (TableView) gui.getGUINode(OH_OFFICE_HOURS_TABLE_VIEW);
         TableView<TeachingAssistantPrototype> tasTableView = (TableView) gui.getGUINode(OH_TAS_TABLE_VIEW);
         Button removeTAButton = (Button) gui.getGUINode(OH_REMOVE_TA_BUTTON);
-        boolean isTypeSelected = data.isTATypeSelected();
+        boolean isTypeSelected = data.isTASelected();
         if (!isTypeSelected) {
             removeTAButton.setDisable(true);
             tasTableView.refresh();
             officeHoursTableView.refresh();
-            return;
+            
         } // A TYPE IS SELECTED SO WE'LL CONTINUE
         else {
             removeTAButton.setDisable(false);
             tasTableView.refresh();
             officeHoursTableView.refresh();
-            return;
+            
         }
     }
 
@@ -140,12 +140,18 @@ public class CSGFoolproofDesign implements FoolproofDesign {
             
         }
         else{
-            Alert alert = new Alert(AlertType.ERROR, "Start Date cannot be greater than the end date!", ButtonType.OK);
-            alert.showAndWait();
-
-            if (alert.getResult() == ButtonType.OK) {
-                alert.close();
+            if(te < ts){
+                timeStart.setDisable(true);
             }
+//            else if(te > ts){
+//                timeEnd.setDisable(true);
+//            }
+//            Alert alert = new Alert(AlertType.ERROR, "Start Date cannot be greater than the end date!", ButtonType.OK);
+//            alert.showAndWait();
+//
+//            if (alert.getResult() == ButtonType.OK) {
+//                alert.close();
+//            }
         }
     }
 }

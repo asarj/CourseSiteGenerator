@@ -161,7 +161,17 @@ public class CSGController {
         int ts = timeStart.getSelectionModel().getSelectedIndex();
         int te = timeEnd.getSelectionModel().getSelectedIndex();
         if(ts <= te){
+            timeStart.setDisable(false);
+            timeEnd.setDisable(false);
             data.resetOHTable(ts, te);
+        }
+        else{
+//            if(te < ts){
+////                timeStart.setDisable(true);
+//            }
+//            else if(ts > te){
+////                timeEnd.setDisable(true);
+//            }
         }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }

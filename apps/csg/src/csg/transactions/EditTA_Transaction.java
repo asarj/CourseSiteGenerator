@@ -43,7 +43,7 @@ public class EditTA_Transaction implements jTPS_Transaction {
         taToEdit.setType(newType);
 //        TableView<TeachingAssistantPrototype> taTableView = (TableView)gui.getGUINode(OH_TAS_TABLE_VIEW);
         if(!newType.equals(oldType)){
-            data.updateTAsFromDialog(oldTA, taToEdit);    
+            data.updateTAsFromDialog(oldTA, newName, newEmail, newType);    
         }
         ((TableView)app.getGUIModule().getGUINode(OH_TAS_TABLE_VIEW)).refresh();
     }

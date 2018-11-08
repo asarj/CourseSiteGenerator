@@ -485,6 +485,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
 
         siteTabVBox.setStyle("-fx-background-color: #ffc581;");
         siteTabVBox.setPadding(new Insets(10, 10, 10, 10));
+        siteTabScrollPane.setStyle("-fx-background-color: #ffc581;");
         siteTabScrollPane.setContent(siteTabVBox);
 //        siteTabScrollPane.setFitToHeight(true);
         siteTabScrollPane.setFitToWidth(true);
@@ -1183,9 +1184,11 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         ComboBox timeStart = (ComboBox)gui.getGUINode(OH_STARTTIME_COMBO_BOX);
         ComboBox timeEnd = (ComboBox)gui.getGUINode(OH_ENDTIME_COMBO_BOX);
         timeStart.setOnAction(e->{
+//            controller.processUpdateEndOptions();
             controller.processUpdateOHTable();
         });
         timeEnd.setOnAction(ev->{
+//            controller.processUpdateStartOptions();
             controller.processUpdateOHTable();
         });
     }

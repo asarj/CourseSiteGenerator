@@ -32,6 +32,7 @@ public class TADialog extends Stage {
 
     TeachingAssistantPrototype taToEdit;
     TeachingAssistantPrototype editTA;
+    TeachingAssistantPrototype oldta;
 
     EventHandler cancelHandler;
     EventHandler editTAOkHandler;
@@ -175,16 +176,18 @@ public class TADialog extends Stage {
         
         // MAKE SURE THE TABLES ARE USING THE CORRECT TYPES
         CSGData data = (CSGData)app.getDataComponent();
-        data.updateTAsFromDialog(taToEdit);
+//        TeachingAssistantPrototype oldTA = data.getSelectedTA();
+        data.updateTAsFromDialog(oldta, name, email, type.toString());
         
         // CLOSE THE DIALOG
         this.hide();
     }
 
     public void showEditDialog(TeachingAssistantPrototype initTAToEdit) {
+        CSGData data = (CSGData)app.getDataComponent();
         // WE'LL NEED THIS FOR VALIDATION
         taToEdit = initTAToEdit;
-        
+        oldta = new TeachingAssistantPrototype(initTAToEdit.getName(), initTAToEdit.getEmail(), initTAToEdit.getType().equals(TAType.Undergraduate.toString())?TAType.Undergraduate : TAType.Graduate);
         // WE'LL ONLY PROCEED IF THERE IS A LINE TO EDIT
         editTA = null;
         
