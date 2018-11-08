@@ -218,10 +218,10 @@
         <property name="DEFAULT_LFIMG_TEXT"                  value="sbuleftfooter.jpeg"></property>
         <property name="DEFAULT_RFIMG_TEXT"                  value="sburightfooter.png"></property>
         <property name="SITE_TITLE_TEXT_FIELD_PROMPT_TEXT"    value="Título"></property>
-        <property name="SITE_NAME_TEXT_FIELD_TEXT"    value="Nombre"></property>
-        <property name="SITE_EMAIL_TEXT_FIELD_TEXT"    value="Email"></property>
-        <property name="SITE_ROOM_TEXT_FIELD_TEXT"    value="Habitación"></property>
-        <property name="SITE_HP_TEXT_FIELD_TEXT"    value="Página de inicio"></property>
+        <property name="SITE_NAME_TEXT_FIELD_PROMPT_TEXT"    value="Nombre"></property>
+        <property name="SITE_EMAIL_TEXT_FIELD_PROMPT_TEXT"    value="Email"></property>
+        <property name="SITE_ROOM_TEXT_FIELD_PROMPT_TEXT"    value="Habitación"></property>
+        <property name="SITE_HP_TEXT_FIELD_PROMPT_TEXT"    value="Página de inicio"></property>
         <property name="SITE_CHOOSE_IMAGE_TITLE"    value="Elige una imagen"></property>
 
         <!-- THESE ARE FOR THE SYLLABUS TAB CONTROLS -->
@@ -234,6 +234,15 @@
         <property name="SYL_GRADINGNOTE_LABEL_TEXT"                       value=" Nota de calificación:"></property>
         <property name="SYL_AD_LABEL_TEXT"                       value=" Honestidad académica:"></property>
         <property name="SYL_SA_LABEL_TEXT"                       value=" Asistencia especial:"></property>
+        <property name="SYL_DESC_BUTTON_TEXT"                       value="+"></property>
+        <property name="SYL_TOPICS_BUTTON_TEXT"                       value="+"></property>
+        <property name="SYL_PREREQ_BUTTON_TEXT"                       value="+"></property>
+        <property name="SYL_OUTCOMES_BUTTON_TEXT"                       value="+"></property>
+        <property name="SYL_TBOOK_BUTTON_TEXT"                       value="+"></property>
+        <property name="SYL_GRADED_BUTTON_TEXT"                       value="+"></property>
+        <property name="SYL_GRADINGNOTE_BUTTON_TEXT"                       value="+"></property>
+        <property name="SYL_AD_BUTTON_TEXT"                       value="+"></property>
+        <property name="SYL_SA_BUTTON_TEXT"                       value="+"></property>
 
         <!-- THESE ARE FOR THE MEETING TIMES TAB CONTROLS -->
         <property name="MT_LECTURE_HEADER_LABEL_TEXT"                       value=" Conferencias"></property>

@@ -438,7 +438,8 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         blank3.setPadding(new Insets(5,5,5,5));
         siteTabVBox.getChildren().addAll(styleContainer, blank3);
         
-        VBox instructorVBox = siteBuilder.buildVBox(SITE_INST_VBOX, null, CLASS_OH_PANE, ENABLED);
+        VBox instructorVBox = new VBox();
+                //siteBuilder.buildVBox(SITE_INST_VBOX, siteTabVBox, CLASS_OH_PANE, ENABLED);
         GridPane instructorBox = siteBuilder.buildGridPane(SITE_INSTBOX_GRID_PANE, instructorVBox, CLASS_OH_PANE, ENABLED);
         Label instructorLabel = siteBuilder.buildLabel(SITE_INSTRUCTOR_LABEL, instructorBox, 0, 0, 1, 1, CLASS_OH_HEADER_LABEL, ENABLED);
         Label nameLabel = siteBuilder.buildLabel(SITE_NAME_LABEL, instructorBox, 0, 1, 1, 1, CLASS_REG_LABEL, ENABLED);
@@ -450,10 +451,12 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         Label hpLabel = siteBuilder.buildLabel(SITE_HP_LABEL, instructorBox, 2, 2, 1, 1, CLASS_REG_LABEL, ENABLED);
         TextField siteHPTF = siteBuilder.buildTextField(SITE_HP_TEXT_FIELD, instructorBox, 3, 2, 1, 1, CLASS_REG_LABEL, ENABLED);
 
-        HBox ohDetail = siteBuilder.buildHBox(SITE_INST_OH_DETAILS, siteTabVBox, CLASS_OH_PANE, ENABLED);
+        HBox ohDetail = new HBox();
+                //siteBuilder.buildHBox(SITE_INST_OH_DETAILS, siteTabVBox, CLASS_OH_PANE, ENABLED);
         Button siteInstructorOHExpandButton = siteBuilder.buildTextButton(SITE_EXPAND_BUTTON, ohDetail, CLASS_APP_BUTTON, ENABLED);
         Label ohLabel = siteBuilder.buildLabel(SITE_OH_LABEL, ohDetail, CLASS_OH_HEADER_LABEL, ENABLED);
-        VBox hiddenTA = siteBuilder.buildVBox(SITE_INST_TA_DETAILS, siteTabVBox, CLASS_OH_PANE, ENABLED);
+        VBox hiddenTA = new VBox();
+                // siteBuilder.buildVBox(SITE_INST_TA_DETAILS, siteTabVBox, CLASS_OH_PANE, ENABLED);
         TextArea instructorOHJsonArea = new TextArea();
 
         instructorOHJsonArea.setText("["
@@ -475,13 +478,13 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         hiddenTA.getChildren().addAll(emptyLbl, instructorOHJsonArea);
         hiddenTA.setStyle("-fx-background-color: #ebebeb;");
         instructorBox.setStyle("-fx-background-color: #ebebeb;");
-        instructorBox.setPadding(new Insets(10, 10, 10, 10));
+//        instructorBox.setPadding(new Insets(10, 10, 10, 10));
         
-
+//        instructorBox.getChildren().addAll(ohDetail, hiddenTA);
+        siteTabVBox.getChildren().addAll(instructorBox, ohDetail, hiddenTA);
 
         siteTabVBox.setStyle("-fx-background-color: #ffc581;");
         siteTabVBox.setPadding(new Insets(10, 10, 10, 10));
-        
         siteTabScrollPane.setContent(siteTabVBox);
 //        siteTabScrollPane.setFitToHeight(true);
         siteTabScrollPane.setFitToWidth(true);
@@ -514,11 +517,13 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         syllabusTabVBox.getChildren().addAll(descTA, blank4);
 //        syllabusTabVBox.getChildren().addAll(descBox, descTA, blank4);
         
-        GridPane topicBox = new GridPane();
+
+        GridPane topicBox = syllabusBuilder.buildGridPane(SYL_TOPICBOX_GRID_PANE, syllabusTabVBox, CLASS_OH_PANE, ENABLED);
         topicBox.setStyle("-fx-background-color: #ebebeb;");
-        Label sylTopic = new Label(props.getProperty(SYL_TOPICS_LABEL));
-        sylTopic.setId("section_header_label");
-        Button sylTopicExpandButton = new Button("+");
+        HBox topicDetail = syllabusBuilder.buildHBox(SYL_TOPIC_HBOX, topicBox, 0, 0, 1, 2, CLASS_OH_PANE, ENABLED);
+        Button sylTopicExpandButton = syllabusBuilder.buildTextButton(SYL_TOPICS_BUTTON, topicDetail, CLASS_APP_BUTTON, ENABLED);
+        Label sylTopic = syllabusBuilder.buildLabel(SYL_TOPICS_LABEL, topicDetail, CLASS_OH_HEADER_LABEL, ENABLED);
+
         TextArea topicTA = new TextArea();
         topicTA.setText("["
                         + "\n\t\"\""
@@ -530,22 +535,23 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             topicTA.setManaged(sylTopicExpandButton.getText().equals("-")? true: false);
             topicTA.setVisible(sylTopicExpandButton.getText().equals("-")? true: false);
         });
-        HBox topicDetail = new HBox();
-        topicDetail.getChildren().addAll(sylTopicExpandButton, sylTopic);
-        topicBox.add(topicDetail, 0, 1);
+//        HBox topicDetail = new HBox();
+//        topicDetail.getChildren().addAll(sylTopicExpandButton, sylTopic);
+//        topicBox.add(topicDetail, 0, 1);
         topicBox.setPadding(new Insets(10, 10, 10, 10));
         topicBox.setVgap(5);
         HBox blank5 = new HBox();
         blank5.setStyle("-fx-background-color: #ffc581;");
         blank5.setPadding(new Insets(5,5,5,5));
+        syllabusTabVBox.getChildren().addAll(topicTA, blank5);
         
-        syllabusTabVBox.getChildren().addAll(topicBox, topicTA, blank5);
         
-        GridPane prereqBox = new GridPane();
+        GridPane prereqBox = syllabusBuilder.buildGridPane(SYL_PRBOX_GRID_PANE, syllabusTabVBox, CLASS_OH_PANE, ENABLED);
         prereqBox.setStyle("-fx-background-color: #ebebeb;");
-        Label prereqLabel = new Label(props.getProperty(SYL_PREREQ_LABEL));
-        prereqLabel.setId("section_header_label");
-        Button sylPrereqExpandButton = new Button("+");
+        HBox prereqDetail = syllabusBuilder.buildHBox(SYL_PR_HBOX, prereqBox, 0, 0, 1, 2, CLASS_OH_PANE, ENABLED);
+        Button sylPrereqExpandButton = syllabusBuilder.buildTextButton(SYL_PREREQ_BUTTON, prereqDetail, CLASS_APP_BUTTON, ENABLED);
+        Label prereqLabel = syllabusBuilder.buildLabel(SYL_PREREQ_LABEL, prereqDetail, CLASS_OH_HEADER_LABEL, ENABLED);
+
         TextArea prereqTA = new TextArea();
         prereqTA.setVisible(false);
         prereqTA.setManaged(false);
@@ -554,21 +560,22 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             prereqTA.setManaged(sylPrereqExpandButton.getText().equals("-")? true: false);
             prereqTA.setVisible(sylPrereqExpandButton.getText().equals("-")? true: false);
         });
-        HBox prereqDetail = new HBox();
-        prereqDetail.getChildren().addAll(sylPrereqExpandButton, prereqLabel);
-        prereqBox.add(prereqDetail, 0, 1);
+//        prereqDetail.getChildren().addAll(sylPrereqExpandButton, prereqLabel);
+//        prereqBox.add(prereqDetail, 0, 1);
         prereqBox.setPadding(new Insets(10, 10, 10, 10));
         prereqBox.setVgap(5);
         HBox blank6 = new HBox();
         blank6.setStyle("-fx-background-color: #ffc581;");
         blank6.setPadding(new Insets(5,5,5,5));
-        syllabusTabVBox.getChildren().addAll(prereqBox, prereqTA, blank6);
+        syllabusTabVBox.getChildren().addAll(prereqTA, blank6);
         
-        GridPane outcomesBox = new GridPane();
+        
+        GridPane outcomesBox = syllabusBuilder.buildGridPane(SYL_OCBOX_GRID_PANE, syllabusTabVBox, CLASS_OH_PANE, ENABLED);
         outcomesBox.setStyle("-fx-background-color: #ebebeb;");
-        Label outcomesLabel = new Label(props.getProperty(SYL_OUTCOMES_LABEL));
-        outcomesLabel.setId("section_header_label");
-        Button sylOutcomesExpandButton = new Button("+");
+        HBox outcomesDetail = syllabusBuilder.buildHBox(SYL_OC_HBOX, outcomesBox, 0, 0, 1, 2, CLASS_OH_PANE, ENABLED);
+        Button sylOutcomesExpandButton = syllabusBuilder.buildTextButton(SYL_OUTCOMES_BUTTON, outcomesDetail, CLASS_APP_BUTTON, ENABLED);
+        Label outcomesLabel = syllabusBuilder.buildLabel(SYL_OUTCOMES_LABEL, outcomesDetail, CLASS_OH_HEADER_LABEL, ENABLED);
+
         TextArea outcomesTA = new TextArea();
         outcomesTA.setText("["
                             + "\n\t\"\""
@@ -580,21 +587,22 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             outcomesTA.setManaged(sylOutcomesExpandButton.getText().equals("-")? true: false);
             outcomesTA.setVisible(sylOutcomesExpandButton.getText().equals("-")? true: false);
         });
-        HBox outcomesDetail = new HBox();
-        outcomesDetail.getChildren().addAll(sylOutcomesExpandButton, outcomesLabel);
-        outcomesBox.add(outcomesDetail, 0, 1);
+//        outcomesDetail.getChildren().addAll(sylOutcomesExpandButton, outcomesLabel);
+//        outcomesBox.add(outcomesDetail, 0, 1);
         outcomesBox.setPadding(new Insets(10, 10, 10, 10));
         outcomesBox.setVgap(5);
         HBox blank7 = new HBox();
         blank7.setStyle("-fx-background-color: #ffc581;");
         blank7.setPadding(new Insets(5,5,5,5));
-        syllabusTabVBox.getChildren().addAll(outcomesBox, outcomesTA, blank7);
+        syllabusTabVBox.getChildren().addAll(outcomesTA, blank7);
         
-        GridPane textbookBox = new GridPane();
+        
+        GridPane textbookBox = syllabusBuilder.buildGridPane(SYL_TBBOX_GRID_PANE, syllabusTabVBox, CLASS_OH_PANE, ENABLED);
         textbookBox.setStyle("-fx-background-color: #ebebeb;");
-        Label textbookLabel = new Label(props.getProperty(SYL_TBOOK_LABEL));
-        textbookLabel.setId("section_header_label");
-        Button sylTextbooksExpandButton = new Button("+");
+        HBox textbooksDetail = syllabusBuilder.buildHBox(SYL_TB_HBOX, textbookBox, 0, 0, 1, 2, CLASS_OH_PANE, ENABLED);
+        Button sylTextbooksExpandButton = syllabusBuilder.buildTextButton(SYL_TBOOK_BUTTON, textbooksDetail, CLASS_APP_BUTTON, ENABLED);
+        Label textbookLabel = syllabusBuilder.buildLabel(SYL_TBOOK_LABEL, textbooksDetail, CLASS_OH_HEADER_LABEL, ENABLED);
+        
         TextArea textbooksTA = new TextArea();
         textbooksTA.setText("[\n\t{"
                              + "\n\t\t\"title\":\"\","
@@ -613,21 +621,22 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             textbooksTA.setManaged(sylTextbooksExpandButton.getText().equals("-")? true: false);
             textbooksTA.setVisible(sylTextbooksExpandButton.getText().equals("-")? true: false);
         });
-        HBox textbooksDetail = new HBox();
-        textbooksDetail.getChildren().addAll(sylTextbooksExpandButton, textbookLabel);
-        textbookBox.add(textbooksDetail, 0, 1);
+//        textbooksDetail.getChildren().addAll(sylTextbooksExpandButton, textbookLabel);
+//        textbookBox.add(textbooksDetail, 0, 1);
         textbookBox.setPadding(new Insets(10, 10, 10, 10));
         textbookBox.setVgap(5);
         HBox blank8 = new HBox();
         blank8.setStyle("-fx-background-color: #ffc581;");
         blank8.setPadding(new Insets(5,5,5,5));
-        syllabusTabVBox.getChildren().addAll(textbookBox, textbooksTA, blank8); 
+        syllabusTabVBox.getChildren().addAll(textbooksTA, blank8); 
         
-        GridPane gradedComponentsBox = new GridPane();
+        
+        GridPane gradedComponentsBox = syllabusBuilder.buildGridPane(SYL_GCBOX_GRID_PANE, syllabusTabVBox, CLASS_OH_PANE, ENABLED);
         gradedComponentsBox.setStyle("-fx-background-color: #ebebeb;");
-        Label gradedComponentsLabel = new Label(props.getProperty(SYL_GRADED_LABEL));
-        gradedComponentsLabel.setId("section_header_label");
-        Button sylGCExpandButton = new Button("+");
+        HBox gcDetail = syllabusBuilder.buildHBox(SYL_GC_HBOX, gradedComponentsBox, 0, 0, 1, 2, CLASS_OH_PANE, ENABLED);
+        Button sylGCExpandButton = syllabusBuilder.buildTextButton(SYL_GRADED_BUTTON, gcDetail, CLASS_APP_BUTTON, ENABLED);
+        Label gradedComponentsLabel = syllabusBuilder.buildLabel(SYL_GRADED_LABEL, gcDetail, CLASS_OH_HEADER_LABEL, ENABLED);
+//        gradedComponentsLabel.setId("section_header_label");
         TextArea gcTA = new TextArea();
         gcTA.setText("["
                     + "\n\t{"
@@ -643,21 +652,22 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             gcTA.setManaged(sylGCExpandButton.getText().equals("-")? true: false);
             gcTA.setVisible(sylGCExpandButton.getText().equals("-")? true: false);
         });
-        HBox gcDetail = new HBox();
-        gcDetail.getChildren().addAll(sylGCExpandButton, gradedComponentsLabel);
-        gradedComponentsBox.add(gcDetail, 0, 1);
+//        gcDetail.getChildren().addAll(sylGCExpandButton, gradedComponentsLabel);
+//        gradedComponentsBox.add(gcDetail, 0, 1);
         gradedComponentsBox.setPadding(new Insets(10, 10, 10, 10));
         gradedComponentsBox.setVgap(5);
         HBox blank9 = new HBox();
         blank9.setStyle("-fx-background-color: #ffc581;");
         blank9.setPadding(new Insets(5,5,5,5));
-        syllabusTabVBox.getChildren().addAll(gradedComponentsBox, gcTA, blank9);
+        syllabusTabVBox.getChildren().addAll(gcTA, blank9);
         
-        GridPane gradingNoteBox = new GridPane();
+        
+        GridPane gradingNoteBox = syllabusBuilder.buildGridPane(SYL_GNBOX_GRID_PANE, syllabusTabVBox, CLASS_OH_PANE, ENABLED);
         gradingNoteBox.setStyle("-fx-background-color: #ebebeb;");
-        Label gradingNoteLabel = new Label(props.getProperty(SYL_GRADINGNOTE_LABEL));
-        gradingNoteLabel.setId("section_header_label");
-        Button sylGradingNoteExpandButton = new Button("+");
+        HBox gradingNoteDetail = syllabusBuilder.buildHBox(SYL_GN_HBOX, gradingNoteBox, 0, 0, 1, 2, CLASS_OH_PANE, ENABLED);
+        Button sylGradingNoteExpandButton = syllabusBuilder.buildTextButton(SYL_GRADINGNOTE_BUTTON, gradingNoteDetail, CLASS_APP_BUTTON, ENABLED);
+        Label gradingNoteLabel = syllabusBuilder.buildLabel(SYL_GRADINGNOTE_LABEL, gradingNoteDetail, CLASS_OH_HEADER_LABEL, ENABLED);
+
         TextArea gradingNoteTA = new TextArea();
         gradingNoteTA.setVisible(false);
         gradingNoteTA.setManaged(false);
@@ -666,21 +676,22 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             gradingNoteTA.setManaged(sylGradingNoteExpandButton.getText().equals("-")? true: false);
             gradingNoteTA.setVisible(sylGradingNoteExpandButton.getText().equals("-")? true: false);
         });
-        HBox gradingNoteDetail = new HBox();
-        gradingNoteDetail.getChildren().addAll(sylGradingNoteExpandButton, gradingNoteLabel);
-        gradingNoteBox.add(gradingNoteDetail, 0, 1);
+//        gradingNoteDetail.getChildren().addAll(sylGradingNoteExpandButton, gradingNoteLabel);
+//        gradingNoteBox.add(gradingNoteDetail, 0, 1);
         gradingNoteBox.setPadding(new Insets(10, 10, 10, 10));
         gradingNoteBox.setVgap(5);
         HBox blank10 = new HBox();
         blank10.setStyle("-fx-background-color: #ffc581;");
         blank10.setPadding(new Insets(5,5,5,5));
-        syllabusTabVBox.getChildren().addAll(gradingNoteBox, gradingNoteTA, blank10);
+        syllabusTabVBox.getChildren().addAll(gradingNoteTA, blank10);
         
-        GridPane adBox = new GridPane();
+        
+        GridPane adBox = syllabusBuilder.buildGridPane(SYL_AD_GRID_PANE, syllabusTabVBox, CLASS_OH_PANE, ENABLED);
         adBox.setStyle("-fx-background-color: #ebebeb;");
-        Label adLabel = new Label(props.getProperty(SYL_AD_LABEL));
-        adLabel.setId("section_header_label");
-        Button sylADExpandButton = new Button("+");
+        HBox adDetail = syllabusBuilder.buildHBox(SYL_AD_HBOX, adBox, 0, 0, 1, 2, CLASS_OH_PANE, ENABLED);
+        Button sylADExpandButton = syllabusBuilder.buildTextButton(SYL_AD_BUTTON, adDetail, CLASS_APP_BUTTON, ENABLED);
+        Label adLabel = syllabusBuilder.buildLabel(SYL_AD_LABEL, adDetail, CLASS_OH_HEADER_LABEL, ENABLED);
+
         TextArea adTA = new TextArea();
         adTA.setVisible(false);
         adTA.setManaged(false);
@@ -689,21 +700,22 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             adTA.setManaged(sylADExpandButton.getText().equals("-")? true: false);
             adTA.setVisible(sylADExpandButton.getText().equals("-")? true: false);
         });
-        HBox adDetail = new HBox();
-        adDetail.getChildren().addAll(sylADExpandButton, adLabel);
-        adBox.add(adDetail, 0, 1);
+//        adDetail.getChildren().addAll(sylADExpandButton, adLabel);
+//        adBox.add(adDetail, 0, 1);
         adBox.setPadding(new Insets(10, 10, 10, 10));
         adBox.setVgap(5);
         HBox blank11 = new HBox();
         blank11.setStyle("-fx-background-color: #ffc581;");
         blank11.setPadding(new Insets(5,5,5,5));
-        syllabusTabVBox.getChildren().addAll(adBox, adTA, blank11);
+        syllabusTabVBox.getChildren().addAll(adTA, blank11);
         
-        GridPane saBox = new GridPane();
+        
+        GridPane saBox = syllabusBuilder.buildGridPane(SYL_SA_GRID_PANE, syllabusTabVBox, CLASS_OH_PANE, ENABLED);
         saBox.setStyle("-fx-background-color: #ebebeb;");
-        Label saLabel = new Label(props.getProperty(SYL_SA_LABEL));
-        saLabel.setId("section_header_label");
-        Button sylSAExpandButton = new Button("+");
+        HBox saDetail = syllabusBuilder.buildHBox(SYL_SA_HBOX, saBox, 0, 0, 1, 2, CLASS_OH_PANE, ENABLED);
+        Button sylSAExpandButton = syllabusBuilder.buildTextButton(SYL_SA_BUTTON, saDetail, CLASS_APP_BUTTON, ENABLED);
+        Label saLabel = syllabusBuilder.buildLabel(SYL_SA_LABEL, saDetail, CLASS_OH_HEADER_LABEL, ENABLED);
+
         TextArea saTA = new TextArea();
         saTA.setVisible(false);
         saTA.setManaged(false);
@@ -712,12 +724,11 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             saTA.setManaged(sylSAExpandButton.getText().equals("-")? true: false);
             saTA.setVisible(sylSAExpandButton.getText().equals("-")? true: false);
         });
-        HBox saDetail = new HBox();
-        saDetail.getChildren().addAll(sylSAExpandButton, saLabel);
-        saBox.add(saDetail, 0, 1);
+//        saDetail.getChildren().addAll(sylSAExpandButton, saLabel);
+//        saBox.add(saDetail, 0, 1);
         saBox.setPadding(new Insets(10, 10, 10, 10));
         saBox.setVgap(5);
-        syllabusTabVBox.getChildren().addAll(saBox, saTA);  
+        syllabusTabVBox.getChildren().addAll(saTA);  
        
         syllabusTabVBox.setStyle("-fx-background-color: #ffc581;");
         syllabusTabVBox.setPadding(new Insets(10, 10, 10, 10));
@@ -1064,6 +1075,8 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         
         //----------------------------------------------PUTS EVERYTHING TOGETHER--------------------------------------------------//
         workspace = new BorderPane();
+        tabs.prefWidthProperty().bind(workspace.widthProperty());
+        tabs.tabMinWidthProperty().bind(workspace.widthProperty().divide(tabs.getTabs().size()).subtract(20));
 //        tabs.minWidthProperty().bind(workspace.widthProperty().divide(5));
         // AND PUT EVERYTHING IN THE WORKSPACE
         ((BorderPane) workspace).setCenter(tabs);

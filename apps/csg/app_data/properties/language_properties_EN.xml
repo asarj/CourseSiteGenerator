@@ -226,7 +226,6 @@
 
         <!-- THESE ARE FOR THE SYLLABUS TAB CONTROLS -->
         <property name="SYL_DESC_LABEL_TEXT"                       value=" Description:"></property>
-        <property name="SYL_DESC_BUTTON_TEXT"                       value="+"></property>
         <property name="SYL_TOPICS_LABEL_TEXT"                       value=" Topics:"></property>
         <property name="SYL_PREREQ_LABEL_TEXT"                       value=" Prerequisites:"></property>
         <property name="SYL_OUTCOMES_LABEL_TEXT"                       value=" Outcomes:"></property>
@@ -235,6 +234,16 @@
         <property name="SYL_GRADINGNOTE_LABEL_TEXT"                       value=" Grading Note:"></property>
         <property name="SYL_AD_LABEL_TEXT"                       value=" Academic Honesty:"></property>
         <property name="SYL_SA_LABEL_TEXT"                       value=" Special Assistance:"></property>
+        <!-- -->
+        <property name="SYL_DESC_BUTTON_TEXT"                       value="+"></property>
+        <property name="SYL_TOPICS_BUTTON_TEXT"                       value="+"></property>
+        <property name="SYL_PREREQ_BUTTON_TEXT"                       value="+"></property>
+        <property name="SYL_OUTCOMES_BUTTON_TEXT"                       value="+"></property>
+        <property name="SYL_TBOOK_BUTTON_TEXT"                       value="+"></property>
+        <property name="SYL_GRADED_BUTTON_TEXT"                       value="+"></property>
+        <property name="SYL_GRADINGNOTE_BUTTON_TEXT"                       value="+"></property>
+        <property name="SYL_AD_BUTTON_TEXT"                       value="+"></property>
+        <property name="SYL_SA_BUTTON_TEXT"                       value="+"></property>
 
         <!-- THESE ARE FOR THE MEETING TIMES TAB CONTROLS -->
         <property name="MT_LECTURE_HEADER_LABEL_TEXT"                       value=" Lectures"></property>

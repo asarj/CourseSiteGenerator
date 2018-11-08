@@ -175,7 +175,7 @@ public class TADialog extends Stage {
         
         // MAKE SURE THE TABLES ARE USING THE CORRECT TYPES
         CSGData data = (CSGData)app.getDataComponent();
-        data.updateTAsFromDialog();
+        data.updateTAsFromDialog(taToEdit);
         
         // CLOSE THE DIALOG
         this.hide();

@@ -1,10 +1,12 @@
 package csg.transactions;
 
 import csg.CSGApp;
+import static csg.CSGPropertyType.OH_TAS_TABLE_VIEW;
 import csg.data.CSGData;
 import java.time.LocalDate;
 import jtps.jTPS_Transaction;
 import csg.data.TeachingAssistantPrototype;
+import javafx.scene.control.TableView;
 
 /**
  *
@@ -12,6 +14,7 @@ import csg.data.TeachingAssistantPrototype;
  */
 public class EditTA_Transaction implements jTPS_Transaction {
     CSGApp app;
+    TeachingAssistantPrototype oldTA;
     TeachingAssistantPrototype taToEdit;
     String oldName, newName;
     String oldEmail, newEmail;
@@ -24,9 +27,11 @@ public class EditTA_Transaction implements jTPS_Transaction {
         oldName = initTAToEdit.getName();
         oldEmail = initTAToEdit.getEmail();
         oldType = initTAToEdit.getType();
+        oldTA = initTAToEdit;
         newName = name;
         newEmail = email;
         newType = type;
+            
     }
 
 
@@ -36,7 +41,11 @@ public class EditTA_Transaction implements jTPS_Transaction {
         taToEdit.setName(newName);
         taToEdit.setEmail(newEmail);
         taToEdit.setType(newType);
-        data.updateTAs();
+//        TableView<TeachingAssistantPrototype> taTableView = (TableView)gui.getGUINode(OH_TAS_TABLE_VIEW);
+        if(!newType.equals(oldType)){
+            data.updateTAsFromDialog(oldTA, taToEdit);    
+        }
+        ((TableView)app.getGUIModule().getGUINode(OH_TAS_TABLE_VIEW)).refresh();
     }
 
     @Override
@@ -45,6 +54,6 @@ public class EditTA_Transaction implements jTPS_Transaction {
         taToEdit.setName(oldName);
         taToEdit.setEmail(oldEmail);
         taToEdit.setType(oldType);
-        data.updateTAs();
+        ((TableView)app.getGUIModule().getGUINode(OH_TAS_TABLE_VIEW)).refresh();
     }
 }

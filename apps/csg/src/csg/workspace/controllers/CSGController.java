@@ -26,6 +26,7 @@ import csg.data.TimeSlot.DayOfWeek;
 import csg.transactions.AddTA_Transaction;
 import csg.transactions.CutTA_Transaction;
 import csg.transactions.EditTA_Transaction;
+import csg.transactions.RemoveTA_Transaction;
 import csg.transactions.ToggleOfficeHours_Transaction;
 import csg.workspace.dialogs.TADialog;
 import java.util.ArrayList;
@@ -143,7 +144,7 @@ public class CSGController {
         if (data.isTASelected()) {
             TeachingAssistantPrototype taToRemove = data.getSelectedTA();
             HashMap<TimeSlot, ArrayList<DayOfWeek>> officeHours = data.getTATimeSlots(taToRemove);
-            CutTA_Transaction transaction = new CutTA_Transaction((CSGApp)app, taToRemove, officeHours);
+            RemoveTA_Transaction transaction = new RemoveTA_Transaction(data, taToRemove);
             app.processTransaction(transaction);
             tasTableView.refresh();
             officeHoursTableView.refresh();
