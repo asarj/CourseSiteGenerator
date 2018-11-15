@@ -26,6 +26,7 @@ import csg.data.TAType;
 import csg.data.TeachingAssistantPrototype;
 import csg.data.TimeSlot;
 import csg.data.TimeSlot.DayOfWeek;
+import java.util.ArrayList;
 
 /**
  * This class serves as the file component for the TA
@@ -151,7 +152,21 @@ public class CSGFiles implements AppFileComponent {
                         .add(JSON_NAME, ta.getName()).build();
                     officeHoursArrayBuilder.add(tsJson);
                 }
-            }
+            }    
+	}
+        for (TimeSlot ts : dataManager.getHeldTs()) {
+            for (int i = 0; i < DayOfWeek.values().length; i++) {
+                DayOfWeek dow = DayOfWeek.values()[i];
+                tasIterator = ts.getTAsIterator(dow);
+                while (tasIterator.hasNext()) {
+                    TeachingAssistantPrototype ta = tasIterator.next();
+                    JsonObject tsJson = Json.createObjectBuilder()
+                        .add(JSON_START_TIME, ts.getStartTime().replace(":", "_"))
+                        .add(JSON_DAY_OF_WEEK, dow.toString())
+                        .add(JSON_NAME, ta.getName()).build();
+                    officeHoursArrayBuilder.add(tsJson);
+                }
+            }    
 	}
 	JsonArray officeHoursArray = officeHoursArrayBuilder.build();
         

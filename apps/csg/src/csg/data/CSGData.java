@@ -81,6 +81,14 @@ public class CSGData implements AppDataComponent {
 
         resetOfficeHours(startHour, endHour);
     }
+
+    public ArrayList<TimeSlot> getHeldTs() {
+        return heldTs;
+    }
+
+    public void setHeldTs(ArrayList<TimeSlot> heldTs) {
+        this.heldTs = heldTs;
+    }
     
     // ACCESSOR METHODS
 

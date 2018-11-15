@@ -40,6 +40,7 @@ import static djf.AppPropertyType.APP_FILE_PROTOCOL;
 import static djf.modules.AppLanguageModule.FILE_PROTOCOL;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -141,7 +142,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
                                                                       props.getProperty(SITE_WINTER_TEXT), 
                                                                       props.getProperty(SITE_SPRING_TEXT), 
                                                                       props.getProperty(SITE_SUMMER_TEXT));
-        ObservableList years = FXCollections.observableArrayList("2018");
+        ObservableList years = FXCollections.observableArrayList(Integer.toString(Calendar.getInstance().get(Calendar.YEAR)), Integer.toString(Calendar.getInstance().get(Calendar.YEAR) + 1));
         GridPane bannerBox = siteBuilder.buildGridPane(SITE_BANNERBOX_GRID_PANE, siteTabVBox, CLASS_OH_PANE, ENABLED);
         Label bannerLabel = siteBuilder.buildLabel(SITE_BANNER_LABEL, bannerBox, 0, 0, 1, 1, CLASS_OH_HEADER_LABEL, ENABLED);
 
