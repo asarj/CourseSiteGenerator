@@ -112,7 +112,10 @@
     -fx-padding: 5;
 }
 .oh_box {
-
+    /*-fx-border-color: blue;*/
+}
+.site_box_error{
+    -fx-border-color: red;
 }
 .oh_combo_box{
     -fx-pref-width: 110;

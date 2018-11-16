@@ -5,7 +5,7 @@ import static djf.AppPropertyType.APP_CLIPBOARD_FOOLPROOF_SETTINGS;
 import java.util.ArrayList;
 import java.util.HashMap;
 import csg.CSGApp;
-import csg.data.CSGData;
+import csg.data.OHData;
 import csg.data.TeachingAssistantPrototype;
 import csg.data.TimeSlot;
 import csg.data.TimeSlot.DayOfWeek;
@@ -25,14 +25,14 @@ public class CutTA_Transaction implements jTPS_Transaction {
 
     @Override
     public void doTransaction() {
-        CSGData data = (CSGData)app.getDataComponent();
+        OHData data = (OHData)app.getDataComponent();
         data.removeTA(taToCut, officeHours);
         app.getFoolproofModule().updateControls(APP_CLIPBOARD_FOOLPROOF_SETTINGS);
     }
 
     @Override
     public void undoTransaction() {
-        CSGData data = (CSGData)app.getDataComponent();
+        OHData data = (OHData)app.getDataComponent();
         data.addTA(taToCut, officeHours);
         app.getFoolproofModule().updateControls(APP_CLIPBOARD_FOOLPROOF_SETTINGS);
     }   

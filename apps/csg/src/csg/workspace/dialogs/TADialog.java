@@ -15,7 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import csg.CSGApp;
-import csg.data.CSGData;
+import csg.data.OHData;
 import csg.data.TAType;
 import csg.data.TeachingAssistantPrototype;
 import static csg.workspace.style.OHStyle.*;
@@ -136,7 +136,7 @@ public class TADialog extends Stage {
         // OTHERWISE WE'LL HAVE TO FOOLPROOF DESIGN THIS STUFF
         // BASED ON WHETHER IT'S A LEGAL EDIT OR NOT
         else {
-            CSGData data = (CSGData)app.getDataComponent();
+            OHData data = (OHData)app.getDataComponent();
             boolean isValidNameEdit = data.isValidNameEdit(taToEdit, name);
             fP.foolproofTextField(nameTextField, isValidNameEdit);
             boolean isValidEmailEdit = data.isValidEmailEdit(taToEdit, email);
@@ -175,7 +175,7 @@ public class TADialog extends Stage {
         app.processTransaction(transaction);
         
         // MAKE SURE THE TABLES ARE USING THE CORRECT TYPES
-        CSGData data = (CSGData)app.getDataComponent();
+        OHData data = (OHData)app.getDataComponent();
 //        TeachingAssistantPrototype oldTA = data.getSelectedTA();
         data.updateTAsFromDialog(oldta, name, email, type.toString());
         
@@ -184,7 +184,7 @@ public class TADialog extends Stage {
     }
 
     public void showEditDialog(TeachingAssistantPrototype initTAToEdit) {
-        CSGData data = (CSGData)app.getDataComponent();
+        OHData data = (OHData)app.getDataComponent();
         // WE'LL NEED THIS FOR VALIDATION
         taToEdit = initTAToEdit;
         oldta = new TeachingAssistantPrototype(initTAToEdit.getName(), initTAToEdit.getEmail(), initTAToEdit.getType().equals(TAType.Undergraduate.toString())?TAType.Undergraduate : TAType.Graduate);

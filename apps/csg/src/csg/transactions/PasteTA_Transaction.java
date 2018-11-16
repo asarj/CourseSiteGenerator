@@ -2,7 +2,7 @@ package csg.transactions;
 
 import jtps.jTPS_Transaction;
 import csg.CSGApp;
-import csg.data.CSGData;
+import csg.data.OHData;
 import csg.data.TeachingAssistantPrototype;
 
 public class PasteTA_Transaction implements jTPS_Transaction {
@@ -17,13 +17,13 @@ public class PasteTA_Transaction implements jTPS_Transaction {
 
     @Override
     public void doTransaction() {
-        CSGData data = (CSGData)app.getDataComponent();
+        OHData data = (OHData)app.getDataComponent();
         data.addTA(taToPaste);
     }
 
     @Override
     public void undoTransaction() {
-        CSGData data = (CSGData)app.getDataComponent();
+        OHData data = (OHData)app.getDataComponent();
         data.removeTA(taToPaste);
     }   
 }

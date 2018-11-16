@@ -2,7 +2,7 @@ package csg.transactions;
 
 import csg.CSGApp;
 import static csg.CSGPropertyType.OH_TAS_TABLE_VIEW;
-import csg.data.CSGData;
+import csg.data.OHData;
 import java.time.LocalDate;
 import jtps.jTPS_Transaction;
 import csg.data.TeachingAssistantPrototype;
@@ -37,7 +37,7 @@ public class EditTA_Transaction implements jTPS_Transaction {
 
     @Override
     public void doTransaction() {
-        CSGData data = (CSGData)app.getDataComponent();
+        OHData data = (OHData)app.getDataComponent();
         taToEdit.setName(newName);
         taToEdit.setEmail(newEmail);
         taToEdit.setType(newType);
@@ -50,7 +50,7 @@ public class EditTA_Transaction implements jTPS_Transaction {
 
     @Override
     public void undoTransaction() {
-        CSGData data = (CSGData)app.getDataComponent();
+        OHData data = (OHData)app.getDataComponent();
         taToEdit.setName(oldName);
         taToEdit.setEmail(oldEmail);
         taToEdit.setType(oldType);

@@ -4,7 +4,7 @@ import djf.components.AppClipboardComponent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import csg.CSGApp;
-import csg.data.CSGData;
+import csg.data.OHData;
 import csg.data.TeachingAssistantPrototype;
 import csg.data.TimeSlot;
 import csg.data.TimeSlot.DayOfWeek;
@@ -25,7 +25,7 @@ public class CSGClipboard implements AppClipboardComponent {
 
     @Override
     public void cut() {
-        CSGData data = (CSGData)app.getDataComponent();
+        OHData data = (OHData)app.getDataComponent();
         if (data.isTASelected()) {
             clipboardCutTA = data.getSelectedTA();
             clipboardCopiedTA = null;
@@ -37,7 +37,7 @@ public class CSGClipboard implements AppClipboardComponent {
 
     @Override
     public void copy() {
-        CSGData data = (CSGData)app.getDataComponent();
+        OHData data = (OHData)app.getDataComponent();
         if (data.isTASelected()) {
             TeachingAssistantPrototype tempTA = data.getSelectedTA();
             copyToCopiedClipboard(tempTA);
@@ -59,7 +59,7 @@ public class CSGClipboard implements AppClipboardComponent {
 
     @Override
     public void paste() {
-        CSGData data = (CSGData)app.getDataComponent();
+        OHData data = (OHData)app.getDataComponent();
         if (clipboardCutTA != null) {
             PasteTA_Transaction transaction = new PasteTA_Transaction((CSGApp)app, clipboardCutTA);
             app.processTransaction(transaction);
@@ -80,12 +80,12 @@ public class CSGClipboard implements AppClipboardComponent {
 
     @Override
     public boolean hasSomethingToCut() {
-        return ((CSGData)app.getDataComponent()).isTASelected();
+        return ((OHData)app.getDataComponent()).isTASelected();
     }
 
     @Override
     public boolean hasSomethingToCopy() {
-        return ((CSGData)app.getDataComponent()).isTASelected();
+        return ((OHData)app.getDataComponent()).isTASelected();
     }
 
     @Override

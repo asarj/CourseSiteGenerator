@@ -6,9 +6,9 @@ import djf.components.AppDataComponent;
 import djf.components.AppFileComponent;
 import djf.components.AppWorkspaceComponent;
 import java.util.Locale;
-import csg.data.CSGData;
 import csg.files.CSGFiles;
 import csg.clipboard.CSGClipboard;
+import csg.data.CSGData;
 import csg.workspace.CSGWorkspace;
 import static javafx.application.Application.launch;
 

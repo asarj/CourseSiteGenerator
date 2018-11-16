@@ -13,11 +13,25 @@ import static csg.CSGPropertyType.OH_OFFICE_HOURS_TABLE_VIEW;
 import static csg.CSGPropertyType.OH_REMOVE_TA_BUTTON;
 import static csg.CSGPropertyType.OH_STARTTIME_COMBO_BOX;
 import static csg.CSGPropertyType.OH_TAS_TABLE_VIEW;
+import static csg.CSGPropertyType.SITE_CSS_COMBO_BOX;
+import static csg.CSGPropertyType.SITE_EMAIL_TEXT_FIELD;
+import static csg.CSGPropertyType.SITE_HP_TEXT_FIELD;
+import static csg.CSGPropertyType.SITE_NAME_TEXT_FIELD;
+import static csg.CSGPropertyType.SITE_ROOM_TEXT_FIELD;
+import static csg.CSGPropertyType.SITE_SEMESTERS_COMBO_BOX;
+import static csg.CSGPropertyType.SITE_SUBJECTNUM_COMBO_BOX;
+import static csg.CSGPropertyType.SITE_SUBJECT_COMBO_BOX;
+import static csg.CSGPropertyType.SITE_TITLE_TEXT_FIELD;
+import static csg.CSGPropertyType.SITE_YEARS_COMBO_BOX;
 import csg.data.CSGData;
+import csg.data.OHData;
+import csg.data.SiteData;
 import csg.data.TeachingAssistantPrototype;
 import csg.data.TimeSlot;
+import static csg.workspace.style.OHStyle.CLASS_OH_BOX;
 import static csg.workspace.style.OHStyle.CLASS_OH_TEXT_FIELD;
 import static csg.workspace.style.OHStyle.CLASS_OH_TEXT_FIELD_ERROR;
+import static csg.workspace.style.OHStyle.CLASS_SITE_BOX_ERROR;
 import java.awt.Color;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -40,6 +54,16 @@ public class CSGFoolproofDesign implements FoolproofDesign {
         updateEditTAFoolproofDesign();
         updateRemoveTAFoolproofDesign();
         updateOHTable();
+        updateCourseNameCB();
+        updateCourseNumCB();
+        updateCourseSemCB();
+        updateCourseYearCB();
+        updateCourseTitleTF();
+        updateInstructorNameTF();
+        updateInstructorEmailTF();
+        updateInstructorRoomTF();
+        updateInstructorHPTF();
+        updateCourseCSSCB();
     }
 
     private void updateAddTAFoolproofDesign() {
@@ -51,7 +75,8 @@ public class CSGFoolproofDesign implements FoolproofDesign {
         TableView<TimeSlot> officeHoursTableView = (TableView) gui.getGUINode(OH_OFFICE_HOURS_TABLE_VIEW);
         String name = nameTextField.getText();
         String email = emailTextField.getText();
-        CSGData data = (CSGData) app.getDataComponent();
+        CSGData d = (CSGData) app.getDataComponent();
+        OHData data = d.getOfficeHoursData();
         Button addTAButton = (Button) gui.getGUINode(OH_ADD_TA_BUTTON);
 
         // FIRST, IF NO TYPE IS SELECTED WE'LL JUST DISABLE
@@ -110,7 +135,8 @@ public class CSGFoolproofDesign implements FoolproofDesign {
 
     private void updateRemoveTAFoolproofDesign() {
         AppGUIModule gui = app.getGUIModule();
-        CSGData data = (CSGData) app.getDataComponent();
+        CSGData d = (CSGData) app.getDataComponent();
+        OHData data = d.getOfficeHoursData();
         TableView<TimeSlot> officeHoursTableView = (TableView) gui.getGUINode(OH_OFFICE_HOURS_TABLE_VIEW);
         TableView<TeachingAssistantPrototype> tasTableView = (TableView) gui.getGUINode(OH_TAS_TABLE_VIEW);
         Button removeTAButton = (Button) gui.getGUINode(OH_REMOVE_TA_BUTTON);
@@ -131,7 +157,8 @@ public class CSGFoolproofDesign implements FoolproofDesign {
 
     private void updateOHTable() {
         AppGUIModule gui = app.getGUIModule();
-        CSGData data = (CSGData)app.getDataComponent();
+        CSGData d = (CSGData)app.getDataComponent();
+        OHData data = d.getOfficeHoursData();
         ComboBox timeStart = (ComboBox)gui.getGUINode(OH_STARTTIME_COMBO_BOX);
         ComboBox timeEnd = (ComboBox)gui.getGUINode(OH_ENDTIME_COMBO_BOX);
         int ts = timeStart.getSelectionModel().getSelectedIndex();
@@ -143,15 +170,155 @@ public class CSGFoolproofDesign implements FoolproofDesign {
             if(te < ts){
                 timeStart.setDisable(true);
             }
-//            else if(te > ts){
-//                timeEnd.setDisable(true);
-//            }
-//            Alert alert = new Alert(AlertType.ERROR, "Start Date cannot be greater than the end date!", ButtonType.OK);
-//            alert.showAndWait();
-//
-//            if (alert.getResult() == ButtonType.OK) {
-//                alert.close();
-//            }
+        }
+    }
+    private void updateCourseNameCB() {
+        AppGUIModule gui = app.getGUIModule();
+        CSGData d = (CSGData)app.getDataComponent();
+        SiteData data = d.getSiteData();
+        ComboBox c = (ComboBox)gui.getGUINode(SITE_SUBJECT_COMBO_BOX);
+//        c.requestFocus();
+        if(c.getSelectionModel().getSelectedItem() == null || ((String)c.getSelectionModel().getSelectedItem()).trim().equals("")){
+            if (c.getStyleClass().contains(CLASS_OH_BOX)) {
+                c.getStyleClass().remove(CLASS_OH_BOX);
+                c.getStyleClass().add(CLASS_SITE_BOX_ERROR);
+            }
+        }
+        else{
+            if(c.getStyleClass().contains(CLASS_SITE_BOX_ERROR)){
+                c.getStyleClass().remove(CLASS_SITE_BOX_ERROR);
+                c.getStyleClass().add(CLASS_OH_BOX); 
+            }
+        }
+    }
+    
+    private void updateCourseNumCB() {
+        AppGUIModule gui = app.getGUIModule();
+        CSGData d = (CSGData)app.getDataComponent();
+        SiteData data = d.getSiteData();
+        ComboBox c = (ComboBox)gui.getGUINode(SITE_SUBJECTNUM_COMBO_BOX);
+//        c.requestFocus();
+        if(c.getSelectionModel().getSelectedItem() == null || ((String)c.getSelectionModel().getSelectedItem()).trim().equals("")){
+            if (c.getStyleClass().contains(CLASS_OH_BOX)) {
+                c.getStyleClass().remove(CLASS_OH_BOX);
+                c.getStyleClass().add(CLASS_SITE_BOX_ERROR);
+            }
+        }
+        else{
+            if(c.getStyleClass().contains(CLASS_SITE_BOX_ERROR)){
+                c.getStyleClass().remove(CLASS_SITE_BOX_ERROR);
+                c.getStyleClass().add(CLASS_OH_BOX); 
+            }
+        }
+    }
+    
+    private void updateCourseSemCB() {
+        AppGUIModule gui = app.getGUIModule();
+        CSGData d = (CSGData)app.getDataComponent();
+        SiteData data = d.getSiteData();
+        ComboBox c = (ComboBox)gui.getGUINode(SITE_SEMESTERS_COMBO_BOX);
+//        c.requestFocus();
+        if(c.getSelectionModel().getSelectedItem() == null || ((String)c.getSelectionModel().getSelectedItem()).trim().equals("")){
+            if (c.getStyleClass().contains(CLASS_OH_BOX)) {
+                c.getStyleClass().remove(CLASS_OH_BOX);
+                c.getStyleClass().add(CLASS_SITE_BOX_ERROR);
+            }
+        }
+        else{
+            if(c.getStyleClass().contains(CLASS_SITE_BOX_ERROR)){
+                c.getStyleClass().remove(CLASS_SITE_BOX_ERROR);
+                c.getStyleClass().add(CLASS_OH_BOX); 
+            }
+        }
+    }
+    
+    private void updateCourseYearCB() {
+        AppGUIModule gui = app.getGUIModule();
+        CSGData d = (CSGData)app.getDataComponent();
+        SiteData data = d.getSiteData();
+        ComboBox c = (ComboBox)gui.getGUINode(SITE_YEARS_COMBO_BOX);
+//        c.requestFocus();
+        if(c.getSelectionModel().getSelectedItem() == null || ((String)c.getSelectionModel().getSelectedItem()).trim().equals("")){
+            if (c.getStyleClass().contains(CLASS_OH_BOX)) {
+                c.getStyleClass().remove(CLASS_OH_BOX);
+                c.getStyleClass().add(CLASS_SITE_BOX_ERROR);
+            }
+        }
+        else{
+            if(c.getStyleClass().contains(CLASS_SITE_BOX_ERROR)){
+                c.getStyleClass().remove(CLASS_SITE_BOX_ERROR);
+                c.getStyleClass().add(CLASS_OH_BOX); 
+            }
+        }
+    }
+    
+    private void updateCourseTitleTF() {
+        AppGUIModule gui = app.getGUIModule();
+        CSGData d = (CSGData)app.getDataComponent();
+        SiteData data = d.getSiteData();
+        TextField c = (TextField)gui.getGUINode(SITE_TITLE_TEXT_FIELD);
+        boolean valid = data.isValidTextFieldInput(c);
+//        c.requestFocus();
+        foolproofTextField(c, valid);
+    }
+    
+    private void updateInstructorNameTF() {
+        AppGUIModule gui = app.getGUIModule();
+        CSGData d = (CSGData)app.getDataComponent();
+        SiteData data = d.getSiteData();
+        TextField c = (TextField)gui.getGUINode(SITE_NAME_TEXT_FIELD);
+        boolean valid = data.isValidTextFieldInput(c);
+//        c.requestFocus();
+        foolproofTextField(c, valid);
+    }
+    
+    private void updateInstructorEmailTF() {
+        AppGUIModule gui = app.getGUIModule();
+        CSGData d = (CSGData)app.getDataComponent();
+        SiteData data = d.getSiteData();
+        TextField c = (TextField)gui.getGUINode(SITE_EMAIL_TEXT_FIELD);
+        boolean valid = data.isValidTextFieldInput(c);
+//        c.requestFocus();
+        foolproofTextField(c, valid);
+    }
+    
+    private void updateInstructorRoomTF() {
+        AppGUIModule gui = app.getGUIModule();
+        CSGData d = (CSGData)app.getDataComponent();
+        SiteData data = d.getSiteData();
+        TextField c = (TextField)gui.getGUINode(SITE_ROOM_TEXT_FIELD);
+        boolean valid = data.isValidTextFieldInput(c);
+//        c.requestFocus();
+        foolproofTextField(c, valid);
+    }
+    
+    private void updateInstructorHPTF() {
+        AppGUIModule gui = app.getGUIModule();
+        CSGData d = (CSGData)app.getDataComponent();
+        SiteData data = d.getSiteData();
+        TextField c = (TextField)gui.getGUINode(SITE_HP_TEXT_FIELD);
+        boolean valid = data.isValidTextFieldInput(c);
+//        c.requestFocus();
+        foolproofTextField(c, valid);
+    }
+    
+    private void updateCourseCSSCB() {
+        AppGUIModule gui = app.getGUIModule();
+        CSGData d = (CSGData)app.getDataComponent();
+        SiteData data = d.getSiteData();
+        ComboBox c = (ComboBox)gui.getGUINode(SITE_CSS_COMBO_BOX);
+//        c.requestFocus();
+        if(c.getSelectionModel().getSelectedItem() == null || ((String)c.getSelectionModel().getSelectedItem()).trim().equals("")){
+            if (c.getStyleClass().contains(CLASS_OH_BOX)) {
+                c.getStyleClass().remove(CLASS_OH_BOX);
+                c.getStyleClass().add(CLASS_SITE_BOX_ERROR);
+            }
+        }
+        else{
+            if(c.getStyleClass().contains(CLASS_SITE_BOX_ERROR)){
+                c.getStyleClass().remove(CLASS_SITE_BOX_ERROR);
+                c.getStyleClass().add(CLASS_OH_BOX); 
+            }
         }
     }
 }

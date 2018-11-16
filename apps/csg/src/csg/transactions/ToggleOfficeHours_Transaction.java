@@ -1,7 +1,7 @@
 package csg.transactions;
 
 import jtps.jTPS_Transaction;
-import csg.data.CSGData;
+import csg.data.OHData;
 import csg.data.TeachingAssistantPrototype;
 import csg.data.TimeSlot;
 import csg.data.TimeSlot.DayOfWeek;
@@ -11,12 +11,12 @@ import csg.data.TimeSlot.DayOfWeek;
  * @author McKillaGorilla
  */
 public class ToggleOfficeHours_Transaction implements jTPS_Transaction {
-    CSGData data;
+    OHData data;
     TimeSlot timeSlot;
     DayOfWeek dow;
     TeachingAssistantPrototype ta;
     
-    public ToggleOfficeHours_Transaction(   CSGData initData, 
+    public ToggleOfficeHours_Transaction(   OHData initData, 
                                             TimeSlot initTimeSlot,
                                             DayOfWeek initDOW,
                                             TeachingAssistantPrototype initTA) {

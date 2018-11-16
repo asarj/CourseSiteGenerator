@@ -45,6 +45,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -65,6 +66,11 @@ import javax.swing.JFileChooser;
  * @author McKillaGorilla
  */
 public class CSGWorkspace extends AppWorkspaceComponent {
+    ImageView fviImgView;
+    ImageView navImgView;
+    ImageView leftImgView;
+    ImageView rightImgView;
+    TextArea instructorOHJsonArea;
     
     public CSGWorkspace(CSGApp app) {
         super(app);
@@ -186,46 +192,110 @@ public class CSGWorkspace extends AppWorkspaceComponent {
 
         subjectCBox.valueProperty().addListener(new ChangeListener<String>() {
             @Override 
-            public void changed(ObservableValue ov, String t, String t1) {                
-                subjects.add(t1);
+            public void changed(ObservableValue ov, String t, String t1) {
+                boolean dupFound = false;
+                for(Object s: subjects){
+                    String c = (String)s;
+                    if(c.equals(t1)){
+                        dupFound = true;
+                        break;
+                    }
+                }
+                if(!dupFound){
+                    subjects.add(t1);    
+                }
                 expDirOutputLabel.setText(".\\export\\" + subjectCBox.getSelectionModel().getSelectedItem().toString() + 
                                                 "_" + subjectNumsCBox.getSelectionModel().getSelectedItem().toString() +
                                                 "_" + semestersCBox.getSelectionModel().getSelectedItem().toString() +
                                                 "_" + yearsCBox.getSelectionModel().getSelectedItem().toString() 
                                                  + "\\public.html");
+                subjects.forEach((s) -> {
+                    String c = (String)s;
+                    if (c.trim().equals("")) {
+                        subjects.remove(s);
+                    }
+                });
             }    
         });
         subjectNumsCBox.valueProperty().addListener(new ChangeListener<String>() {
             @Override 
             public void changed(ObservableValue ov, String t, String t1) {                
-                subjectNums.add(t1);
+                boolean dupFound = false;
+                for(Object s: subjectNums){
+                    String c = (String)s;
+                    if(c.equals(t1)){
+                        dupFound = true;
+                        break;
+                    }
+                }
+                if(!dupFound){
+                    subjectNums.add(t1);    
+                }
                 expDirOutputLabel.setText(".\\export\\" + subjectCBox.getSelectionModel().getSelectedItem().toString() + 
                                                 "_" + subjectNumsCBox.getSelectionModel().getSelectedItem().toString() +
                                                 "_" + semestersCBox.getSelectionModel().getSelectedItem().toString() +
                                                 "_" + yearsCBox.getSelectionModel().getSelectedItem().toString() 
                                                  + "\\public.html");
+                subjectNums.forEach((s) -> {
+                    String c = (String)s;
+                    if (c.trim().equals("")) {
+                        subjectNums.remove(s);
+                    }
+                });
             }    
         });
         semestersCBox.valueProperty().addListener(new ChangeListener<String>() {
             @Override 
             public void changed(ObservableValue ov, String t, String t1) {                
-                semesters.add(t1);
+                boolean dupFound = false;
+                for(Object s: semesters){
+                    String c = (String)s;
+                    if(c.equals(t1)){
+                        dupFound = true;
+                        break;
+                    }
+                }
+                if(!dupFound){
+                    semesters.add(t1);    
+                }
                 expDirOutputLabel.setText(".\\export\\" + subjectCBox.getSelectionModel().getSelectedItem().toString() + 
                                                 "_" + subjectNumsCBox.getSelectionModel().getSelectedItem().toString() +
                                                 "_" + semestersCBox.getSelectionModel().getSelectedItem().toString() +
                                                 "_" + yearsCBox.getSelectionModel().getSelectedItem().toString() 
                                                  + "\\public.html");
+                semesters.forEach((s) -> {
+                    String c = (String)s;
+                    if (c.trim().equals("")) {
+                        semesters.remove(s);
+                    }
+                });
             }    
         });
         yearsCBox.valueProperty().addListener(new ChangeListener<String>() {
             @Override 
             public void changed(ObservableValue ov, String t, String t1) {                
-                years.add(t1);
+                boolean dupFound = false;
+                for(Object s: years){
+                    String c = (String)s;
+                    if(c.equals(t1)){
+                        dupFound = true;
+                        break;
+                    }
+                }
+                if(!dupFound){
+                    years.add(t1);    
+                }
                 expDirOutputLabel.setText(".\\export\\" + subjectCBox.getSelectionModel().getSelectedItem().toString() + 
                                                 "_" + subjectNumsCBox.getSelectionModel().getSelectedItem().toString() +
                                                 "_" + semestersCBox.getSelectionModel().getSelectedItem().toString() +
                                                 "_" + yearsCBox.getSelectionModel().getSelectedItem().toString()
                                                  + "\\public.html");
+                years.forEach((s) -> {
+                    String c = (String)s;
+                    if (c.trim().equals("")) {
+                        years.remove(s);
+                    }
+                });
             }    
         });
 
@@ -306,7 +376,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         Label fontLabel = siteBuilder.buildLabel(SITE_FONTSTYLE_LABEL, styleBox, 0, 5, 1, 1, CLASS_REG_LABEL, ENABLED);
         
 
-        ImageView fviImgView = new ImageView(
+        fviImgView = new ImageView(
                 props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_FAVICON_TEXT)
         );
         fviImgView.setFitWidth(25);
@@ -314,7 +384,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         fviImgView.setPreserveRatio(true);
         fviImgView.setSmooth(true);
         fviImgView.setCache(true);
-        ImageView navImgView = new ImageView(
+        navImgView = new ImageView(
                 props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_NAVBAR_TEXT)
         );
         navImgView.setFitWidth(300);
@@ -322,7 +392,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         navImgView.setPreserveRatio(true);
         navImgView.setSmooth(true);
         navImgView.setCache(true);
-        ImageView leftImgView = new ImageView(
+        leftImgView = new ImageView(
                 props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_LFIMG_TEXT)
         );
         leftImgView.setFitWidth(300);
@@ -330,7 +400,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         leftImgView.setPreserveRatio(true);
         leftImgView.setSmooth(true);
         leftImgView.setCache(true);
-        ImageView rightImgView = new ImageView(
+        rightImgView = new ImageView(
                props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_RFIMG_TEXT)
         );
         rightImgView.setFitWidth(300);
@@ -353,6 +423,11 @@ public class CSGWorkspace extends AppWorkspaceComponent {
                 fviImgView.setPreserveRatio(true);
                 fviImgView.setSmooth(true);
                 fviImgView.setCache(true);
+                
+                CSGController controller = new CSGController((CSGApp) app);
+                AppGUIModule gui = app.getGUIModule();
+                controller.processFviImgViewFile(f.getPath());
+
             }
             
             
@@ -372,6 +447,10 @@ public class CSGWorkspace extends AppWorkspaceComponent {
                 navImgView.setPreserveRatio(true);
                 navImgView.setSmooth(true);
                 navImgView.setCache(true);
+                
+                CSGController controller = new CSGController((CSGApp) app);
+                AppGUIModule gui = app.getGUIModule();
+                controller.processNavImgViewFile(f.getPath());
             }
             
             
@@ -391,6 +470,10 @@ public class CSGWorkspace extends AppWorkspaceComponent {
                 leftImgView.setPreserveRatio(true);
                 leftImgView.setSmooth(true);
                 leftImgView.setCache(true);
+                
+                CSGController controller = new CSGController((CSGApp) app);
+                AppGUIModule gui = app.getGUIModule();
+                controller.processLeftImgViewFile(f.getPath());
             }
             
             
@@ -410,6 +493,10 @@ public class CSGWorkspace extends AppWorkspaceComponent {
                 rightImgView.setPreserveRatio(true);
                 rightImgView.setSmooth(true);
                 rightImgView.setCache(true);
+                
+                CSGController controller = new CSGController((CSGApp) app);
+                AppGUIModule gui = app.getGUIModule();
+                controller.processRightImgViewFile(f.getPath());
             }
             
             
@@ -458,7 +545,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         Label ohLabel = siteBuilder.buildLabel(SITE_OH_LABEL, ohDetail, CLASS_OH_HEADER_LABEL, ENABLED);
         VBox hiddenTA = new VBox();
                 // siteBuilder.buildVBox(SITE_INST_TA_DETAILS, siteTabVBox, CLASS_OH_PANE, ENABLED);
-        TextArea instructorOHJsonArea = new TextArea();
+        instructorOHJsonArea = new TextArea();
 
         instructorOHJsonArea.setText("["
                                     + "\n\t{\"Day\": \"\"\t\"Time\": \"\"}"
@@ -471,6 +558,13 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             instructorOHJsonArea.setManaged(siteInstructorOHExpandButton.getText().equals("-")? true: false);
             instructorOHJsonArea.setVisible(siteInstructorOHExpandButton.getText().equals("-")? true: false);
         });
+        
+        instructorOHJsonArea.textProperty().addListener(e->{
+            CSGController controller = new CSGController((CSGApp) app);
+            AppGUIModule gui = app.getGUIModule();
+            controller.processInstructorHoursJSON(instructorOHJsonArea.getText());
+        });
+        
 
         Label emptyLbl = new Label();
 
@@ -504,6 +598,11 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         TextArea descTA = new TextArea();
         descTA.setVisible(false);
         descTA.setManaged(false);
+        descTA.textProperty().addListener(e->{
+            CSGController controller = new CSGController((CSGApp) app);
+            AppGUIModule gui = app.getGUIModule();
+            controller.processDescriptionJSON(descTA.getText());
+        });
         sylDescExpandButton.setOnAction(e->{
             sylDescExpandButton.setText(sylDescExpandButton.getText().equals("+") ? "-": "+");
             descTA.setManaged(sylDescExpandButton.getText().equals("-")? true: false);
@@ -532,6 +631,11 @@ public class CSGWorkspace extends AppWorkspaceComponent {
                     + "\n],");
         topicTA.setVisible(false);
         topicTA.setManaged(false);
+        topicTA.textProperty().addListener(e->{
+            CSGController controller = new CSGController((CSGApp) app);
+            AppGUIModule gui = app.getGUIModule();
+            controller.processTopicsJSON(topicTA.getText());
+        });
         sylTopicExpandButton.setOnAction(e->{
             sylTopicExpandButton.setText(sylTopicExpandButton.getText().equals("+") ? "-": "+");
             topicTA.setManaged(sylTopicExpandButton.getText().equals("-")? true: false);
@@ -557,6 +661,11 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         TextArea prereqTA = new TextArea();
         prereqTA.setVisible(false);
         prereqTA.setManaged(false);
+        prereqTA.textProperty().addListener(e->{
+            CSGController controller = new CSGController((CSGApp) app);
+            AppGUIModule gui = app.getGUIModule();
+            controller.processPrereqsJSON(prereqTA.getText());
+        });
         sylPrereqExpandButton.setOnAction(e->{
             sylPrereqExpandButton.setText(sylPrereqExpandButton.getText().equals("+") ? "-": "+");
             prereqTA.setManaged(sylPrereqExpandButton.getText().equals("-")? true: false);
@@ -584,6 +693,11 @@ public class CSGWorkspace extends AppWorkspaceComponent {
                         + "\n],");
         outcomesTA.setVisible(false);
         outcomesTA.setManaged(false);
+        outcomesTA.textProperty().addListener(e->{
+            CSGController controller = new CSGController((CSGApp) app);
+            AppGUIModule gui = app.getGUIModule();
+            controller.processOutcomesJSON(outcomesTA.getText());
+        });
         sylOutcomesExpandButton.setOnAction(e->{
             sylOutcomesExpandButton.setText(sylOutcomesExpandButton.getText().equals("+") ? "-": "+");
             outcomesTA.setManaged(sylOutcomesExpandButton.getText().equals("-")? true: false);
@@ -618,6 +732,11 @@ public class CSGWorkspace extends AppWorkspaceComponent {
                         + "\n\t}\n]");
         textbooksTA.setVisible(false);
         textbooksTA.setManaged(false);
+        textbooksTA.textProperty().addListener(e->{
+            CSGController controller = new CSGController((CSGApp) app);
+            AppGUIModule gui = app.getGUIModule();
+            controller.processTextbooksJSON(textbooksTA.getText());
+        });
         sylTextbooksExpandButton.setOnAction(e->{
             sylTextbooksExpandButton.setText(sylTextbooksExpandButton.getText().equals("+") ? "-": "+");
             textbooksTA.setManaged(sylTextbooksExpandButton.getText().equals("-")? true: false);
@@ -649,6 +768,11 @@ public class CSGWorkspace extends AppWorkspaceComponent {
                  + "\n],");
         gcTA.setVisible(false);
         gcTA.setManaged(false);
+        gcTA.textProperty().addListener(e->{
+            CSGController controller = new CSGController((CSGApp) app);
+            AppGUIModule gui = app.getGUIModule();
+            controller.processGCJSON(gcTA.getText());
+        });
         sylGCExpandButton.setOnAction(e->{
             sylGCExpandButton.setText(sylGCExpandButton.getText().equals("+") ? "-": "+");
             gcTA.setManaged(sylGCExpandButton.getText().equals("-")? true: false);
@@ -673,6 +797,11 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         TextArea gradingNoteTA = new TextArea();
         gradingNoteTA.setVisible(false);
         gradingNoteTA.setManaged(false);
+        gradingNoteTA.textProperty().addListener(e->{
+            CSGController controller = new CSGController((CSGApp) app);
+            AppGUIModule gui = app.getGUIModule();
+            controller.processGNJSON(gradingNoteTA.getText());
+        });
         sylGradingNoteExpandButton.setOnAction(e->{
             sylGradingNoteExpandButton.setText(sylGradingNoteExpandButton.getText().equals("+") ? "-": "+");
             gradingNoteTA.setManaged(sylGradingNoteExpandButton.getText().equals("-")? true: false);
@@ -697,6 +826,11 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         TextArea adTA = new TextArea();
         adTA.setVisible(false);
         adTA.setManaged(false);
+        adTA.textProperty().addListener(e->{
+            CSGController controller = new CSGController((CSGApp) app);
+            AppGUIModule gui = app.getGUIModule();
+            controller.processADJSON(adTA.getText());
+        });
         sylADExpandButton.setOnAction(e->{
             sylADExpandButton.setText(sylADExpandButton.getText().equals("+") ? "-": "+");
             adTA.setManaged(sylADExpandButton.getText().equals("-")? true: false);
@@ -721,6 +855,11 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         TextArea saTA = new TextArea();
         saTA.setVisible(false);
         saTA.setManaged(false);
+        saTA.textProperty().addListener(e->{
+            CSGController controller = new CSGController((CSGApp) app);
+            AppGUIModule gui = app.getGUIModule();
+            controller.processSAJSON(saTA.getText());
+        });
         sylSAExpandButton.setOnAction(e->{
             sylSAExpandButton.setText(sylSAExpandButton.getText().equals("+") ? "-": "+");
             saTA.setManaged(sylSAExpandButton.getText().equals("-")? true: false);
@@ -1192,6 +1331,68 @@ public class CSGWorkspace extends AppWorkspaceComponent {
 //            controller.processUpdateStartOptions();
             controller.processUpdateOHTable();
         });
+        
+        ComboBox courseName = (ComboBox)gui.getGUINode(SITE_SUBJECT_COMBO_BOX);
+        courseName.setOnAction(e->{
+            controller.processCourseName();
+            controller.processExportURL();
+        });
+        ComboBox courseNum = (ComboBox)gui.getGUINode(SITE_SUBJECTNUM_COMBO_BOX);
+        courseNum.setOnAction(e->{
+            controller.processCourseNum();
+            controller.processExportURL();
+        });
+        ComboBox courseSem = (ComboBox)gui.getGUINode(SITE_SEMESTERS_COMBO_BOX);
+        courseSem.setOnAction(e->{
+            controller.processCourseSem();
+            controller.processExportURL();
+        });
+        ComboBox courseYear = (ComboBox)gui.getGUINode(SITE_YEARS_COMBO_BOX);
+        courseYear.setOnAction(e->{
+            controller.processCourseYear();
+            controller.processExportURL();
+        });
+        TextField courseTitle =(TextField)gui.getGUINode(SITE_TITLE_TEXT_FIELD);
+        courseTitle.setOnAction(e->{
+            controller.processCourseTitle();
+        });
+        CheckBox courseHomeCB = (CheckBox)gui.getGUINode(SITE_HOME_CHECK_BOX);
+        courseHomeCB.setOnAction(e->{
+            controller.processCheckedOptions();
+        });
+        CheckBox courseSyllabusCB = (CheckBox)gui.getGUINode(SITE_SYLLABUS_CHECK_BOX);
+        courseSyllabusCB.setOnAction(e->{
+            controller.processCheckedOptions();
+        });
+        CheckBox courseScheduleCB = (CheckBox)gui.getGUINode(SITE_SCHEDULE_CHECK_BOX);
+        courseScheduleCB.setOnAction(e->{
+            controller.processCheckedOptions();
+        });
+        CheckBox courseHWCB = (CheckBox)gui.getGUINode(SITE_HW_CHECK_BOX);
+        courseHWCB.setOnAction(e->{
+            controller.processCheckedOptions();
+        });
+        ComboBox siteCSS = (ComboBox)gui.getGUINode(SITE_CSS_COMBO_BOX);
+        siteCSS.setOnAction(e->{
+            controller.processSiteCSS();
+        });
+        TextField instructorName = (TextField)gui.getGUINode(SITE_NAME_TEXT_FIELD);
+        instructorName.setOnAction(e->{
+            controller.processInstructorName();
+        });
+        TextField instructorEmail = (TextField)gui.getGUINode(SITE_EMAIL_TEXT_FIELD);
+        instructorEmail.setOnAction(e->{
+            controller.processInstructorEmail();
+        });
+        TextField instructorRoom = (TextField)gui.getGUINode(SITE_ROOM_TEXT_FIELD);
+        instructorRoom.setOnAction(e->{
+            controller.processInstructorRoom();
+        });
+        TextField instructorHP = (TextField)gui.getGUINode(SITE_HP_TEXT_FIELD);
+        instructorHP.setOnAction(e->{
+            controller.processInstructorHP();
+        });
+        
     }
 
     public void initFoolproofDesign() {
@@ -1209,5 +1410,45 @@ public class CSGWorkspace extends AppWorkspaceComponent {
     @Override
     public void showNewDialog() {
         // WE AREN'T USING THIS FOR THIS APPLICATION
+    }
+    
+    public ImageView getFviImgView() {
+        return fviImgView;
+    }
+
+    public void setFviImgView(ImageView fviImgView) {
+        this.fviImgView = fviImgView;
+    }
+
+    public ImageView getNavImgView() {
+        return navImgView;
+    }
+
+    public void setNavImgView(ImageView navImgView) {
+        this.navImgView = navImgView;
+    }
+
+    public ImageView getLeftImgView() {
+        return leftImgView;
+    }
+
+    public void setLeftImgView(ImageView leftImgView) {
+        this.leftImgView = leftImgView;
+    }
+
+    public ImageView getRightImgView() {
+        return rightImgView;
+    }
+
+    public void setRightImgView(ImageView rightImgView) {
+        this.rightImgView = rightImgView;
+    }
+    
+    public TextArea getInstructorOHJsonArea() {
+        return instructorOHJsonArea;
+    }
+
+    public void setInstructorOHJsonArea(TextArea instructorOHJsonArea) {
+        this.instructorOHJsonArea = instructorOHJsonArea;
     }
 }
