@@ -34,6 +34,7 @@ import static csg.CSGPropertyType.SITE_SYLLABUS_CHECK_BOX;
 import static csg.CSGPropertyType.SITE_TITLE_TEXT_FIELD;
 import static csg.CSGPropertyType.SITE_YEARS_COMBO_BOX;
 import csg.data.CSGData;
+import csg.data.MeetingTimesData;
 import csg.data.OHData;
 import csg.data.SiteData;
 import csg.data.SyllabusData;
@@ -436,6 +437,36 @@ public class CSGController {
         SyllabusData data = d.getSyllabusData();
         data.setSaJSON(text);
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
+    }
+
+    public void processAddLecture() {
+        CSGData d = (CSGData)app.getDataComponent();
+        MeetingTimesData data = d.getMeetingTimesData();
+        data.addLecture();
+    }
+
+    public void processRemoveLecture() {
+        
+    }
+
+    public void processAddRecitation() {
+        CSGData d = (CSGData)app.getDataComponent();
+        MeetingTimesData data = d.getMeetingTimesData();
+        data.addRecitation();
+    }
+
+    public void processRemoveRectiation() {
+        
+    }
+
+    public void processAddLab() {
+        CSGData d = (CSGData)app.getDataComponent();
+        MeetingTimesData data = d.getMeetingTimesData();
+        data.addLab();
+    }
+
+    public void processRemoveLab() {
+        
     }
     
 }

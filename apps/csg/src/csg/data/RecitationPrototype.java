@@ -12,58 +12,63 @@ import javafx.beans.property.StringProperty;
  *
  * @author Ajay
  */
-public class Recitation {
+public class RecitationPrototype <E extends Comparable<E>> implements Comparable<E>  {
     private StringProperty section;
     private StringProperty dayAndTime;
     private StringProperty room;
-    private TeachingAssistantPrototype TA1;
-    private TeachingAssistantPrototype TA2;
+    private StringProperty TA1;
+    private StringProperty TA2;
     
-    public Recitation(String section, String day, String room, TeachingAssistantPrototype ta1, TeachingAssistantPrototype ta2) {
+    public RecitationPrototype(String section, String day, String room, String ta1, String ta2) {
         this.section = new SimpleStringProperty(section);
         this.dayAndTime = new SimpleStringProperty(day);
         this.room = new SimpleStringProperty(room);
-        this.TA1 = ta1;
-        this.TA2 = ta2;
+        this.TA1 = new SimpleStringProperty(ta1);
+        this.TA2 = new SimpleStringProperty(ta2);
     }
 
-    public StringProperty getSection() {
-        return section;
+    public String getSection() {
+        return section.get();
     }
 
     public void setSection(StringProperty section) {
         this.section = section;
     }
 
-    public StringProperty getDayAndTime() {
-        return dayAndTime;
+    public String getDayAndTime() {
+        return dayAndTime.get();
     }
 
     public void setDayAndTime(StringProperty dayAndTime) {
         this.dayAndTime = dayAndTime;
     }
 
-    public StringProperty getRoom() {
-        return room;
+    public String getRoom() {
+        return room.get();
     }
 
     public void setRoom(StringProperty room) {
         this.room = room;
     }
 
-    public TeachingAssistantPrototype getTA1() {
-        return TA1;
+    public String getTA1() {
+        return TA1.get();
     }
 
-    public void setTA1(TeachingAssistantPrototype TA1) {
+    public void setTA1(StringProperty TA1) {
         this.TA1 = TA1;
     }
 
-    public TeachingAssistantPrototype getTA2() {
-        return TA2;
+    public String getTA2() {
+        return TA2.get();
     }
 
-    public void setTA2(TeachingAssistantPrototype TA2) {
+    public void setTA2(StringProperty TA2) {
         this.TA2 = TA2;
+    }
+
+    @Override
+    public int compareTo(E o) {
+        return getSection().compareTo(((RecitationPrototype)o).getSection());
     }
 }

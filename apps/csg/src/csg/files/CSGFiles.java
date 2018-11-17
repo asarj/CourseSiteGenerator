@@ -21,7 +21,12 @@ import javax.json.JsonWriter;
 import javax.json.JsonWriterFactory;
 import javax.json.stream.JsonGenerator;
 import csg.CSGApp;
+import csg.data.CSGData;
+import csg.data.MeetingTimesData;
 import csg.data.OHData;
+import csg.data.ScheduleData;
+import csg.data.SiteData;
+import csg.data.SyllabusData;
 import csg.data.TAType;
 import csg.data.TeachingAssistantPrototype;
 import csg.data.TimeSlot;
@@ -63,8 +68,15 @@ public class CSGFiles implements AppFileComponent {
     @Override
     public void loadData(AppDataComponent data, String filePath) throws IOException {
 	// CLEAR THE OLD DATA OUT
-	OHData dataManager = (OHData)data;
-        dataManager.reset();
+	CSGData d = (CSGData)data;
+        SiteData siteDataManager = d.getSiteData();
+        SyllabusData syllabusDataManager = d.getSyllabusData();
+        MeetingTimesData mtDataManager = d.getMeetingTimesData();
+        OHData ohDataManager = d.getOfficeHoursData();
+        ScheduleData schDataManager = d.getScheduleData();
+        
+        /* LOADS THE OH DATA */
+        ohDataManager.reset();
 
 	// LOAD THE JSON FILE WITH ALL THE DATA
 	JsonObject json = loadJSONFile(filePath);
@@ -72,11 +84,11 @@ public class CSGFiles implements AppFileComponent {
 	// LOAD THE START AND END HOURS
 	String startHour = json.getString(JSON_OH_START_HOUR);
         String endHour = json.getString(JSON_OH_END_HOUR);
-        dataManager.initHours(startHour, endHour);
+        ohDataManager.initHours(startHour, endHour);
         
         // LOAD ALL THE GRAD TAs
-        loadTAs(dataManager, json, JSON_OH_GRAD_TAS);
-        loadTAs(dataManager, json, JSON_OH_UNDERGRAD_TAS);
+        loadTAs(ohDataManager, json, JSON_OH_GRAD_TAS);
+        loadTAs(ohDataManager, json, JSON_OH_UNDERGRAD_TAS);
 
         // AND THEN ALL THE OFFICE HOURS
         JsonArray jsonOfficeHoursArray = json.getJsonArray(JSON_OH_OFFICE_HOURS);
@@ -85,8 +97,8 @@ public class CSGFiles implements AppFileComponent {
             String startTime = jsonOfficeHours.getString(JSON_OH_START_TIME);
             DayOfWeek dow = DayOfWeek.valueOf(jsonOfficeHours.getString(JSON_OH_DAY_OF_WEEK));
             String name = jsonOfficeHours.getString(JSON_OH_NAME);
-            TeachingAssistantPrototype ta = dataManager.getTAWithName(name);
-            TimeSlot timeSlot = dataManager.getTimeSlot(startTime);
+            TeachingAssistantPrototype ta = ohDataManager.getTAWithName(name);
+            TimeSlot timeSlot = ohDataManager.getTimeSlot(startTime);
             timeSlot.toggleTA(dow, ta);
         }
     }
@@ -116,12 +128,17 @@ public class CSGFiles implements AppFileComponent {
     @Override
     public void saveData(AppDataComponent data, String filePath) throws IOException {
 	// GET THE DATA
-	OHData dataManager = (OHData)data;
+	CSGData d = (CSGData)data;
+        SiteData siteDataManager = d.getSiteData();
+        SyllabusData syllabusDataManager = d.getSyllabusData();
+        MeetingTimesData mtDataManager = d.getMeetingTimesData();
+        OHData ohDataManager = d.getOfficeHoursData();
+        ScheduleData schDataManager = d.getScheduleData();
 
 	// NOW BUILD THE TA JSON OBJCTS TO SAVE
 	JsonArrayBuilder gradTAsArrayBuilder = Json.createArrayBuilder();
         JsonArrayBuilder undergradTAsArrayBuilder = Json.createArrayBuilder();
-	Iterator<TeachingAssistantPrototype> tasIterator = dataManager.teachingAssistantsIterator();
+	Iterator<TeachingAssistantPrototype> tasIterator = ohDataManager.teachingAssistantsIterator();
         while (tasIterator.hasNext()) {
             TeachingAssistantPrototype ta = tasIterator.next();
 	    JsonObject taJson = Json.createObjectBuilder()
@@ -138,7 +155,7 @@ public class CSGFiles implements AppFileComponent {
 
 	// NOW BUILD THE OFFICE HOURS JSON OBJCTS TO SAVE
 	JsonArrayBuilder officeHoursArrayBuilder = Json.createArrayBuilder();
-        Iterator<TimeSlot> timeSlotsIterator = dataManager.officeHoursIterator();
+        Iterator<TimeSlot> timeSlotsIterator = ohDataManager.officeHoursIterator();
         while (timeSlotsIterator.hasNext()) {
             TimeSlot timeSlot = timeSlotsIterator.next();
             for (int i = 0; i < DayOfWeek.values().length; i++) {
@@ -154,7 +171,7 @@ public class CSGFiles implements AppFileComponent {
                 }
             }    
 	}
-        for (TimeSlot ts : dataManager.getHeldTs()) {
+        for (TimeSlot ts : ohDataManager.getHeldTs()) {
             for (int i = 0; i < DayOfWeek.values().length; i++) {
                 DayOfWeek dow = DayOfWeek.values()[i];
                 tasIterator = ts.getTAsIterator(dow);
@@ -172,8 +189,8 @@ public class CSGFiles implements AppFileComponent {
         
 	// THEN PUT IT ALL TOGETHER IN A JsonObject
 	JsonObject dataManagerJSO = Json.createObjectBuilder()
-		.add(JSON_OH_START_HOUR, "" + dataManager.getStartHour())
-		.add(JSON_OH_END_HOUR, "" + dataManager.getEndHour())
+		.add(JSON_OH_START_HOUR, "" + ohDataManager.getStartHour())
+		.add(JSON_OH_END_HOUR, "" + ohDataManager.getEndHour())
                 .add(JSON_OH_GRAD_TAS, gradTAsArray)
                 .add(JSON_OH_UNDERGRAD_TAS, undergradTAsArray)
                 .add(JSON_OH_OFFICE_HOURS, officeHoursArray)

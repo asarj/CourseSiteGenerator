@@ -26,9 +26,9 @@ import properties_manager.PropertiesManager;
 import csg.CSGApp;
 import csg.CSGPropertyType;
 import static csg.CSGPropertyType.*;
-import csg.data.Lab;
-import csg.data.Lecture;
-import csg.data.Recitation;
+import csg.data.LabPrototype;
+import csg.data.LecturePrototype;
+import csg.data.RecitationPrototype;
 import csg.data.ScheduleItem;
 import csg.data.TeachingAssistantPrototype;
 import csg.data.TimeSlot;
@@ -890,7 +890,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         mtBuilder.buildTextButton(MT_LECTURE_REMOVE_BUTTON, lectureHeaderBox, CLASS_APP_BUTTON, ENABLED);
         mtBuilder.buildLabel(CSGPropertyType.MT_LECTURE_HEADER_LABEL, lectureHeaderBox, CLASS_OH_HEADER_LABEL, ENABLED); 
         
-        TableView<Lecture> lectureTable = mtBuilder.buildTableView(MT_LECTURE_TABLE_VIEW, lecturePane, CLASS_OH_TABLE_VIEW, ENABLED);
+        TableView<LecturePrototype> lectureTable = mtBuilder.buildTableView(MT_LECTURE_TABLE_VIEW, lecturePane, CLASS_OH_TABLE_VIEW, ENABLED);
         lectureTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         TableColumn lectureSectionColumn = mtBuilder.buildTableColumn(MT_LECTURE_SECTION_TABLE_COLUMN, lectureTable, CLASS_OH_COLUMN);
         TableColumn lectureDayColumn = mtBuilder.buildTableColumn(MT_LECTURE_DAY_TABLE_COLUMN, lectureTable, CLASS_OH_COLUMN);
@@ -920,7 +920,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         mtBuilder.buildTextButton(MT_RECITATION_REMOVE_BUTTON, recitationHeaderBox, CLASS_APP_BUTTON, ENABLED);
         mtBuilder.buildLabel(CSGPropertyType.MT_RECITATIONS_HEADER_LABEL, recitationHeaderBox, CLASS_OH_HEADER_LABEL, ENABLED); 
         
-        TableView<Recitation> recitationTable = mtBuilder.buildTableView(MT_RECITATION_TABLE_VIEW, recitationPane, CLASS_OH_TABLE_VIEW, ENABLED);
+        TableView<RecitationPrototype> recitationTable = mtBuilder.buildTableView(MT_RECITATION_TABLE_VIEW, recitationPane, CLASS_OH_TABLE_VIEW, ENABLED);
         recitationTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         TableColumn recitationSectionColumn = mtBuilder.buildTableColumn(MT_RECITATION_SECTION_TABLE_COLUMN, recitationTable, CLASS_OH_COLUMN);
         TableColumn recitationDayTimeColumn = mtBuilder.buildTableColumn(MT_RECITATION_DAYANDTIME_TABLE_COLUMN, recitationTable, CLASS_OH_COLUMN);
@@ -951,7 +951,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         mtBuilder.buildTextButton(MT_LAB_REMOVE_BUTTON, labHeaderBox, CLASS_APP_BUTTON, ENABLED);
         mtBuilder.buildLabel(CSGPropertyType.MT_LABS_HEADER_LABEL, labHeaderBox, CLASS_OH_HEADER_LABEL, ENABLED); 
         
-        TableView<Lab> labTable = mtBuilder.buildTableView(MT_LAB_TABLE_VIEW, labPane, CLASS_OH_TABLE_VIEW, ENABLED);
+        TableView<LabPrototype> labTable = mtBuilder.buildTableView(MT_LAB_TABLE_VIEW, labPane, CLASS_OH_TABLE_VIEW, ENABLED);
         labTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         TableColumn labSectionColumn = mtBuilder.buildTableColumn(MT_LAB_SECTION_TABLE_COLUMN, labTable, CLASS_OH_COLUMN);
         TableColumn labDayTimeColumn = mtBuilder.buildTableColumn(MT_LAB_DAYANDTIME_TABLE_COLUMN, labTable, CLASS_OH_COLUMN);
@@ -1391,6 +1391,25 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         TextField instructorHP = (TextField)gui.getGUINode(SITE_HP_TEXT_FIELD);
         instructorHP.setOnAction(e->{
             controller.processInstructorHP();
+        });
+        
+        ((Button) gui.getGUINode(MT_LECTURE_ADD_BUTTON)).setOnAction(e -> {
+            controller.processAddLecture();
+        });
+        ((Button) gui.getGUINode(MT_LECTURE_REMOVE_BUTTON)).setOnAction(e -> {
+            controller.processRemoveLecture();
+        });
+        ((Button) gui.getGUINode(MT_RECITATION_ADD_BUTTON)).setOnAction(e -> {
+            controller.processAddRecitation();
+        });
+        ((Button) gui.getGUINode(MT_RECITATION_REMOVE_BUTTON)).setOnAction(e -> {
+            controller.processRemoveRectiation();
+        });
+        ((Button) gui.getGUINode(MT_LAB_ADD_BUTTON)).setOnAction(e -> {
+            controller.processAddLab();
+        });
+        ((Button) gui.getGUINode(MT_LAB_REMOVE_BUTTON)).setOnAction(e -> {
+            controller.processRemoveLab();
         });
         
     }

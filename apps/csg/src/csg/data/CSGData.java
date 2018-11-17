@@ -16,7 +16,9 @@ public class CSGData implements AppDataComponent{
     CSGApp app;
     SiteData siteData;
     SyllabusData syllabusData;
+    MeetingTimesData meetingTimesData;
     OHData officeHoursData;
+    ScheduleData scheduleData;
 
     
     
@@ -24,7 +26,9 @@ public class CSGData implements AppDataComponent{
         app = initApp;
         siteData = new SiteData(app);
         syllabusData = new SyllabusData(app);
+        meetingTimesData = new MeetingTimesData(app);
         officeHoursData = new OHData(app);
+        scheduleData = new ScheduleData(app);
     }
     
     public void reset(){
@@ -53,6 +57,22 @@ public class CSGData implements AppDataComponent{
 
     public void setOfficeHoursData(OHData officeHoursData) {
         this.officeHoursData = officeHoursData;
+    }
+
+    public MeetingTimesData getMeetingTimesData() {
+        return meetingTimesData;
+    }
+
+    public void setMeetingTimesData(MeetingTimesData meetingTimesData) {
+        this.meetingTimesData = meetingTimesData;
+    }
+
+    public ScheduleData getScheduleData() {
+        return scheduleData;
+    }
+
+    public void setScheduleData(ScheduleData scheduleData) {
+        this.scheduleData = scheduleData;
     }
     
 }
