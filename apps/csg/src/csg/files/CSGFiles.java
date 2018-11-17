@@ -31,7 +31,9 @@ import csg.data.TAType;
 import csg.data.TeachingAssistantPrototype;
 import csg.data.TimeSlot;
 import csg.data.TimeSlot.DayOfWeek;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import javax.json.JsonObjectBuilder;
 
 /**
  * This class serves as the file component for the TA
@@ -45,6 +47,60 @@ public class CSGFiles implements AppFileComponent {
     CSGApp app;
     
     // THESE ARE USED FOR IDENTIFYING JSON TYPES
+    
+    // SITE DATA FIELDS
+    static final String JSON_SITE_SUBJECT = "subject";
+    static final String JSON_SITE_NUMBER = "number";
+    static final String JSON_SITE_SEMESTER = "semester";
+    static final String JSON_SITE_YEAR = "year";
+    static final String JSON_SITE_TITLE = "site_title";
+    static final String JSON_SITE_EXPORT_URL = "export_url";
+    static final String JSON_SITE_PAGES = "pages";
+    static final String JSON_SITE_PAGES_NAME = "name";
+    static final String JSON_SITE_LOGOS = "logos";
+    static final String JSON_SITE_FAVICON = "favicon";
+    static final String JSON_SITE_NAVBAR = "navbar";
+    static final String JSON_SITE_BOTTOM_LEFT = "bottom_left";
+    static final String JSON_SITE_BOTTOM_RIGHT = "bottom_right";
+    static final String JSON_SITE_SELECTED_CSS = "css";
+    static final String JSON_SITE_INSTRUCTOR = "instructor";
+    static final String JSON_SITE_INSTRUCTOR_NAME = "instructor_name";
+    static final String JSON_SITE_INSTRUCTOR_EMAIL = "instructor_email";
+    static final String JSON_SITE_INSTRUCTOR_ROOM = "instructor_room";
+    static final String JSON_SITE_INSTRUCTOR_HP = "instructor_hp";
+    static final String JSON_SITE_INSTRUCTOR_HOURS = "instructor_hours";
+    
+    // SYLLABUS DATA FIELDS
+    static final String JSON_SYL_DESCRIPTION = "description";
+    static final String JSON_SYL_TOPICS = "topics";
+    static final String JSON_SYL_PREREQUISITES = "prerequisites";
+    static final String JSON_SYL_OUTCOMES = "outcomes";
+    static final String JSON_SYL_TEXTBOOKS = "textbooks";
+    static final String JSON_SYL_GC = "graded_components";
+    static final String JSON_SYL_GN = "grading_note";
+    static final String JSON_SYL_AD = "academic_dishonesty";
+    static final String JSON_SYL_SA = "special_assistance";
+    
+    // MEETING TIMES DATA FIELDS
+    static final String JSON_MT_LECTURES = "lectures";
+    static final String JSON_MT_LECTURES_SECTION = "lec_section";
+    static final String JSON_MT_LECTURES_DAYS = "lec_days";
+    static final String JSON_MT_LECTURES_TIME = "lec_time";
+    static final String JSON_MT_LECTURES_ROOM = "lec_room";
+    static final String JSON_MT_RECITATIONS = "recitations";
+    static final String JSON_MT_RECITATIONS_SECTION = "r_section";
+    static final String JSON_MT_RECITATIONS_DAY_TIME = "r_day_time";
+    static final String JSON_MT_RECITATIONS_LOCATION = "r_location";
+    static final String JSON_MT_RECITATIONS_TA1 = "r_ta_1";
+    static final String JSON_MT_RECITATIONS_TA2 = "r_ta_2";
+    static final String JSON_MT_LABS = "labs";
+    static final String JSON_MT_LABS_SECTION = "lab_section";
+    static final String JSON_MT_LABS_DAY_TIME = "lab_day_time";
+    static final String JSON_MT_LABS_LOCATION = "lab_location";
+    static final String JSON_MT_LABS_TA1 = "lab_ta_1";
+    static final String JSON_MT_LABS_TA2 = "lab_ta_2";
+    
+    // OH DATA FIELDS
     static final String JSON_OH_GRAD_TAS = "grad_tas";
     static final String JSON_OH_UNDERGRAD_TAS = "undergrad_tas";
     static final String JSON_OH_NAME = "name";
@@ -60,6 +116,25 @@ public class CSGFiles implements AppFileComponent {
     static final String JSON_OH_WEDNESDAY = "wednesday";
     static final String JSON_OH_THURSDAY = "thursday";
     static final String JSON_OH_FRIDAY = "friday";
+    
+    // SCHEDULE DATA FIELDS
+    static final String JSON_SCH_STARTING_MONDAY_MONTH = "startingMondayMonth";
+    static final String JSON_SCH_STARTING_MONDAY_DAY = "startingMondayDay";
+    static final String JSON_SCH_STARTING_MONDAY_YEAR = "startingMondayYear";
+    static final String JSON_SCH_ENDING_FRIDAY_MONTH = "endingFridayMonth";
+    static final String JSON_SCH_ENDING_FRIDAY_DAY = "endingFridayDay";
+    static final String JSON_SCH_ENDING_FRIDAY_YEAR = "endingFridayYear";
+    static final String JSON_SCH_HOLIDAYS = "holidays";
+    static final String JSON_SCH_LECTURES = "lectures";
+    static final String JSON_SCH_REFERENCES = "references";
+    static final String JSON_SCH_RECITATIONS = "recitations";
+    static final String JSON_SCH_HWS = "hws";
+    static final String JSON_SCH_EVENT_MONTH = "month";
+    static final String JSON_SCH_EVENT_DAY = "event_day";
+    static final String JSON_SCH_EVENT_YEAR = "year";
+    static final String JSON_SCH_EVENT_TITLE = "title";
+    static final String JSON_SCH_EVENT_TOPIC = "topic";
+    static final String JSON_SCH_EVENT_LINK = "link";
 
     public CSGFiles(CSGApp initApp) {
         app = initApp;
@@ -75,12 +150,74 @@ public class CSGFiles implements AppFileComponent {
         OHData ohDataManager = d.getOfficeHoursData();
         ScheduleData schDataManager = d.getScheduleData();
         
-        /* LOADS THE OH DATA */
+        mtDataManager.reset();
+        schDataManager.reset();
         ohDataManager.reset();
+        
 
 	// LOAD THE JSON FILE WITH ALL THE DATA
 	JsonObject json = loadJSONFile(filePath);
 
+        /******************LOADS THE SITE DATA*********************/
+        String courseSubject = json.getString(JSON_SITE_SUBJECT);
+        siteDataManager.setSelectedName(courseSubject);
+        
+        String courseNum = json.getString(JSON_SITE_NUMBER);
+        siteDataManager.setSelectedNum(courseNum);
+        
+        String courseSem = json.getString(JSON_SITE_SEMESTER);
+        siteDataManager.setSelectedSem(courseSem);
+        
+        String courseYr = json.getString(JSON_SITE_YEAR);
+        siteDataManager.setSelectedYear(courseYr);
+        
+        String courseTitle = json.getString(JSON_SITE_TITLE);
+        siteDataManager.setTitle(courseTitle);
+        
+        String expUrl = json.getString(JSON_SITE_EXPORT_URL);
+        siteDataManager.setExp(expUrl);
+        
+        JsonArray jsonPagesArray = json.getJsonArray(JSON_SITE_PAGES);
+        ArrayList<String> loadedChoices = new ArrayList<>();
+        for(int i = 0; i < jsonPagesArray.size(); i++){
+            JsonObject item = jsonPagesArray.getJsonObject(i);
+            loadedChoices.add(item.getString(JSON_SITE_PAGES_NAME));
+        }
+        siteDataManager.setSelectedPageOptions(loadedChoices);
+        
+        JsonArray jsonLogosArray = json.getJsonArray(JSON_SITE_LOGOS);
+        if(!jsonLogosArray.getJsonObject(0).getString(JSON_SITE_FAVICON).equals("")){
+            siteDataManager.setFavUrl(jsonLogosArray.getJsonObject(0).getString(JSON_SITE_FAVICON));
+        }
+        if(!jsonLogosArray.getJsonObject(1).getString(JSON_SITE_NAVBAR).equals("")){
+            siteDataManager.setNavUrl(jsonLogosArray.getJsonObject(1).getString(JSON_SITE_NAVBAR));
+        }
+        if(!jsonLogosArray.getJsonObject(2).getString(JSON_SITE_BOTTOM_LEFT).equals("")){
+            siteDataManager.setLeftUrl(jsonLogosArray.getJsonObject(2).getString(JSON_SITE_BOTTOM_LEFT));
+        }
+        if(!jsonLogosArray.getJsonObject(3).getString(JSON_SITE_BOTTOM_RIGHT).equals("")){
+            siteDataManager.setRightUrl(jsonLogosArray.getJsonObject(3).getString(JSON_SITE_BOTTOM_RIGHT));
+        }
+        
+        String courseCSS = json.getString(JSON_SITE_SELECTED_CSS);
+        siteDataManager.setCSS(courseCSS.substring(courseCSS.lastIndexOf("/") + 1));
+        
+        JsonArray jsonInstructorArray = json.getJsonArray(JSON_SITE_INSTRUCTOR);
+        siteDataManager.setInstructorName(jsonInstructorArray.getJsonObject(0).getString(JSON_SITE_INSTRUCTOR_NAME));
+        siteDataManager.setInstructorEmail(jsonInstructorArray.getJsonObject(1).getString(JSON_SITE_INSTRUCTOR_EMAIL));
+        siteDataManager.setInstructorRoom(jsonInstructorArray.getJsonObject(2).getString(JSON_SITE_INSTRUCTOR_ROOM));
+        siteDataManager.setInstructorHP(jsonInstructorArray.getJsonObject(3).getString(JSON_SITE_INSTRUCTOR_HP));
+        try{
+            siteDataManager.setInstructorHoursJSON(jsonInstructorArray.getJsonObject(4).getString(JSON_SITE_INSTRUCTOR_HOURS));
+        }
+        catch(Exception e){
+            
+        }
+        
+        /**********************************************************/
+        
+        
+        /*******************LOADS THE OH DATA**********************/
 	// LOAD THE START AND END HOURS
 	String startHour = json.getString(JSON_OH_START_HOUR);
         String endHour = json.getString(JSON_OH_END_HOUR);
@@ -135,6 +272,64 @@ public class CSGFiles implements AppFileComponent {
         OHData ohDataManager = d.getOfficeHoursData();
         ScheduleData schDataManager = d.getScheduleData();
 
+        /*****************SAVES THE SITE DATA*******************/
+        JsonArrayBuilder pagesArrayBuilder = Json.createArrayBuilder();
+        for(String s: siteDataManager.getSelectedPageOptions()){
+            if(s.equals("home")){
+                JsonObject cbOption = Json.createObjectBuilder()
+                        .add(JSON_SITE_PAGES_NAME, s).build();
+                pagesArrayBuilder.add(cbOption);
+            }
+            else if(s.equals("syllabus")){
+                JsonObject cbOption = Json.createObjectBuilder()
+                        .add(JSON_SITE_PAGES_NAME, s).build();
+                pagesArrayBuilder.add(cbOption);
+            }
+            else if(s.equals("schedule")){
+                JsonObject cbOption = Json.createObjectBuilder()
+                        .add(JSON_SITE_PAGES_NAME, s).build();
+                pagesArrayBuilder.add(cbOption);
+            }
+            else if(s.equals("hw")){
+                JsonObject cbOption = Json.createObjectBuilder()
+                        .add(JSON_SITE_PAGES_NAME, s).build();
+                pagesArrayBuilder.add(cbOption);
+            }
+        }
+        JsonArray pagesArray = pagesArrayBuilder.build();
+        
+        JsonArrayBuilder logos = Json.createArrayBuilder();
+        JsonObject favUrl = Json.createObjectBuilder().add(JSON_SITE_FAVICON, siteDataManager.getFavUrl()).build();
+        logos.add(favUrl);
+        JsonObject navUrl = Json.createObjectBuilder().add(JSON_SITE_NAVBAR, siteDataManager.getNavUrl()).build();
+        logos.add(navUrl);
+        JsonObject leftUrl = Json.createObjectBuilder().add(JSON_SITE_BOTTOM_LEFT, siteDataManager.getLeftUrl()).build();
+        logos.add(leftUrl);
+        JsonObject rightUrl = Json.createObjectBuilder().add(JSON_SITE_BOTTOM_RIGHT, siteDataManager.getRightUrl()).build();
+        logos.add(rightUrl);
+        JsonArray logosArray = logos.build();
+        
+        JsonArrayBuilder inst = Json.createArrayBuilder();
+        JsonObject instName = Json.createObjectBuilder().add(JSON_SITE_INSTRUCTOR_NAME, siteDataManager.getInstructorName()).build();
+        inst.add(instName);
+        JsonObject instEmail = Json.createObjectBuilder().add(JSON_SITE_INSTRUCTOR_EMAIL, siteDataManager.getInstructorEmail()).build();
+        inst.add(instEmail);
+        JsonObject instRoom = Json.createObjectBuilder().add(JSON_SITE_INSTRUCTOR_ROOM, siteDataManager.getInstructorRoom()).build();
+        inst.add(instRoom);
+        JsonObject instHP = Json.createObjectBuilder().add(JSON_SITE_INSTRUCTOR_HP, siteDataManager.getInstructorHP()).build();
+        inst.add(instHP);
+        JsonArrayBuilder instHours = Json.createArrayBuilder().add(siteDataManager.getInstructorHoursJSON());
+        inst.add(instHours);
+        JsonArray instructorArray = inst.build();
+        /*******************************************************/
+        
+        
+        
+        /*****************SAVES THE SYLLABUS DATA*******************/
+        
+        /***********************************************************/
+        
+        /****************SAVES THE OH DATA**********************/
 	// NOW BUILD THE TA JSON OBJCTS TO SAVE
 	JsonArrayBuilder gradTAsArrayBuilder = Json.createArrayBuilder();
         JsonArrayBuilder undergradTAsArrayBuilder = Json.createArrayBuilder();
@@ -189,6 +384,20 @@ public class CSGFiles implements AppFileComponent {
         
 	// THEN PUT IT ALL TOGETHER IN A JsonObject
 	JsonObject dataManagerJSO = Json.createObjectBuilder()
+                // Adds the Site info
+                .add(JSON_SITE_SUBJECT, siteDataManager.getSelectedName())
+                .add(JSON_SITE_NUMBER, siteDataManager.getSelectedNum())
+                .add(JSON_SITE_SEMESTER, siteDataManager.getSelectedSem())
+                .add(JSON_SITE_YEAR, siteDataManager.getSelectedYear())
+                .add(JSON_SITE_TITLE, siteDataManager.getTitle())
+                .add(JSON_SITE_EXPORT_URL, siteDataManager.getExp())
+                .add(JSON_SITE_PAGES, pagesArray)
+                .add(JSON_SITE_LOGOS, logosArray)
+                .add(JSON_SITE_SELECTED_CSS, siteDataManager.getCSS())
+                .add(JSON_SITE_INSTRUCTOR, instructorArray)
+                // Adds the Syllabus info
+                
+                // Adds the OH Info
 		.add(JSON_OH_START_HOUR, "" + ohDataManager.getStartHour())
 		.add(JSON_OH_END_HOUR, "" + ohDataManager.getEndHour())
                 .add(JSON_OH_GRAD_TAS, gradTAsArray)

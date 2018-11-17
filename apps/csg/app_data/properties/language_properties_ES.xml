@@ -232,7 +232,7 @@
         <property name="SYL_TBOOK_LABEL_TEXT"                       value=" Libros de texto"></property>
         <property name="SYL_GRADED_LABEL_TEXT"                       value=" Componentes graduados:"></property>
         <property name="SYL_GRADINGNOTE_LABEL_TEXT"                       value=" Nota de calificación:"></property>
-        <property name="SYL_AD_LABEL_TEXT"                       value=" Honestidad académica:"></property>
+        <property name="SYL_AD_LABEL_TEXT"                       value=" Dishonestidad académica:"></property>
         <property name="SYL_SA_LABEL_TEXT"                       value=" Asistencia especial:"></property>
         <property name="SYL_DESC_BUTTON_TEXT"                       value="+"></property>
         <property name="SYL_TOPICS_BUTTON_TEXT"                       value="+"></property>
@@ -252,7 +252,7 @@
         <property name="MT_LECTURE_DAY_TABLE_COLUMN_TEXT"                       value="Día"></property>
         <property name="MT_LECTURE_TIME_TABLE_COLUMN_TEXT"                       value="Hora"></property>
         <property name="MT_RECITATION_SECTION_TABLE_COLUMN_TEXT"                       value="Sección"></property>
-        <property name="MT_LAB_SECTION_TABLE_COLUMN_TEXT"                       value="Laboratorio"></property>
+        <property name="MT_LAB_SECTION_TABLE_COLUMN_TEXT"                       value="Sección"></property>
         <property name="MT_RECITATION_DAYANDTIME_TABLE_COLUMN_TEXT"                       value="Día &amp; Hora"></property>
         <property name="MT_LAB_DAYANDTIME_TABLE_COLUMN_TEXT"                       value="Día &amp; Hora"></property>
         <property name="MT_LECTURE_ROOM_TABLE_COLUMN_TEXT"                       value="Habitación"></property>

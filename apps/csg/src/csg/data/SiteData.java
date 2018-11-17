@@ -3,10 +3,26 @@ package csg.data;
 import djf.components.AppDataComponent;
 import djf.modules.AppGUIModule;
 import csg.CSGApp;
+import static csg.CSGPropertyType.SITE_CSS_COMBO_BOX;
+import static csg.CSGPropertyType.SITE_EXPORT_LABEL;
+import static csg.CSGPropertyType.SITE_HOME_CHECK_BOX;
+import static csg.CSGPropertyType.SITE_HW_CHECK_BOX;
+import static csg.CSGPropertyType.SITE_SCHEDULE_CHECK_BOX;
+import static csg.CSGPropertyType.SITE_SEMESTERS_COMBO_BOX;
+import static csg.CSGPropertyType.SITE_SUBJECTNUM_COMBO_BOX;
+import static csg.CSGPropertyType.SITE_SUBJECT_COMBO_BOX;
+import static csg.CSGPropertyType.SITE_SYLLABUS_CHECK_BOX;
+import static csg.CSGPropertyType.SITE_TITLE_TEXT_FIELD;
+import static csg.CSGPropertyType.SITE_YEARS_COMBO_BOX;
+import csg.workspace.CSGWorkspace;
+import java.io.File;
 import java.util.ArrayList;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * This is the data component for TAManagerApp. It has all the data needed
@@ -68,35 +84,21 @@ public class SiteData{
 
     }
     
-    public void reset() {
-        this.selectedName = "";
-        this.selectedNum = "";
-        this.selectedSem = "";
-        this.selectedYear = "";
-        this.title = "";
-        this.exp = "";
-
-        this.selectedPageOptions.clear();
-
-        this.favUrl = "";
-        this.navUrl = "";
-        this.leftUrl = "";
-        this.rightUrl = "";
-
-        this.instructorName = "";
-        this.instructorEmail = "";
-        this.instructorRoom = "";
-        this.instructorHP = "";
-        this.instructorHoursJSON = "";
-       
-    }
-    
     public String getSelectedName() {
         return selectedName;
     }
 
     public void setSelectedName(String selectedName) {
         this.selectedName = selectedName;
+        AppGUIModule gui = app.getGUIModule();
+        ComboBox n = (ComboBox)gui.getGUINode(SITE_SUBJECT_COMBO_BOX);
+        try{
+            n.getSelectionModel().select(this.selectedName);
+        }
+        catch(Exception e){
+            n.getItems().add(this.selectedName);
+            n.getSelectionModel().select(this.selectedName);
+        }
     }
 
     public String getSelectedNum() {
@@ -105,6 +107,15 @@ public class SiteData{
 
     public void setSelectedNum(String selectedNum) {
         this.selectedNum = selectedNum;
+        AppGUIModule gui = app.getGUIModule();
+        ComboBox n = (ComboBox)gui.getGUINode(SITE_SUBJECTNUM_COMBO_BOX);
+        try{
+            n.getSelectionModel().select(this.selectedNum);
+        }
+        catch(Exception e){
+            n.getItems().add(this.selectedName);
+            n.getSelectionModel().select(this.selectedNum);
+        }
     }
 
     public String getSelectedSem() {
@@ -113,6 +124,15 @@ public class SiteData{
 
     public void setSelectedSem(String selectedSem) {
         this.selectedSem = selectedSem;
+        AppGUIModule gui = app.getGUIModule();
+        ComboBox n = (ComboBox)gui.getGUINode(SITE_SEMESTERS_COMBO_BOX);
+        try{
+            n.getSelectionModel().select(this.selectedSem);
+        }
+        catch(Exception e){
+            n.getItems().add(this.selectedName);
+            n.getSelectionModel().select(this.selectedSem);
+        }
     }
 
     public String getSelectedYear() {
@@ -121,6 +141,15 @@ public class SiteData{
 
     public void setSelectedYear(String selectedYear) {
         this.selectedYear = selectedYear;
+        AppGUIModule gui = app.getGUIModule();
+        ComboBox n = (ComboBox)gui.getGUINode(SITE_YEARS_COMBO_BOX);
+        try{
+            n.getSelectionModel().select(this.selectedYear);
+        }
+        catch(Exception e){
+            n.getItems().add(this.selectedName);
+            n.getSelectionModel().select(this.selectedYear);
+        }
     }
 
     public String getTitle() {
@@ -128,7 +157,7 @@ public class SiteData{
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.title = title;     
     }
 
     public String getExp() {
@@ -137,6 +166,9 @@ public class SiteData{
 
     public void setExp(String exp) {
         this.exp = exp;
+        AppGUIModule gui = app.getGUIModule();
+        Label n = (Label)gui.getGUINode(SITE_EXPORT_LABEL);
+        n.setText(this.exp);
     }
 
     public ArrayList<String> getSelectedPageOptions() {
@@ -145,6 +177,25 @@ public class SiteData{
 
     public void setSelectedPageOptions(ArrayList<String> selectedPageOptions) {
         this.selectedPageOptions = selectedPageOptions;
+        AppGUIModule gui = app.getGUIModule();
+        CheckBox courseHomeCB = (CheckBox)gui.getGUINode(SITE_HOME_CHECK_BOX);
+        CheckBox courseSyllabusCB = (CheckBox)gui.getGUINode(SITE_SYLLABUS_CHECK_BOX);
+        CheckBox courseScheduleCB = (CheckBox)gui.getGUINode(SITE_SCHEDULE_CHECK_BOX);
+        CheckBox courseHWCB = (CheckBox)gui.getGUINode(SITE_HW_CHECK_BOX);
+        for(int i = 0; i < selectedPageOptions.size(); i++){
+            if(selectedPageOptions.get(i).equals("home")){
+                courseHomeCB.setSelected(true);
+            }
+            else if(selectedPageOptions.get(i).equals("syllabus")){
+                courseSyllabusCB.setSelected(true);
+            }
+            else if(selectedPageOptions.get(i).equals("schedule")){
+                courseScheduleCB.setSelected(true);
+            }
+            else if(selectedPageOptions.get(i).equals("hw")){
+                courseHWCB.setSelected(true);
+            }
+        }
     }
 
     public String getFavUrl() {
@@ -153,6 +204,10 @@ public class SiteData{
 
     public void setFavUrl(String favUrl) {
         this.favUrl = favUrl;
+        AppGUIModule gui = app.getGUIModule();
+        CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
+        ImageView imgView = workspace.getFviImgView();
+        imgView.setImage(new Image("file:" + favUrl));
     }
 
     public String getNavUrl() {
@@ -161,6 +216,10 @@ public class SiteData{
 
     public void setNavUrl(String navUrl) {
         this.navUrl = navUrl;
+        AppGUIModule gui = app.getGUIModule();
+        CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
+        ImageView imgView = workspace.getNavImgView();
+        imgView.setImage(new Image("file:" + navUrl));
     }
 
     public String getLeftUrl() {
@@ -169,6 +228,10 @@ public class SiteData{
 
     public void setLeftUrl(String leftUrl) {
         this.leftUrl = leftUrl;
+        AppGUIModule gui = app.getGUIModule();
+        CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
+        ImageView imgView = workspace.getLeftImgView();
+        imgView.setImage(new Image("file:" + leftUrl));
     }
 
     public String getRightUrl() {
@@ -177,6 +240,10 @@ public class SiteData{
 
     public void setRightUrl(String rightUrl) {
         this.rightUrl = rightUrl;
+        AppGUIModule gui = app.getGUIModule();
+        CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
+        ImageView imgView = workspace.getRightImgView();
+        imgView.setImage(new Image("file:" + rightUrl));
     }
 
     public String getInstructorName() {
@@ -220,11 +287,11 @@ public class SiteData{
     }   
     
     public String getCSS() {
-        return css;
+        return this.css;
     }
 
     public void setCSS(String css) {
-        this.css = "/work/css/" + css;
+        this.css = "./work/css/" + css;
     }
     
     public boolean isValidComboBoxChoice(ComboBox c){
@@ -236,7 +303,7 @@ public class SiteData{
     }
     
     public boolean isValidTextFieldInput(TextField tf){
-        return tf.getText().trim().equals("");
+        return !tf.getText().trim().equals("");
     }
     
     public void clearOptions(){

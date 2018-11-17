@@ -29,7 +29,7 @@ import static csg.CSGPropertyType.*;
 import csg.data.LabPrototype;
 import csg.data.LecturePrototype;
 import csg.data.RecitationPrototype;
-import csg.data.ScheduleItem;
+import csg.data.ScheduleItemPrototype;
 import csg.data.TeachingAssistantPrototype;
 import csg.data.TimeSlot;
 import csg.workspace.controllers.CSGController;
@@ -39,6 +39,7 @@ import static csg.workspace.style.OHStyle.*;
 import static djf.AppPropertyType.APP_FILE_PROTOCOL;
 import static djf.modules.AppLanguageModule.FILE_PROTOCOL;
 import java.io.File;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javafx.beans.value.ChangeListener;
@@ -71,6 +72,9 @@ public class CSGWorkspace extends AppWorkspaceComponent {
     ImageView leftImgView;
     ImageView rightImgView;
     TextArea instructorOHJsonArea;
+    DatePicker startDate;
+    DatePicker endDate;
+    DatePicker editDatePicker;
     
     public CSGWorkspace(CSGApp app) {
         super(app);
@@ -97,6 +101,8 @@ public class CSGWorkspace extends AppWorkspaceComponent {
     private void initLayout() {
         // FIRST LOAD THE FONT FAMILIES FOR THE COMBO BOX
         PropertiesManager props = PropertiesManager.getPropertiesManager();
+        CSGController outsideController = new CSGController((CSGApp) app);
+//        AppGUIModule outsideGUI = app.getGUIModule();
 
         // THIS WILL BUILD ALL OF OUR JavaFX COMPONENTS FOR US
         AppNodesBuilder tabBuilder = app.getGUIModule().getNodesBuilder();
@@ -174,12 +180,16 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         yearsCBox.setEditable(true);
         subjectCBox.setItems(subjects);
         subjectCBox.getSelectionModel().selectFirst();
+//        outsideController.processCourseName();
         subjectNumsCBox.setItems(subjectNums);
         subjectNumsCBox.getSelectionModel().selectFirst();
+//        outsideController.processCourseNum();
         semestersCBox.setItems(semesters);
         semestersCBox.getSelectionModel().selectFirst();
+//        outsideController.processCourseSem();
         yearsCBox.setItems(years);
         yearsCBox.getSelectionModel().selectFirst();
+//        outsideController.processCourseYear();
         
         
         Label titleLabel = siteBuilder.buildLabel(SITE_TITLE_LABEL, bannerBox, 0, 3, 1, 1, CLASS_REG_LABEL, ENABLED);
@@ -189,6 +199,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         expVBox.setStyle("-fx-background-color: #ebebeb;");
         Label expDirLabel = siteBuilder.buildLabel(SITE_EXPDIR_LABEL, expVBox, 0, 0, 1, 1, CLASS_REG_LABEL, ENABLED);
         Label expDirOutputLabel = siteBuilder.buildLabel(SITE_EXPORT_LABEL, expVBox, 1, 0, 1, 1, CLASS_REG_LABEL, ENABLED);
+//        outsideController.processExportURL();
 
         subjectCBox.valueProperty().addListener(new ChangeListener<String>() {
             @Override 
@@ -384,6 +395,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         fviImgView.setPreserveRatio(true);
         fviImgView.setSmooth(true);
         fviImgView.setCache(true);
+        
         navImgView = new ImageView(
                 props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_NAVBAR_TEXT)
         );
@@ -392,6 +404,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         navImgView.setPreserveRatio(true);
         navImgView.setSmooth(true);
         navImgView.setCache(true);
+        
         leftImgView = new ImageView(
                 props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_LFIMG_TEXT)
         );
@@ -891,7 +904,9 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         mtBuilder.buildLabel(CSGPropertyType.MT_LECTURE_HEADER_LABEL, lectureHeaderBox, CLASS_OH_HEADER_LABEL, ENABLED); 
         
         TableView<LecturePrototype> lectureTable = mtBuilder.buildTableView(MT_LECTURE_TABLE_VIEW, lecturePane, CLASS_OH_TABLE_VIEW, ENABLED);
-        lectureTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+//        lectureTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        lectureTable.getSelectionModel().cellSelectionEnabledProperty().set(true);
+        
         TableColumn lectureSectionColumn = mtBuilder.buildTableColumn(MT_LECTURE_SECTION_TABLE_COLUMN, lectureTable, CLASS_OH_COLUMN);
         TableColumn lectureDayColumn = mtBuilder.buildTableColumn(MT_LECTURE_DAY_TABLE_COLUMN, lectureTable, CLASS_OH_COLUMN);
         TableColumn lectureTimeColumn = mtBuilder.buildTableColumn(MT_LECTURE_TIME_TABLE_COLUMN, lectureTable, CLASS_OH_COLUMN);
@@ -922,6 +937,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         
         TableView<RecitationPrototype> recitationTable = mtBuilder.buildTableView(MT_RECITATION_TABLE_VIEW, recitationPane, CLASS_OH_TABLE_VIEW, ENABLED);
         recitationTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        recitationTable.setEditable(true);
         TableColumn recitationSectionColumn = mtBuilder.buildTableColumn(MT_RECITATION_SECTION_TABLE_COLUMN, recitationTable, CLASS_OH_COLUMN);
         TableColumn recitationDayTimeColumn = mtBuilder.buildTableColumn(MT_RECITATION_DAYANDTIME_TABLE_COLUMN, recitationTable, CLASS_OH_COLUMN);
         TableColumn recitationRoomColumn = mtBuilder.buildTableColumn(MT_RECITATION_ROOM_TABLE_COLUMN, recitationTable, CLASS_OH_COLUMN);
@@ -953,6 +969,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         
         TableView<LabPrototype> labTable = mtBuilder.buildTableView(MT_LAB_TABLE_VIEW, labPane, CLASS_OH_TABLE_VIEW, ENABLED);
         labTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        labTable.setEditable(true);
         TableColumn labSectionColumn = mtBuilder.buildTableColumn(MT_LAB_SECTION_TABLE_COLUMN, labTable, CLASS_OH_COLUMN);
         TableColumn labDayTimeColumn = mtBuilder.buildTableColumn(MT_LAB_DAYANDTIME_TABLE_COLUMN, labTable, CLASS_OH_COLUMN);
         TableColumn labRoomColumn = mtBuilder.buildTableColumn(MT_LAB_ROOM_TABLE_COLUMN, labTable, CLASS_OH_COLUMN);
@@ -1126,10 +1143,10 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         schBuilder.buildLabel(SCH_CALENDAR_BOUNDARIES_LABEL, schBoundariesPane, CLASS_OH_HEADER_LABEL, ENABLED);
         HBox schBoundariesBox = schBuilder.buildHBox(SCH_BOUNDARIES_OPTIONS_HEADER_BOX, schBoundariesPane, CLASS_OH_BOX, ENABLED);
         schBuilder.buildLabel(SCH_STARTING_MONDAY_LABEL, schBoundariesBox, CLASS_OH_LABEL, ENABLED);
-        DatePicker startDate = new DatePicker();
+        startDate = new DatePicker();
         schBoundariesBox.getChildren().add(startDate);
         schBuilder.buildLabel(SCH_ENDING_FRIDAY_LABEL, schBoundariesBox, CLASS_OH_LABEL, ENABLED);
-        DatePicker endDate = new DatePicker();
+        endDate = new DatePicker();
         schBoundariesPane.setStyle("-fx-background-color: #ebebeb;");
         schBoundariesPane.setSpacing(5);
         HBox blank14 = schBuilder.buildHBox(SCH_BLANK14_HBOX, schPane, CLASS_OH_BOX, ENABLED);
@@ -1142,7 +1159,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         schBuilder.buildTextButton(SCH_REMOVE_ITEM_BUTTON, schItemsPaneHeaderBox, CLASS_APP_BUTTON, ENABLED);
         schBuilder.buildLabel(SCH_SCHEDULE_ITEMS_LABEL, schItemsPaneHeaderBox, CLASS_OH_HEADER_LABEL, ENABLED);
         
-        TableView<ScheduleItem> itemTable = schBuilder.buildTableView(SCH_ITEMS_TABLE_VIEW, schItemsPane, CLASS_OH_TABLE_VIEW, ENABLED);
+        TableView<ScheduleItemPrototype> itemTable = schBuilder.buildTableView(SCH_ITEMS_TABLE_VIEW, schItemsPane, CLASS_OH_TABLE_VIEW, ENABLED);
         itemTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         TableColumn schTypeColumn = schBuilder.buildTableColumn(SCH_TYPE_TABLE_COLUMN, itemTable, CLASS_OH_COLUMN);
         TableColumn schDateColumn = schBuilder.buildTableColumn(SCH_DATE_TABLE_COLUMN, itemTable, CLASS_OH_COLUMN);
@@ -1180,7 +1197,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
 //        schBuilder.buildComboBox(end, saBox, BUTTON_TAG_WIDTH, BUTTON_TAG_WIDTH, BUTTON_TAG_WIDTH, BUTTON_TAG_WIDTH, EMPTY_TEXT, ENABLED, mtContent, DEFAULT_NAVBAR_TEXT)
 //        HBox dateBox = schBuilder.buildHBox(SCH_DATE_HBOX, schAddEditPane, 0, 3, 2, 1, CLASS_OH_BOX, ENABLED);
         schBuilder.buildLabel(SCH_DATE_LABEL, schAddEditPane, 0, 3, 2, 1, CLASS_OH_LABEL, ENABLED);
-        DatePicker editDatePicker = new DatePicker();
+        editDatePicker = new DatePicker();
         schAddEditPane.add(editDatePicker, 1, 3, 2, 1);
 //        HBox titleBox = schBuilder.buildHBox(SCH_TITLE_HBOX, schAddEditPane, 0, 4, 2, 1, CLASS_OH_BOX, ENABLED);
         schBuilder.buildLabel(SCH_TITLE_LABEL, schAddEditPane, 0 ,4, 2, 1, CLASS_OH_LABEL, ENABLED);
@@ -1323,37 +1340,76 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         
         ComboBox timeStart = (ComboBox)gui.getGUINode(OH_STARTTIME_COMBO_BOX);
         ComboBox timeEnd = (ComboBox)gui.getGUINode(OH_ENDTIME_COMBO_BOX);
-        timeStart.setOnAction(e->{
-//            controller.processUpdateEndOptions();
-            controller.processUpdateOHTable();
+        timeStart.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
+              System.out.println(timeStart.getItems().get((Integer) number));
+              System.out.println(timeStart.getItems().get((Integer) number2));
+              controller.processUpdateOHTable(number.intValue(), true);
+            }
         });
-        timeEnd.setOnAction(ev->{
-//            controller.processUpdateStartOptions();
-            controller.processUpdateOHTable();
+                
+                
+//                .addListener((ObservableValue<Integer> ov, Object t, Object t1) -> {
+//            int oldStart = Integer.parseInt(((String)t).substring(0, ((String)t).indexOf(":")));
+//            if(((String)t).contains("pm")){
+//                oldStart += 11;
+//            }
+//            controller.processUpdateOHTable(oldStart, true);
+//        });
+            
+        timeEnd.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
+              System.out.println(timeEnd.getItems().get((Integer) number));
+              System.out.println(timeEnd.getItems().get((Integer) number2));
+              controller.processUpdateOHTable(number.intValue(), false);
+            }
         });
+                
+                
+//                .addListener((ObservableValue<?> ov, Object t, Object t1) -> {
+//            int oldEnd = Integer.parseInt(((String)t).substring(0, ((String)t).indexOf(":")));
+//            if(((String)t).contains("pm")){
+//                oldEnd += 11;
+//            }
+//            controller.processUpdateOHTable(oldEnd, false);
+//        });
         
         ComboBox courseName = (ComboBox)gui.getGUINode(SITE_SUBJECT_COMBO_BOX);
         courseName.setOnAction(e->{
             controller.processCourseName();
+            controller.processCourseNum();
+            controller.processCourseSem();
+            controller.processCourseYear();
             controller.processExportURL();
         });
         ComboBox courseNum = (ComboBox)gui.getGUINode(SITE_SUBJECTNUM_COMBO_BOX);
         courseNum.setOnAction(e->{
+            controller.processCourseName();
             controller.processCourseNum();
+            controller.processCourseSem();
+            controller.processCourseYear();
             controller.processExportURL();
         });
         ComboBox courseSem = (ComboBox)gui.getGUINode(SITE_SEMESTERS_COMBO_BOX);
         courseSem.setOnAction(e->{
+            controller.processCourseName();
+            controller.processCourseNum();
             controller.processCourseSem();
+            controller.processCourseYear();
             controller.processExportURL();
         });
         ComboBox courseYear = (ComboBox)gui.getGUINode(SITE_YEARS_COMBO_BOX);
         courseYear.setOnAction(e->{
+            controller.processCourseName();
+            controller.processCourseNum();
+            controller.processCourseSem();
             controller.processCourseYear();
             controller.processExportURL();
         });
         TextField courseTitle =(TextField)gui.getGUINode(SITE_TITLE_TEXT_FIELD);
-        courseTitle.setOnAction(e->{
+        courseTitle.textProperty().addListener(e->{
             controller.processCourseTitle();
         });
         CheckBox courseHomeCB = (CheckBox)gui.getGUINode(SITE_HOME_CHECK_BOX);
@@ -1377,22 +1433,21 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             controller.processSiteCSS();
         });
         TextField instructorName = (TextField)gui.getGUINode(SITE_NAME_TEXT_FIELD);
-        instructorName.setOnAction(e->{
+        instructorName.textProperty().addListener(e->{
             controller.processInstructorName();
         });
         TextField instructorEmail = (TextField)gui.getGUINode(SITE_EMAIL_TEXT_FIELD);
-        instructorEmail.setOnAction(e->{
+        instructorEmail.textProperty().addListener(e->{
             controller.processInstructorEmail();
         });
         TextField instructorRoom = (TextField)gui.getGUINode(SITE_ROOM_TEXT_FIELD);
-        instructorRoom.setOnAction(e->{
+        instructorRoom.textProperty().addListener(e->{
             controller.processInstructorRoom();
         });
         TextField instructorHP = (TextField)gui.getGUINode(SITE_HP_TEXT_FIELD);
-        instructorHP.setOnAction(e->{
+        instructorHP.textProperty().addListener(e->{
             controller.processInstructorHP();
         });
-        
         ((Button) gui.getGUINode(MT_LECTURE_ADD_BUTTON)).setOnAction(e -> {
             controller.processAddLecture();
         });
@@ -1412,6 +1467,21 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             controller.processRemoveLab();
         });
         
+        DatePicker start = getStartDate();
+        start.setOnAction(e->{
+            controller.processStartDate(start.getValue());
+        });
+        DatePicker end = getEndDate();
+        end.setOnAction(e->{
+            controller.processEndDate(end.getValue());
+        });
+        ((Button) gui.getGUINode(SCH_CLEAR_BUTTON)).setOnAction(e -> {
+            controller.processClearSelection();
+        });
+        DatePicker edit = getEditDatePicker();
+        ((Button) gui.getGUINode(SCH_ADD_UPDATE_BUTTON)).setOnAction(e -> {
+            controller.processAddEditSelection(edit.getValue());
+        });
     }
 
     public void initFoolproofDesign() {
@@ -1469,5 +1539,29 @@ public class CSGWorkspace extends AppWorkspaceComponent {
 
     public void setInstructorOHJsonArea(TextArea instructorOHJsonArea) {
         this.instructorOHJsonArea = instructorOHJsonArea;
+    }
+    
+    public DatePicker getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(DatePicker startDate) {
+        this.startDate = startDate;
+    }
+
+    public DatePicker getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(DatePicker endDate) {
+        this.endDate = endDate;
+    }
+    
+    public DatePicker getEditDatePicker() {
+        return editDatePicker;
+    }
+
+    public void setEditDatePicker(DatePicker editDatePicker) {
+        this.editDatePicker = editDatePicker;
     }
 }

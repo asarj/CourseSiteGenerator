@@ -44,6 +44,12 @@ public class MeetingTimesData {
         labItems = new ArrayList<>();
     }
     
+    public void reset(){
+        lectures.clear();
+        recitations.clear();
+        labs.clear();
+    }
+    
     public void addLecture(){
         LecturePrototype l = new LecturePrototype("?", "?", "?", "?");
         lectureItems.add(l);

@@ -18,6 +18,10 @@ import static csg.CSGPropertyType.OH_OFFICE_HOURS_TABLE_VIEW;
 import static csg.CSGPropertyType.OH_STARTTIME_COMBO_BOX;
 import static csg.CSGPropertyType.OH_TAS_TABLE_VIEW;
 import static csg.CSGPropertyType.OH_TA_EDIT_DIALOG;
+import static csg.CSGPropertyType.SCH_LINK_TEXT_FIELD;
+import static csg.CSGPropertyType.SCH_TITLE_TEXT_FIELD;
+import static csg.CSGPropertyType.SCH_TOPIC_TEXT_FIELD;
+import static csg.CSGPropertyType.SCH_TYPE_COMBO_BOX;
 import static csg.CSGPropertyType.SITE_CSS_COMBO_BOX;
 import static csg.CSGPropertyType.SITE_EMAIL_TEXT_FIELD;
 import static csg.CSGPropertyType.SITE_EXPORT_LABEL;
@@ -36,6 +40,8 @@ import static csg.CSGPropertyType.SITE_YEARS_COMBO_BOX;
 import csg.data.CSGData;
 import csg.data.MeetingTimesData;
 import csg.data.OHData;
+import csg.data.ScheduleData;
+import csg.data.ScheduleItemPrototype;
 import csg.data.SiteData;
 import csg.data.SyllabusData;
 import csg.data.TAType;
@@ -47,12 +53,18 @@ import csg.transactions.CutTA_Transaction;
 import csg.transactions.EditTA_Transaction;
 import csg.transactions.RemoveTA_Transaction;
 import csg.transactions.ToggleOfficeHours_Transaction;
+import csg.transactions.UpdateTable_Transaction;
 import csg.workspace.dialogs.TADialog;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 
 /**
  *
@@ -181,18 +193,36 @@ public class CSGController {
         
     }
 
-    public void processUpdateOHTable() {
+    public void processUpdateOHTable(int old, boolean isStartCB) {
         AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         OHData data = d.getOfficeHoursData();
+        TableView<TimeSlot> officeHoursTableView = (TableView) gui.getGUINode(OH_OFFICE_HOURS_TABLE_VIEW);
         ComboBox timeStart = (ComboBox)gui.getGUINode(OH_STARTTIME_COMBO_BOX);
         ComboBox timeEnd = (ComboBox)gui.getGUINode(OH_ENDTIME_COMBO_BOX);
         int ts = timeStart.getSelectionModel().getSelectedIndex();
         int te = timeEnd.getSelectionModel().getSelectedIndex();
+        int oldts = 0;
+        int oldte = 0;
         if(ts <= te){
             timeStart.setDisable(false);
             timeEnd.setDisable(false);
-            data.resetOHTable(ts, te);
+            if(isStartCB){
+                oldts = old;
+                oldte = te;
+            }
+            else{
+                oldts = ts;
+                oldte = old;
+            }
+            System.out.println(ts);
+            System.out.println(te);
+            System.out.println(oldts);
+            System.out.println(oldte);
+            UpdateTable_Transaction u = new UpdateTable_Transaction(app, data, ts, te, oldts, oldte);
+            app.processTransaction(u);
+            officeHoursTableView.refresh();
+//            data.resetOHTable(ts, te, oldts, oldte);
         }
         else{
 //            if(te < ts){
@@ -259,7 +289,9 @@ public class CSGController {
         SiteData data = d.getSiteData();
         TextField titleTF = (TextField)gui.getGUINode(SITE_TITLE_TEXT_FIELD);
         if(data.isValidTextFieldInput(titleTF)){
-            data.setTitle(titleTF.getText());
+            if(titleTF.isFocused()){
+                data.setTitle(titleTF.getText());
+            }
         }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
@@ -319,7 +351,9 @@ public class CSGController {
         SiteData data = d.getSiteData();
         ComboBox c = (ComboBox)gui.getGUINode(SITE_CSS_COMBO_BOX);
         if(data.isValidComboBoxChoice(c)){
-            data.setCSS((String)c.getSelectionModel().getSelectedItem());
+            if(c.isFocused()){
+                data.setCSS((String)c.getSelectionModel().getSelectedItem());
+            }
         }
         
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
@@ -467,6 +501,70 @@ public class CSGController {
 
     public void processRemoveLab() {
         
+    }
+
+    public void processStartDate(LocalDate date) {
+        CSGData d = (CSGData)app.getDataComponent();
+        ScheduleData data = d.getScheduleData();
+        if(date.getDayOfWeek().getValue() == 1){
+            data.setStartDate(date);      
+        }
+        else{
+            Alert alert = new Alert(AlertType.ERROR, "Start date must happen on a Monday!", ButtonType.OK);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.OK) {
+                alert.close();
+            }
+        }
+        app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
+    }
+
+    public void processEndDate(LocalDate date) {
+        CSGData d = (CSGData)app.getDataComponent();
+        ScheduleData data = d.getScheduleData();
+        if(date.getDayOfWeek().getValue() == 5){
+            data.setEndDate(date);      
+        }
+        else{
+            Alert alert = new Alert(AlertType.ERROR, "End date must happen on a Friday!", ButtonType.OK);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.OK) {
+                alert.close();
+            }
+        }
+        app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
+    }
+
+    public void processClearSelection() {
+        
+    }
+
+    public void processAddEditSelection(LocalDate date) {
+        AppGUIModule gui = app.getGUIModule();
+        CSGData d = (CSGData)app.getDataComponent();
+        ScheduleData data = d.getScheduleData();
+        ComboBox type = (ComboBox)gui.getGUINode(SCH_TYPE_COMBO_BOX);
+        TextField title = (TextField)gui.getGUINode(SCH_TITLE_TEXT_FIELD);
+        TextField topic = (TextField)gui.getGUINode(SCH_TOPIC_TEXT_FIELD);
+        TextField link = (TextField)gui.getGUINode(SCH_LINK_TEXT_FIELD);
+        String typeOption = (String)type.getSelectionModel().getSelectedItem();
+        String titleOption = title.getText();
+        String topicOption = topic.getText();
+        String linkOption = link.getText();
+        if(date.getDayOfWeek().getValue() > 0 && date.getDayOfWeek().getValue() < 6){
+            ScheduleItemPrototype s = new ScheduleItemPrototype(typeOption.trim(), date, titleOption.trim(), topicOption.trim(), linkOption.trim());
+            data.addScheduleItem(s);
+        }
+        else{
+            Alert alert = new Alert(AlertType.ERROR, "The event must happen on a Monday or Friday!", ButtonType.OK);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.OK) {
+                alert.close();
+            }
+        }
     }
     
 }

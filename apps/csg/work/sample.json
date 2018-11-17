@@ -1,71 +1,51 @@
 
 {
+    "subject":"CSE",
+    "number":"114",
+    "semester":"Fall",
+    "year":"2018",
+    "site_title":"Intro to Java",
+    "export_url":".\\export\\CSE_114_Fall_2018\\public.html",
+    "pages":[
+    ],
+    "logos":[
+        {
+            "favicon":""
+        },
+        {
+            "navbar":""
+        },
+        {
+            "bottom_left":""
+        },
+        {
+            "bottom_right":""
+        }
+    ],
+    "css":"",
+    "instructor":[
+        {
+            "instructor_name":""
+        },
+        {
+            "instructor_email":""
+        },
+        {
+            "instructor_room":""
+        },
+        {
+            "instructor_hp":""
+        },
+        [
+            ""
+        ]
+    ],
     "startHour":"0",
     "endHour":"23",
     "grad_tas":[
-        {
-            "name":"ajay2",
-            "email":"ajay2@me.com",
-            "type":"Graduate"
-        }
     ],
     "undergrad_tas":[
-        {
-            "name":"ajay",
-            "email":"ajay@me.com",
-            "type":"Undergraduate"
-        }
     ],
     "officeHours":[
-        {
-            "time":"12_00am",
-            "day":"MONDAY",
-            "name":"ajay"
-        },
-        {
-            "time":"12_00am",
-            "day":"TUESDAY",
-            "name":"ajay"
-        },
-        {
-            "time":"12_00am",
-            "day":"WEDNESDAY",
-            "name":"ajay"
-        },
-        {
-            "time":"12_00am",
-            "day":"THURSDAY",
-            "name":"ajay"
-        },
-        {
-            "time":"12_00am",
-            "day":"FRIDAY",
-            "name":"ajay"
-        },
-        {
-            "time":"5_30am",
-            "day":"MONDAY",
-            "name":"ajay2"
-        },
-        {
-            "time":"5_30am",
-            "day":"TUESDAY",
-            "name":"ajay2"
-        },
-        {
-            "time":"5_30am",
-            "day":"WEDNESDAY",
-            "name":"ajay2"
-        },
-        {
-            "time":"5_30am",
-            "day":"THURSDAY",
-            "name":"ajay2"
-        },
-        {
-            "time":"5_30am",
-            "day":"FRIDAY",
-            "name":"ajay2"
-        }
     ]
 }
