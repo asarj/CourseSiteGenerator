@@ -1,11 +1,11 @@
 
 {
     "subject":"CSE",
-    "number":"114",
+    "number":"101",
     "semester":"Fall",
-    "year":"2018",
-    "site_title":"Intro to Java",
-    "export_url":".\\export\\CSE_114_Fall_2018\\public.html",
+    "year":"2019",
+    "site_title":"Some title",
+    "export_url":".\\export\\CSE_101_Fall_2019\\public.html",
     "pages":[
     ],
     "logos":[
@@ -40,9 +40,31 @@
             ""
         ]
     ],
+    "description":"Some desc",
+    "topics":[
+        "\"Some topic1\", \"Some topic2\""
+    ],
+    "prerequisites":"Some pr",
+    "outcomes":[
+        "\"1\",\"2\""
+    ],
+    "textbooks":[
+        "{\n\t\t\"title\":\"1\",\n\t\t\"link\":\"2\",\n\t\t\"photo\":\"3\",\n\t\t\"authors\":[\n\t\t\t\"4\"\n\t\t],\n\t\t\"publisher\":\"5\",\n\t\t\"year\":\"6\"\n},"
+    ],
+    "graded_components":[
+        "{\n\t\t\"Name\": \"7\"\n\t\t\"Description\": \"8\"\n\t\t\"Weight\": \"9\"\n},"
+    ],
+    "grading_note":"Some gn",
+    "academic_dishonesty":"Some ad",
+    "special_assistance":"Some sa",
     "startHour":"0",
     "endHour":"23",
     "grad_tas":[
+        {
+            "name":"me",
+            "email":"me@me.com",
+            "type":"Graduate"
+        }
     ],
     "undergrad_tas":[
     ],

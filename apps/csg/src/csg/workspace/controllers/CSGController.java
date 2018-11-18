@@ -54,6 +54,7 @@ import csg.transactions.EditTA_Transaction;
 import csg.transactions.RemoveTA_Transaction;
 import csg.transactions.ToggleOfficeHours_Transaction;
 import csg.transactions.UpdateTable_Transaction;
+import csg.workspace.CSGWorkspace;
 import csg.workspace.dialogs.TADialog;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -405,71 +406,101 @@ public class CSGController {
 
     public void processInstructorHoursJSON(String text) {
         CSGData d = (CSGData)app.getDataComponent();
+        CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
         SiteData data = d.getSiteData();
-        data.setInstructorHoursJSON(text);
+        if(workspace.getInstructorOHJsonArea().isFocused()){
+            data.setInstructorHoursJSON(text);
+        }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
     public void processDescriptionJSON(String text) {
         CSGData d = (CSGData)app.getDataComponent();
+        CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
         SyllabusData data = d.getSyllabusData();
-        data.setDescriptionJSON(text);
+        if(workspace.getDescTA().isFocused()){
+            data.setDescriptionJSON(text);
+        }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
     public void processTopicsJSON(String text) {
         CSGData d = (CSGData)app.getDataComponent();
+        CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
         SyllabusData data = d.getSyllabusData();
-        data.setTopicsJSON(text);
+        if(workspace.getTopicTA().isFocused()){
+            data.setTopicsJSON(text);
+        }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
     public void processPrereqsJSON(String text) {
         CSGData d = (CSGData)app.getDataComponent();
+        CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
         SyllabusData data = d.getSyllabusData();
-        data.setPrereqJSON(text);
+        if(workspace.getPrereqTA().isFocused()){
+            data.setPrereqJSON(text);
+        }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
     public void processOutcomesJSON(String text) {
         CSGData d = (CSGData)app.getDataComponent();
+        CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
         SyllabusData data = d.getSyllabusData();
-        data.setOutcomesJSON(text);
+        if(workspace.getOutcomesTA().isFocused()){
+            data.setOutcomesJSON(text);
+        }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
     public void processTextbooksJSON(String text) {
         CSGData d = (CSGData)app.getDataComponent();
+        CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
         SyllabusData data = d.getSyllabusData();
-        data.setTextbooksJSON(text);
+        if(workspace.getTextbooksTA().isFocused()){
+            data.setTextbooksJSON(text);
+        }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
     public void processGCJSON(String text) {
         CSGData d = (CSGData)app.getDataComponent();
+        CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
         SyllabusData data = d.getSyllabusData();
-        data.setGcJSON(text);
+        if(workspace.getGcTA().isFocused()){
+            data.setGcJSON(text);
+        }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
     public void processGNJSON(String text) {
         CSGData d = (CSGData)app.getDataComponent();
+        CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
         SyllabusData data = d.getSyllabusData();
-        data.setGnJSON(text);
+        if(workspace.getGradingNoteTA().isFocused()){
+            data.setGnJSON(text);
+        }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
     public void processADJSON(String text) {
         CSGData d = (CSGData)app.getDataComponent();
+        CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
         SyllabusData data = d.getSyllabusData();
-        data.setAdJSON(text);
+        if(workspace.getAdTA().isFocused()){
+            data.setAdJSON(text);
+        }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
     public void processSAJSON(String text) {
         CSGData d = (CSGData)app.getDataComponent();
+        CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
         SyllabusData data = d.getSyllabusData();
-        data.setSaJSON(text);
+        if(workspace.getSaTA().isFocused()){
+            data.setSaJSON(text);
+        }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 

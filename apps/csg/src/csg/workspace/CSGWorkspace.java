@@ -60,7 +60,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
-import javax.swing.JFileChooser;
 
 /**
  *
@@ -72,6 +71,17 @@ public class CSGWorkspace extends AppWorkspaceComponent {
     ImageView leftImgView;
     ImageView rightImgView;
     TextArea instructorOHJsonArea;
+    
+    TextArea descTA;
+    TextArea topicTA;
+    TextArea prereqTA;
+    TextArea outcomesTA;
+    TextArea textbooksTA;
+    TextArea gcTA;
+    TextArea gradingNoteTA;
+    TextArea adTA;
+    TextArea saTA;
+    
     DatePicker startDate;
     DatePicker endDate;
     DatePicker editDatePicker;
@@ -608,18 +618,18 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         Button sylDescExpandButton = syllabusBuilder.buildTextButton(SYL_DESC_BUTTON, descDetail, CLASS_APP_BUTTON, ENABLED);
         Label sylDesc = syllabusBuilder.buildLabel(SYL_DESC_LABEL, descDetail, CLASS_OH_HEADER_LABEL, ENABLED);
         
-        TextArea descTA = new TextArea();
+        descTA = new TextArea();
         descTA.setVisible(false);
         descTA.setManaged(false);
-        descTA.textProperty().addListener(e->{
-            CSGController controller = new CSGController((CSGApp) app);
-            AppGUIModule gui = app.getGUIModule();
-            controller.processDescriptionJSON(descTA.getText());
-        });
         sylDescExpandButton.setOnAction(e->{
             sylDescExpandButton.setText(sylDescExpandButton.getText().equals("+") ? "-": "+");
             descTA.setManaged(sylDescExpandButton.getText().equals("-")? true: false);
             descTA.setVisible(sylDescExpandButton.getText().equals("-")? true: false);
+        });
+        descTA.textProperty().addListener(e->{
+            CSGController controller = new CSGController((CSGApp) app);
+            AppGUIModule gui = app.getGUIModule();
+            controller.processDescriptionJSON(descTA.getText());
         });
 //        descDetail.getChildren().addAll(sylDescExpandButton, sylDesc);
 //        descBox.add(descDetail, 0, 1);
@@ -638,21 +648,21 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         Button sylTopicExpandButton = syllabusBuilder.buildTextButton(SYL_TOPICS_BUTTON, topicDetail, CLASS_APP_BUTTON, ENABLED);
         Label sylTopic = syllabusBuilder.buildLabel(SYL_TOPICS_LABEL, topicDetail, CLASS_OH_HEADER_LABEL, ENABLED);
 
-        TextArea topicTA = new TextArea();
-        topicTA.setText("["
-                        + "\n\t\"\""
-                    + "\n],");
+        topicTA = new TextArea();
+        topicTA.setText(
+                        "\"\","
+                        );
         topicTA.setVisible(false);
         topicTA.setManaged(false);
-        topicTA.textProperty().addListener(e->{
-            CSGController controller = new CSGController((CSGApp) app);
-            AppGUIModule gui = app.getGUIModule();
-            controller.processTopicsJSON(topicTA.getText());
-        });
         sylTopicExpandButton.setOnAction(e->{
             sylTopicExpandButton.setText(sylTopicExpandButton.getText().equals("+") ? "-": "+");
             topicTA.setManaged(sylTopicExpandButton.getText().equals("-")? true: false);
             topicTA.setVisible(sylTopicExpandButton.getText().equals("-")? true: false);
+        });
+        topicTA.textProperty().addListener(e->{
+            CSGController controller = new CSGController((CSGApp) app);
+            AppGUIModule gui = app.getGUIModule();
+            controller.processTopicsJSON(topicTA.getText());
         });
 //        HBox topicDetail = new HBox();
 //        topicDetail.getChildren().addAll(sylTopicExpandButton, sylTopic);
@@ -671,18 +681,18 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         Button sylPrereqExpandButton = syllabusBuilder.buildTextButton(SYL_PREREQ_BUTTON, prereqDetail, CLASS_APP_BUTTON, ENABLED);
         Label prereqLabel = syllabusBuilder.buildLabel(SYL_PREREQ_LABEL, prereqDetail, CLASS_OH_HEADER_LABEL, ENABLED);
 
-        TextArea prereqTA = new TextArea();
+        prereqTA = new TextArea();
         prereqTA.setVisible(false);
         prereqTA.setManaged(false);
-        prereqTA.textProperty().addListener(e->{
-            CSGController controller = new CSGController((CSGApp) app);
-            AppGUIModule gui = app.getGUIModule();
-            controller.processPrereqsJSON(prereqTA.getText());
-        });
         sylPrereqExpandButton.setOnAction(e->{
             sylPrereqExpandButton.setText(sylPrereqExpandButton.getText().equals("+") ? "-": "+");
             prereqTA.setManaged(sylPrereqExpandButton.getText().equals("-")? true: false);
             prereqTA.setVisible(sylPrereqExpandButton.getText().equals("-")? true: false);
+        });
+        prereqTA.textProperty().addListener(e->{
+            CSGController controller = new CSGController((CSGApp) app);
+            AppGUIModule gui = app.getGUIModule();
+            controller.processPrereqsJSON(prereqTA.getText());
         });
 //        prereqDetail.getChildren().addAll(sylPrereqExpandButton, prereqLabel);
 //        prereqBox.add(prereqDetail, 0, 1);
@@ -700,21 +710,21 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         Button sylOutcomesExpandButton = syllabusBuilder.buildTextButton(SYL_OUTCOMES_BUTTON, outcomesDetail, CLASS_APP_BUTTON, ENABLED);
         Label outcomesLabel = syllabusBuilder.buildLabel(SYL_OUTCOMES_LABEL, outcomesDetail, CLASS_OH_HEADER_LABEL, ENABLED);
 
-        TextArea outcomesTA = new TextArea();
-        outcomesTA.setText("["
-                            + "\n\t\"\""
-                        + "\n],");
+        outcomesTA = new TextArea();
+        outcomesTA.setText(
+                            "\"\","
+                          );
         outcomesTA.setVisible(false);
         outcomesTA.setManaged(false);
-        outcomesTA.textProperty().addListener(e->{
-            CSGController controller = new CSGController((CSGApp) app);
-            AppGUIModule gui = app.getGUIModule();
-            controller.processOutcomesJSON(outcomesTA.getText());
-        });
         sylOutcomesExpandButton.setOnAction(e->{
             sylOutcomesExpandButton.setText(sylOutcomesExpandButton.getText().equals("+") ? "-": "+");
             outcomesTA.setManaged(sylOutcomesExpandButton.getText().equals("-")? true: false);
             outcomesTA.setVisible(sylOutcomesExpandButton.getText().equals("-")? true: false);
+        });
+        outcomesTA.textProperty().addListener(e->{
+            CSGController controller = new CSGController((CSGApp) app);
+            AppGUIModule gui = app.getGUIModule();
+            controller.processOutcomesJSON(outcomesTA.getText());
         });
 //        outcomesDetail.getChildren().addAll(sylOutcomesExpandButton, outcomesLabel);
 //        outcomesBox.add(outcomesDetail, 0, 1);
@@ -732,8 +742,8 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         Button sylTextbooksExpandButton = syllabusBuilder.buildTextButton(SYL_TBOOK_BUTTON, textbooksDetail, CLASS_APP_BUTTON, ENABLED);
         Label textbookLabel = syllabusBuilder.buildLabel(SYL_TBOOK_LABEL, textbooksDetail, CLASS_OH_HEADER_LABEL, ENABLED);
         
-        TextArea textbooksTA = new TextArea();
-        textbooksTA.setText("[\n\t{"
+        textbooksTA = new TextArea();
+        textbooksTA.setText("{"
                              + "\n\t\t\"title\":\"\","
                              + "\n\t\t\"link\":\"\","
                              + "\n\t\t\"photo\":\"\","
@@ -741,19 +751,19 @@ public class CSGWorkspace extends AppWorkspaceComponent {
                                 + "\n\t\t\t\"\""
                              + "\n\t\t],"
                              + "\n\t\t\"publisher\":\"\","
-                             + "\n\t\t\"year\":\"\","
-                        + "\n\t}\n]");
+                             + "\n\t\t\"year\":\"\""
+                        + "\n},");
         textbooksTA.setVisible(false);
         textbooksTA.setManaged(false);
-        textbooksTA.textProperty().addListener(e->{
-            CSGController controller = new CSGController((CSGApp) app);
-            AppGUIModule gui = app.getGUIModule();
-            controller.processTextbooksJSON(textbooksTA.getText());
-        });
         sylTextbooksExpandButton.setOnAction(e->{
             sylTextbooksExpandButton.setText(sylTextbooksExpandButton.getText().equals("+") ? "-": "+");
             textbooksTA.setManaged(sylTextbooksExpandButton.getText().equals("-")? true: false);
             textbooksTA.setVisible(sylTextbooksExpandButton.getText().equals("-")? true: false);
+        });
+        textbooksTA.textProperty().addListener(e->{
+            CSGController controller = new CSGController((CSGApp) app);
+            AppGUIModule gui = app.getGUIModule();
+            controller.processTextbooksJSON(textbooksTA.getText());
         });
 //        textbooksDetail.getChildren().addAll(sylTextbooksExpandButton, textbookLabel);
 //        textbookBox.add(textbooksDetail, 0, 1);
@@ -771,25 +781,24 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         Button sylGCExpandButton = syllabusBuilder.buildTextButton(SYL_GRADED_BUTTON, gcDetail, CLASS_APP_BUTTON, ENABLED);
         Label gradedComponentsLabel = syllabusBuilder.buildLabel(SYL_GRADED_LABEL, gcDetail, CLASS_OH_HEADER_LABEL, ENABLED);
 //        gradedComponentsLabel.setId("section_header_label");
-        TextArea gcTA = new TextArea();
-        gcTA.setText("["
-                    + "\n\t{"
+        gcTA = new TextArea();
+        gcTA.setText("{"
                             + "\n\t\t\"Name\": \"\""
                             + "\n\t\t\"Description\": \"\""
                             + "\n\t\t\"Weight\": \"\""
-                        + "\n\t}"
-                 + "\n],");
+                        + "\n},"
+                    );
         gcTA.setVisible(false);
         gcTA.setManaged(false);
-        gcTA.textProperty().addListener(e->{
-            CSGController controller = new CSGController((CSGApp) app);
-            AppGUIModule gui = app.getGUIModule();
-            controller.processGCJSON(gcTA.getText());
-        });
         sylGCExpandButton.setOnAction(e->{
             sylGCExpandButton.setText(sylGCExpandButton.getText().equals("+") ? "-": "+");
             gcTA.setManaged(sylGCExpandButton.getText().equals("-")? true: false);
             gcTA.setVisible(sylGCExpandButton.getText().equals("-")? true: false);
+        });
+        gcTA.textProperty().addListener(e->{
+            CSGController controller = new CSGController((CSGApp) app);
+            AppGUIModule gui = app.getGUIModule();
+            controller.processGCJSON(gcTA.getText());
         });
 //        gcDetail.getChildren().addAll(sylGCExpandButton, gradedComponentsLabel);
 //        gradedComponentsBox.add(gcDetail, 0, 1);
@@ -807,18 +816,18 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         Button sylGradingNoteExpandButton = syllabusBuilder.buildTextButton(SYL_GRADINGNOTE_BUTTON, gradingNoteDetail, CLASS_APP_BUTTON, ENABLED);
         Label gradingNoteLabel = syllabusBuilder.buildLabel(SYL_GRADINGNOTE_LABEL, gradingNoteDetail, CLASS_OH_HEADER_LABEL, ENABLED);
 
-        TextArea gradingNoteTA = new TextArea();
+        gradingNoteTA = new TextArea();
         gradingNoteTA.setVisible(false);
         gradingNoteTA.setManaged(false);
-        gradingNoteTA.textProperty().addListener(e->{
-            CSGController controller = new CSGController((CSGApp) app);
-            AppGUIModule gui = app.getGUIModule();
-            controller.processGNJSON(gradingNoteTA.getText());
-        });
         sylGradingNoteExpandButton.setOnAction(e->{
             sylGradingNoteExpandButton.setText(sylGradingNoteExpandButton.getText().equals("+") ? "-": "+");
             gradingNoteTA.setManaged(sylGradingNoteExpandButton.getText().equals("-")? true: false);
             gradingNoteTA.setVisible(sylGradingNoteExpandButton.getText().equals("-")? true: false);
+        });
+        gradingNoteTA.textProperty().addListener(e->{
+            CSGController controller = new CSGController((CSGApp) app);
+            AppGUIModule gui = app.getGUIModule();
+            controller.processGNJSON(gradingNoteTA.getText());
         });
 //        gradingNoteDetail.getChildren().addAll(sylGradingNoteExpandButton, gradingNoteLabel);
 //        gradingNoteBox.add(gradingNoteDetail, 0, 1);
@@ -836,18 +845,18 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         Button sylADExpandButton = syllabusBuilder.buildTextButton(SYL_AD_BUTTON, adDetail, CLASS_APP_BUTTON, ENABLED);
         Label adLabel = syllabusBuilder.buildLabel(SYL_AD_LABEL, adDetail, CLASS_OH_HEADER_LABEL, ENABLED);
 
-        TextArea adTA = new TextArea();
+        adTA = new TextArea();
         adTA.setVisible(false);
         adTA.setManaged(false);
-        adTA.textProperty().addListener(e->{
-            CSGController controller = new CSGController((CSGApp) app);
-            AppGUIModule gui = app.getGUIModule();
-            controller.processADJSON(adTA.getText());
-        });
         sylADExpandButton.setOnAction(e->{
             sylADExpandButton.setText(sylADExpandButton.getText().equals("+") ? "-": "+");
             adTA.setManaged(sylADExpandButton.getText().equals("-")? true: false);
             adTA.setVisible(sylADExpandButton.getText().equals("-")? true: false);
+        });
+        adTA.textProperty().addListener(e->{
+            CSGController controller = new CSGController((CSGApp) app);
+            AppGUIModule gui = app.getGUIModule();
+            controller.processADJSON(adTA.getText());
         });
 //        adDetail.getChildren().addAll(sylADExpandButton, adLabel);
 //        adBox.add(adDetail, 0, 1);
@@ -865,18 +874,18 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         Button sylSAExpandButton = syllabusBuilder.buildTextButton(SYL_SA_BUTTON, saDetail, CLASS_APP_BUTTON, ENABLED);
         Label saLabel = syllabusBuilder.buildLabel(SYL_SA_LABEL, saDetail, CLASS_OH_HEADER_LABEL, ENABLED);
 
-        TextArea saTA = new TextArea();
+        saTA = new TextArea();
         saTA.setVisible(false);
         saTA.setManaged(false);
-        saTA.textProperty().addListener(e->{
-            CSGController controller = new CSGController((CSGApp) app);
-            AppGUIModule gui = app.getGUIModule();
-            controller.processSAJSON(saTA.getText());
-        });
         sylSAExpandButton.setOnAction(e->{
             sylSAExpandButton.setText(sylSAExpandButton.getText().equals("+") ? "-": "+");
             saTA.setManaged(sylSAExpandButton.getText().equals("-")? true: false);
             saTA.setVisible(sylSAExpandButton.getText().equals("-")? true: false);
+        });
+        saTA.textProperty().addListener(e->{
+            CSGController controller = new CSGController((CSGApp) app);
+            AppGUIModule gui = app.getGUIModule();
+            controller.processSAJSON(saTA.getText());
         });
 //        saDetail.getChildren().addAll(sylSAExpandButton, saLabel);
 //        saBox.add(saDetail, 0, 1);
@@ -1448,6 +1457,8 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         instructorHP.textProperty().addListener(e->{
             controller.processInstructorHP();
         });
+        
+        
         ((Button) gui.getGUINode(MT_LECTURE_ADD_BUTTON)).setOnAction(e -> {
             controller.processAddLecture();
         });
@@ -1563,5 +1574,77 @@ public class CSGWorkspace extends AppWorkspaceComponent {
 
     public void setEditDatePicker(DatePicker editDatePicker) {
         this.editDatePicker = editDatePicker;
+    }
+    
+    public TextArea getDescTA() {
+        return descTA;
+    }
+
+    public void setDescTA(TextArea descTA) {
+        this.descTA = descTA;
+    }
+
+    public TextArea getTopicTA() {
+        return topicTA;
+    }
+
+    public void setTopicTA(TextArea topicTA) {
+        this.topicTA = topicTA;
+    }
+
+    public TextArea getPrereqTA() {
+        return prereqTA;
+    }
+
+    public void setPrereqTA(TextArea prereqTA) {
+        this.prereqTA = prereqTA;
+    }
+
+    public TextArea getOutcomesTA() {
+        return outcomesTA;
+    }
+
+    public void setOutcomesTA(TextArea outcomesTA) {
+        this.outcomesTA = outcomesTA;
+    }
+
+    public TextArea getTextbooksTA() {
+        return textbooksTA;
+    }
+
+    public void setTextbooksTA(TextArea textbooksTA) {
+        this.textbooksTA = textbooksTA;
+    }
+
+    public TextArea getGcTA() {
+        return gcTA;
+    }
+
+    public void setGcTA(TextArea gcTA) {
+        this.gcTA = gcTA;
+    }
+
+    public TextArea getGradingNoteTA() {
+        return gradingNoteTA;
+    }
+
+    public void setGradingNoteTA(TextArea gradingNoteTA) {
+        this.gradingNoteTA = gradingNoteTA;
+    }
+
+    public TextArea getAdTA() {
+        return adTA;
+    }
+
+    public void setAdTA(TextArea adTA) {
+        this.adTA = adTA;
+    }
+
+    public TextArea getSaTA() {
+        return saTA;
+    }
+
+    public void setSaTA(TextArea saTA) {
+        this.saTA = saTA;
     }
 }

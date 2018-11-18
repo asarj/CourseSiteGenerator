@@ -6,6 +6,7 @@
 package csg.data;
 
 import csg.CSGApp;
+import csg.workspace.CSGWorkspace;
 
 /**
  *

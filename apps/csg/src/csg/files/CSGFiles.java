@@ -160,19 +160,24 @@ public class CSGFiles implements AppFileComponent {
 
         /******************LOADS THE SITE DATA*********************/
         String courseSubject = json.getString(JSON_SITE_SUBJECT);
-        siteDataManager.setSelectedName(courseSubject);
+        if(!courseSubject.trim().equals(""))
+            siteDataManager.setSelectedName(courseSubject);
         
         String courseNum = json.getString(JSON_SITE_NUMBER);
-        siteDataManager.setSelectedNum(courseNum);
+        if(!courseNum.trim().equals(""))
+            siteDataManager.setSelectedNum(courseNum);
         
         String courseSem = json.getString(JSON_SITE_SEMESTER);
-        siteDataManager.setSelectedSem(courseSem);
+        if(!courseSem.trim().equals(""))
+            siteDataManager.setSelectedSem(courseSem);
         
         String courseYr = json.getString(JSON_SITE_YEAR);
-        siteDataManager.setSelectedYear(courseYr);
+        if(!courseYr.trim().equals(""))
+            siteDataManager.setSelectedYear(courseYr);
         
         String courseTitle = json.getString(JSON_SITE_TITLE);
-        siteDataManager.setTitle(courseTitle);
+        if(!courseTitle.trim().equals(""))
+            siteDataManager.setTitle(courseTitle);
         
         String expUrl = json.getString(JSON_SITE_EXPORT_URL);
         siteDataManager.setExp(expUrl);
@@ -200,7 +205,8 @@ public class CSGFiles implements AppFileComponent {
         }
         
         String courseCSS = json.getString(JSON_SITE_SELECTED_CSS);
-        siteDataManager.setCSS(courseCSS.substring(courseCSS.lastIndexOf("/") + 1));
+        if(!courseCSS.trim().equals(""))
+            siteDataManager.setCSS(courseCSS.substring(courseCSS.lastIndexOf("/") + 1));
         
         JsonArray jsonInstructorArray = json.getJsonArray(JSON_SITE_INSTRUCTOR);
         siteDataManager.setInstructorName(jsonInstructorArray.getJsonObject(0).getString(JSON_SITE_INSTRUCTOR_NAME));
@@ -214,6 +220,54 @@ public class CSGFiles implements AppFileComponent {
             
         }
         
+        /**********************************************************/
+        
+        
+        /******************LOADS THE SYLLABUS DATA*****************/
+        String desc = json.getString(JSON_SYL_DESCRIPTION);
+        if(!desc.trim().equals("")){
+            syllabusDataManager.setDescriptionJSON(desc);
+        }
+        
+        String topics = json.getJsonArray(JSON_SYL_TOPICS).getString(0);
+        if(!topics.trim().equals("")){
+            syllabusDataManager.setTopicsJSON(topics);
+        }
+        
+        String pr = json.getString(JSON_SYL_PREREQUISITES);
+        if(!pr.trim().equals("")){
+            syllabusDataManager.setPrereqJSON(pr);
+        }
+        
+        String outcomes = json.getJsonArray(JSON_SYL_OUTCOMES).getString(0);
+        if(!outcomes.trim().equals("")){
+            syllabusDataManager.setOutcomesJSON(outcomes);
+        }
+        
+        String tb = json.getJsonArray(JSON_SYL_TEXTBOOKS).getString(0);
+        if(!tb.trim().equals("")){
+            syllabusDataManager.setTextbooksJSON(tb);
+        }
+        
+        String gc = json.getJsonArray(JSON_SYL_GC).getString(0);
+        if(!gc.trim().equals("")){
+            syllabusDataManager.setGcJSON(gc);
+        }
+        
+        String gn = json.getString(JSON_SYL_GN);
+        if(!gn.trim().equals("")){
+            syllabusDataManager.setGnJSON(gn);
+        }
+        
+        String ad = json.getString(JSON_SYL_AD);
+        if(!ad.trim().equals("")){
+            syllabusDataManager.setAdJSON(ad);
+        }
+        
+        String sa = json.getString(JSON_SYL_SA);
+        if(!sa.trim().equals("")){
+            syllabusDataManager.setSaJSON(sa);
+        }
         /**********************************************************/
         
         
@@ -326,7 +380,21 @@ public class CSGFiles implements AppFileComponent {
         
         
         /*****************SAVES THE SYLLABUS DATA*******************/
+        JsonArrayBuilder topicsArrayBuilder = Json.createArrayBuilder();
+        topicsArrayBuilder.add(syllabusDataManager.getTopicsJSON());
+        JsonArray topicsArray = topicsArrayBuilder.build();
         
+        JsonArrayBuilder outcomesArrayBuilder = Json.createArrayBuilder();
+        outcomesArrayBuilder.add(syllabusDataManager.getOutcomesJSON());
+        JsonArray outcomesArray = outcomesArrayBuilder.build();
+        
+        JsonArrayBuilder textbooksArrayBuilder = Json.createArrayBuilder();
+        textbooksArrayBuilder.add(syllabusDataManager.getTextbooksJSON());
+        JsonArray textbooksArray = textbooksArrayBuilder.build();
+        
+        JsonArrayBuilder gcArrayBuilder = Json.createArrayBuilder();
+        gcArrayBuilder.add(syllabusDataManager.getGcJSON());
+        JsonArray gcArray = gcArrayBuilder.build();
         /***********************************************************/
         
         /****************SAVES THE OH DATA**********************/
@@ -396,7 +464,15 @@ public class CSGFiles implements AppFileComponent {
                 .add(JSON_SITE_SELECTED_CSS, siteDataManager.getCSS())
                 .add(JSON_SITE_INSTRUCTOR, instructorArray)
                 // Adds the Syllabus info
-                
+                .add(JSON_SYL_DESCRIPTION, syllabusDataManager.getDescriptionJSON())
+                .add(JSON_SYL_TOPICS, /*syllabusDataManager.getTopicsJSON()*/topicsArray)
+                .add(JSON_SYL_PREREQUISITES, syllabusDataManager.getPrereqJSON())
+                .add(JSON_SYL_OUTCOMES, /*syllabusDataManager.getOutcomesJSON()*/outcomesArray)
+                .add(JSON_SYL_TEXTBOOKS, /*syllabusDataManager.getTextbooksJSON()*/textbooksArray)
+                .add(JSON_SYL_GC, /*syllabusDataManager.getGcJSON()*/gcArray)
+                .add(JSON_SYL_GN, syllabusDataManager.getGnJSON())
+                .add(JSON_SYL_AD, syllabusDataManager.getAdJSON())
+                .add(JSON_SYL_SA, syllabusDataManager.getSaJSON())
                 // Adds the OH Info
 		.add(JSON_OH_START_HOUR, "" + ohDataManager.getStartHour())
 		.add(JSON_OH_END_HOUR, "" + ohDataManager.getEndHour())
