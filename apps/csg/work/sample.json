@@ -3,60 +3,110 @@
     "subject":"CSE",
     "number":"101",
     "semester":"Fall",
-    "year":"2019",
-    "site_title":"Some title",
-    "export_url":".\\export\\CSE_101_Fall_2019\\public.html",
+    "year":"2018",
+    "site_title":"course",
+    "export_url":".\\export\\CSE_101_Fall_2018\\public.html",
     "pages":[
+        {
+            "name":"home"
+        }
     ],
     "logos":[
         {
-            "favicon":""
+            "favicon":"./images/styleicons/sbusheath.jpeg"
         },
         {
-            "navbar":""
+            "navbar":"./images/styleicons/sbunavbar.png"
         },
         {
-            "bottom_left":""
+            "bottom_left":"./images/styleicons/sbuleftfooter.jpeg"
         },
         {
-            "bottom_right":""
+            "bottom_right":"./images/styleicons/sburightfooter.png"
         }
     ],
-    "css":"",
+    "css":"./work/css/autumn.css",
     "instructor":[
         {
-            "instructor_name":""
+            "instructor_name":"me"
         },
         {
-            "instructor_email":""
+            "instructor_email":"me"
         },
         {
-            "instructor_room":""
+            "instructor_room":"me"
         },
         {
-            "instructor_hp":""
+            "instructor_hp":"me"
         },
         [
-            ""
+            "[\n\t{\"Day\": \"\"\t\"Time\": \"\"}\n]"
         ]
     ],
-    "description":"Some desc",
+    "description":"some desc",
     "topics":[
-        "\"Some topic1\", \"Some topic2\""
+        "\"1\", \"2\""
     ],
-    "prerequisites":"Some pr",
+    "prerequisites":"some pr",
     "outcomes":[
-        "\"1\",\"2\""
+        "\"3\", \"4\""
     ],
     "textbooks":[
-        "{\n\t\t\"title\":\"1\",\n\t\t\"link\":\"2\",\n\t\t\"photo\":\"3\",\n\t\t\"authors\":[\n\t\t\t\"4\"\n\t\t],\n\t\t\"publisher\":\"5\",\n\t\t\"year\":\"6\"\n},"
+        "{\n\t\t\"title\":\"5\",\n\t\t\"link\":\"6\",\n\t\t\"photo\":\"7\",\n\t\t\"authors\":[\n\t\t\t\"8\", \"9\n\t\t],\n\t\t\"publisher\":\"10\",\n\t\t\"year\":\"11\"\n},"
     ],
     "graded_components":[
-        "{\n\t\t\"Name\": \"7\"\n\t\t\"Description\": \"8\"\n\t\t\"Weight\": \"9\"\n},"
+        "{\n\t\t\"Name\": \"12\"\n\t\t\"Description\": \"13\"\n\t\t\"Weight\": \"14\"\n},"
     ],
-    "grading_note":"Some gn",
-    "academic_dishonesty":"Some ad",
-    "special_assistance":"Some sa",
+    "grading_note":"some gn",
+    "academic_dishonesty":"some ad",
+    "special_assistance":"some sa",
+    "lectures":[
+        {
+            "lec_section":"?",
+            "lec_days":"?",
+            "lec_time":"?",
+            "lec_room":"?"
+        }
+    ],
+    "recitations":[
+        {
+            "r_section":"?",
+            "r_day_time":"?",
+            "r_location":"?",
+            "r_ta_1":"?",
+            "r_ta_2":"?"
+        },
+        {
+            "r_section":"?",
+            "r_day_time":"?",
+            "r_location":"?",
+            "r_ta_1":"?",
+            "r_ta_2":"?"
+        }
+    ],
+    "labs":[
+        {
+            "lab_section":"?",
+            "lab_day_time":"?",
+            "lab_location":"?",
+            "lab_ta_1":"?",
+            "lab_ta_2":"?"
+        },
+        {
+            "lab_section":"?",
+            "lab_day_time":"?",
+            "lab_location":"?",
+            "lab_ta_1":"?",
+            "lab_ta_2":"?"
+        },
+        {
+            "lab_section":"?",
+            "lab_day_time":"?",
+            "lab_location":"?",
+            "lab_ta_1":"?",
+            "lab_ta_2":"?"
+        }
+    ],
     "startHour":"0",
     "endHour":"23",
     "grad_tas":[
@@ -69,5 +119,129 @@
     "undergrad_tas":[
     ],
     "officeHours":[
+        {
+            "time":"12_00am",
+            "day":"MONDAY",
+            "name":"me"
+        },
+        {
+            "time":"12_00am",
+            "day":"TUESDAY",
+            "name":"me"
+        },
+        {
+            "time":"12_00am",
+            "day":"WEDNESDAY",
+            "name":"me"
+        },
+        {
+            "time":"12_00am",
+            "day":"THURSDAY",
+            "name":"me"
+        },
+        {
+            "time":"12_00am",
+            "day":"FRIDAY",
+            "name":"me"
+        },
+        {
+            "time":"12_00am",
+            "day":"MONDAY",
+            "name":"me"
+        },
+        {
+            "time":"12_00am",
+            "day":"TUESDAY",
+            "name":"me"
+        },
+        {
+            "time":"12_00am",
+            "day":"WEDNESDAY",
+            "name":"me"
+        },
+        {
+            "time":"12_00am",
+            "day":"THURSDAY",
+            "name":"me"
+        },
+        {
+            "time":"12_00am",
+            "day":"FRIDAY",
+            "name":"me"
+        }
+    ],
+    "startDate":"2018-11-05",
+    "endDate":"2018-11-30",
+    "startingMondayMonth":"11",
+    "startingMondayDay":"5",
+    "startingMondayYear":"2018",
+    "endingFridayMonth":"11",
+    "endingFridayDay":"30",
+    "endingFridayYear":"2018",
+    "sch_holidays":[
+        {
+            "sch_date":"2018-11-12",
+            "sch_month":"11",
+            "sch_event_day":"12",
+            "sch_year":"2018",
+            "sch_title":"t1",
+            "sch_topic":"h1",
+            "sch_link":"l1"
+        }
+    ],
+    "sch_lectures":[
+        {
+            "sch_date":"2018-11-13",
+            "sch_month":"11",
+            "sch_event_day":"13",
+            "sch_year":"2018",
+            "sch_title":"l2",
+            "sch_topic":"l2",
+            "sch_link":"l2"
+        }
+    ],
+    "sch_recitations":[
+        {
+            "sch_date":"2018-11-15",
+            "sch_month":"11",
+            "sch_event_day":"15",
+            "sch_year":"2018",
+            "sch_title":"r4",
+            "sch_topic":"r4",
+            "sch_link":"r4"
+        }
+    ],
+    "sch_labs":[
+        {
+            "sch_date":"2018-11-14",
+            "sch_month":"11",
+            "sch_event_day":"14",
+            "sch_year":"2018",
+            "sch_title":"l3",
+            "sch_topic":"l3",
+            "sch_link":"l3"
+        }
+    ],
+    "sch_references":[
+        {
+            "sch_date":"2018-11-19",
+            "sch_month":"11",
+            "sch_event_day":"19",
+            "sch_year":"2018",
+            "sch_title":"r6",
+            "sch_topic":"r6",
+            "sch_link":"r6"
+        }
+    ],
+    "sch_hws":[
+        {
+            "sch_date":"2018-11-16",
+            "sch_month":"11",
+            "sch_event_day":"16",
+            "sch_year":"2018",
+            "sch_title":"h5",
+            "sch_topic":"h5",
+            "sch_link":"h5"
+        }
     ]
 }

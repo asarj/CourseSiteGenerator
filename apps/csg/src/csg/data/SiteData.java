@@ -174,6 +174,11 @@ public class SiteData{
     public ArrayList<String> getSelectedPageOptions() {
         return selectedPageOptions;
     }
+    
+    public String prepareExportUrlForSave(){
+        setExp(".\\export\\" + this.selectedName + "_" + this.selectedNum + "_" + this.selectedSem + "_" + this.selectedYear + "\\public.html");
+        return ".\\export\\" + this.selectedName + "_" + this.selectedNum + "_" + this.selectedSem + "_" + this.selectedYear + "\\public.html";
+    }
 
     public void setSelectedPageOptions(ArrayList<String> selectedPageOptions) {
         this.selectedPageOptions = selectedPageOptions;

@@ -38,6 +38,7 @@ public class ScheduleData {
     
     public void reset(){
         schedule.clear();
+        scheduleItems.clear();
     }
     
     public LocalDate getStartDate() {

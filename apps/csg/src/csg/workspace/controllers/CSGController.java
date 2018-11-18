@@ -537,16 +537,21 @@ public class CSGController {
     public void processStartDate(LocalDate date) {
         CSGData d = (CSGData)app.getDataComponent();
         ScheduleData data = d.getScheduleData();
-        if(date.getDayOfWeek().getValue() == 1){
-            data.setStartDate(date);      
-        }
-        else{
-            Alert alert = new Alert(AlertType.ERROR, "Start date must happen on a Monday!", ButtonType.OK);
-            alert.showAndWait();
-
-            if (alert.getResult() == ButtonType.OK) {
-                alert.close();
+        try{
+            if(date.getDayOfWeek().getValue() == 1){
+                data.setStartDate(date);      
             }
+            else{
+                Alert alert = new Alert(AlertType.ERROR, "Start date must happen on a Monday!", ButtonType.OK);
+                alert.showAndWait();
+
+                if (alert.getResult() == ButtonType.OK) {
+                    alert.close();
+                }
+            }
+        }
+        catch(NullPointerException n){
+            data.setStartDate(null);
         }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
@@ -554,16 +559,22 @@ public class CSGController {
     public void processEndDate(LocalDate date) {
         CSGData d = (CSGData)app.getDataComponent();
         ScheduleData data = d.getScheduleData();
-        if(date.getDayOfWeek().getValue() == 5){
-            data.setEndDate(date);      
-        }
-        else{
-            Alert alert = new Alert(AlertType.ERROR, "End date must happen on a Friday!", ButtonType.OK);
-            alert.showAndWait();
-
-            if (alert.getResult() == ButtonType.OK) {
-                alert.close();
+        try{
+            if(date.getDayOfWeek().getValue() == 5){
+                data.setEndDate(date);      
             }
+            else{
+                Alert alert = new Alert(AlertType.ERROR, "End date must happen on a Friday!", ButtonType.OK);
+                alert.showAndWait();
+
+                if (alert.getResult() == ButtonType.OK) {
+                    alert.close();
+                }
+            }
+            
+        }
+        catch(NullPointerException n){
+            data.setEndDate(null);
         }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }

@@ -16,15 +16,17 @@ import javafx.beans.property.StringProperty;
 public class ScheduleItemPrototype<E extends Comparable<E>> implements Comparable<E> {
     private StringProperty type;
     private StringProperty date;
+    private LocalDate localDate;
     private StringProperty title;
     private StringProperty topic;
     private StringProperty link;
     
-    public ScheduleItemPrototype(String type, LocalDate day, String time, String room, String link) {
+    public ScheduleItemPrototype(String type, LocalDate day, String topic, String title, String link) {
         this.type = new SimpleStringProperty(type);
+        this.localDate = day;
         this.date = new SimpleStringProperty(Integer.toString(day.getMonthValue()) + "/" + Integer.toString(day.getDayOfMonth()) + "/" + Integer.toString(day.getYear()));
-        this.title = new SimpleStringProperty(room);
-        this.topic = new SimpleStringProperty(time);
+        this.title = new SimpleStringProperty(title);
+        this.topic = new SimpleStringProperty(topic);
         this.link = new SimpleStringProperty(link);
     }
 
@@ -66,6 +68,14 @@ public class ScheduleItemPrototype<E extends Comparable<E>> implements Comparabl
 
     public void setLink(StringProperty link) {
         this.link = link;
+    }
+    
+    public LocalDate getLocalDate() {
+        return localDate;
+    }
+
+    public void setLocalDate(LocalDate localDate) {
+        this.localDate = localDate;
     }
 
     @Override

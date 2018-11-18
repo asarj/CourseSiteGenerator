@@ -48,10 +48,17 @@ public class MeetingTimesData {
         lectures.clear();
         recitations.clear();
         labs.clear();
+        lectureItems.clear();
+        recitationItems.clear();
+        labItems.clear();
     }
     
     public void addLecture(){
         LecturePrototype l = new LecturePrototype("?", "?", "?", "?");
+        lectureItems.add(l);
+        selectLectures();
+    }
+    public void addLecture(LecturePrototype l){
         lectureItems.add(l);
         selectLectures();
     }
@@ -66,13 +73,23 @@ public class MeetingTimesData {
         selectRecitations();
     }
     
+    public void addRecitation(RecitationPrototype r){
+        recitationItems.add(r);
+        selectRecitations();
+    }
+    
     public void removeRecitation(){
         
     }
     
     public void addLab(){
-        LabPrototype r = new LabPrototype("?", "?", "?", "?", "?");
-        labItems.add(r);
+        LabPrototype l = new LabPrototype("?", "?", "?", "?", "?");
+        labItems.add(l);
+        selectLabs();
+    }
+    
+    public void addLab(LabPrototype l){
+        labItems.add(l);
         selectLabs();
     }
     

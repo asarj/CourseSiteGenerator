@@ -1153,9 +1153,19 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         HBox schBoundariesBox = schBuilder.buildHBox(SCH_BOUNDARIES_OPTIONS_HEADER_BOX, schBoundariesPane, CLASS_OH_BOX, ENABLED);
         schBuilder.buildLabel(SCH_STARTING_MONDAY_LABEL, schBoundariesBox, CLASS_OH_LABEL, ENABLED);
         startDate = new DatePicker();
+        startDate.valueProperty().addListener((ov, oldValue, newValue) ->{
+            CSGController controller = new CSGController((CSGApp) app);
+            AppGUIModule gui = app.getGUIModule();
+            controller.processStartDate(newValue);
+        });
         schBoundariesBox.getChildren().add(startDate);
         schBuilder.buildLabel(SCH_ENDING_FRIDAY_LABEL, schBoundariesBox, CLASS_OH_LABEL, ENABLED);
         endDate = new DatePicker();
+        endDate.valueProperty().addListener((ov, oldValue, newValue) ->{
+            CSGController controller = new CSGController((CSGApp) app);
+            AppGUIModule gui = app.getGUIModule();
+            controller.processEndDate(newValue);
+        });
         schBoundariesPane.setStyle("-fx-background-color: #ebebeb;");
         schBoundariesPane.setSpacing(5);
         HBox blank14 = schBuilder.buildHBox(SCH_BLANK14_HBOX, schPane, CLASS_OH_BOX, ENABLED);
