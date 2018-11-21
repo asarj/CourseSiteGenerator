@@ -21,7 +21,7 @@ import javafx.scene.control.TableView;
  *
  * @author McKillaGorilla
  */
-public class UpdateTable_Transaction implements jTPS_Transaction {
+public class UpdateOHTable_Transaction implements jTPS_Transaction {
     CSGApp app;
     OHData data;
     int ts;
@@ -29,7 +29,7 @@ public class UpdateTable_Transaction implements jTPS_Transaction {
     int oldts;
     int oldte;
     
-    public UpdateTable_Transaction(CSGApp initApp, OHData initData, int start, int end, int oldStart, int oldEnd) {
+    public UpdateOHTable_Transaction(CSGApp initApp, OHData initData, int start, int end, int oldStart, int oldEnd) {
         app = initApp;
         data = initData;
         ts = start;
@@ -45,8 +45,8 @@ public class UpdateTable_Transaction implements jTPS_Transaction {
         TableView<TimeSlot> officeHoursTableView = (TableView) gui.getGUINode(OH_OFFICE_HOURS_TABLE_VIEW);
         ComboBox timeStart = (ComboBox)gui.getGUINode(OH_STARTTIME_COMBO_BOX);
         ComboBox timeEnd = (ComboBox)gui.getGUINode(OH_ENDTIME_COMBO_BOX);
-        timeStart.getSelectionModel().select(ts);
-        timeEnd.getSelectionModel().select(te);
+        timeStart.setValue(timeStart.getItems().get(ts));
+        timeEnd.setValue(timeEnd.getItems().get(te));
         data.resetOHTable(ts, te);
         officeHoursTableView.refresh();
     }
@@ -57,8 +57,8 @@ public class UpdateTable_Transaction implements jTPS_Transaction {
         TableView<TimeSlot> officeHoursTableView = (TableView) gui.getGUINode(OH_OFFICE_HOURS_TABLE_VIEW);
         ComboBox timeStart = (ComboBox)gui.getGUINode(OH_STARTTIME_COMBO_BOX);
         ComboBox timeEnd = (ComboBox)gui.getGUINode(OH_ENDTIME_COMBO_BOX);
-        timeStart.getSelectionModel().select(oldts);
-        timeEnd.getSelectionModel().select(oldte);
+        timeStart.setValue(timeStart.getItems().get(oldts));
+        timeEnd.setValue(timeEnd.getItems().get(oldte));
         data.resetOHTable(oldts, oldte);
         officeHoursTableView.refresh();
     }

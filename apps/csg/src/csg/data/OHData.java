@@ -78,8 +78,11 @@ public class OHData{
         // THESE ARE THE DEFAULT OFFICE HOURS
         startHour = MIN_START_HOUR;
         endHour = MAX_END_HOUR;
-
-        resetOfficeHours(startHour, endHour);
+        initHours(Integer.toString(startHour), Integer.toString(endHour));
+//        resetOfficeHours(startHour, endHour);
+//        resetOHTable(startHour, endHour);
+        
+         
     }
 
     public ArrayList<TimeSlot> getHeldTs() {

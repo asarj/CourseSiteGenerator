@@ -218,4 +218,13 @@ public class TimeSlot {
             return days;
         }
     }
+    
+    public void printDayText(){
+        System.out.println("Monday: " + dayText.get(DayOfWeek.MONDAY));
+        System.out.println("Tuesday: " + dayText.get(DayOfWeek.TUESDAY));
+        System.out.println("Wednesday: " + dayText.get(DayOfWeek.WEDNESDAY));
+        System.out.println("Thursday: " + dayText.get(DayOfWeek.THURSDAY));
+        System.out.println("Friday: " + dayText.get(DayOfWeek.FRIDAY));
+        
+    }
 }

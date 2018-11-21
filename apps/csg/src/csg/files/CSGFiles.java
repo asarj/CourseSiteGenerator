@@ -56,6 +56,13 @@ import static djf.AppPropertyType.APP_PATH_IMAGES;
 import djf.modules.AppGUIModule;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -79,12 +86,14 @@ public class CSGFiles implements AppFileComponent {
     
     // SITE DATA FIELDS
     static final String JSON_SITE_SUBJECT = "subject";
+    static final String JSON_SITE_OPTION = "option";
     static final String JSON_SITE_NUMBER = "number";
     static final String JSON_SITE_SEMESTER = "semester";
     static final String JSON_SITE_YEAR = "year";
     static final String JSON_SITE_TITLE = "site_title";
     static final String JSON_SITE_EXPORT_URL = "export_url";
     static final String JSON_SITE_PAGES = "pages";
+    static final String JSON_SITE_PAGES_LINK = "pages_link";
     static final String JSON_SITE_PAGES_NAME = "name";
     static final String JSON_SITE_LOGOS = "logos";
     static final String JSON_SITE_FAVICON = "favicon";
@@ -186,29 +195,98 @@ public class CSGFiles implements AppFileComponent {
         ScheduleData schDataManager = d.getScheduleData();
         
         mtDataManager.reset();
-        schDataManager.reset();
         ohDataManager.reset();
+        schDataManager.reset();
         
 
 	// LOAD THE JSON FILE WITH ALL THE DATA
 	JsonObject json = loadJSONFile(filePath);
-
+        JsonObject jsonCB = loadJSONFileForCB("./work/jsondata/cboptions.json");
         /******************LOADS THE SITE DATA*********************/
+//        try{
+        ObservableList subjectsCB = FXCollections.observableArrayList();
+        ObservableList subjectsNumsCB = FXCollections.observableArrayList();
+        ObservableList semsCB = FXCollections.observableArrayList();
+        ObservableList yearsCB = FXCollections.observableArrayList();
+        JsonArray subjects = jsonCB.getJsonArray(JSON_SITE_SUBJECT);
+        for(int i = 0; i < subjects.size(); i++){
+            JsonObject item = subjects.getJsonObject(i);
+            subjectsCB.add(item.getString(JSON_SITE_OPTION));
+        }
+        JsonArray subjectsNums = jsonCB.getJsonArray(JSON_SITE_NUMBER);
+        for(int i = 0; i < subjectsNums.size(); i++){
+            JsonObject item = subjectsNums.getJsonObject(i);
+            subjectsNumsCB.add(item.getString(JSON_SITE_OPTION));
+        }
+        JsonArray semesters = jsonCB.getJsonArray(JSON_SITE_SEMESTER);
+        for(int i = 0; i < semesters.size(); i++){
+            JsonObject item = semesters.getJsonObject(i);
+            semsCB.add(item.getString(JSON_SITE_OPTION));
+        }
+        JsonArray years = jsonCB.getJsonArray(JSON_SITE_YEAR);
+        for(int i = 0; i < years.size(); i++){
+            JsonObject item = years.getJsonObject(i);
+            yearsCB.add(item.getString(JSON_SITE_OPTION));
+        }
         String courseSubject = json.getString(JSON_SITE_SUBJECT);
         if(!courseSubject.trim().equals(""))
             siteDataManager.setSelectedName(courseSubject);
+        boolean subFound = false;
+        for(int i = 0; i < subjectsCB.size(); i++){
+            JsonObject item = subjects.getJsonObject(i);
+            if(item.getString(JSON_SITE_OPTION).equals(courseSubject)){
+                subFound = true;
+                break;
+            }
+        }
+        if(!subFound){
+            subjectsCB.add(courseSubject);
+        }
         
         String courseNum = json.getString(JSON_SITE_NUMBER);
         if(!courseNum.trim().equals(""))
             siteDataManager.setSelectedNum(courseNum);
+        boolean subNumFound = false;
+        for(int i = 0; i < subjectsNumsCB.size(); i++){
+            JsonObject item = subjectsNums.getJsonObject(i);
+            if(item.getString(JSON_SITE_OPTION).equals(courseNum)){
+                subNumFound = true;
+                break;
+            }
+        }
+        if(!subNumFound){
+            subjectsNumsCB.add(courseNum);
+        }
         
         String courseSem = json.getString(JSON_SITE_SEMESTER);
         if(!courseSem.trim().equals(""))
             siteDataManager.setSelectedSem(courseSem);
+        boolean subSemFound = false;
+        for(int i = 0; i < semsCB.size(); i++){
+            JsonObject item = semesters.getJsonObject(i);
+            if(item.getString(JSON_SITE_OPTION).equals(courseSem)){
+                subSemFound = true;
+                break;
+            }
+        }
+        if(!subSemFound){
+            semsCB.add(courseSem);
+        }
         
         String courseYr = json.getString(JSON_SITE_YEAR);
         if(!courseYr.trim().equals(""))
             siteDataManager.setSelectedYear(courseYr);
+        boolean subYearFound = false;
+        for(int i = 0; i < yearsCB.size(); i++){
+            JsonObject item = years.getJsonObject(i);
+            if(item.getString(JSON_SITE_OPTION).equals(courseYr)){
+                subYearFound = true;
+                break;
+            }
+        }
+        if(!subYearFound){
+            yearsCB.add(courseYr);
+        }
         
         String courseTitle = json.getString(JSON_SITE_TITLE);
         if(!courseTitle.trim().equals("")){
@@ -219,6 +297,15 @@ public class CSGFiles implements AppFileComponent {
         
         String expUrl = json.getString(JSON_SITE_EXPORT_URL);
         siteDataManager.setExp(expUrl);
+        
+        workspace.setSubjects(subjectsCB);
+        workspace.setSubjectNums(subjectsNumsCB);
+        workspace.setSemesters(semsCB);
+        workspace.setYears(yearsCB);
+//        ((ComboBox)gui.getGUINode(SITE_SUBJECT_COMBO_BOX)).setItems(subjectsCB);
+//        ((ComboBox)gui.getGUINode(SITE_SUBJECTNUM_COMBO_BOX)).setItems(subjectsNumsCB);
+//        ((ComboBox)gui.getGUINode(SITE_SEMESTERS_COMBO_BOX)).setItems(semsCB);
+//        ((ComboBox)gui.getGUINode(SITE_YEARS_COMBO_BOX)).setItems(yearsCB);
         
         JsonArray jsonPagesArray = json.getJsonArray(JSON_SITE_PAGES);
         ArrayList<String> loadedChoices = new ArrayList<>();
@@ -288,6 +375,7 @@ public class CSGFiles implements AppFileComponent {
         
         String courseCSS = json.getString(JSON_SITE_SELECTED_CSS);
         if(!courseCSS.trim().equals("")){
+            ((ComboBox)gui.getGUINode(SITE_CSS_COMBO_BOX)).getSelectionModel().select(courseCSS.substring(courseCSS.lastIndexOf("/") + 1));
             siteDataManager.setCSS(courseCSS.substring(courseCSS.lastIndexOf("/") + 1));
         }
         
@@ -384,11 +472,11 @@ public class CSGFiles implements AppFileComponent {
         ohDataManager.reset();
 	String startHour = json.getString(JSON_OH_START_HOUR);
         String endHour = json.getString(JSON_OH_END_HOUR);
-        ohDataManager.initHours(startHour, endHour);
+        ohDataManager.resetOfficeHours(Integer.parseInt(startHour), Integer.parseInt(endHour));
         
         // LOAD ALL THE GRAD TAs
-        loadTAs(ohDataManager, json, JSON_OH_GRAD_TAS);
-        loadTAs(ohDataManager, json, JSON_OH_UNDERGRAD_TAS);
+        loadTAs(ohDataManager, json, JSON_OH_GRAD_TAS, TAType.Graduate);
+        loadTAs(ohDataManager, json, JSON_OH_UNDERGRAD_TAS, TAType.Undergraduate);
 
         // AND THEN ALL THE OFFICE HOURS
         JsonArray jsonOfficeHoursArray = json.getJsonArray(JSON_OH_OFFICE_HOURS);
@@ -400,12 +488,13 @@ public class CSGFiles implements AppFileComponent {
             TeachingAssistantPrototype ta = ohDataManager.getTAWithName(name);
             TimeSlot timeSlot = ohDataManager.getTimeSlot(startTime);
             try{
-                timeSlot.toggleTA(dow, ta);
+            timeSlot.toggleTA(dow, ta);
             }
             catch(Exception e){
                 
             }
         }
+        
         /**********************************************************/
         
         
@@ -433,7 +522,23 @@ public class CSGFiles implements AppFileComponent {
         loadScheduleRecitations(schDataManager, json, JSON_SCH_RECITATIONS);
         loadScheduleLabs(schDataManager, json, JSON_SCH_LABS);
         
+        
+        /**********LOADS THE COMBOBOX DATA IN THE SITE TAB*********/
+        
         /**********************************************************/
+        
+        
+        
+        /**********************************************************/
+//        }
+//        catch(NullPointerException e){
+//            Alert alert = new Alert(Alert.AlertType.ERROR, "You have selected a invalid/corrupt file, please select another work file", ButtonType.OK);
+//            alert.showAndWait();
+//
+//            if (alert.getResult() == ButtonType.OK) {
+//                alert.close();
+//            }
+//        }
     }
     
     private void loadScheduleHolidays(ScheduleData data, JsonObject json, String h) {
@@ -561,13 +666,13 @@ public class CSGFiles implements AppFileComponent {
         } 
     }
     
-    private void loadTAs(OHData data, JsonObject json, String tas) {
+    private void loadTAs(OHData data, JsonObject json, String tas, TAType type) {
         JsonArray jsonTAArray = json.getJsonArray(tas);
         for (int i = 0; i < jsonTAArray.size(); i++) {
             JsonObject jsonTA = jsonTAArray.getJsonObject(i);
             String name = jsonTA.getString(JSON_OH_NAME);
             String email = jsonTA.getString(JSON_OH_EMAIL);
-            TAType type = TAType.valueOf(jsonTA.getString(JSON_OH_TYPE));
+            //TAType type = TAType.valueOf(jsonTA.getString(JSON_OH_TYPE));
             TeachingAssistantPrototype ta = new TeachingAssistantPrototype(name, email, type);
             data.addTA(ta);
         }     
@@ -575,6 +680,14 @@ public class CSGFiles implements AppFileComponent {
       
     // HELPER METHOD FOR LOADING DATA FROM A JSON FORMAT
     private JsonObject loadJSONFile(String jsonFilePath) throws IOException {
+	InputStream is = new FileInputStream(jsonFilePath);
+	JsonReader jsonReader = Json.createReader(is);
+	JsonObject json = jsonReader.readObject();
+	jsonReader.close();
+	is.close();
+	return json;
+    }
+    private JsonObject loadJSONFileForCB(String jsonFilePath) throws IOException {
 	InputStream is = new FileInputStream(jsonFilePath);
 	JsonReader jsonReader = Json.createReader(is);
 	JsonObject json = jsonReader.readObject();
@@ -601,22 +714,26 @@ public class CSGFiles implements AppFileComponent {
         for(String s: siteDataManager.getSelectedPageOptions()){
             if(s.equals("home")){
                 JsonObject cbOption = Json.createObjectBuilder()
-                        .add(JSON_SITE_PAGES_NAME, s).build();
+                        .add(JSON_SITE_PAGES_NAME, s)
+                        .add(JSON_SITE_PAGES_LINK, s + ".html").build();
                 pagesArrayBuilder.add(cbOption);
             }
             else if(s.equals("syllabus")){
                 JsonObject cbOption = Json.createObjectBuilder()
-                        .add(JSON_SITE_PAGES_NAME, s).build();
+                        .add(JSON_SITE_PAGES_NAME, s)
+                        .add(JSON_SITE_PAGES_LINK, s + ".html").build();
                 pagesArrayBuilder.add(cbOption);
             }
             else if(s.equals("schedule")){
                 JsonObject cbOption = Json.createObjectBuilder()
-                        .add(JSON_SITE_PAGES_NAME, s).build();
+                        .add(JSON_SITE_PAGES_NAME, s)
+                        .add(JSON_SITE_PAGES_LINK, s + ".html").build();
                 pagesArrayBuilder.add(cbOption);
             }
             else if(s.equals("hw")){
                 JsonObject cbOption = Json.createObjectBuilder()
-                        .add(JSON_SITE_PAGES_NAME, s).build();
+                        .add(JSON_SITE_PAGES_NAME, s)
+                        .add(JSON_SITE_PAGES_LINK, s + ".html").build();
                 pagesArrayBuilder.add(cbOption);
             }
         }
@@ -824,7 +941,46 @@ public class CSGFiles implements AppFileComponent {
                 }
             }    
 	}
-	JsonArray officeHoursArray = officeHoursArrayBuilder.build();
+	JsonArray officeHoursArrayDRAFT = officeHoursArrayBuilder.build();
+        
+        String[] strips = officeHoursArrayDRAFT.toString().replace("[", "").replace("]", "").split(",");
+        for(int i = 0; i < strips.length; i++){
+//            System.out.println(strips[i]);
+        }
+        String rstrip = "";
+        for(int i = 0; i < strips.length; i++){
+            rstrip += strips[i];
+        }
+        String[] rstrips = rstrip.split("\\{");
+        for(int i = 0; i < rstrips.length; i++){
+//            System.out.println(rstrips[i]);
+        }
+        String rs = "";
+        for(int i = 0; i < rstrips.length; i++){
+            rs += rstrips[i];
+        }
+        String[] srs = rs.replace("\"\"", "\",\"").replace("\"time\":","").replace("\"day\":", "").replace("\"name\":", "").split("\\}");
+        ArrayList<String> tss = new ArrayList<>(Arrays.asList(srs));
+        Set<String> set = new LinkedHashSet<>(tss);
+        JsonArrayBuilder updateOHBuilder = Json.createArrayBuilder();
+        for(String s: set){
+//            System.out.println(s);
+//            if(!(s.length() == 0)){
+            try{
+                JsonObject js = Json.createObjectBuilder()
+                        .add(JSON_OH_START_TIME, s.substring(0, s.indexOf(",")).replace("\"", ""))
+                        .add(JSON_OH_DAY_OF_WEEK, s.substring(s.indexOf(",") + 1, s.lastIndexOf(",")).replace("\"", ""))
+                        .add(JSON_OH_NAME, s.substring(s.lastIndexOf(",") + 1).replace("\"", "")).build();
+                updateOHBuilder.add(js);
+            }
+            catch(Exception e){
+                
+            }
+
+//            }
+        }
+        JsonArray officeHoursArray = updateOHBuilder.build();
+
         /*******************************************************/
         
         
@@ -1126,6 +1282,73 @@ public class CSGFiles implements AppFileComponent {
 	PrintWriter pw = new PrintWriter(filePath);
 	pw.write(prettyPrinted);
 	pw.close();
+        
+        // NOW SAVE ALL THE COMBOBOXES FOR THE SITE TAB
+        ObservableList subjects = ((ComboBox)gui.getGUINode(SITE_SUBJECT_COMBO_BOX)).getItems();
+        ObservableList subjectsNums = ((ComboBox)gui.getGUINode(SITE_SUBJECTNUM_COMBO_BOX)).getItems();
+        ObservableList years = ((ComboBox)gui.getGUINode(SITE_YEARS_COMBO_BOX)).getItems();
+        ObservableList semesters = ((ComboBox)gui.getGUINode(SITE_SEMESTERS_COMBO_BOX)).getItems();
+        JsonArrayBuilder siteSubjectsArrayBuilder = Json.createArrayBuilder();
+        JsonArrayBuilder siteSubjectNumsArrayBuilder = Json.createArrayBuilder();
+        JsonArrayBuilder siteSubjectSemArrayBuilder = Json.createArrayBuilder();
+        JsonArrayBuilder siteSubjectYrArrayBuilder = Json.createArrayBuilder();
+        for(Object s: subjects){
+            if(!((String)s == null)){
+                JsonObject op = Json.createObjectBuilder()
+                        .add(JSON_SITE_OPTION, (String)s).build();
+                siteSubjectsArrayBuilder.add(op);
+                
+            }
+        }
+        for(Object s: subjectsNums){
+            if(!((String)s == null)){
+                JsonObject op = Json.createObjectBuilder()
+                        .add(JSON_SITE_OPTION, (String)s).build();
+                siteSubjectNumsArrayBuilder.add(op);
+                
+            }
+        }
+        for(Object s: semesters){
+            if(!((String)s == null)){
+                JsonObject op = Json.createObjectBuilder()
+                        .add(JSON_SITE_OPTION, (String)s).build();
+                siteSubjectSemArrayBuilder.add(op);
+                
+            }
+        }
+        for(Object s: years){
+            if(!((String)s == null)){
+                JsonObject op = Json.createObjectBuilder()
+                        .add(JSON_SITE_OPTION, (String)s).build();
+                siteSubjectYrArrayBuilder.add(op);
+                
+            }
+        }
+        JsonArray subjectsArray = siteSubjectsArrayBuilder.build();
+        JsonArray subjectNumsArray = siteSubjectNumsArrayBuilder.build();
+        JsonArray semestersArray = siteSubjectSemArrayBuilder.build();
+        JsonArray yearsArray = siteSubjectYrArrayBuilder.build();
+        JsonObject cbJSO = Json.createObjectBuilder()
+                .add(JSON_SITE_SUBJECT, subjectsArray)
+                .add(JSON_SITE_NUMBER, subjectNumsArray)
+                .add(JSON_SITE_SEMESTER, semestersArray)
+                .add(JSON_SITE_YEAR, yearsArray).build();
+        Map<String, Object> propertiesCB = new HashMap<>(1);
+	propertiesCB.put(JsonGenerator.PRETTY_PRINTING, true);
+	JsonWriterFactory writerFactoryCB = Json.createWriterFactory(propertiesCB);
+	StringWriter swCB = new StringWriter();
+	JsonWriter jsonWriterCB = writerFactoryCB.createWriter(swCB);
+	jsonWriterCB.writeObject(cbJSO);
+	jsonWriterCB.close();
+
+	// INIT THE WRITER
+	OutputStream osCB = new FileOutputStream("./work/jsondata/cboptions.json");
+	JsonWriter jsonFileWriterCB = Json.createWriter(osCB);
+	jsonFileWriterCB.writeObject(cbJSO);
+	String prettyPrintedCB = swCB.toString();
+	PrintWriter pwCB = new PrintWriter("./work/jsondata/cboptions.json");
+	pwCB.write(prettyPrintedCB);
+	pwCB.close();
     }
     
     // IMPORTING/EXPORTING DATA IS USED WHEN WE READ/WRITE DATA IN AN

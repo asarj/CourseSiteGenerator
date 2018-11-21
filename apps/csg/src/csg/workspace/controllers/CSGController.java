@@ -50,10 +50,34 @@ import csg.data.TimeSlot;
 import csg.data.TimeSlot.DayOfWeek;
 import csg.transactions.AddTA_Transaction;
 import csg.transactions.CutTA_Transaction;
+import csg.transactions.EditAcademicDishonestyTA_Transaction;
+import csg.transactions.EditCourseCSSComboBox_Transaction;
+import csg.transactions.EditCourseNumberComboBox_Transaction;
+import csg.transactions.EditCourseSemesterComboBox_Transaction;
+import csg.transactions.EditCourseSubjectComboBox_Transaction;
+import csg.transactions.EditCourseTitleTF_Transaction;
+import csg.transactions.EditCourseYearComboBox_Transaction;
+import csg.transactions.EditDescriptionTA_Transaction;
+import csg.transactions.EditFviImg_Transaction;
+import csg.transactions.EditGradingComponentsTA_Transaction;
+import csg.transactions.EditGradingNoteTA_Transaction;
+import csg.transactions.EditInstructorEmailTF_Transaction;
+import csg.transactions.EditInstructorHPTF_Transaction;
+import csg.transactions.EditInstructorNameTF_Transaction;
+import csg.transactions.EditInstructorOHTA_Transaction;
+import csg.transactions.EditInstructorRoomTF_Transaction;
+import csg.transactions.EditLeftImg_Transaction;
+import csg.transactions.EditNavImg_Transaction;
+import csg.transactions.EditOutcomesTA_Transaction;
+import csg.transactions.EditPrereqTA_Transaction;
+import csg.transactions.EditRightImg_Transaction;
+import csg.transactions.EditSpecialAssistanceTA_Transaction;
 import csg.transactions.EditTA_Transaction;
+import csg.transactions.EditTextbooksTA_Transaction;
+import csg.transactions.EditTopicsTA_Transaction;
 import csg.transactions.RemoveTA_Transaction;
 import csg.transactions.ToggleOfficeHours_Transaction;
-import csg.transactions.UpdateTable_Transaction;
+import csg.transactions.UpdateOHTable_Transaction;
 import csg.workspace.CSGWorkspace;
 import csg.workspace.dialogs.TADialog;
 import java.time.LocalDate;
@@ -194,7 +218,7 @@ public class CSGController {
         
     }
 
-    public void processUpdateOHTable(int old, boolean isStartCB) {
+     public void processUpdateOHTable(int old, boolean isStartCB) {
         AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         OHData data = d.getOfficeHoursData();
@@ -220,7 +244,7 @@ public class CSGController {
             System.out.println(te);
             System.out.println(oldts);
             System.out.println(oldte);
-            UpdateTable_Transaction u = new UpdateTable_Transaction(app, data, ts, te, oldts, oldte);
+            UpdateOHTable_Transaction u = new UpdateOHTable_Transaction(app, data, ts, te, oldts, oldte);
             app.processTransaction(u);
             officeHoursTableView.refresh();
 //            data.resetOHTable(ts, te, oldts, oldte);
@@ -247,44 +271,64 @@ public class CSGController {
         
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
+    
+    public void processCourseName(String oldOption, String newOption) {
+        AppGUIModule gui = app.getGUIModule();
+        CSGData d = (CSGData)app.getDataComponent();
+        SiteData data = d.getSiteData();
+        ComboBox c = (ComboBox)gui.getGUINode(SITE_SUBJECT_COMBO_BOX);
+        if(data.isValidComboBoxChoice(c)){
+            data.setSelectedName((String)c.getSelectionModel().getSelectedItem());
+            EditCourseSubjectComboBox_Transaction e = new EditCourseSubjectComboBox_Transaction(app, d, data, c, oldOption, newOption);
+            app.processTransaction(e);
+        }
+        
+        app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
+    }
 
-    public void processCourseNum() {
+    public void processCourseNum(String oldOption, String newOption) {
         AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
         ComboBox c = (ComboBox)gui.getGUINode(SITE_SUBJECTNUM_COMBO_BOX);
         if(data.isValidComboBoxChoice(c)){
             data.setSelectedNum((String)c.getSelectionModel().getSelectedItem());
+            EditCourseNumberComboBox_Transaction e = new EditCourseNumberComboBox_Transaction(app, d, data, c, oldOption, newOption);
+            app.processTransaction(e);
         }
         
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
-    public void processCourseSem() {
+    public void processCourseSem(String oldOption, String newOption) {
         AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
         ComboBox c = (ComboBox)gui.getGUINode(SITE_SEMESTERS_COMBO_BOX);
         if(data.isValidComboBoxChoice(c)){
             data.setSelectedSem((String)c.getSelectionModel().getSelectedItem());
+            EditCourseSemesterComboBox_Transaction e = new EditCourseSemesterComboBox_Transaction(app, d, data, c, oldOption, newOption);
+            app.processTransaction(e);
         }
         
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
-    public void processCourseYear() {
+    public void processCourseYear(String oldOption, String newOption) {
         AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
         ComboBox c = (ComboBox)gui.getGUINode(SITE_YEARS_COMBO_BOX);
         if(data.isValidComboBoxChoice(c)){
             data.setSelectedYear((String)c.getSelectionModel().getSelectedItem());
+            EditCourseYearComboBox_Transaction e = new EditCourseYearComboBox_Transaction(app, d, data, c, oldOption, newOption);
+            app.processTransaction(e);
         }
         
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
-    public void processCourseTitle() {
+    public void processCourseTitle(String oldText, String newText) {
         AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
@@ -292,6 +336,7 @@ public class CSGController {
         if(data.isValidTextFieldInput(titleTF)){
             if(titleTF.isFocused()){
                 data.setTitle(titleTF.getText());
+                EditCourseTitleTF_Transaction e = new EditCourseTitleTF_Transaction(app, d, data, titleTF,oldText, newText);
             }
         }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
@@ -314,39 +359,43 @@ public class CSGController {
         CheckBox syllabusCB = (CheckBox)gui.getGUINode(SITE_SYLLABUS_CHECK_BOX);
         CheckBox scheduleCB = (CheckBox)gui.getGUINode(SITE_SCHEDULE_CHECK_BOX);
         CheckBox hwCB = (CheckBox)gui.getGUINode(SITE_HW_CHECK_BOX);
-        data.updatePagesOptions(homeCB, syllabusCB, scheduleCB, hwCB);
+        EditPagesCheckboxes_Transaction e = new EditPagesCheckboxes_Transaction(app, d, data, homeCB, syllabusCB, scheduleCB, hwCB);
+        app.processTransaction(e);
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
     public void processFviImgViewFile(String path) {
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
-        data.setFavUrl(path);
+        EditFviImg_Transaction e = new EditFviImg_Transaction(app, d, data, path);
+        app.processTransaction(e);
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
     public void processNavImgViewFile(String path) {
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
-        data.setNavUrl(path);
+        EditNavImg_Transaction e = new EditNavImg_Transaction(app, d, data, path);
+        app.processTransaction(e);
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
     public void processLeftImgViewFile(String path) {
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
-        data.setLeftUrl(path);
+        EditLeftImg_Transaction e = new EditLeftImg_Transaction(app, d, data, path);
+        app.processTransaction(e);
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
     public void processRightImgViewFile(String path) {
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
-        data.setRightUrl(path);
+        EditRightImg_Transaction e = new EditRightImg_Transaction(app, d, data, path);
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
-    public void processSiteCSS() {
+    public void processSiteCSS(String oldText, String newText) {
         AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
@@ -354,152 +403,182 @@ public class CSGController {
         if(data.isValidComboBoxChoice(c)){
             if(c.isFocused()){
                 data.setCSS((String)c.getSelectionModel().getSelectedItem());
+                EditCourseCSSComboBox_Transaction e = new EditCourseCSSComboBox_Transaction(app, d, data, c, oldText, newText);
+                app.processTransaction(e);
             }
         }
         
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
-    public void processInstructorName() {
+    public void processInstructorName(String old, String n) {
         AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
         TextField titleTF = (TextField)gui.getGUINode(SITE_NAME_TEXT_FIELD);
         if(data.isValidTextFieldInput(titleTF)){
             data.setInstructorName(titleTF.getText());
+            EditInstructorNameTF_Transaction e = new EditInstructorNameTF_Transaction(app, d, data, titleTF, old, n);
+            app.processTransaction(e);
         }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
-    public void processInstructorEmail() {
+    public void processInstructorEmail(String old, String n) {
         AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
         TextField titleTF = (TextField)gui.getGUINode(SITE_EMAIL_TEXT_FIELD);
         if(data.isValidTextFieldInput(titleTF)){
             data.setInstructorEmail(titleTF.getText());
+            EditInstructorEmailTF_Transaction e = new EditInstructorEmailTF_Transaction(app, d, data, titleTF, old, n);
+            app.processTransaction(e);
         }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
-    public void processInstructorRoom() {
+    public void processInstructorRoom(String old, String n) {
         AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
         TextField titleTF = (TextField)gui.getGUINode(SITE_ROOM_TEXT_FIELD);
         if(data.isValidTextFieldInput(titleTF)){
             data.setInstructorRoom(titleTF.getText());
+            EditInstructorRoomTF_Transaction e = new EditInstructorRoomTF_Transaction(app, d, data, titleTF, old, n);
+            app.processTransaction(e);
         }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
-    public void processInstructorHP() {
+    public void processInstructorHP(String old, String n) {
         AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
         TextField titleTF = (TextField)gui.getGUINode(SITE_HP_TEXT_FIELD);
         if(data.isValidTextFieldInput(titleTF)){
             data.setInstructorHP(titleTF.getText());
+            EditInstructorHPTF_Transaction e = new EditInstructorHPTF_Transaction(app, d, data, titleTF, old, n);
+            app.processTransaction(e);
         }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
-    public void processInstructorHoursJSON(String text) {
+    public void processInstructorHoursJSON(String text, String old, String n) {
         CSGData d = (CSGData)app.getDataComponent();
         CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
         SiteData data = d.getSiteData();
         if(workspace.getInstructorOHJsonArea().isFocused()){
             data.setInstructorHoursJSON(text);
+            EditInstructorOHTA_Transaction e = new EditInstructorOHTA_Transaction(app, workspace, data, workspace.getInstructorOHJsonArea(), old, n);
+            app.processTransaction(e);
         }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
-    public void processDescriptionJSON(String text) {
+    public void processDescriptionJSON(String text, String old, String n) {
         CSGData d = (CSGData)app.getDataComponent();
         CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
         SyllabusData data = d.getSyllabusData();
         if(workspace.getDescTA().isFocused()){
             data.setDescriptionJSON(text);
+            EditDescriptionTA_Transaction e = new EditDescriptionTA_Transaction(app, workspace, data, workspace.getDescTA(), old, n);
+            app.processTransaction(e);
         }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
-    public void processTopicsJSON(String text) {
+    public void processTopicsJSON(String text, String old, String n) {
         CSGData d = (CSGData)app.getDataComponent();
         CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
         SyllabusData data = d.getSyllabusData();
         if(workspace.getTopicTA().isFocused()){
             data.setTopicsJSON(text);
+            EditTopicsTA_Transaction e = new EditTopicsTA_Transaction(app, workspace, data, workspace.getTopicTA(), old, n);
+            app.processTransaction(e);
         }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
-    public void processPrereqsJSON(String text) {
+    public void processPrereqsJSON(String text, String old, String n) {
         CSGData d = (CSGData)app.getDataComponent();
         CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
         SyllabusData data = d.getSyllabusData();
         if(workspace.getPrereqTA().isFocused()){
             data.setPrereqJSON(text);
+            EditPrereqTA_Transaction e = new EditPrereqTA_Transaction(app, workspace, data, workspace.getPrereqTA(), old, n);
+            app.processTransaction(e);
         }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
-    public void processOutcomesJSON(String text) {
+    public void processOutcomesJSON(String text, String old, String n) {
         CSGData d = (CSGData)app.getDataComponent();
         CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
         SyllabusData data = d.getSyllabusData();
         if(workspace.getOutcomesTA().isFocused()){
             data.setOutcomesJSON(text);
+            EditOutcomesTA_Transaction e = new EditOutcomesTA_Transaction(app, workspace, data, workspace.getOutcomesTA(), old, n);
+            app.processTransaction(e);
         }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
-    public void processTextbooksJSON(String text) {
+    public void processTextbooksJSON(String text, String old, String n) {
         CSGData d = (CSGData)app.getDataComponent();
         CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
         SyllabusData data = d.getSyllabusData();
         if(workspace.getTextbooksTA().isFocused()){
             data.setTextbooksJSON(text);
+            EditTextbooksTA_Transaction e = new EditTextbooksTA_Transaction(app, workspace, data, workspace.getTextbooksTA(), old, n);
+            app.processTransaction(e);
         }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
-    public void processGCJSON(String text) {
+    public void processGCJSON(String text, String old, String n) {
         CSGData d = (CSGData)app.getDataComponent();
         CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
         SyllabusData data = d.getSyllabusData();
         if(workspace.getGcTA().isFocused()){
             data.setGcJSON(text);
+            EditGradingComponentsTA_Transaction e = new EditGradingComponentsTA_Transaction(app, workspace, data, workspace.getGcTA(), old, n);
+            app.processTransaction(e);
         }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
-    public void processGNJSON(String text) {
+    public void processGNJSON(String text, String old, String n) {
         CSGData d = (CSGData)app.getDataComponent();
         CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
         SyllabusData data = d.getSyllabusData();
         if(workspace.getGradingNoteTA().isFocused()){
             data.setGnJSON(text);
+            EditGradingNoteTA_Transaction e = new EditGradingNoteTA_Transaction(app, workspace, data, workspace.getGradingNoteTA(), old, n);
+            app.processTransaction(e);
         }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
-    public void processADJSON(String text) {
+    public void processADJSON(String text, String old, String n) {
         CSGData d = (CSGData)app.getDataComponent();
         CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
         SyllabusData data = d.getSyllabusData();
         if(workspace.getAdTA().isFocused()){
             data.setAdJSON(text);
+            EditAcademicDishonestyTA_Transaction e = new EditAcademicDishonestyTA_Transaction(app, workspace, data, workspace.getAdTA(), old, n);
+            app.processTransaction(e);
         }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
-    public void processSAJSON(String text) {
+    public void processSAJSON(String text, String old, String n) {
         CSGData d = (CSGData)app.getDataComponent();
         CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
         SyllabusData data = d.getSyllabusData();
         if(workspace.getSaTA().isFocused()){
             data.setSaJSON(text);
+            EditSpecialAssistanceTA_Transaction e = new EditSpecialAssistanceTA_Transaction(app, workspace, data, workspace.getSaTA(), old, n);
+            app.processTransaction(e);
         }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
