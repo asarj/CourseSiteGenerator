@@ -53,18 +53,62 @@ public class MeetingTimesData {
         labItems.clear();
     }
     
-    public void addLecture(){
+    public LecturePrototype addLecture(){
         LecturePrototype l = new LecturePrototype("?", "?", "?", "?");
         lectureItems.add(l);
         selectLectures();
+        return l;
     }
     public void addLecture(LecturePrototype l){
         lectureItems.add(l);
         selectLectures();
     }
     
-    public void removeLecture(){
-        
+    public LecturePrototype editLecture(LecturePrototype l, String TYPE, String change){
+        if(TYPE.equals("SECTION")){
+            for(LecturePrototype x: lectureItems){
+                if(x.equals(l)){
+                    x.setSection(change);
+                    return x;
+                }
+            }
+            selectLectures();
+        }
+        else if(TYPE.equals("DAY")){
+            for(LecturePrototype x: lectureItems){
+                if(x.equals(l)){
+                    x.setDay(change);
+                    return x;
+                }
+            }
+            selectLectures();
+        }
+        else if(TYPE.equals("TIME")){
+            for(LecturePrototype x: lectureItems){
+                if(x.equals(l)){
+                    x.setTime(change);
+                    return x;
+                }
+            }
+            selectLectures();
+        }
+        else if(TYPE.equals("ROOM")){
+            for(LecturePrototype x: lectureItems){
+                if(x.equals(l)){
+                    x.setRoom(change);
+                    return x;
+                }
+            }
+            selectLectures();
+        }
+        return l;
+    }
+    
+    public void removeLecture(LecturePrototype l){
+        AppGUIModule gui = app.getGUIModule();
+        TableView<LecturePrototype> lecTable = (TableView)gui.getGUINode(MT_LECTURE_TABLE_VIEW);
+        lectureItems.remove(l);
+        selectLectures();
     }
     
     public void addRecitation(){

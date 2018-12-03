@@ -29,37 +29,41 @@ public class LecturePrototype<E extends Comparable<E>> implements Comparable<E> 
         return section.get();
     }
 
-    public void setSection(StringProperty section) {
-        this.section = section;
+    public void setSection(String section) {
+        this.section.set(section);
     }
 
     public String getDay() {
         return day.get();
     }
 
-    public void setDay(StringProperty day) {
-        this.day = day;
+    public void setDay(String day) {
+        this.day.set(day);
     }
 
     public String getRoom() {
         return room.get();
     }
 
-    public void setRoom(StringProperty room) {
-        this.room = room;
+    public void setRoom(String room) {
+        this.room.set(room);
     }
 
     public String getTime() {
         return time.get();
     }
 
-    public void setTime(StringProperty time) {
-        this.time = time;
+    public void setTime(String time) {
+        this.time.set(time);
     }
 
     @Override
     public int compareTo(E o) {
         return getSection().compareTo(((LecturePrototype)o).getSection());
+    }
+    
+    public boolean equals(LecturePrototype l){
+        return l.getSection().equals(this.getSection()) && l.getDay().equals(this.getDay()) && l.getTime().equals(this.getTime()) && l.getRoom().equals(this.getRoom());
     }
     
 }

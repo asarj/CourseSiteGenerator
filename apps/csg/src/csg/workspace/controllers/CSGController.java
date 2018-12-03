@@ -8,6 +8,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import csg.CSGApp;
+import static csg.CSGPropertyType.MT_LECTURE_TABLE_VIEW;
 import static csg.CSGPropertyType.OH_EMAIL_TEXT_FIELD;
 import static csg.CSGPropertyType.OH_ENDTIME_COMBO_BOX;
 import static csg.CSGPropertyType.OH_FOOLPROOF_SETTINGS;
@@ -38,6 +39,7 @@ import static csg.CSGPropertyType.SITE_SYLLABUS_CHECK_BOX;
 import static csg.CSGPropertyType.SITE_TITLE_TEXT_FIELD;
 import static csg.CSGPropertyType.SITE_YEARS_COMBO_BOX;
 import csg.data.CSGData;
+import csg.data.LecturePrototype;
 import csg.data.MeetingTimesData;
 import csg.data.OHData;
 import csg.data.ScheduleData;
@@ -75,6 +77,12 @@ import csg.transactions.EditSpecialAssistanceTA_Transaction;
 import csg.transactions.EditTA_Transaction;
 import csg.transactions.EditTextbooksTA_Transaction;
 import csg.transactions.EditTopicsTA_Transaction;
+import csg.transactions.MTAddLecture_Transaction;
+import csg.transactions.MTEditDayColumn_Transaction;
+import csg.transactions.MTEditRoomColumn_Transaction;
+import csg.transactions.MTEditSectionColumn_Transaction;
+import csg.transactions.MTEditTimeColumn_Transaction;
+import csg.transactions.MTRemoveLecture_Transaction;
 import csg.transactions.RemoveTA_Transaction;
 import csg.transactions.ToggleOfficeHours_Transaction;
 import csg.transactions.UpdateOHTable_Transaction;
@@ -89,6 +97,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.image.ImageView;
 
 /**
@@ -586,11 +595,45 @@ public class CSGController {
     public void processAddLecture() {
         CSGData d = (CSGData)app.getDataComponent();
         MeetingTimesData data = d.getMeetingTimesData();
-        data.addLecture();
+        MTAddLecture_Transaction e = new MTAddLecture_Transaction(app, d, data);
+        app.processTransaction(e);
+    }
+    
+    public void processLectureTableSectionEdit(String oldValue, String newValue) {
+        CSGData d = (CSGData)app.getDataComponent();
+        MeetingTimesData data = d.getMeetingTimesData();
+        MTEditSectionColumn_Transaction e = new MTEditSectionColumn_Transaction(app, d, data, oldValue, newValue);
+        app.processTransaction(e);
+    }
+    
+    public void processLectureTableDayEdit(String oldValue, String newValue) {
+        CSGData d = (CSGData)app.getDataComponent();
+        MeetingTimesData data = d.getMeetingTimesData();
+        MTEditDayColumn_Transaction e = new MTEditDayColumn_Transaction(app, d, data, oldValue, newValue);
+        app.processTransaction(e);
+    }
+
+    public void processLectureTableTimeEdit(String oldValue, String newValue) {
+        CSGData d = (CSGData)app.getDataComponent();
+        MeetingTimesData data = d.getMeetingTimesData();
+        MTEditTimeColumn_Transaction e = new MTEditTimeColumn_Transaction(app, d, data, oldValue, newValue);
+        app.processTransaction(e);
+    }
+
+    public void processLectureTableRoomEdit(String oldValue, String newValue) {
+        CSGData d = (CSGData)app.getDataComponent();
+        MeetingTimesData data = d.getMeetingTimesData();
+        MTEditRoomColumn_Transaction e = new MTEditRoomColumn_Transaction(app, d, data, oldValue, newValue);
+        app.processTransaction(e);
     }
 
     public void processRemoveLecture() {
-        
+        CSGData d = (CSGData)app.getDataComponent();
+        MeetingTimesData data = d.getMeetingTimesData();
+        if(((TableView)app.getGUIModule().getGUINode(MT_LECTURE_TABLE_VIEW)).getSelectionModel().getSelectedItem() != null){
+            MTRemoveLecture_Transaction e = new MTRemoveLecture_Transaction(app, d, data, (LecturePrototype)((TableView)app.getGUIModule().getGUINode(MT_LECTURE_TABLE_VIEW)).getSelectionModel().getSelectedItem());
+            app.processTransaction(e);
+        }
     }
 
     public void processAddRecitation() {
@@ -687,5 +730,5 @@ public class CSGController {
             }
         }
     }
-    
+
 }

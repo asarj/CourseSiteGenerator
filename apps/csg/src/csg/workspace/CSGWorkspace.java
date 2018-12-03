@@ -46,6 +46,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.scene.control.CheckBox;
@@ -55,7 +56,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -930,17 +933,41 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         mtBuilder.buildLabel(CSGPropertyType.MT_LECTURE_HEADER_LABEL, lectureHeaderBox, CLASS_OH_HEADER_LABEL, ENABLED); 
         
         TableView<LecturePrototype> lectureTable = mtBuilder.buildTableView(MT_LECTURE_TABLE_VIEW, lecturePane, CLASS_OH_TABLE_VIEW, ENABLED);
-//        lectureTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        lectureTable.getSelectionModel().cellSelectionEnabledProperty().set(true);
+        lectureTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        lectureTable.setEditable(true);
         
-        TableColumn lectureSectionColumn = mtBuilder.buildTableColumn(MT_LECTURE_SECTION_TABLE_COLUMN, lectureTable, CLASS_OH_COLUMN);
-        TableColumn lectureDayColumn = mtBuilder.buildTableColumn(MT_LECTURE_DAY_TABLE_COLUMN, lectureTable, CLASS_OH_COLUMN);
-        TableColumn lectureTimeColumn = mtBuilder.buildTableColumn(MT_LECTURE_TIME_TABLE_COLUMN, lectureTable, CLASS_OH_COLUMN);
-        TableColumn lectureRoomColumn = mtBuilder.buildTableColumn(MT_LECTURE_ROOM_TABLE_COLUMN, lectureTable, CLASS_OH_COLUMN);
+        
+        TableColumn<String, String> lectureSectionColumn = mtBuilder.buildTableColumn(MT_LECTURE_SECTION_TABLE_COLUMN, lectureTable, CLASS_OH_COLUMN);
+        TableColumn<String, String> lectureDayColumn = mtBuilder.buildTableColumn(MT_LECTURE_DAY_TABLE_COLUMN, lectureTable, CLASS_OH_COLUMN);
+        TableColumn<String, String> lectureTimeColumn = mtBuilder.buildTableColumn(MT_LECTURE_TIME_TABLE_COLUMN, lectureTable, CLASS_OH_COLUMN);
+        TableColumn<String, String> lectureRoomColumn = mtBuilder.buildTableColumn(MT_LECTURE_ROOM_TABLE_COLUMN, lectureTable, CLASS_OH_COLUMN);
         lectureSectionColumn.setCellValueFactory(new PropertyValueFactory<String, String>("section"));
         lectureDayColumn.setCellValueFactory(new PropertyValueFactory<String, String>("day"));
         lectureTimeColumn.setCellValueFactory(new PropertyValueFactory<String, String>("time"));
         lectureRoomColumn.setCellValueFactory(new PropertyValueFactory<String, String>("room"));
+//        lectureSectionColumn.setEditable(true);
+//        lectureDayColumn.setEditable(true);
+//        lectureTimeColumn.setEditable(true);
+//        lectureRoomColumn.setEditable(true);
+        
+        lectureSectionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        lectureSectionColumn.setOnEditCommit((CellEditEvent<String, String> t) -> {
+            outsideController.processLectureTableSectionEdit(t.getOldValue(), t.getNewValue());
+        });
+        lectureDayColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        lectureDayColumn.setOnEditCommit((CellEditEvent<String, String> t) -> {
+            outsideController.processLectureTableDayEdit(t.getOldValue(), t.getNewValue());
+        });
+        lectureTimeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        lectureTimeColumn.setOnEditCommit((CellEditEvent<String, String> t) -> {
+            outsideController.processLectureTableTimeEdit(t.getOldValue(), t.getNewValue());
+        });
+        lectureRoomColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        lectureRoomColumn.setOnEditCommit((CellEditEvent<String, String> t) -> {
+            outsideController.processLectureTableRoomEdit(t.getOldValue(), t.getNewValue());
+        });
+
+        
         lectureSectionColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(.2));
         lectureDayColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(.4));
         lectureTimeColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(.2));

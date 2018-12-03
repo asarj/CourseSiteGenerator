@@ -3,20 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/jujubear/Documents/SBU/CourseSiteGenerator/apps/csg/src/csg/workspace/style/oh_style.css</file>
-            <file>file:/Users/jujubear/Documents/SBU/CourseSiteGenerator/apps/csg/src/csg/transactions/RemoveTA_Transaction.java</file>
-            <file>file:/Users/jujubear/Documents/SBU/CourseSiteGenerator/apps/csg/src/csg/workspace/CSGWorkspace.java</file>
-            <file>file:/Users/jujubear/Documents/SBU/CourseSiteGenerator/apps/csg/src/csg/workspace/dialogs/TADialog.java</file>
             <file>file:/Users/jujubear/Documents/SBU/CourseSiteGenerator/apps/csg/src/csg/workspace/controllers/CSGController.java</file>
-            <file>file:/Users/jujubear/Documents/SBU/CourseSiteGenerator/apps/csg/src/csg/workspace/foolproof/CSGFoolproofDesign.java</file>
-            <file>file:/Users/jujubear/Documents/SBU/CourseSiteGenerator/apps/csg/src/csg/transactions/EditTA_Transaction.java</file>
-            <file>file:/Users/jujubear/Documents/SBU/CourseSiteGenerator/apps/csg/src/csg/data/TeachingAssistantPrototype.java</file>
-            <file>file:/Users/jujubear/Documents/SBU/CourseSiteGenerator/apps/csg/src/csg/transactions/CutTA_Transaction.java</file>
-            <file>file:/Users/jujubear/Documents/SBU/CourseSiteGenerator/apps/csg/src/csg/CSGPropertyType.java</file>
             <file>file:/Users/jujubear/Documents/SBU/CourseSiteGenerator/apps/csg/src/csg/files/CSGFiles.java</file>
             <file>file:/Users/jujubear/Documents/SBU/CourseSiteGenerator/apps/csg/src/csg/data/CSGData.java</file>
-            <file>file:/Users/jujubear/Documents/SBU/CourseSiteGenerator/apps/csg/src/csg/transactions/AddTA_Transaction.java</file>
-            <file>file:/Users/jujubear/Documents/SBU/CourseSiteGenerator/apps/csg/src/csg/workspace/style/OHStyle.java</file>
+            <file>file:/Users/jujubear/Documents/SBU/CourseSiteGenerator/apps/csg/src/csg/transactions/UpdateOHTable_Transaction.java</file>
+            <file>file:/Users/jujubear/Documents/SBU/CourseSiteGenerator/apps/csg/src/csg/CSGApp.java</file>
+            <file>file:/Users/jujubear/Documents/SBU/CourseSiteGenerator/apps/csg/src/csg/data/OHData.java</file>
+            <file>file:/Users/jujubear/Documents/SBU/CourseSiteGenerator/apps/csg/src/csg/workspace/CSGWorkspace.java</file>
         </group>
     </open-files>
 </project-private>
