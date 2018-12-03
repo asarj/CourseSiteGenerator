@@ -31,40 +31,40 @@ public class RecitationPrototype <E extends Comparable<E>> implements Comparable
         return section.get();
     }
 
-    public void setSection(StringProperty section) {
-        this.section = section;
+    public void setSection(String section) {
+        this.section.set(section);
     }
 
     public String getDayAndTime() {
         return dayAndTime.get();
     }
 
-    public void setDayAndTime(StringProperty dayAndTime) {
-        this.dayAndTime = dayAndTime;
+    public void setDayAndTime(String dayAndTime) {
+        this.dayAndTime.set(dayAndTime);
     }
 
     public String getRoom() {
         return room.get();
     }
 
-    public void setRoom(StringProperty room) {
-        this.room = room;
+    public void setRoom(String room) {
+        this.room.set(room);
     }
 
     public String getTA1() {
         return TA1.get();
     }
 
-    public void setTA1(StringProperty TA1) {
-        this.TA1 = TA1;
+    public void setTA1(String TA1) {
+        this.TA1.set(TA1);
     }
 
     public String getTA2() {
         return TA2.get();
     }
 
-    public void setTA2(StringProperty TA2) {
-        this.TA2 = TA2;
+    public void setTA2(String TA2) {
+        this.TA2.set(TA2);
     }
 
     @Override

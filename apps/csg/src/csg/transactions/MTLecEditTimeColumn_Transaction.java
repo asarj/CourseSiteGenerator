@@ -22,7 +22,7 @@ import jtps.jTPS_Transaction;
  *
  * @author Ajay
  */
-public class MTEditRoomColumn_Transaction implements jTPS_Transaction{
+public class MTLecEditTimeColumn_Transaction implements jTPS_Transaction{
     CSGApp app;
     CSGData d;
     MeetingTimesData data;
@@ -31,7 +31,7 @@ public class MTEditRoomColumn_Transaction implements jTPS_Transaction{
     String n;
     LecturePrototype newLecture;
     
-    public MTEditRoomColumn_Transaction(CSGApp initApp, CSGData d, MeetingTimesData data, String old, String n){
+    public MTLecEditTimeColumn_Transaction(CSGApp initApp, CSGData d, MeetingTimesData data, String old, String n){
         app = initApp;
         this.d = d;
         this.data = data;
@@ -44,7 +44,7 @@ public class MTEditRoomColumn_Transaction implements jTPS_Transaction{
         AppGUIModule gui = app.getGUIModule();
         TableView lecTable = (TableView)gui.getGUINode(MT_LECTURE_TABLE_VIEW);
         LecturePrototype l = (LecturePrototype)lecTable.getSelectionModel().getSelectedItem();
-        newLecture = data.editLecture(l, "ROOM", n);
+        newLecture = data.editLecture(l, "TIME", n);
         lecTable.refresh();
     }
 
@@ -53,7 +53,7 @@ public class MTEditRoomColumn_Transaction implements jTPS_Transaction{
         AppGUIModule gui = app.getGUIModule();
         TableView lecTable = (TableView)gui.getGUINode(MT_LECTURE_TABLE_VIEW);
         LecturePrototype l = (LecturePrototype)lecTable.getSelectionModel().getSelectedItem();
-        data.editLecture(newLecture, "ROOM", old);
+        data.editLecture(newLecture, "TIME", old);
         lecTable.refresh();
 
     }

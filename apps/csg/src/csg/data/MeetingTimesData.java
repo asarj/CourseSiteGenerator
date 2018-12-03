@@ -65,41 +65,101 @@ public class MeetingTimesData {
     }
     
     public LecturePrototype editLecture(LecturePrototype l, String TYPE, String change){
-        if(TYPE.equals("SECTION")){
-            for(LecturePrototype x: lectureItems){
-                if(x.equals(l)){
-                    x.setSection(change);
-                    return x;
+        try{
+            if(TYPE.equals("SECTION")){
+                for(LecturePrototype x: lectureItems){
+                    if(x.equals(l)){
+                        x.setSection(change);
+                        return x;
+                    }
                 }
+                selectLectures();
             }
-            selectLectures();
+            else if(TYPE.equals("DAY")){
+                for(LecturePrototype x: lectureItems){
+                    if(x.equals(l)){
+                        x.setDay(change);
+                        return x;
+                    }
+                }
+                selectLectures();
+            }
+            else if(TYPE.equals("TIME")){
+                for(LecturePrototype x: lectureItems){
+                    if(x.equals(l)){
+                        x.setTime(change);
+                        return x;
+                    }
+                }
+                selectLectures();
+            }
+            else if(TYPE.equals("ROOM")){
+                for(LecturePrototype x: lectureItems){
+                    if(x.equals(l)){
+                        x.setRoom(change);
+                        return x;
+                    }
+                }
+                selectLectures();
+            }
+            
         }
-        else if(TYPE.equals("DAY")){
-            for(LecturePrototype x: lectureItems){
-                if(x.equals(l)){
-                    x.setDay(change);
-                    return x;
-                }
-            }
-            selectLectures();
+        catch(NullPointerException n){
+            System.out.println("Lecture not found");
         }
-        else if(TYPE.equals("TIME")){
-            for(LecturePrototype x: lectureItems){
-                if(x.equals(l)){
-                    x.setTime(change);
-                    return x;
+        return l;
+    }
+    
+    public RecitationPrototype editRecitation(RecitationPrototype l, String TYPE, String change){
+        try{
+            if(TYPE.equals("SECTION")){
+                for(RecitationPrototype x: recitationItems){
+                    if(x.equals(l)){
+                        x.setSection(change);
+                        return x;
+                    }
                 }
+                selectRecitations();
             }
-            selectLectures();
+            else if(TYPE.equals("DAYTIME")){
+                for(RecitationPrototype x: recitationItems){
+                    if(x.equals(l)){
+                        x.setDayAndTime(change);
+                        return x;
+                    }
+                }
+                selectRecitations();
+            }
+            else if(TYPE.equals("ROOM")){
+                for(RecitationPrototype x: recitationItems){
+                    if(x.equals(l)){
+                        x.setRoom(change);
+                        return x;
+                    }
+                }
+                selectRecitations();
+            }
+            else if(TYPE.equals("TA1")){
+                for(RecitationPrototype x: recitationItems){
+                    if(x.equals(l)){
+                        x.setTA1(change);
+                        return x;
+                    }
+                }
+                selectRecitations();
+            }
+            else if(TYPE.equals("TA2")){
+                for(RecitationPrototype x: recitationItems){
+                    if(x.equals(l)){
+                        x.setTA2(change);
+                        return x;
+                    }
+                }
+                selectRecitations();
+            }
         }
-        else if(TYPE.equals("ROOM")){
-            for(LecturePrototype x: lectureItems){
-                if(x.equals(l)){
-                    x.setRoom(change);
-                    return x;
-                }
-            }
-            selectLectures();
+        catch(NullPointerException e){
+            System.out.println("Recitation not found");
         }
         return l;
     }
@@ -111,10 +171,11 @@ public class MeetingTimesData {
         selectLectures();
     }
     
-    public void addRecitation(){
+    public RecitationPrototype addRecitation(){
         RecitationPrototype r = new RecitationPrototype("?", "?", "?", "?", "?");
         recitationItems.add(r);
         selectRecitations();
+        return r;
     }
     
     public void addRecitation(RecitationPrototype r){
@@ -122,14 +183,72 @@ public class MeetingTimesData {
         selectRecitations();
     }
     
-    public void removeRecitation(){
-        
+    public void removeRecitation(RecitationPrototype r){
+        AppGUIModule gui = app.getGUIModule();
+        TableView<LecturePrototype> recTable = (TableView)gui.getGUINode(MT_RECITATION_TABLE_VIEW);
+        recitationItems.remove(r);
+        selectRecitations();
     }
     
-    public void addLab(){
+    public LabPrototype editLab(LabPrototype l, String TYPE, String change){
+        try{
+            if(TYPE.equals("SECTION")){
+                for(LabPrototype x: labItems){
+                    if(x.equals(l)){
+                        x.setSection(change);
+                        return x;
+                    }
+                }
+                selectRecitations();
+            }
+            else if(TYPE.equals("DAYTIME")){
+                for(LabPrototype x: labItems){
+                    if(x.equals(l)){
+                        x.setDayAndTime(change);
+                        return x;
+                    }
+                }
+                selectRecitations();
+            }
+            else if(TYPE.equals("ROOM")){
+                for(LabPrototype x: labItems){
+                    if(x.equals(l)){
+                        x.setRoom(change);
+                        return x;
+                    }
+                }
+                selectRecitations();
+            }
+            else if(TYPE.equals("TA1")){
+                for(LabPrototype x: labItems){
+                    if(x.equals(l)){
+                        x.setTA1(change);
+                        return x;
+                    }
+                }
+                selectRecitations();
+            }
+            else if(TYPE.equals("TA2")){
+                for(LabPrototype x: labItems){
+                    if(x.equals(l)){
+                        x.setTA2(change);
+                        return x;
+                    }
+                }
+                selectRecitations();
+            }
+        }
+        catch(NullPointerException e){
+            System.out.println("Lab not found");
+        }
+        return l;
+    }
+    
+    public LabPrototype addLab(){
         LabPrototype l = new LabPrototype("?", "?", "?", "?", "?");
         labItems.add(l);
         selectLabs();
+        return l;
     }
     
     public void addLab(LabPrototype l){
@@ -137,8 +256,11 @@ public class MeetingTimesData {
         selectLabs();
     }
     
-    public void removeLab(){
-        
+    public void removeLab(LabPrototype l){
+        AppGUIModule gui = app.getGUIModule();
+        TableView<LecturePrototype> labTable = (TableView)gui.getGUINode(MT_LAB_TABLE_VIEW);
+        labItems.remove(l);
+        selectLabs();
     }
     
     public void selectLectures() {

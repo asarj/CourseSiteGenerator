@@ -6,10 +6,11 @@
 package csg.transactions;
 
 import csg.CSGApp;
-import static csg.CSGPropertyType.MT_LECTURE_TABLE_VIEW;
+import static csg.CSGPropertyType.MT_RECITATION_TABLE_VIEW;
 import csg.data.CSGData;
 import csg.data.LecturePrototype;
 import csg.data.MeetingTimesData;
+import csg.data.RecitationPrototype;
 import csg.data.SiteData;
 import djf.modules.AppGUIModule;
 import javafx.scene.control.ComboBox;
@@ -22,16 +23,15 @@ import jtps.jTPS_Transaction;
  *
  * @author Ajay
  */
-public class MTEditTimeColumn_Transaction implements jTPS_Transaction{
+public class MTRecEditSectionColumn_Transaction implements jTPS_Transaction{
     CSGApp app;
     CSGData d;
     MeetingTimesData data;
-    TextField c;
     String old;
     String n;
-    LecturePrototype newLecture;
+    RecitationPrototype newRecitation;
     
-    public MTEditTimeColumn_Transaction(CSGApp initApp, CSGData d, MeetingTimesData data, String old, String n){
+    public MTRecEditSectionColumn_Transaction(CSGApp initApp, CSGData d, MeetingTimesData data, String old, String n){
         app = initApp;
         this.d = d;
         this.data = data;
@@ -42,19 +42,19 @@ public class MTEditTimeColumn_Transaction implements jTPS_Transaction{
     @Override
     public void doTransaction() {
         AppGUIModule gui = app.getGUIModule();
-        TableView lecTable = (TableView)gui.getGUINode(MT_LECTURE_TABLE_VIEW);
-        LecturePrototype l = (LecturePrototype)lecTable.getSelectionModel().getSelectedItem();
-        newLecture = data.editLecture(l, "TIME", n);
-        lecTable.refresh();
+        TableView recTable = (TableView)gui.getGUINode(MT_RECITATION_TABLE_VIEW);
+        RecitationPrototype r = (RecitationPrototype)recTable.getSelectionModel().getSelectedItem();
+        newRecitation = data.editRecitation(r, "SECTION", n);
+        recTable.refresh();
     }
 
     @Override
     public void undoTransaction() {
         AppGUIModule gui = app.getGUIModule();
-        TableView lecTable = (TableView)gui.getGUINode(MT_LECTURE_TABLE_VIEW);
-        LecturePrototype l = (LecturePrototype)lecTable.getSelectionModel().getSelectedItem();
-        data.editLecture(newLecture, "TIME", old);
-        lecTable.refresh();
+        TableView recTable = (TableView)gui.getGUINode(MT_RECITATION_TABLE_VIEW);
+        RecitationPrototype r = (RecitationPrototype)recTable.getSelectionModel().getSelectedItem(); 
+        data.editRecitation(newRecitation, "SECTION", old);
+        recTable.refresh();
 
     }
 }

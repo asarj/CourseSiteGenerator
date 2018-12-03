@@ -935,8 +935,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         TableView<LecturePrototype> lectureTable = mtBuilder.buildTableView(MT_LECTURE_TABLE_VIEW, lecturePane, CLASS_OH_TABLE_VIEW, ENABLED);
         lectureTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         lectureTable.setEditable(true);
-        
-        
+            
         TableColumn<String, String> lectureSectionColumn = mtBuilder.buildTableColumn(MT_LECTURE_SECTION_TABLE_COLUMN, lectureTable, CLASS_OH_COLUMN);
         TableColumn<String, String> lectureDayColumn = mtBuilder.buildTableColumn(MT_LECTURE_DAY_TABLE_COLUMN, lectureTable, CLASS_OH_COLUMN);
         TableColumn<String, String> lectureTimeColumn = mtBuilder.buildTableColumn(MT_LECTURE_TIME_TABLE_COLUMN, lectureTable, CLASS_OH_COLUMN);
@@ -991,16 +990,38 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         TableView<RecitationPrototype> recitationTable = mtBuilder.buildTableView(MT_RECITATION_TABLE_VIEW, recitationPane, CLASS_OH_TABLE_VIEW, ENABLED);
         recitationTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         recitationTable.setEditable(true);
-        TableColumn recitationSectionColumn = mtBuilder.buildTableColumn(MT_RECITATION_SECTION_TABLE_COLUMN, recitationTable, CLASS_OH_COLUMN);
-        TableColumn recitationDayTimeColumn = mtBuilder.buildTableColumn(MT_RECITATION_DAYANDTIME_TABLE_COLUMN, recitationTable, CLASS_OH_COLUMN);
-        TableColumn recitationRoomColumn = mtBuilder.buildTableColumn(MT_RECITATION_ROOM_TABLE_COLUMN, recitationTable, CLASS_OH_COLUMN);
-        TableColumn recitationTA1Column = mtBuilder.buildTableColumn(MT_RECITATION_TA1_TABLE_COLUMN, recitationTable, CLASS_OH_COLUMN);
-        TableColumn recitationTA2Column = mtBuilder.buildTableColumn(MT_RECITATION_TA2_TABLE_COLUMN, recitationTable, CLASS_OH_COLUMN);
+        TableColumn<String, String> recitationSectionColumn = mtBuilder.buildTableColumn(MT_RECITATION_SECTION_TABLE_COLUMN, recitationTable, CLASS_OH_COLUMN);
+        TableColumn<String, String> recitationDayTimeColumn = mtBuilder.buildTableColumn(MT_RECITATION_DAYANDTIME_TABLE_COLUMN, recitationTable, CLASS_OH_COLUMN);
+        TableColumn<String, String> recitationRoomColumn = mtBuilder.buildTableColumn(MT_RECITATION_ROOM_TABLE_COLUMN, recitationTable, CLASS_OH_COLUMN);
+        TableColumn<String, String> recitationTA1Column = mtBuilder.buildTableColumn(MT_RECITATION_TA1_TABLE_COLUMN, recitationTable, CLASS_OH_COLUMN);
+        TableColumn<String, String> recitationTA2Column = mtBuilder.buildTableColumn(MT_RECITATION_TA2_TABLE_COLUMN, recitationTable, CLASS_OH_COLUMN);
         recitationSectionColumn.setCellValueFactory(new PropertyValueFactory<String, String>("section"));
-        recitationDayTimeColumn.setCellValueFactory(new PropertyValueFactory<String, String>("day"));
+        recitationDayTimeColumn.setCellValueFactory(new PropertyValueFactory<String, String>("dayAndTime"));
         recitationRoomColumn.setCellValueFactory(new PropertyValueFactory<String, String>("room"));
         recitationTA1Column.setCellValueFactory(new PropertyValueFactory<String, String>("TA1"));
         recitationTA2Column.setCellValueFactory(new PropertyValueFactory<String, String>("TA2"));
+        
+        recitationSectionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        recitationSectionColumn.setOnEditCommit((CellEditEvent<String, String> t) -> {
+            outsideController.processRecitationTableSectionEdit(t.getOldValue(), t.getNewValue());
+        });
+        recitationDayTimeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        recitationDayTimeColumn.setOnEditCommit((CellEditEvent<String, String> t) -> {
+            outsideController.processRecitationTableDayTimeEdit(t.getOldValue(), t.getNewValue());
+        });
+        recitationRoomColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        recitationRoomColumn.setOnEditCommit((CellEditEvent<String, String> t) -> {
+            outsideController.processRecitationTableRoomEdit(t.getOldValue(), t.getNewValue());
+        });
+        recitationTA1Column.setCellFactory(TextFieldTableCell.forTableColumn());
+        recitationTA1Column.setOnEditCommit((CellEditEvent<String, String> t) -> {
+            outsideController.processRecitationTableTA1Edit(t.getOldValue(), t.getNewValue());
+        });
+        recitationTA2Column.setCellFactory(TextFieldTableCell.forTableColumn());
+        recitationTA2Column.setOnEditCommit((CellEditEvent<String, String> t) -> {
+            outsideController.processRecitationTableTA2Edit(t.getOldValue(), t.getNewValue());
+        });
+        
         recitationSectionColumn.prefWidthProperty().bind(recitationTable.widthProperty().multiply(.15));
         recitationDayTimeColumn.prefWidthProperty().bind(recitationTable.widthProperty().multiply(.4));
         lectureRoomColumn.prefWidthProperty().bind(recitationTable.widthProperty().multiply(.15));
@@ -1023,16 +1044,38 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         TableView<LabPrototype> labTable = mtBuilder.buildTableView(MT_LAB_TABLE_VIEW, labPane, CLASS_OH_TABLE_VIEW, ENABLED);
         labTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         labTable.setEditable(true);
-        TableColumn labSectionColumn = mtBuilder.buildTableColumn(MT_LAB_SECTION_TABLE_COLUMN, labTable, CLASS_OH_COLUMN);
-        TableColumn labDayTimeColumn = mtBuilder.buildTableColumn(MT_LAB_DAYANDTIME_TABLE_COLUMN, labTable, CLASS_OH_COLUMN);
-        TableColumn labRoomColumn = mtBuilder.buildTableColumn(MT_LAB_ROOM_TABLE_COLUMN, labTable, CLASS_OH_COLUMN);
-        TableColumn labTA1Column = mtBuilder.buildTableColumn(MT_LAB_TA1_TABLE_COLUMN, labTable, CLASS_OH_COLUMN);
-        TableColumn labTA2Column = mtBuilder.buildTableColumn(MT_LAB_TA2_TABLE_COLUMN, labTable, CLASS_OH_COLUMN);
+        TableColumn<String, String> labSectionColumn = mtBuilder.buildTableColumn(MT_LAB_SECTION_TABLE_COLUMN, labTable, CLASS_OH_COLUMN);
+        TableColumn<String, String> labDayTimeColumn = mtBuilder.buildTableColumn(MT_LAB_DAYANDTIME_TABLE_COLUMN, labTable, CLASS_OH_COLUMN);
+        TableColumn<String, String> labRoomColumn = mtBuilder.buildTableColumn(MT_LAB_ROOM_TABLE_COLUMN, labTable, CLASS_OH_COLUMN);
+        TableColumn<String, String> labTA1Column = mtBuilder.buildTableColumn(MT_LAB_TA1_TABLE_COLUMN, labTable, CLASS_OH_COLUMN);
+        TableColumn<String, String> labTA2Column = mtBuilder.buildTableColumn(MT_LAB_TA2_TABLE_COLUMN, labTable, CLASS_OH_COLUMN);
         labSectionColumn.setCellValueFactory(new PropertyValueFactory<String, String>("section"));
-        labDayTimeColumn.setCellValueFactory(new PropertyValueFactory<String, String>("day"));
+        labDayTimeColumn.setCellValueFactory(new PropertyValueFactory<String, String>("dayAndTime"));
         labRoomColumn.setCellValueFactory(new PropertyValueFactory<String, String>("room"));
         labTA1Column.setCellValueFactory(new PropertyValueFactory<String, String>("TA1"));
         labTA2Column.setCellValueFactory(new PropertyValueFactory<String, String>("TA2"));
+        
+        labSectionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        labSectionColumn.setOnEditCommit((CellEditEvent<String, String> t) -> {
+            outsideController.processLabTableSectionEdit(t.getOldValue(), t.getNewValue());
+        });
+        labDayTimeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        labDayTimeColumn.setOnEditCommit((CellEditEvent<String, String> t) -> {
+            outsideController.processLabTableDayTimeEdit(t.getOldValue(), t.getNewValue());
+        });
+        labRoomColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        labRoomColumn.setOnEditCommit((CellEditEvent<String, String> t) -> {
+            outsideController.processLabTableRoomEdit(t.getOldValue(), t.getNewValue());
+        });
+        labTA1Column.setCellFactory(TextFieldTableCell.forTableColumn());
+        labTA1Column.setOnEditCommit((CellEditEvent<String, String> t) -> {
+            outsideController.processLabTableTA1Edit(t.getOldValue(), t.getNewValue());
+        });
+        labTA2Column.setCellFactory(TextFieldTableCell.forTableColumn());
+        labTA2Column.setOnEditCommit((CellEditEvent<String, String> t) -> {
+            outsideController.processLabTableTA2Edit(t.getOldValue(), t.getNewValue());
+        });
+        
         labSectionColumn.prefWidthProperty().bind(labTable.widthProperty().multiply(.15));
         labDayTimeColumn.prefWidthProperty().bind(labTable.widthProperty().multiply(.4));
         lectureRoomColumn.prefWidthProperty().bind(labTable.widthProperty().multiply(.15));

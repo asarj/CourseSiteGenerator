@@ -5,6 +5,12 @@ import djf.ui.foolproof.FoolproofDesign;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import csg.CSGApp;
+import static csg.CSGPropertyType.MT_LAB_REMOVE_BUTTON;
+import static csg.CSGPropertyType.MT_LAB_TABLE_VIEW;
+import static csg.CSGPropertyType.MT_LECTURE_REMOVE_BUTTON;
+import static csg.CSGPropertyType.MT_LECTURE_TABLE_VIEW;
+import static csg.CSGPropertyType.MT_RECITATION_REMOVE_BUTTON;
+import static csg.CSGPropertyType.MT_RECITATION_TABLE_VIEW;
 import static csg.CSGPropertyType.OH_ADD_TA_BUTTON;
 import static csg.CSGPropertyType.OH_EMAIL_TEXT_FIELD;
 import static csg.CSGPropertyType.OH_ENDTIME_COMBO_BOX;
@@ -24,7 +30,11 @@ import static csg.CSGPropertyType.SITE_SUBJECT_COMBO_BOX;
 import static csg.CSGPropertyType.SITE_TITLE_TEXT_FIELD;
 import static csg.CSGPropertyType.SITE_YEARS_COMBO_BOX;
 import csg.data.CSGData;
+import csg.data.LabPrototype;
+import csg.data.LecturePrototype;
+import csg.data.MeetingTimesData;
 import csg.data.OHData;
+import csg.data.RecitationPrototype;
 import csg.data.SiteData;
 import csg.data.TeachingAssistantPrototype;
 import csg.data.TimeSlot;
@@ -64,6 +74,9 @@ public class CSGFoolproofDesign implements FoolproofDesign {
         updateInstructorRoomTF();
         updateInstructorHPTF();
         updateCourseCSSCB();
+        updateRemoveLectureFoolproofDesign();
+        updateRemoveRecitationFoolproofDesign();
+        updateRemoveLabFoolproofDesign();
     }
 
     private void updateAddTAFoolproofDesign() {
@@ -319,6 +332,51 @@ public class CSGFoolproofDesign implements FoolproofDesign {
                 c.getStyleClass().remove(CLASS_SITE_BOX_ERROR);
                 c.getStyleClass().add(CLASS_OH_BOX); 
             }
+        }
+    }
+    
+    private void updateRemoveLectureFoolproofDesign(){
+        AppGUIModule gui = app.getGUIModule();
+        CSGData d = (CSGData)app.getDataComponent();
+        MeetingTimesData data = d.getMeetingTimesData();
+        TableView<LecturePrototype> lecTableView = (TableView) gui.getGUINode(MT_LECTURE_TABLE_VIEW);
+        Button remove = (Button)gui.getGUINode(MT_LECTURE_REMOVE_BUTTON);
+        boolean isLecSelected = lecTableView.getSelectionModel().getSelectedItem() != null;
+        if(!isLecSelected){
+            remove.setDisable(true);
+        }
+        else{
+            remove.setDisable(false);
+        }
+    }
+    
+    private void updateRemoveRecitationFoolproofDesign(){
+        AppGUIModule gui = app.getGUIModule();
+        CSGData d = (CSGData)app.getDataComponent();
+        MeetingTimesData data = d.getMeetingTimesData();
+        TableView<RecitationPrototype> recTableView = (TableView) gui.getGUINode(MT_RECITATION_TABLE_VIEW);
+        Button remove = (Button)gui.getGUINode(MT_RECITATION_REMOVE_BUTTON);
+        boolean isRecSelected = recTableView.getSelectionModel().getSelectedItem() != null;
+        if(!isRecSelected){
+            remove.setDisable(true);
+        }
+        else{
+            remove.setDisable(false);
+        }
+    }
+    
+    private void updateRemoveLabFoolproofDesign(){
+        AppGUIModule gui = app.getGUIModule();
+        CSGData d = (CSGData)app.getDataComponent();
+        MeetingTimesData data = d.getMeetingTimesData();
+        TableView<LabPrototype> labTableView = (TableView) gui.getGUINode(MT_LAB_TABLE_VIEW);
+        Button remove = (Button)gui.getGUINode(MT_LAB_REMOVE_BUTTON);
+        boolean isLabSelected = labTableView.getSelectionModel().getSelectedItem() != null;
+        if(!isLabSelected){
+            remove.setDisable(true);
+        }
+        else{
+            remove.setDisable(false);
         }
     }
     

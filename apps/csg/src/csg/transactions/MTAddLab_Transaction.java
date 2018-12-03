@@ -6,8 +6,10 @@
 package csg.transactions;
 
 import csg.CSGApp;
+import static csg.CSGPropertyType.MT_LAB_TABLE_VIEW;
 import static csg.CSGPropertyType.MT_LECTURE_TABLE_VIEW;
 import csg.data.CSGData;
+import csg.data.LabPrototype;
 import csg.data.LecturePrototype;
 import csg.data.MeetingTimesData;
 import csg.data.SiteData;
@@ -22,39 +24,35 @@ import jtps.jTPS_Transaction;
  *
  * @author Ajay
  */
-public class MTEditSectionColumn_Transaction implements jTPS_Transaction{
+public class MTAddLab_Transaction implements jTPS_Transaction{
     CSGApp app;
     CSGData d;
     MeetingTimesData data;
     TextField c;
     String old;
     String n;
-    LecturePrototype newLecture;
+    LabPrototype addedLab;
     
-    public MTEditSectionColumn_Transaction(CSGApp initApp, CSGData d, MeetingTimesData data, String old, String n){
+    public MTAddLab_Transaction(CSGApp initApp, CSGData d, MeetingTimesData data){
         app = initApp;
         this.d = d;
         this.data = data;
-        this.old = old;
-        this.n = n;
     }
     
     @Override
     public void doTransaction() {
         AppGUIModule gui = app.getGUIModule();
-        TableView lecTable = (TableView)gui.getGUINode(MT_LECTURE_TABLE_VIEW);
-        LecturePrototype l = (LecturePrototype)lecTable.getSelectionModel().getSelectedItem();
-        newLecture = data.editLecture(l, "SECTION", n);
-        lecTable.refresh();
+        TableView labTable = (TableView)gui.getGUINode(MT_LAB_TABLE_VIEW);
+        addedLab = data.addLab();
+        labTable.refresh();
     }
 
     @Override
     public void undoTransaction() {
         AppGUIModule gui = app.getGUIModule();
-        TableView lecTable = (TableView)gui.getGUINode(MT_LECTURE_TABLE_VIEW);
-        LecturePrototype l = (LecturePrototype)lecTable.getSelectionModel().getSelectedItem();
-        data.editLecture(newLecture, "SECTION", old);
-        lecTable.refresh();
+        TableView labTable = (TableView)gui.getGUINode(MT_LAB_TABLE_VIEW);
+        data.removeLab(addedLab);
+        labTable.refresh();
 
     }
 }
