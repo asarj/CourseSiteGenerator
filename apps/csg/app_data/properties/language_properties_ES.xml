@@ -288,6 +288,8 @@
         <property name="SCH_TOPIC_LABEL_TEXT"                       value="Tema: "></property>
         <property name="SCH_LINK_LABEL_TEXT"                       value="Enlazar: "></property>
         <property name="SCH_ADD_UPDATE_BUTTON_TEXT"                       value="Añadir/Actualizar"></property>
+        <property name="SCH_ADD"                       value="Añadir"></property>
+        <property name="SCH_UPDATE"                       value="Actualizar"></property>
         <property name="SCH_CLEAR_BUTTON_TEXT"                       value="Claro"></property>
         <property name="SCH_HOLIDAY"                       value="Vacaciones"></property>
         <property name="SCH_LECTURE"                       value="Conferencia"></property>

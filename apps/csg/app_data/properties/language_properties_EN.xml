@@ -289,6 +289,8 @@
         <property name="SCH_TOPIC_LABEL_TEXT"                       value="Topic: "></property>
         <property name="SCH_LINK_LABEL_TEXT"                       value="Link: "></property>
         <property name="SCH_ADD_UPDATE_BUTTON_TEXT"                       value="Add/Update"></property>
+        <property name="SCH_ADD"                       value="Add"></property>
+        <property name="SCH_UPDATE"                       value="Update"></property>
         <property name="SCH_CLEAR_BUTTON_TEXT"                       value="Clear"></property>
         <property name="SCH_HOLIDAY"                       value="Holiday"></property>
         <property name="SCH_LECTURE"                       value="Lecture"></property>

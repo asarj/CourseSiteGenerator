@@ -40,6 +40,8 @@ import static djf.AppPropertyType.APP_FILE_PROTOCOL;
 import static djf.modules.AppLanguageModule.FILE_PROTOCOL;
 import java.io.File;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javafx.beans.value.ChangeListener;
@@ -49,8 +51,11 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -1240,6 +1245,27 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         HBox schBoundariesBox = schBuilder.buildHBox(SCH_BOUNDARIES_OPTIONS_HEADER_BOX, schBoundariesPane, CLASS_OH_BOX, ENABLED);
         schBuilder.buildLabel(SCH_STARTING_MONDAY_LABEL, schBoundariesBox, CLASS_OH_LABEL, ENABLED);
         startDate = new DatePicker();
+        startDate.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate end;
+                LocalDate setEndVal = LocalDate.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth() + 4);
+                if(endDate != null){
+                    end = endDate.getValue();
+                }
+                else{
+                    end = setEndVal;
+                }
+                setDisable(empty || date.getDayOfWeek() == DayOfWeek.SATURDAY || 
+                        date.getDayOfWeek() == DayOfWeek.SUNDAY || 
+                        date.getDayOfWeek() == DayOfWeek.TUESDAY ||
+                        date.getDayOfWeek() == DayOfWeek.WEDNESDAY ||
+                        date.getDayOfWeek() == DayOfWeek.THURSDAY ||
+                        date.getDayOfWeek() == DayOfWeek.FRIDAY
+                );
+            }
+        });
         startDate.valueProperty().addListener((ov, oldValue, newValue) ->{
             CSGController controller = new CSGController((CSGApp) app);
             AppGUIModule gui = app.getGUIModule();
@@ -1248,6 +1274,18 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         schBoundariesBox.getChildren().add(startDate);
         schBuilder.buildLabel(SCH_ENDING_FRIDAY_LABEL, schBoundariesBox, CLASS_OH_LABEL, ENABLED);
         endDate = new DatePicker();
+        endDate.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                setDisable(empty || date.getDayOfWeek() == DayOfWeek.SATURDAY || 
+                        date.getDayOfWeek() == DayOfWeek.SUNDAY || 
+                        date.getDayOfWeek() == DayOfWeek.MONDAY ||
+                        date.getDayOfWeek() == DayOfWeek.TUESDAY ||
+                        date.getDayOfWeek() == DayOfWeek.WEDNESDAY ||
+                        date.getDayOfWeek() == DayOfWeek.THURSDAY);
+            }
+        });
         endDate.valueProperty().addListener((ov, oldValue, newValue) ->{
             CSGController controller = new CSGController((CSGApp) app);
             AppGUIModule gui = app.getGUIModule();
@@ -1304,6 +1342,22 @@ public class CSGWorkspace extends AppWorkspaceComponent {
 //        HBox dateBox = schBuilder.buildHBox(SCH_DATE_HBOX, schAddEditPane, 0, 3, 2, 1, CLASS_OH_BOX, ENABLED);
         schBuilder.buildLabel(SCH_DATE_LABEL, schAddEditPane, 0, 3, 2, 1, CLASS_OH_LABEL, ENABLED);
         editDatePicker = new DatePicker();
+        editDatePicker.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                try{
+                    setDisable(empty || date.compareTo(startDate.getValue()) < 0 || date.compareTo(endDate.getValue()) > 0);
+                }
+                catch(NullPointerException n){
+//                    Alert alert = new Alert(Alert.AlertType.ERROR, "Set the start and end dates first!", ButtonType.OK);
+//                    alert.showAndWait();
+//
+//                    if (alert.getResult() == ButtonType.OK) {
+//                        alert.close();
+//                    }
+                }
+            }
+        });
         schAddEditPane.add(editDatePicker, 1, 3, 2, 1);
 //        HBox titleBox = schBuilder.buildHBox(SCH_TITLE_HBOX, schAddEditPane, 0, 4, 2, 1, CLASS_OH_BOX, ENABLED);
         schBuilder.buildLabel(SCH_TITLE_LABEL, schAddEditPane, 0 ,4, 2, 1, CLASS_OH_LABEL, ENABLED);
@@ -1575,20 +1629,26 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             controller.processRemoveLab();
         });
         
-        DatePicker start = getStartDate();
-        start.valueProperty().addListener(e->{
-            controller.processStartDate(start.getValue());
-        });
-        DatePicker end = getEndDate();
-        end.valueProperty().addListener(e->{
-            controller.processEndDate(end.getValue());
-        });
+//        DatePicker start = getStartDate();
+//        start.valueProperty().addListener(e->{
+//            controller.processStartDate(start.getValue());
+//        });
+//        DatePicker end = getEndDate();
+//        end.valueProperty().addListener(e->{
+//            controller.processEndDate(end.getValue());
+//        });
         ((Button) gui.getGUINode(SCH_CLEAR_BUTTON)).setOnAction(e -> {
             controller.processClearSelection();
         });
         DatePicker edit = getEditDatePicker();
         ((Button) gui.getGUINode(SCH_ADD_UPDATE_BUTTON)).setOnAction(e -> {
-            controller.processAddEditSelection(edit.getValue());
+            controller.processAddEditButton();
+        });
+        ((TableView)gui.getGUINode(SCH_ITEMS_TABLE_VIEW)).setOnMouseClicked(e->{
+            controller.processAddEditSelection();
+        });
+        ((Button)gui.getGUINode(SCH_REMOVE_ITEM_BUTTON)).setOnAction(e->{
+            controller.processRemoveItem();
         });
     }
 

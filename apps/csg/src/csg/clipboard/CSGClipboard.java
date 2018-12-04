@@ -8,8 +8,8 @@ import csg.data.OHData;
 import csg.data.TeachingAssistantPrototype;
 import csg.data.TimeSlot;
 import csg.data.TimeSlot.DayOfWeek;
-import csg.transactions.CutTA_Transaction;
-import csg.transactions.PasteTA_Transaction;
+import csg.transactions.OH_CutTA_Transaction;
+import csg.transactions.OH_PasteTA_Transaction;
 
 
 public class CSGClipboard implements AppClipboardComponent {
@@ -30,7 +30,7 @@ public class CSGClipboard implements AppClipboardComponent {
             clipboardCutTA = data.getSelectedTA();
             clipboardCopiedTA = null;
             HashMap<TimeSlot, ArrayList<DayOfWeek>> officeHours = data.getTATimeSlots(clipboardCutTA);
-            CutTA_Transaction transaction = new CutTA_Transaction((CSGApp)app, clipboardCutTA, officeHours);
+            OH_CutTA_Transaction transaction = new OH_CutTA_Transaction((CSGApp)app, clipboardCutTA, officeHours);
             app.processTransaction(transaction);
         }
     }
@@ -61,7 +61,7 @@ public class CSGClipboard implements AppClipboardComponent {
     public void paste() {
         OHData data = (OHData)app.getDataComponent();
         if (clipboardCutTA != null) {
-            PasteTA_Transaction transaction = new PasteTA_Transaction((CSGApp)app, clipboardCutTA);
+            OH_PasteTA_Transaction transaction = new OH_PasteTA_Transaction((CSGApp)app, clipboardCutTA);
             app.processTransaction(transaction);
             
             this.clipboardCutTA = null;
@@ -70,7 +70,7 @@ public class CSGClipboard implements AppClipboardComponent {
         else if (clipboardCopiedTA != null) {
             // FIGURE OUT THE PROPER NAME AND
             // EMAIL ADDRESS SO THAT THERE ISN'T A DUPLICATE             
-            PasteTA_Transaction transaction = new PasteTA_Transaction((CSGApp)app, clipboardCopiedTA);
+            OH_PasteTA_Transaction transaction = new OH_PasteTA_Transaction((CSGApp)app, clipboardCopiedTA);
             app.processTransaction(transaction);
             
             this.clipboardCopiedTA = null;

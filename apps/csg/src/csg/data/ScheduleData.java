@@ -78,6 +78,29 @@ public class ScheduleData {
         selectSchedule();
     }
     
+    public ScheduleItemPrototype editScheduleItem(ScheduleItemPrototype old, ScheduleItemPrototype s){
+        for(ScheduleItemPrototype x : scheduleItems){
+            if(x.equals(old)){
+                x.setType(s.getType());
+                x.setTopic(s.getTopic());
+                x.setLocalDate(s.getLocalDate());
+                x.setDate(Integer.toString(s.getLocalDate().getMonthValue()) 
+                        + "/" + Integer.toString(s.getLocalDate().getDayOfMonth()) 
+                        + "/" + Integer.toString(s.getLocalDate().getYear()));
+                x.setTitle(s.getTitle());
+                x.setTopic(s.getTopic());
+                x.setLink(s.getLink());
+            }
+        }
+        selectSchedule();
+        return s;
+    }
+    
+    public void removeScheduleItem(ScheduleItemPrototype s){
+        scheduleItems.remove(s);
+        selectSchedule();
+    }
+    
     public void selectSchedule() {
         schedule.clear();
         Iterator<ScheduleItemPrototype> schIt = this.scheduleIterator();

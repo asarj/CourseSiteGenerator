@@ -20,7 +20,7 @@ import csg.data.TAType;
 import csg.data.TeachingAssistantPrototype;
 import static csg.workspace.style.OHStyle.*;
 import static csg.CSGPropertyType.*;
-import csg.transactions.EditTA_Transaction;
+import csg.transactions.OH_EditTA_Transaction;
 import csg.workspace.foolproof.CSGFoolproofDesign;
 
 /**
@@ -171,7 +171,7 @@ public class TADialog extends Stage {
 
         // WE NOW KNOW SOMETHING HAS CHANGED
         // WE NEED A TRANSACTION FOR THE EDIT
-        EditTA_Transaction transaction = new EditTA_Transaction(app, taToEdit, name, email, type.toString());
+        OH_EditTA_Transaction transaction = new OH_EditTA_Transaction(app, taToEdit, name, email, type.toString());
         app.processTransaction(transaction);
         
         // MAKE SURE THE TABLES ARE USING THE CORRECT TYPES

@@ -34,40 +34,40 @@ public class ScheduleItemPrototype<E extends Comparable<E>> implements Comparabl
         return type.get();
     }
 
-    public void setType(StringProperty type) {
-        this.type = type;
+    public void setType(String type) {
+        this.type.set(type);
     }
 
     public String getDate() {
         return date.get();
     }
 
-    public void setDate(StringProperty date) {
-        this.date = date;
+    public void setDate(String date) {
+        this.date.set(date);
     }
 
     public String getTitle() {
         return title.get();
     }
 
-    public void setTitle(StringProperty title) {
-        this.title = title;
+    public void setTitle(String title) {
+        this.title.set(title);
     }
 
     public String getTopic() {
         return topic.get();
     }
 
-    public void setTopic(StringProperty topic) {
-        this.topic = topic;
+    public void setTopic(String topic) {
+        this.topic.set(topic);
     }
 
     public String getLink() {
         return link.get();
     }
 
-    public void setLink(StringProperty link) {
-        this.link = link;
+    public void setLink(String link) {
+        this.link.set(link);
     }
     
     public LocalDate getLocalDate() {
@@ -83,6 +83,16 @@ public class ScheduleItemPrototype<E extends Comparable<E>> implements Comparabl
         return getDate().compareTo(((ScheduleItemPrototype)o).getDate());
     }
     
+    public boolean equals(ScheduleItemPrototype s){
+        return this.getType().equals(s.getType()) && 
+                this.getLocalDate().equals(s.getLocalDate()) && 
+                this.getTitle().equals(s.getTitle()) && 
+                this.getTopic().equals(s.getTopic()) &&
+                this.getLink().equals(s.getLink());
+    }
     
+    public ScheduleItemPrototype clone(){
+        return new ScheduleItemPrototype(this.getType(), this.getLocalDate(), this.getTopic(), this.getTitle(), this.getLink());
+    }
     
 }

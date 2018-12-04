@@ -19,6 +19,12 @@ import static csg.CSGPropertyType.OH_OFFICE_HOURS_TABLE_VIEW;
 import static csg.CSGPropertyType.OH_REMOVE_TA_BUTTON;
 import static csg.CSGPropertyType.OH_STARTTIME_COMBO_BOX;
 import static csg.CSGPropertyType.OH_TAS_TABLE_VIEW;
+import static csg.CSGPropertyType.SCH_ADD;
+import static csg.CSGPropertyType.SCH_ADD_UPDATE_BUTTON;
+import static csg.CSGPropertyType.SCH_CLEAR_BUTTON;
+import static csg.CSGPropertyType.SCH_ITEMS_TABLE_VIEW;
+import static csg.CSGPropertyType.SCH_REMOVE_ITEM_BUTTON;
+import static csg.CSGPropertyType.SCH_UPDATE;
 import static csg.CSGPropertyType.SITE_CSS_COMBO_BOX;
 import static csg.CSGPropertyType.SITE_EMAIL_TEXT_FIELD;
 import static csg.CSGPropertyType.SITE_HP_TEXT_FIELD;
@@ -35,6 +41,8 @@ import csg.data.LecturePrototype;
 import csg.data.MeetingTimesData;
 import csg.data.OHData;
 import csg.data.RecitationPrototype;
+import csg.data.ScheduleData;
+import csg.data.ScheduleItemPrototype;
 import csg.data.SiteData;
 import csg.data.TeachingAssistantPrototype;
 import csg.data.TimeSlot;
@@ -49,6 +57,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Background;
+import properties_manager.PropertiesManager;
 
 public class CSGFoolproofDesign implements FoolproofDesign {
 
@@ -77,6 +86,9 @@ public class CSGFoolproofDesign implements FoolproofDesign {
         updateRemoveLectureFoolproofDesign();
         updateRemoveRecitationFoolproofDesign();
         updateRemoveLabFoolproofDesign();
+        updateClearSelectionFoolproofDesign();
+        updateAddEditButtonTextFoolproofDesign();
+        updateRemoveScheduleItemFoolproofDesign();
     }
 
     private void updateAddTAFoolproofDesign() {
@@ -377,6 +389,54 @@ public class CSGFoolproofDesign implements FoolproofDesign {
         }
         else{
             remove.setDisable(false);
+        }
+    }
+    
+    private void updateRemoveScheduleItemFoolproofDesign(){
+        AppGUIModule gui = app.getGUIModule();
+        CSGData d = (CSGData)app.getDataComponent();
+        ScheduleData data = d.getScheduleData();
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        TableView<ScheduleItemPrototype> schTableView = (TableView) gui.getGUINode(SCH_ITEMS_TABLE_VIEW);
+        Button removeButton = (Button)gui.getGUINode(SCH_REMOVE_ITEM_BUTTON);
+        boolean isItemSelected = schTableView.getSelectionModel().getSelectedItem() != null;
+        if(!isItemSelected){
+            removeButton.setDisable(true);
+        }
+        else{
+            removeButton.setDisable(false);
+        }
+    }
+    
+    private void updateAddEditButtonTextFoolproofDesign(){
+        AppGUIModule gui = app.getGUIModule();
+        CSGData d = (CSGData)app.getDataComponent();
+        ScheduleData data = d.getScheduleData();
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        TableView<ScheduleItemPrototype> schTableView = (TableView) gui.getGUINode(SCH_ITEMS_TABLE_VIEW);
+        Button addEditButton = (Button)gui.getGUINode(SCH_ADD_UPDATE_BUTTON);
+        boolean isItemSelected = schTableView.getSelectionModel().getSelectedItem() != null;
+        if(!isItemSelected){
+            addEditButton.setText(props.getProperty(SCH_ADD));
+        }
+        else{
+            addEditButton.setText(props.getProperty(SCH_UPDATE));
+        }
+    }
+    
+    private void updateClearSelectionFoolproofDesign(){
+        AppGUIModule gui = app.getGUIModule();
+        CSGData d = (CSGData)app.getDataComponent();
+        ScheduleData data = d.getScheduleData();
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        TableView<ScheduleItemPrototype> schTableView = (TableView) gui.getGUINode(SCH_ITEMS_TABLE_VIEW);
+        Button clearButton = (Button)gui.getGUINode(SCH_CLEAR_BUTTON);
+        boolean isItemSelected = schTableView.getSelectionModel().getSelectedItem() != null;
+        if(!isItemSelected){
+            clearButton.setDisable(true);
+        }
+        else{
+            clearButton.setDisable(false);
         }
     }
     
