@@ -302,7 +302,7 @@
         <property name="SCH_TOPIC_TEXT_FIELD_PROMPT_TEXT"    value="Topic"></property>
         <property name="SCH_LINK_TEXT_FIELD_PROMPT_TEXT"    value="Link"></property>
 
-
+        <property name="HREF"      value="http://www.cs.stonybrook.edu"></property>
 
         <property name="WORK_FILE_EXT"          value="*.json"></property>
 	      <property name="WORK_FILE_EXT_DESC"     value="Course Site Data File"></property>

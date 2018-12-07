@@ -25,24 +25,26 @@ public class SITE_EditCourseTitleTF_Transaction implements jTPS_Transaction{
     String old;
     String n;
     
-    public SITE_EditCourseTitleTF_Transaction(CSGApp initApp, CSGData d, SiteData data, TextField c, String old, String n){
+    public SITE_EditCourseTitleTF_Transaction(CSGApp initApp, CSGData d, SiteData data, TextField c){
         app = initApp;
         this.d = d;
         this.data = data;
         this.c = c;
-        this.old = old;
-        this.n = n;
+        this.old = data.getTitle();
+        this.n = c.getText();
     }
     
     @Override
     public void doTransaction() {
         AppGUIModule gui = app.getGUIModule();
+        data.setTitle(n);
         c.setText(n);
     }
 
     @Override
     public void undoTransaction() {
         AppGUIModule gui = app.getGUIModule();
+        data.setTitle(old);
         c.setText(old);
 
     }

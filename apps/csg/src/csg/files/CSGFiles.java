@@ -25,6 +25,7 @@ import static csg.CSGPropertyType.DEFAULT_FAVICON_TEXT;
 import static csg.CSGPropertyType.DEFAULT_LFIMG_TEXT;
 import static csg.CSGPropertyType.DEFAULT_NAVBAR_TEXT;
 import static csg.CSGPropertyType.DEFAULT_RFIMG_TEXT;
+import static csg.CSGPropertyType.HREF;
 import static csg.CSGPropertyType.SITE_CSS_COMBO_BOX;
 import static csg.CSGPropertyType.SITE_EMAIL_TEXT_FIELD;
 import static csg.CSGPropertyType.SITE_EXPORT_LABEL;
@@ -54,6 +55,14 @@ import csg.workspace.CSGWorkspace;
 import static djf.AppPropertyType.APP_FILE_PROTOCOL;
 import static djf.AppPropertyType.APP_PATH_IMAGES;
 import djf.modules.AppGUIModule;
+import djf.ui.dialogs.AppWebDialog;
+import java.io.File;
+import java.io.StringReader;
+import java.math.BigDecimal;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,6 +79,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javax.json.JsonObjectBuilder;
 import properties_manager.PropertiesManager;
+import org.apache.commons.io.FileUtils;
 
 /**
  * This class serves as the file component for the TA
@@ -90,23 +100,26 @@ public class CSGFiles implements AppFileComponent {
     static final String JSON_SITE_NUMBER = "number";
     static final String JSON_SITE_SEMESTER = "semester";
     static final String JSON_SITE_YEAR = "year";
-    static final String JSON_SITE_TITLE = "site_title";
+    static final String JSON_SITE_TITLE = "title";
     static final String JSON_SITE_EXPORT_URL = "export_url";
     static final String JSON_SITE_PAGES = "pages";
-    static final String JSON_SITE_PAGES_LINK = "pages_link";
+    static final String JSON_SITE_PAGES_LINK = "link";
     static final String JSON_SITE_PAGES_NAME = "name";
     static final String JSON_SITE_LOGOS = "logos";
     static final String JSON_SITE_FAVICON = "favicon";
     static final String JSON_SITE_NAVBAR = "navbar";
     static final String JSON_SITE_BOTTOM_LEFT = "bottom_left";
     static final String JSON_SITE_BOTTOM_RIGHT = "bottom_right";
+    static final String JSON_SITE_SRC = "src";
+    static final String JSON_SITE_HREF = "href";
     static final String JSON_SITE_SELECTED_CSS = "css";
     static final String JSON_SITE_INSTRUCTOR = "instructor";
-    static final String JSON_SITE_INSTRUCTOR_NAME = "instructor_name";
-    static final String JSON_SITE_INSTRUCTOR_EMAIL = "instructor_email";
-    static final String JSON_SITE_INSTRUCTOR_ROOM = "instructor_room";
-    static final String JSON_SITE_INSTRUCTOR_HP = "instructor_hp";
-    static final String JSON_SITE_INSTRUCTOR_HOURS = "instructor_hours";
+    static final String JSON_SITE_INSTRUCTOR_NAME = "name";
+    static final String JSON_SITE_INSTRUCTOR_EMAIL = "email";
+    static final String JSON_SITE_INSTRUCTOR_ROOM = "room";
+    static final String JSON_SITE_INSTRUCTOR_HP = "link";
+    static final String JSON_SITE_INSTRUCTOR_PHOTO = "photo";
+    static final String JSON_SITE_INSTRUCTOR_HOURS = "hours";
     
     // SYLLABUS DATA FIELDS
     static final String JSON_SYL_DESCRIPTION = "description";
@@ -121,22 +134,22 @@ public class CSGFiles implements AppFileComponent {
     
     // MEETING TIMES DATA FIELDS
     static final String JSON_MT_LECTURES = "lectures";
-    static final String JSON_MT_LECTURES_SECTION = "lec_section";
-    static final String JSON_MT_LECTURES_DAYS = "lec_days";
-    static final String JSON_MT_LECTURES_TIME = "lec_time";
-    static final String JSON_MT_LECTURES_ROOM = "lec_room";
+    static final String JSON_MT_LECTURES_SECTION = "section";
+    static final String JSON_MT_LECTURES_DAYS = "days";
+    static final String JSON_MT_LECTURES_TIME = "time";
+    static final String JSON_MT_LECTURES_ROOM = "room";
     static final String JSON_MT_RECITATIONS = "recitations";
-    static final String JSON_MT_RECITATIONS_SECTION = "r_section";
-    static final String JSON_MT_RECITATIONS_DAY_TIME = "r_day_time";
-    static final String JSON_MT_RECITATIONS_LOCATION = "r_location";
-    static final String JSON_MT_RECITATIONS_TA1 = "r_ta_1";
-    static final String JSON_MT_RECITATIONS_TA2 = "r_ta_2";
+    static final String JSON_MT_RECITATIONS_SECTION = "section";
+    static final String JSON_MT_RECITATIONS_DAY_TIME = "day_time";
+    static final String JSON_MT_RECITATIONS_LOCATION = "location";
+    static final String JSON_MT_RECITATIONS_TA1 = "ta_1";
+    static final String JSON_MT_RECITATIONS_TA2 = "ta_2";
     static final String JSON_MT_LABS = "labs";
-    static final String JSON_MT_LABS_SECTION = "lab_section";
-    static final String JSON_MT_LABS_DAY_TIME = "lab_day_time";
-    static final String JSON_MT_LABS_LOCATION = "lab_location";
-    static final String JSON_MT_LABS_TA1 = "lab_ta_1";
-    static final String JSON_MT_LABS_TA2 = "lab_ta_2";
+    static final String JSON_MT_LABS_SECTION = "section";
+    static final String JSON_MT_LABS_DAY_TIME = "day_time";
+    static final String JSON_MT_LABS_LOCATION = "location";
+    static final String JSON_MT_LABS_TA1 = "ta_1";
+    static final String JSON_MT_LABS_TA2 = "ta_2";
     
     // OH DATA FIELDS
     static final String JSON_OH_GRAD_TAS = "grad_tas";
@@ -164,19 +177,19 @@ public class CSGFiles implements AppFileComponent {
     static final String JSON_SCH_ENDING_FRIDAY_MONTH = "endingFridayMonth";
     static final String JSON_SCH_ENDING_FRIDAY_DAY = "endingFridayDay";
     static final String JSON_SCH_ENDING_FRIDAY_YEAR = "endingFridayYear";
-    static final String JSON_SCH_HOLIDAYS = "sch_holidays";
-    static final String JSON_SCH_LECTURES = "sch_lectures";
-    static final String JSON_SCH_REFERENCES = "sch_references";
-    static final String JSON_SCH_RECITATIONS = "sch_recitations";
-    static final String JSON_SCH_HWS = "sch_hws";
-    static final String JSON_SCH_LABS = "sch_labs";
-    static final String JSON_SCH_EVENT_DATE = "sch_date";
-    static final String JSON_SCH_EVENT_MONTH = "sch_month";
-    static final String JSON_SCH_EVENT_DAY = "sch_event_day";
-    static final String JSON_SCH_EVENT_YEAR = "sch_year";
-    static final String JSON_SCH_EVENT_TITLE = "sch_title";
-    static final String JSON_SCH_EVENT_TOPIC = "sch_topic";
-    static final String JSON_SCH_EVENT_LINK = "sch_link";
+    static final String JSON_SCH_HOLIDAYS = "holidays";
+    static final String JSON_SCH_LECTURES = "lectures";
+    static final String JSON_SCH_REFERENCES = "references";
+    static final String JSON_SCH_RECITATIONS = "recitations";
+    static final String JSON_SCH_HWS = "hws";
+    static final String JSON_SCH_LABS = "labs";
+    static final String JSON_SCH_EVENT_DATE = "date";
+    static final String JSON_SCH_EVENT_MONTH = "month";
+    static final String JSON_SCH_EVENT_DAY = "day";
+    static final String JSON_SCH_EVENT_YEAR = "year";
+    static final String JSON_SCH_EVENT_TITLE = "title";
+    static final String JSON_SCH_EVENT_TOPIC = "topic";
+    static final String JSON_SCH_EVENT_LINK = "link";
 
     public CSGFiles(CSGApp initApp) {
         app = initApp;
@@ -327,8 +340,8 @@ public class CSGFiles implements AppFileComponent {
         }
         else{
             PropertiesManager props = PropertiesManager.getPropertiesManager();
-            siteDataManager.setFavUrl(props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_FAVICON_TEXT));
-            workspace.getFviImgView().setImage(new Image(props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_FAVICON_TEXT)));
+            siteDataManager.setFavUrl(props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_FAVICON_TEXT));
+            workspace.getFviImgView().setImage(new Image(props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_FAVICON_TEXT)));
         }
         if(!jsonLogosArray.getJsonObject(1).getString(JSON_SITE_NAVBAR).equals("")){
             siteDataManager.setNavUrl(jsonLogosArray.getJsonObject(1).getString(JSON_SITE_NAVBAR));
@@ -341,8 +354,8 @@ public class CSGFiles implements AppFileComponent {
         }
         else{
             PropertiesManager props = PropertiesManager.getPropertiesManager();
-            siteDataManager.setNavUrl(props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_NAVBAR_TEXT));
-            workspace.getNavImgView().setImage(new Image(props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_NAVBAR_TEXT)));
+            siteDataManager.setNavUrl(props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_NAVBAR_TEXT));
+            workspace.getNavImgView().setImage(new Image(props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_NAVBAR_TEXT)));
         }
         if(!jsonLogosArray.getJsonObject(2).getString(JSON_SITE_BOTTOM_LEFT).equals("")){
             siteDataManager.setLeftUrl(jsonLogosArray.getJsonObject(2).getString(JSON_SITE_BOTTOM_LEFT));
@@ -355,8 +368,8 @@ public class CSGFiles implements AppFileComponent {
         }
         else{
             PropertiesManager props = PropertiesManager.getPropertiesManager();
-            siteDataManager.setLeftUrl(props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_LFIMG_TEXT));
-            workspace.getLeftImgView().setImage(new Image(props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_LFIMG_TEXT)));
+            siteDataManager.setLeftUrl(props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_LFIMG_TEXT));
+            workspace.getLeftImgView().setImage(new Image(props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_LFIMG_TEXT)));
         }
         if(!jsonLogosArray.getJsonObject(3).getString(JSON_SITE_BOTTOM_RIGHT).equals("")){
             siteDataManager.setRightUrl(jsonLogosArray.getJsonObject(3).getString(JSON_SITE_BOTTOM_RIGHT));
@@ -369,8 +382,8 @@ public class CSGFiles implements AppFileComponent {
         }
         else{
             PropertiesManager props = PropertiesManager.getPropertiesManager();
-            siteDataManager.setRightUrl(props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_RFIMG_TEXT));
-            workspace.getRightImgView().setImage(new Image(props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_RFIMG_TEXT)));
+            siteDataManager.setRightUrl(props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_RFIMG_TEXT));
+            workspace.getRightImgView().setImage(new Image(props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_RFIMG_TEXT)));
         }
         
         String courseCSS = json.getString(JSON_SITE_SELECTED_CSS);
@@ -711,31 +724,60 @@ public class CSGFiles implements AppFileComponent {
 
         /*****************SAVES THE SITE DATA*******************/
         JsonArrayBuilder pagesArrayBuilder = Json.createArrayBuilder();
-        for(String s: siteDataManager.getSelectedPageOptions()){
-            if(s.equals("home")){
+        for(int i = 0; i < siteDataManager.getSelectedPageOptions().size(); i++){
+            if(i == 0){
+                if(siteDataManager.getSelectedPageOptions().get(i).equals("home")){
                 JsonObject cbOption = Json.createObjectBuilder()
-                        .add(JSON_SITE_PAGES_NAME, s)
-                        .add(JSON_SITE_PAGES_LINK, s + ".html").build();
-                pagesArrayBuilder.add(cbOption);
+                        .add(JSON_SITE_PAGES_NAME, siteDataManager.getSelectedPageOptions().get(i))
+                        .add(JSON_SITE_PAGES_LINK, "index.html").build();
+                    pagesArrayBuilder.add(cbOption);
+                }
+                else if(siteDataManager.getSelectedPageOptions().get(i).equals("syllabus")){
+                    JsonObject cbOption = Json.createObjectBuilder()
+                            .add(JSON_SITE_PAGES_NAME, siteDataManager.getSelectedPageOptions().get(i))
+                            .add(JSON_SITE_PAGES_LINK, "index.html").build();
+                    pagesArrayBuilder.add(cbOption);
+                }
+                else if(siteDataManager.getSelectedPageOptions().get(i).equals("schedule")){
+                    JsonObject cbOption = Json.createObjectBuilder()
+                            .add(JSON_SITE_PAGES_NAME, siteDataManager.getSelectedPageOptions().get(i))
+                            .add(JSON_SITE_PAGES_LINK, "index.html").build();
+                    pagesArrayBuilder.add(cbOption);
+                }
+                else if(siteDataManager.getSelectedPageOptions().get(i).equals("hw")){
+                    JsonObject cbOption = Json.createObjectBuilder()
+                            .add(JSON_SITE_PAGES_NAME, siteDataManager.getSelectedPageOptions().get(i))
+                            .add(JSON_SITE_PAGES_LINK, "index.html").build();
+                    pagesArrayBuilder.add(cbOption);
+                }
             }
-            else if(s.equals("syllabus")){
+            else{
+                if(siteDataManager.getSelectedPageOptions().get(i).equals("home")){
                 JsonObject cbOption = Json.createObjectBuilder()
-                        .add(JSON_SITE_PAGES_NAME, s)
-                        .add(JSON_SITE_PAGES_LINK, s + ".html").build();
-                pagesArrayBuilder.add(cbOption);
+                        .add(JSON_SITE_PAGES_NAME, siteDataManager.getSelectedPageOptions().get(i))
+                        .add(JSON_SITE_PAGES_LINK, siteDataManager.getSelectedPageOptions().get(i) + ".html").build();
+                    pagesArrayBuilder.add(cbOption);
+                }
+                else if(siteDataManager.getSelectedPageOptions().get(i).equals("syllabus")){
+                    JsonObject cbOption = Json.createObjectBuilder()
+                            .add(JSON_SITE_PAGES_NAME, siteDataManager.getSelectedPageOptions().get(i))
+                            .add(JSON_SITE_PAGES_LINK, siteDataManager.getSelectedPageOptions().get(i) + ".html").build();
+                    pagesArrayBuilder.add(cbOption);
+                }
+                else if(siteDataManager.getSelectedPageOptions().get(i).equals("schedule")){
+                    JsonObject cbOption = Json.createObjectBuilder()
+                            .add(JSON_SITE_PAGES_NAME, siteDataManager.getSelectedPageOptions().get(i))
+                            .add(JSON_SITE_PAGES_LINK, siteDataManager.getSelectedPageOptions().get(i) + ".html").build();
+                    pagesArrayBuilder.add(cbOption);
+                }
+                else if(siteDataManager.getSelectedPageOptions().get(i).equals("hw")){
+                    JsonObject cbOption = Json.createObjectBuilder()
+                            .add(JSON_SITE_PAGES_NAME, siteDataManager.getSelectedPageOptions().get(i))
+                            .add(JSON_SITE_PAGES_LINK, siteDataManager.getSelectedPageOptions().get(i) + ".html").build();
+                    pagesArrayBuilder.add(cbOption);
+                }
             }
-            else if(s.equals("schedule")){
-                JsonObject cbOption = Json.createObjectBuilder()
-                        .add(JSON_SITE_PAGES_NAME, s)
-                        .add(JSON_SITE_PAGES_LINK, s + ".html").build();
-                pagesArrayBuilder.add(cbOption);
-            }
-            else if(s.equals("hw")){
-                JsonObject cbOption = Json.createObjectBuilder()
-                        .add(JSON_SITE_PAGES_NAME, s)
-                        .add(JSON_SITE_PAGES_LINK, s + ".html").build();
-                pagesArrayBuilder.add(cbOption);
-            }
+            
         }
         JsonArray pagesArray = pagesArrayBuilder.build();
         
@@ -745,8 +787,8 @@ public class CSGFiles implements AppFileComponent {
             logos.add(favUrl);
         }
         else{
-            siteDataManager.setFavUrl(props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_FAVICON_TEXT));
-            JsonObject favUrl = Json.createObjectBuilder().add(JSON_SITE_FAVICON, props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_FAVICON_TEXT)).build();
+            siteDataManager.setFavUrl(props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_FAVICON_TEXT));
+            JsonObject favUrl = Json.createObjectBuilder().add(JSON_SITE_FAVICON, props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_FAVICON_TEXT)).build();
             logos.add(favUrl);
         }
         if(!siteDataManager.getNavUrl().trim().equals("")){
@@ -754,8 +796,8 @@ public class CSGFiles implements AppFileComponent {
             logos.add(navUrl);
         }
         else{
-            siteDataManager.setNavUrl(props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_NAVBAR_TEXT));
-            JsonObject navUrl = Json.createObjectBuilder().add(JSON_SITE_NAVBAR, props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_NAVBAR_TEXT)).build();
+            siteDataManager.setNavUrl(props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_NAVBAR_TEXT));
+            JsonObject navUrl = Json.createObjectBuilder().add(JSON_SITE_NAVBAR, props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_NAVBAR_TEXT)).build();
             logos.add(navUrl);
         }
         if(!siteDataManager.getLeftUrl().trim().equals("")){
@@ -763,8 +805,8 @@ public class CSGFiles implements AppFileComponent {
             logos.add(leftUrl);
         }
         else{
-            siteDataManager.setLeftUrl(props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_LFIMG_TEXT));
-            JsonObject leftUrl = Json.createObjectBuilder().add(JSON_SITE_BOTTOM_LEFT, props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_LFIMG_TEXT)).build();
+            siteDataManager.setLeftUrl(props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_LFIMG_TEXT));
+            JsonObject leftUrl = Json.createObjectBuilder().add(JSON_SITE_BOTTOM_LEFT, props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_LFIMG_TEXT)).build();
             logos.add(leftUrl);
         }
         if(!siteDataManager.getRightUrl().trim().equals("")){
@@ -772,8 +814,8 @@ public class CSGFiles implements AppFileComponent {
             logos.add(rightUrl);
         }
         else{
-            siteDataManager.setRightUrl(props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_RFIMG_TEXT));
-            JsonObject rightUrl = Json.createObjectBuilder().add(JSON_SITE_BOTTOM_RIGHT, props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_RFIMG_TEXT)).build();
+            siteDataManager.setRightUrl(props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_RFIMG_TEXT));
+            JsonObject rightUrl = Json.createObjectBuilder().add(JSON_SITE_BOTTOM_RIGHT, props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_RFIMG_TEXT)).build();
             logos.add(rightUrl);
         }
         JsonArray logosArray = logos.build();
@@ -1353,14 +1395,798 @@ public class CSGFiles implements AppFileComponent {
     
     // IMPORTING/EXPORTING DATA IS USED WHEN WE READ/WRITE DATA IN AN
     // ADDITIONAL FORMAT USEFUL FOR ANOTHER PURPOSE, LIKE ANOTHER APPLICATION
-
+    
+    /**
+     * THIS MUST BE RENAMED TO EXPORT
+     * @param data
+     * @param filePath
+     * @throws IOException 
+     */
     @Override
-    public void importData(AppDataComponent data, String filePath) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void exportData(AppDataComponent data, String filePath) throws IOException {
+        CSGData d = (CSGData)data;
+        CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
+        AppGUIModule gui = app.getGUIModule();
+        SiteData siteDataManager = d.getSiteData();
+        SyllabusData syllabusDataManager = d.getSyllabusData();
+        MeetingTimesData mtDataManager = d.getMeetingTimesData();
+        OHData ohDataManager = d.getOfficeHoursData();
+        ScheduleData schDataManager = d.getScheduleData();
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        
+        String pageDataPath = "./export/js/PageData.json";
+        String ohDataPath = "./export/js/OfficeHoursData.json";
+        String mtDataPath = "./export/js/MeetingTimesData.json";
+        String schDataPath = "./export/js/ScheduleData.json";
+        String sylDataPath = "./export/js/SyllabusData.json";
+        String cssDataPath = "./export/css/";
+        String imagesDataPath = ".export/images/";
+//        String bannerImageDirectory = filePath + "images/SBUDarkRedShieldLogo.png";
+//        String leftFooterDirectory = filePath + "images/CSLogo.png";
+//        String rightFooterDirectory = filePath + "images/SBUWhiteShieldLogo.jpg";
+        
+        /***********************************FORMATS SITE DATA***********************************/
+        String siteSubject = "";
+        if(siteDataManager.getSelectedName().trim().equals("")){
+            siteSubject = (String)((ComboBox)gui.getGUINode(SITE_SUBJECT_COMBO_BOX)).getSelectionModel().getSelectedItem();
+            siteDataManager.setSelectedName(siteSubject);
+//            ((Label)gui.getGUINode(SITE_EXPORT_LABEL)).setText(siteDataManager.prepareExportUrlForSave());
+            siteDataManager.prepareExportUrlForSave();
+        }
+        else{
+            siteSubject = siteDataManager.getSelectedName();
+//            ((Label)gui.getGUINode(SITE_EXPORT_LABEL)).setText(siteDataManager.prepareExportUrlForSave());
+            siteDataManager.prepareExportUrlForSave();
+        }
+        String siteNumber = "";
+        if(siteDataManager.getSelectedNum().trim().equals("")){
+            siteNumber = (String)((ComboBox)gui.getGUINode(SITE_SUBJECTNUM_COMBO_BOX)).getSelectionModel().getSelectedItem();
+            siteDataManager.setSelectedNum(siteNumber);
+//            ((Label)gui.getGUINode(SITE_EXPORT_LABEL)).setText(siteDataManager.prepareExportUrlForSave());
+            siteDataManager.prepareExportUrlForSave();
+        }
+        else{
+            siteNumber = siteDataManager.getSelectedNum();
+//            ((Label)gui.getGUINode(SITE_EXPORT_LABEL)).setText(siteDataManager.prepareExportUrlForSave());
+            siteDataManager.prepareExportUrlForSave();
+        }
+        String siteSem = "";
+        if(siteDataManager.getSelectedSem().trim().equals("")){
+            siteSem = (String)((ComboBox)gui.getGUINode(SITE_SEMESTERS_COMBO_BOX)).getSelectionModel().getSelectedItem();
+            siteDataManager.setSelectedSem(siteSem);
+//            ((Label)gui.getGUINode(SITE_EXPORT_LABEL)).setText(siteDataManager.prepareExportUrlForSave());
+            siteDataManager.prepareExportUrlForSave();
+        }
+        else{
+            siteSem = siteDataManager.getSelectedSem();
+//            ((Label)gui.getGUINode(SITE_EXPORT_LABEL)).setText(siteDataManager.prepareExportUrlForSave());
+            siteDataManager.prepareExportUrlForSave();
+        }
+        String siteYr = "";
+        if(siteDataManager.getSelectedYear().trim().equals("")){
+            siteYr = (String)((ComboBox)gui.getGUINode(SITE_YEARS_COMBO_BOX)).getSelectionModel().getSelectedItem();
+            siteDataManager.setSelectedYear(siteYr);
+//            ((Label)gui.getGUINode(SITE_EXPORT_LABEL)).setText(siteDataManager.prepareExportUrlForSave());
+            siteDataManager.prepareExportUrlForSave();
+        }
+        else{
+            siteYr = siteDataManager.getSelectedYear();
+//            ((Label)gui.getGUINode(SITE_EXPORT_LABEL)).setText(siteDataManager.prepareExportUrlForSave());
+        }
+        siteDataManager.prepareExportUrlForSave();
+        String siteTitle = "";
+        if(siteDataManager.getTitle().trim().equals("")){
+            siteTitle = (String)((TextField)gui.getGUINode(SITE_TITLE_TEXT_FIELD)).getText();
+            siteDataManager.setTitle(siteTitle);
+        }
+        else{
+            siteTitle = siteDataManager.getTitle();
+        }
+        String siteCSS = "";
+        if(siteDataManager.getCSS().trim().equals("")){
+            siteCSS = (String)((ComboBox)gui.getGUINode(SITE_CSS_COMBO_BOX)).getSelectionModel().getSelectedItem();
+            siteDataManager.setCSS(siteCSS);
+        }
+        else{
+            siteCSS = siteDataManager.getCSS();
+        }
+        JsonArrayBuilder pagesArrayBuilder = Json.createArrayBuilder();
+        for(int i = 0; i < siteDataManager.getSelectedPageOptions().size(); i++){
+            if(i == 0){
+                if(siteDataManager.getSelectedPageOptions().get(i).equals("home")){
+                JsonObject cbOption = Json.createObjectBuilder()
+                        .add(JSON_SITE_PAGES_NAME, siteDataManager.getSelectedPageOptions().get(i))
+                        .add(JSON_SITE_PAGES_LINK, "index.html").build();
+                    pagesArrayBuilder.add(cbOption);
+                }
+                else if(siteDataManager.getSelectedPageOptions().get(i).equals("syllabus")){
+                    JsonObject cbOption = Json.createObjectBuilder()
+                            .add(JSON_SITE_PAGES_NAME, siteDataManager.getSelectedPageOptions().get(i))
+                            .add(JSON_SITE_PAGES_LINK, "index.html").build();
+                    pagesArrayBuilder.add(cbOption);
+                }
+                else if(siteDataManager.getSelectedPageOptions().get(i).equals("schedule")){
+                    JsonObject cbOption = Json.createObjectBuilder()
+                            .add(JSON_SITE_PAGES_NAME, siteDataManager.getSelectedPageOptions().get(i))
+                            .add(JSON_SITE_PAGES_LINK, "index.html").build();
+                    pagesArrayBuilder.add(cbOption);
+                }
+                else if(siteDataManager.getSelectedPageOptions().get(i).equals("hw")){
+                    JsonObject cbOption = Json.createObjectBuilder()
+                            .add(JSON_SITE_PAGES_NAME, siteDataManager.getSelectedPageOptions().get(i))
+                            .add(JSON_SITE_PAGES_LINK, "index.html").build();
+                    pagesArrayBuilder.add(cbOption);
+                }
+            }
+            else{
+                if(siteDataManager.getSelectedPageOptions().get(i).equals("home")){
+                JsonObject cbOption = Json.createObjectBuilder()
+                        .add(JSON_SITE_PAGES_NAME, "H" + siteDataManager.getSelectedPageOptions().get(i).substring(1))
+                        .add(JSON_SITE_PAGES_LINK, siteDataManager.getSelectedPageOptions().get(i) + ".html").build();
+                    pagesArrayBuilder.add(cbOption);
+                }
+                else if(siteDataManager.getSelectedPageOptions().get(i).equals("syllabus")){
+                    JsonObject cbOption = Json.createObjectBuilder()
+                            .add(JSON_SITE_PAGES_NAME, "S" + siteDataManager.getSelectedPageOptions().get(i).substring(1))
+                            .add(JSON_SITE_PAGES_LINK, siteDataManager.getSelectedPageOptions().get(i) + ".html").build();
+                    pagesArrayBuilder.add(cbOption);
+                }
+                else if(siteDataManager.getSelectedPageOptions().get(i).equals("schedule")){
+                    JsonObject cbOption = Json.createObjectBuilder()
+                            .add(JSON_SITE_PAGES_NAME, "S" + siteDataManager.getSelectedPageOptions().get(i).substring(1))
+                            .add(JSON_SITE_PAGES_LINK, siteDataManager.getSelectedPageOptions().get(i) + ".html").build();
+                    pagesArrayBuilder.add(cbOption);
+                }
+                else if(siteDataManager.getSelectedPageOptions().get(i).equals("hw")){
+                    JsonObject cbOption = Json.createObjectBuilder()
+                            .add(JSON_SITE_PAGES_NAME, "HWs")
+                            .add(JSON_SITE_PAGES_LINK, siteDataManager.getSelectedPageOptions().get(i) + "s.html").build();
+                    pagesArrayBuilder.add(cbOption);
+                }
+            }
+            
+        }
+        JsonArray pagesArray = pagesArrayBuilder.build();
+        
+        JsonObjectBuilder logos = Json.createObjectBuilder();
+        if(!siteDataManager.getFavUrl().trim().equals("")){
+            JsonObject favUrl = Json.createObjectBuilder()
+                    .add(JSON_SITE_HREF, siteDataManager.getFavUrl()).build();
+            logos.add(JSON_SITE_FAVICON, favUrl);
+//            siteDataManager.prepareExportUrlForSave();
+        }
+        else{
+            siteDataManager.setFavUrl(props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_FAVICON_TEXT));
+            JsonObject favUrl = Json.createObjectBuilder()
+                    .add(JSON_SITE_HREF, props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_FAVICON_TEXT)).build();
+            logos.add(JSON_SITE_FAVICON, favUrl);
+//            siteDataManager.prepareExportUrlForSave();
+        }
+        if(!siteDataManager.getNavUrl().trim().equals("")){
+            JsonObject navUrl = Json.createObjectBuilder()
+                    .add(JSON_SITE_HREF, props.getProperty(HREF))
+                    .add(JSON_SITE_SRC, siteDataManager.getNavUrl()).build();
+            logos.add(JSON_SITE_NAVBAR, navUrl);
+//            siteDataManager.prepareExportUrlForSave();
+        }
+        else{
+            siteDataManager.setNavUrl(props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_NAVBAR_TEXT));
+            JsonObject navUrl = Json.createObjectBuilder()
+                    .add(JSON_SITE_HREF, props.getProperty(HREF))
+                    .add(JSON_SITE_SRC, props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_NAVBAR_TEXT)).build();
+            logos.add(JSON_SITE_NAVBAR, navUrl);
+//            siteDataManager.prepareExportUrlForSave();
+        }
+        if(!siteDataManager.getLeftUrl().trim().equals("")){
+            JsonObject leftUrl = Json.createObjectBuilder()
+                    .add(JSON_SITE_HREF, props.getProperty(HREF))
+                    .add(JSON_SITE_SRC, siteDataManager.getLeftUrl()).build();
+            logos.add(JSON_SITE_BOTTOM_LEFT, leftUrl);
+//            siteDataManager.prepareExportUrlForSave();
+        }
+        else{
+            siteDataManager.setLeftUrl(props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_LFIMG_TEXT));
+            JsonObject leftUrl = Json.createObjectBuilder()
+                    .add(JSON_SITE_HREF, props.getProperty(HREF))
+                    .add(JSON_SITE_SRC, props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_LFIMG_TEXT)).build();
+            logos.add(JSON_SITE_BOTTOM_LEFT, leftUrl);
+//            siteDataManager.prepareExportUrlForSave();
+        }
+        if(!siteDataManager.getRightUrl().trim().equals("")){
+            JsonObject rightUrl = Json.createObjectBuilder()
+                    .add(JSON_SITE_HREF, props.getProperty(HREF))
+                    .add(JSON_SITE_SRC, siteDataManager.getRightUrl()).build();
+            logos.add(JSON_SITE_BOTTOM_RIGHT, rightUrl);
+//            siteDataManager.prepareExportUrlForSave();
+        }
+        else{
+            siteDataManager.setRightUrl(props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_RFIMG_TEXT));
+            JsonObject rightUrl = Json.createObjectBuilder()
+                    .add(JSON_SITE_HREF, props.getProperty(HREF))
+                    .add(JSON_SITE_SRC, props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_RFIMG_TEXT)).build();
+            logos.add(JSON_SITE_BOTTOM_RIGHT, rightUrl);
+//            siteDataManager.prepareExportUrlForSave();
+        }
+        JsonObject logosArray = logos.build();
+        
+        JsonObjectBuilder inst = Json.createObjectBuilder();
+//        JsonObject instName = Json.createObjectBuilder().add(JSON_SITE_INSTRUCTOR_NAME, siteDataManager.getInstructorName()).build();
+        inst.add(JSON_SITE_INSTRUCTOR_NAME, siteDataManager.getInstructorName());
+//        JsonObject instHP = Json.createObjectBuilder().add(JSON_SITE_INSTRUCTOR_HP, siteDataManager.getInstructorHP()).build();
+        inst.add(JSON_SITE_INSTRUCTOR_HP, siteDataManager.getInstructorHP());
+//        JsonObject instEmail = Json.createObjectBuilder().add(JSON_SITE_INSTRUCTOR_EMAIL, siteDataManager.getInstructorEmail()).build();
+        inst.add(JSON_SITE_INSTRUCTOR_EMAIL, siteDataManager.getInstructorEmail());
+//        JsonObject instRoom = Json.createObjectBuilder().add(JSON_SITE_INSTRUCTOR_ROOM, siteDataManager.getInstructorRoom()).build();
+        inst.add(JSON_SITE_INSTRUCTOR_ROOM, siteDataManager.getInstructorRoom());
+//        JsonObject instPhoto = Json.createObjectBuilder().add(JSON_SITE_INSTRUCTOR_PHOTO, "").build();
+        inst.add(JSON_SITE_INSTRUCTOR_PHOTO, "insert_photo_here");
+        if(siteDataManager.getInstructorHoursJSON().trim().equals("")){
+            JsonArray ohArray;
+            try (JsonReader jsonReader = Json.createReader(new StringReader(((TextArea)workspace.getInstructorOHJsonArea()).getText()))) {
+                ohArray = jsonReader.readArray();
+            }
+//            String hoursJson = ((TextArea)workspace.getInstructorOHJsonArea()).getText();
+//            JsonArrayBuilder instHours = Json.createArrayBuilder().add(hoursJson);
+            inst.add(JSON_SITE_INSTRUCTOR_HOURS, ohArray);
+        }
+        else{
+            JsonArray ohArray;
+            try (JsonReader jsonReader = Json.createReader(new StringReader(siteDataManager.getInstructorHoursJSON()))) {
+                ohArray = jsonReader.readArray();
+            }
+            inst.add(JSON_SITE_INSTRUCTOR_HOURS, ohArray);    
+        }
+        JsonObject instructorArray = inst.build();
+        /*****************************************************************************************************/
+        
+        
+        /***********************************FORMATS SYLLABUS DATA***********************************/
+        String sylDescription = "";
+        if(syllabusDataManager.getDescriptionJSON().trim().equals("")){
+            sylDescription = workspace.getDescTA().getText();
+            syllabusDataManager.setDescriptionJSON(sylDescription);
+        }
+        else{
+            sylDescription = syllabusDataManager.getDescriptionJSON();
+        }
+        String sylPR = "";
+        if(syllabusDataManager.getPrereqJSON().trim().equals("")){
+            sylPR = workspace.getPrereqTA().getText();
+            syllabusDataManager.setPrereqJSON(sylPR);
+        }
+        else{
+            sylPR = syllabusDataManager.getPrereqJSON();
+        }
+        String sylGN = "";
+        if(syllabusDataManager.getGnJSON().trim().equals("")){
+            sylGN = workspace.getGradingNoteTA().getText();
+            syllabusDataManager.setGnJSON(sylGN);
+        }
+        else{
+            sylGN = syllabusDataManager.getGnJSON();
+        }
+        String sylAD = "";
+        if(syllabusDataManager.getAdJSON().trim().equals("")){
+            sylAD = workspace.getAdTA().getText();
+            syllabusDataManager.setAdJSON(sylAD);
+        }
+        else{
+            sylAD = syllabusDataManager.getAdJSON();
+        }
+        String sylSA = "";
+        if(syllabusDataManager.getSaJSON().trim().equals("")){
+            sylSA = workspace.getSaTA().getText();
+            syllabusDataManager.setSaJSON(sylSA);
+        }
+        else{
+            sylSA = syllabusDataManager.getSaJSON();
+        }
+//        JsonObjectBuilder topicsArrayBuilder = Json.createObjectBuilder();
+        JsonArray topicArray;
+        if(syllabusDataManager.getTopicsJSON().trim().equals("")){
+//            topicsArrayBuilder.add(((String)workspace.getTopicTA().getText()));
+            try (JsonReader jsonReader = Json.createReader(new StringReader(((String)workspace.getTopicTA().getText())))) {
+                topicArray = jsonReader.readArray();
+            }
+            syllabusDataManager.setTopicsJSON(((String)workspace.getTopicTA().getText()));
+        }
+        else{
+
+            try (JsonReader jsonReader = Json.createReader(new StringReader(syllabusDataManager.getTopicsJSON()))) {
+                topicArray = jsonReader.readArray();
+            }
+//            topicsArrayBuilder.add(JSON_SYL_TOPICS, topicArray);
+        }
+//        JsonObject topicsArray = topicArray.build();
+        
+//        JsonArrayBuilder outcomesArrayBuilder = Json.createArrayBuilder();
+        JsonArray outcomeArray;
+        if(syllabusDataManager.getOutcomesJSON().trim().equals("")){
+//            outcomesArrayBuilder.add(((String)workspace.getOutcomesTA().getText()));
+            try (JsonReader jsonReader = Json.createReader(new StringReader(((String)workspace.getOutcomesTA().getText())))) {
+                outcomeArray = jsonReader.readArray();
+            }
+            syllabusDataManager.setOutcomesJSON(((String)workspace.getOutcomesTA().getText()));
+        }
+        else{
+            try (JsonReader jsonReader = Json.createReader(new StringReader((syllabusDataManager.getOutcomesJSON())))) {
+                outcomeArray = jsonReader.readArray();
+            }
+//            outcomesArrayBuilder.add(syllabusDataManager.getOutcomesJSON());
+        }
+//        JsonArray outcomesArray = outcomesArrayBuilder.build();
+        
+//        JsonArrayBuilder textbooksArrayBuilder = Json.createArrayBuilder();
+        JsonArray textbookArray;
+        if(syllabusDataManager.getTextbooksJSON().trim().equals("")){
+//            textbooksArrayBuilder.add(((String)workspace.getTextbooksTA().getText()));
+            try (JsonReader jsonReader = Json.createReader(new StringReader(((String)workspace.getTextbooksTA().getText())))) {
+                textbookArray = jsonReader.readArray();
+            }
+            syllabusDataManager.setTextbooksJSON(((String)workspace.getTextbooksTA().getText()));
+        }
+        else{
+//            textbooksArrayBuilder.add(syllabusDataManager.getTextbooksJSON());
+            try (JsonReader jsonReader = Json.createReader(new StringReader((syllabusDataManager.getTextbooksJSON())))) {
+                textbookArray = jsonReader.readArray();
+            }
+        }
+//        JsonArray textbooksArray = textbooksArrayBuilder.build();
+        
+//        JsonArrayBuilder gcArrayBuilder = Json.createArrayBuilder();
+        JsonArray gcArray;
+        if(syllabusDataManager.getGcJSON().trim().equals("")){
+//            gcArrayBuilder.add(((String)workspace.getGcTA().getText()));
+            try (JsonReader jsonReader = Json.createReader(new StringReader(((String)workspace.getGcTA().getText())))) {
+                gcArray = jsonReader.readArray();
+            }
+            syllabusDataManager.setGcJSON(((String)workspace.getGcTA().getText()));
+        }
+        else{
+//            gcArrayBuilder.add(syllabusDataManager.getGcJSON());
+            try (JsonReader jsonReader = Json.createReader(new StringReader((syllabusDataManager.getGcJSON())))) {
+                gcArray = jsonReader.readArray();
+            }
+        }
+//        JsonArray gcArray = gcArrayBuilder.build();
+        /*****************************************************************************************************/
+        
+        
+        /***********************************FORMATS MEETING TIMES DATA***********************************/
+        JsonArrayBuilder lecArrayBuilder = Json.createArrayBuilder();
+        Iterator<LecturePrototype> lecIterator = mtDataManager.lectureIterator();
+        while(lecIterator.hasNext()){
+            LecturePrototype l = lecIterator.next();
+            JsonObject lecJson = Json.createObjectBuilder()
+                    .add(JSON_MT_LECTURES_SECTION, l.getSection())
+                    .add(JSON_MT_LECTURES_DAYS, l.getDay())
+                    .add(JSON_MT_LECTURES_TIME, l.getRoom())
+                    .add(JSON_MT_LECTURES_ROOM, l.getRoom()).build();
+            lecArrayBuilder.add(lecJson);
+        }
+        JsonArray lectureArray = lecArrayBuilder.build();
+        
+        JsonArrayBuilder recArrayBuilder = Json.createArrayBuilder();
+        Iterator<RecitationPrototype> recIterator = mtDataManager.recitationIterator();
+        while(recIterator.hasNext()){
+            RecitationPrototype l = recIterator.next();
+            JsonObject lecJson = Json.createObjectBuilder()
+                    .add(JSON_MT_RECITATIONS_SECTION, l.getSection())
+                    .add(JSON_MT_RECITATIONS_DAY_TIME, l.getRoom())
+                    .add(JSON_MT_RECITATIONS_LOCATION, l.getRoom())
+                    .add(JSON_MT_RECITATIONS_TA1, l.getTA1())
+                    .add(JSON_MT_RECITATIONS_TA2, l.getTA2()).build();
+            recArrayBuilder.add(lecJson);
+        }
+        JsonArray recitationArray = recArrayBuilder.build();
+        
+        JsonArrayBuilder labsArrayBuilder = Json.createArrayBuilder();
+        Iterator<LabPrototype> labsIterator = mtDataManager.labIterator();
+        while(labsIterator.hasNext()){
+            LabPrototype l = labsIterator.next();
+            JsonObject lecJson = Json.createObjectBuilder()
+                    .add(JSON_MT_LABS_SECTION, l.getSection())
+                    .add(JSON_MT_LABS_DAY_TIME, l.getRoom())
+                    .add(JSON_MT_LABS_LOCATION, l.getRoom())
+                    .add(JSON_MT_LABS_TA1, l.getTA1())
+                    .add(JSON_MT_LABS_TA2, l.getTA2()).build();
+            labsArrayBuilder.add(lecJson);
+        }
+        JsonArray labsArray = labsArrayBuilder.build();
+        /*****************************************************************************************************/
+        
+        /***********************************FORMATS OH DATA***********************************/
+        JsonArrayBuilder gradTAsArrayBuilder = Json.createArrayBuilder();
+        JsonArrayBuilder undergradTAsArrayBuilder = Json.createArrayBuilder();
+	Iterator<TeachingAssistantPrototype> tasIterator = ohDataManager.teachingAssistantsIterator();
+        while (tasIterator.hasNext()) {
+            TeachingAssistantPrototype ta = tasIterator.next();
+	    JsonObject taJson = Json.createObjectBuilder()
+		    .add(JSON_OH_NAME, ta.getName())
+		    .add(JSON_OH_EMAIL, ta.getEmail()).build();
+                    //.add(JSON_OH_TYPE, ta.getType().toString())
+            if (ta.getType().equals(TAType.Graduate.toString()))
+                gradTAsArrayBuilder.add(taJson);
+            else
+                undergradTAsArrayBuilder.add(taJson);
+	}
+        JsonArray gradTAsArray = gradTAsArrayBuilder.build();
+	JsonArray undergradTAsArray = undergradTAsArrayBuilder.build();
+
+	// NOW BUILD THE OFFICE HOURS JSON OBJCTS TO SAVE
+	JsonArrayBuilder officeHoursArrayBuilder = Json.createArrayBuilder();
+        Iterator<TimeSlot> timeSlotsIterator = ohDataManager.officeHoursIterator();
+        while (timeSlotsIterator.hasNext()) {
+            TimeSlot timeSlot = timeSlotsIterator.next();
+            for (int i = 0; i < DayOfWeek.values().length; i++) {
+                DayOfWeek dow = DayOfWeek.values()[i];
+                tasIterator = timeSlot.getTAsIterator(dow);
+                while (tasIterator.hasNext()) {
+                    TeachingAssistantPrototype ta = tasIterator.next();
+                    JsonObject tsJson = Json.createObjectBuilder()
+                        .add(JSON_OH_START_TIME, timeSlot.getStartTime().replace(":", "_"))
+                        .add(JSON_OH_DAY_OF_WEEK, dow.toString())
+                        .add(JSON_OH_NAME, ta.getName()).build();
+                    officeHoursArrayBuilder.add(tsJson);
+                }
+            }    
+	}
+        for (TimeSlot ts : ohDataManager.getHeldTs()) {
+            for (int i = 0; i < DayOfWeek.values().length; i++) {
+                DayOfWeek dow = DayOfWeek.values()[i];
+                tasIterator = ts.getTAsIterator(dow);
+                while (tasIterator.hasNext()) {
+                    TeachingAssistantPrototype ta = tasIterator.next();
+                    JsonObject tsJson = Json.createObjectBuilder()
+                        .add(JSON_OH_START_TIME, ts.getStartTime().replace(":", "_"))
+                        .add(JSON_OH_DAY_OF_WEEK, dow.toString())
+                        .add(JSON_OH_NAME, ta.getName()).build();
+                    officeHoursArrayBuilder.add(tsJson);
+                }
+            }    
+	}
+	JsonArray officeHoursArrayDRAFT = officeHoursArrayBuilder.build();
+        
+        String[] strips = officeHoursArrayDRAFT.toString().replace("[", "").replace("]", "").split(",");
+        for(int i = 0; i < strips.length; i++){
+//            System.out.println(strips[i]);
+        }
+        String rstrip = "";
+        for(int i = 0; i < strips.length; i++){
+            rstrip += strips[i];
+        }
+        String[] rstrips = rstrip.split("\\{");
+        for(int i = 0; i < rstrips.length; i++){
+//            System.out.println(rstrips[i]);
+        }
+        String rs = "";
+        for(int i = 0; i < rstrips.length; i++){
+            rs += rstrips[i];
+        }
+        String[] srs = rs.replace("\"\"", "\",\"").replace("\"time\":","").replace("\"day\":", "").replace("\"name\":", "").split("\\}");
+        ArrayList<String> tss = new ArrayList<>(Arrays.asList(srs));
+        Set<String> set = new LinkedHashSet<>(tss);
+        JsonArrayBuilder updateOHBuilder = Json.createArrayBuilder();
+        for(String s: set){
+//            System.out.println(s);
+//            if(!(s.length() == 0)){
+            try{
+                JsonObject js = Json.createObjectBuilder()
+                        .add(JSON_OH_START_TIME, s.substring(0, s.indexOf(",")).replace("\"", ""))
+                        .add(JSON_OH_DAY_OF_WEEK, s.substring(s.indexOf(",") + 1, s.lastIndexOf(",")).replace("\"", ""))
+                        .add(JSON_OH_NAME, s.substring(s.lastIndexOf(",") + 1).replace("\"", "")).build();
+                updateOHBuilder.add(js);
+            }
+            catch(Exception e){
+                
+            }
+
+//            }
+        }
+        JsonArray officeHoursArray = updateOHBuilder.build();
+        /*****************************************************************************************************/
+        
+        
+        /******************FORMATS THE SCHEDULE DATA********************/
+        String startDate = "";
+        String startingMondayMonth = "";
+        String startingMondayDay = "";
+        String startingMondayYear = "";
+        String endDate = "";
+        String endingFridayMonth = "";
+        String endingFridayDay = "";
+        String endingFridayYear = "";
+        if(!(schDataManager.getStartDate() == null)){
+            startDate = schDataManager.getStartDate().toString();
+            startingMondayMonth = Integer.toString(schDataManager.getStartDate().getMonthValue());
+            startingMondayDay = Integer.toString(schDataManager.getStartDate().getDayOfMonth());
+            startingMondayYear = Integer.toString(schDataManager.getStartDate().getYear());
+        }
+        else{
+            startDate = "";
+            startingMondayMonth= "";
+            startingMondayDay = "";
+            startingMondayYear = "";
+        }
+        if(!(schDataManager.getEndDate() == null)){
+            endDate = schDataManager.getEndDate().toString();
+            endingFridayMonth = Integer.toString(schDataManager.getEndDate().getMonthValue());
+            endingFridayDay = Integer.toString(schDataManager.getEndDate().getDayOfMonth());
+            endingFridayYear = Integer.toString(schDataManager.getEndDate().getYear());
+        }
+        else{
+            endDate = "";
+            endingFridayMonth = "";
+            endingFridayDay = "";
+            endingFridayYear = "";
+        }
+
+        JsonArrayBuilder schHolidayArrayBuilder = Json.createArrayBuilder();
+        JsonArrayBuilder schLectureArrayBuilder = Json.createArrayBuilder();
+        JsonArrayBuilder schRefArrayBuilder = Json.createArrayBuilder();
+        JsonArrayBuilder schRecArrayBuilder = Json.createArrayBuilder();
+        JsonArrayBuilder schLabArrayBuilder = Json.createArrayBuilder();
+        JsonArrayBuilder schHwArrayBuilder = Json.createArrayBuilder();
+        
+        Iterator<ScheduleItemPrototype> schIterator = schDataManager.scheduleIterator();
+        while(schIterator.hasNext()){
+            ScheduleItemPrototype s = schIterator.next();
+            if(s.getType().equals("Holiday")){
+                JsonObject schJson = Json.createObjectBuilder()
+                        .add(JSON_SCH_EVENT_DATE, s.getLocalDate().toString())
+                        .add(JSON_SCH_EVENT_MONTH, Integer.toString(s.getLocalDate().getMonthValue()))
+                        .add(JSON_SCH_EVENT_DAY, Integer.toString(s.getLocalDate().getDayOfMonth()))
+                        .add(JSON_SCH_EVENT_YEAR, Integer.toString(s.getLocalDate().getYear()))
+                        .add(JSON_SCH_EVENT_TITLE, s.getTitle())
+                        .add(JSON_SCH_EVENT_TOPIC, s.getTopic())
+                        .add(JSON_SCH_EVENT_LINK, s.getLink()).build();
+                schHolidayArrayBuilder.add(schJson);               
+            }
+            else if(s.getType().equals("Lecture")){
+                JsonObject schJson = Json.createObjectBuilder()
+                        .add(JSON_SCH_EVENT_DATE, s.getLocalDate().toString())
+                        .add(JSON_SCH_EVENT_MONTH, Integer.toString(s.getLocalDate().getMonthValue()))
+                        .add(JSON_SCH_EVENT_DAY, Integer.toString(s.getLocalDate().getDayOfMonth()))
+                        .add(JSON_SCH_EVENT_YEAR, Integer.toString(s.getLocalDate().getYear()))
+                        .add(JSON_SCH_EVENT_TITLE, s.getTitle())
+                        .add(JSON_SCH_EVENT_TOPIC, s.getTopic())
+                        .add(JSON_SCH_EVENT_LINK, s.getLink()).build();
+                schLectureArrayBuilder.add(schJson);              
+            }
+            else if(s.getType().equals("Recitation")){
+                JsonObject schJson = Json.createObjectBuilder()
+                        .add(JSON_SCH_EVENT_DATE, s.getLocalDate().toString())
+                        .add(JSON_SCH_EVENT_MONTH, Integer.toString(s.getLocalDate().getMonthValue()))
+                        .add(JSON_SCH_EVENT_DAY, Integer.toString(s.getLocalDate().getDayOfMonth()))
+                        .add(JSON_SCH_EVENT_YEAR, Integer.toString(s.getLocalDate().getYear()))
+                        .add(JSON_SCH_EVENT_TITLE, s.getTitle())
+                        .add(JSON_SCH_EVENT_TOPIC, s.getTopic())
+                        .add(JSON_SCH_EVENT_LINK, s.getLink()).build();
+                schRecArrayBuilder.add(schJson);                
+            }
+            else if(s.getType().equals("Lab")){
+                JsonObject schJson = Json.createObjectBuilder()
+                        .add(JSON_SCH_EVENT_DATE, s.getLocalDate().toString())
+                        .add(JSON_SCH_EVENT_MONTH, Integer.toString(s.getLocalDate().getMonthValue()))
+                        .add(JSON_SCH_EVENT_DAY, Integer.toString(s.getLocalDate().getDayOfMonth()))
+                        .add(JSON_SCH_EVENT_YEAR, Integer.toString(s.getLocalDate().getYear()))
+                        .add(JSON_SCH_EVENT_TITLE, s.getTitle())
+                        .add(JSON_SCH_EVENT_TOPIC, s.getTopic())
+                        .add(JSON_SCH_EVENT_LINK, s.getLink()).build();
+                schLabArrayBuilder.add(schJson);                
+            }
+            else if(s.getType().equals("Reference")){
+                JsonObject schJson = Json.createObjectBuilder()
+                        .add(JSON_SCH_EVENT_DATE, s.getLocalDate().toString())
+                        .add(JSON_SCH_EVENT_MONTH, Integer.toString(s.getLocalDate().getMonthValue()))
+                        .add(JSON_SCH_EVENT_DAY, Integer.toString(s.getLocalDate().getDayOfMonth()))
+                        .add(JSON_SCH_EVENT_YEAR, Integer.toString(s.getLocalDate().getYear()))
+                        .add(JSON_SCH_EVENT_TITLE, s.getTitle())
+                        .add(JSON_SCH_EVENT_TOPIC, s.getTopic())
+                        .add(JSON_SCH_EVENT_LINK, s.getLink()).build();
+                schRefArrayBuilder.add(schJson);                
+            }
+            else if(s.getType().equals("HW")){
+                JsonObject schJson = Json.createObjectBuilder()
+                        .add(JSON_SCH_EVENT_DATE, s.getLocalDate().toString())
+                        .add(JSON_SCH_EVENT_MONTH, Integer.toString(s.getLocalDate().getMonthValue()))
+                        .add(JSON_SCH_EVENT_DAY, Integer.toString(s.getLocalDate().getDayOfMonth()))
+                        .add(JSON_SCH_EVENT_YEAR, Integer.toString(s.getLocalDate().getYear()))
+                        .add(JSON_SCH_EVENT_TITLE, s.getTitle())
+                        .add(JSON_SCH_EVENT_TOPIC, s.getTopic())
+                        .add(JSON_SCH_EVENT_LINK, s.getLink()).build();
+                schHwArrayBuilder.add(schJson);                
+            }
+        }
+        JsonArray schHolidayArray = schHolidayArrayBuilder.build();
+        JsonArray schLectureArray = schLectureArrayBuilder.build();
+        JsonArray schRefArray = schRefArrayBuilder.build();
+        JsonArray schRecArray = schRecArrayBuilder.build();
+        JsonArray schLabArray = schLabArrayBuilder.build();
+        JsonArray schHwArray = schHwArrayBuilder.build();
+        /*************************************************************/
+        /** PUTS IT ALL TOGETHER **/
+        
+        JsonObject pageDataJSON = Json.createObjectBuilder()
+                //Add the site data
+                .add(JSON_SITE_SUBJECT, siteSubject)
+                .add(JSON_SITE_NUMBER, siteNumber)
+                .add(JSON_SITE_SEMESTER, siteSem)
+                .add(JSON_SITE_YEAR, siteYr)
+                .add(JSON_SITE_TITLE, siteTitle)
+                .add(JSON_SITE_LOGOS, logosArray)
+                .add(JSON_SITE_INSTRUCTOR, instructorArray)
+                .add(JSON_SITE_PAGES, pagesArray).build();
+//                .add(JSON_SITE_EXPORT_URL, siteDataManager.getExp())
+        Map<String, Object> pageProperties = new HashMap<>(1);
+	pageProperties.put(JsonGenerator.PRETTY_PRINTING, true);
+	JsonWriterFactory pageWriterFactory = Json.createWriterFactory(pageProperties);
+	StringWriter pageSW = new StringWriter();
+	JsonWriter pageJsonWriter = pageWriterFactory.createWriter(pageSW);
+	pageJsonWriter.writeObject(pageDataJSON);
+	pageJsonWriter.close();
+	// INIT THE WRITER
+	OutputStream pageOS = new FileOutputStream(pageDataPath);
+	JsonWriter pageJsonFileWriter = Json.createWriter(pageOS);
+	pageJsonFileWriter.writeObject(pageDataJSON);
+	String pagePrettyPrinted = pageSW.toString();
+	PrintWriter pagePW = new PrintWriter(pageDataPath);
+	pagePW.write(pagePrettyPrinted);
+	pagePW.close();
+        
+                 //Adds the Syllabus info
+        JsonObject syllabusDataJSON = Json.createObjectBuilder()
+                .add(JSON_SYL_DESCRIPTION, sylDescription)
+                .add(JSON_SYL_TOPICS, /*syllabusDataManager.getTopicsJSON()*/topicArray)
+                .add(JSON_SYL_PREREQUISITES, sylPR)
+                .add(JSON_SYL_OUTCOMES, /*syllabusDataManager.getOutcomesJSON()*/outcomeArray)
+                .add(JSON_SYL_TEXTBOOKS, /*syllabusDataManager.getTextbooksJSON()*/textbookArray)
+                .add(JSON_SYL_GC, /*syllabusDataManager.getGcJSON()*/gcArray)
+                .add(JSON_SYL_GN, sylGN)
+                .add(JSON_SYL_AD, sylAD)
+                .add(JSON_SYL_SA, sylSA).build();
+        Map<String, Object> sylProperties = new HashMap<>(1);
+	sylProperties.put(JsonGenerator.PRETTY_PRINTING, true);
+	JsonWriterFactory sylWriterFactory = Json.createWriterFactory(sylProperties);
+	StringWriter sylSW = new StringWriter();
+	JsonWriter sylJsonWriter = sylWriterFactory.createWriter(sylSW);
+	sylJsonWriter.writeObject(syllabusDataJSON);
+	sylJsonWriter.close();
+	// INIT THE WRITER
+	OutputStream sylOS = new FileOutputStream(sylDataPath);
+	JsonWriter sylJsonFileWriter = Json.createWriter(sylOS);
+	sylJsonFileWriter.writeObject(pageDataJSON);
+	String sylPrettyPrinted = sylSW.toString();
+	PrintWriter sylPW = new PrintWriter(sylDataPath);
+	sylPW.write(sylPrettyPrinted);
+	sylPW.close();
+        
+                 //Adds the Meeting Times info
+        JsonObject mtDataJSON = Json.createObjectBuilder()
+                .add(JSON_MT_LECTURES, lectureArray)
+                .add(JSON_MT_RECITATIONS, recitationArray)
+                .add(JSON_MT_LABS, labsArray).build();
+        Map<String, Object> mtProperties = new HashMap<>(1);
+	mtProperties.put(JsonGenerator.PRETTY_PRINTING, true);
+	JsonWriterFactory mtWriterFactory = Json.createWriterFactory(mtProperties);
+	StringWriter mtSW = new StringWriter();
+	JsonWriter mtJsonWriter = mtWriterFactory.createWriter(mtSW);
+	mtJsonWriter.writeObject(mtDataJSON);
+	mtJsonWriter.close();
+	// INIT THE WRITER
+	OutputStream mtOS = new FileOutputStream(mtDataPath);
+	JsonWriter mtJsonFileWriter = Json.createWriter(mtOS);
+	mtJsonFileWriter.writeObject(mtDataJSON);
+	String mtPrettyPrinted = mtSW.toString();
+	PrintWriter mtPW = new PrintWriter(mtDataPath);
+	mtPW.write(mtPrettyPrinted);
+	mtPW.close();
+        
+        JsonObject ohDataJSON = Json.createObjectBuilder()
+                // Adds the OH Info
+		.add(JSON_OH_START_HOUR, "" + ohDataManager.getStartHour())
+		.add(JSON_OH_END_HOUR, "" + ohDataManager.getEndHour())
+                .add(JSON_OH_GRAD_TAS, gradTAsArray)
+                .add(JSON_OH_UNDERGRAD_TAS, undergradTAsArray)
+                .add(JSON_OH_OFFICE_HOURS, officeHoursArray).build();
+        Map<String, Object> ohProperties = new HashMap<>(1);
+	ohProperties.put(JsonGenerator.PRETTY_PRINTING, true);
+	JsonWriterFactory ohWriterFactory = Json.createWriterFactory(ohProperties);
+	StringWriter ohSW = new StringWriter();
+	JsonWriter ohJsonWriter = ohWriterFactory.createWriter(ohSW);
+	ohJsonWriter.writeObject(ohDataJSON);
+	ohJsonWriter.close();
+	// INIT THE WRITER
+	OutputStream ohOS = new FileOutputStream(ohDataPath);
+	JsonWriter ohJsonFileWriter = Json.createWriter(ohOS);
+	ohJsonFileWriter.writeObject(ohDataJSON);
+	String ohPrettyPrinted = ohSW.toString();
+	PrintWriter ohPW = new PrintWriter(ohDataPath);
+	ohPW.write(ohPrettyPrinted);
+	ohPW.close();
+        
+        JsonObject schDataJSON = Json.createObjectBuilder()
+                // Adds the Schedule Info
+                .add(JSON_SCH_START_DATE, startDate)
+                .add(JSON_SCH_END_DATE, endDate)
+                .add(JSON_SCH_STARTING_MONDAY_MONTH, startingMondayMonth)
+                .add(JSON_SCH_STARTING_MONDAY_DAY, startingMondayDay)
+                .add(JSON_SCH_STARTING_MONDAY_YEAR, startingMondayYear)
+                .add(JSON_SCH_ENDING_FRIDAY_MONTH, endingFridayMonth)
+                .add(JSON_SCH_ENDING_FRIDAY_DAY, endingFridayDay)
+                .add(JSON_SCH_ENDING_FRIDAY_YEAR, endingFridayYear)
+                .add(JSON_SCH_HOLIDAYS, schHolidayArray)
+                .add(JSON_SCH_LECTURES, schLectureArray)
+                .add(JSON_SCH_RECITATIONS, schRecArray)
+                .add(JSON_SCH_LABS, schLabArray)
+                .add(JSON_SCH_REFERENCES, schRefArray)
+                .add(JSON_SCH_HWS, schHwArray)
+		.build();
+        Map<String, Object> schProperties = new HashMap<>(1);
+	schProperties.put(JsonGenerator.PRETTY_PRINTING, true);
+	JsonWriterFactory schWriterFactory = Json.createWriterFactory(schProperties);
+	StringWriter schSW = new StringWriter();
+	JsonWriter schJsonWriter = schWriterFactory.createWriter(schSW);
+	schJsonWriter.writeObject(schDataJSON);
+	schJsonWriter.close();
+	// INIT THE WRITER
+	OutputStream schOS = new FileOutputStream(schDataPath);
+	JsonWriter schJsonFileWriter = Json.createWriter(schOS);
+	schJsonFileWriter.writeObject(schDataJSON);
+	String schPrettyPrinted = schSW.toString();
+	PrintWriter schPW = new PrintWriter(schDataPath);
+	schPW.write(schPrettyPrinted);
+	schPW.close();
+        
+        // Copying the CSS over
+        Path cssImport = Paths.get(siteDataManager.getCSS());
+        Path cssExport = Paths.get("./export/css/");
+        try{
+            Files.copy(cssImport, cssExport.resolve(cssImport.getFileName()));
+        }
+        catch(FileAlreadyExistsException e){
+            
+        }
+        
+        // Copying the images over
+        Path favImport = Paths.get(siteDataManager.getFavUrl());
+        Path navImport = Paths.get(siteDataManager.getNavUrl());
+        Path leftImport = Paths.get(siteDataManager.getLeftUrl());
+        Path rightImport = Paths.get(siteDataManager.getRightUrl());
+        Path imgExport = Paths.get("./export/images/");
+        try{
+            Files.copy(favImport, imgExport.resolve(favImport.getFileName())); 
+        }
+        catch(FileAlreadyExistsException e){
+            
+        }
+        try{
+            Files.copy(navImport, imgExport.resolve(navImport.getFileName()));         
+        }
+        catch(FileAlreadyExistsException e){
+            
+        }
+        try{
+            Files.copy(leftImport, imgExport.resolve(leftImport.getFileName())); 
+        }
+        catch(FileAlreadyExistsException e){
+            
+        }
+        try{
+            Files.copy(rightImport, imgExport.resolve(rightImport.getFileName()));  
+        }
+        catch(FileAlreadyExistsException e){
+            
+        }
+        
+        // Copying everything over
+        File exportTo = new File("./app_data/");
+        File importTo = new File("./export/");
+        FileUtils.copyDirectory(importTo, exportTo);
     }
 
     @Override
-    public void exportData(AppDataComponent data, String filePath) throws IOException {
+    public void importData(AppDataComponent data, String filePath) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

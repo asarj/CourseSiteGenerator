@@ -1,0 +1,23 @@
+
+{
+    "startDate":"",
+    "endDate":"",
+    "startingMondayMonth":"",
+    "startingMondayDay":"",
+    "startingMondayYear":"",
+    "endingFridayMonth":"",
+    "endingFridayDay":"",
+    "endingFridayYear":"",
+    "holidays":[
+    ],
+    "lectures":[
+    ],
+    "recitations":[
+    ],
+    "labs":[
+    ],
+    "references":[
+    ],
+    "hws":[
+    ]
+}

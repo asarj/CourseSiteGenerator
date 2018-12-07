@@ -1,12 +1,28 @@
 
 {
-    "subject":"AMS",
+    "subject":"CSE",
     "number":"216",
     "semester":"Fall",
     "year":"2018",
     "site_title":"",
-    "export_url":".\\export\\AMS_216_Fall_2018\\public.html",
+    "export_url":".\\export\\CSE_216_Fall_2018\\public.html",
     "pages":[
+        {
+            "name":"home",
+            "link":"index.html"
+        },
+        {
+            "name":"syllabus",
+            "link":"syllabus.html"
+        },
+        {
+            "name":"schedule",
+            "link":"schedule.html"
+        },
+        {
+            "name":"hw",
+            "link":"hw.html"
+        }
     ],
     "logos":[
         {
@@ -22,7 +38,7 @@
             "bottom_right":"./images/styleicons/sburightfooter.png"
         }
     ],
-    "css":"autumn.css",
+    "css":"./work/css/autumn.css",
     "instructor":[
         {
             "instructor_name":""

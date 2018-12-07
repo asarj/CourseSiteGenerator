@@ -26,9 +26,6 @@ public class MT_AddLecture_Transaction implements jTPS_Transaction{
     CSGApp app;
     CSGData d;
     MeetingTimesData data;
-    TextField c;
-    String old;
-    String n;
     LecturePrototype addedLecture;
     
     public MT_AddLecture_Transaction(CSGApp initApp, CSGData d, MeetingTimesData data){

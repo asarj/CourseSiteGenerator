@@ -1,5 +1,6 @@
 package csg.workspace.controllers;
 
+import csg.transactions.SITE_EditPagesCheckboxes_Transaction;
 import djf.modules.AppGUIModule;
 import djf.ui.dialogs.AppDialogsFacade;
 import javafx.collections.ObservableList;
@@ -256,45 +257,17 @@ public class CSGController {
         
     }
 
-     public void processUpdateOHTable(int old, boolean isStartCB) {
+     public void processUpdateOHTable() {
         AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         OHData data = d.getOfficeHoursData();
-        TableView<TimeSlot> officeHoursTableView = (TableView) gui.getGUINode(OH_OFFICE_HOURS_TABLE_VIEW);
         ComboBox timeStart = (ComboBox)gui.getGUINode(OH_STARTTIME_COMBO_BOX);
         ComboBox timeEnd = (ComboBox)gui.getGUINode(OH_ENDTIME_COMBO_BOX);
-        int ts = timeStart.getSelectionModel().getSelectedIndex();
-        int te = timeEnd.getSelectionModel().getSelectedIndex();
-        int oldts = 0;
-        int oldte = 0;
-        if(ts <= te){
-            timeStart.setDisable(false);
-            timeEnd.setDisable(false);
-            if(isStartCB){
-                oldts = old;
-                oldte = te;
-            }
-            else{
-                oldts = ts;
-                oldte = old;
-            }
-            System.out.println(ts);
-            System.out.println(te);
-            System.out.println(oldts);
-            System.out.println(oldte);
-            OH_UpdateOHTable_Transaction u = new OH_UpdateOHTable_Transaction(app, data, ts, te, oldts, oldte);
-            app.processTransaction(u);
-            officeHoursTableView.refresh();
+        OH_UpdateOHTable_Transaction u = new OH_UpdateOHTable_Transaction(app, data, timeStart, timeEnd);
+        app.processTransaction(u);
+//        officeHoursTableView.refresh();
 //            data.resetOHTable(ts, te, oldts, oldte);
-        }
-        else{
-//            if(te < ts){
-////                timeStart.setDisable(true);
-//            }
-//            else if(ts > te){
-////                timeEnd.setDisable(true);
-//            }
-        }
+       
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
     
@@ -303,89 +276,92 @@ public class CSGController {
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
         ComboBox c = (ComboBox)gui.getGUINode(SITE_SUBJECT_COMBO_BOX);
-        if(data.isValidComboBoxChoice(c)){
-            data.setSelectedName((String)c.getSelectionModel().getSelectedItem());
+        if(!data.getSelectedName().equals((String)c.getSelectionModel().getSelectedItem()) && data.isValidComboBoxChoice(c)){
+//            data.setSelectedName((String)c.getSelectionModel().getSelectedItem());
+            SITE_EditCourseSubjectComboBox_Transaction e = new SITE_EditCourseSubjectComboBox_Transaction(app, d, data, c);
+            app.processTransaction(e);
         }
         
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
     
-    public void processCourseName(String oldOption, String newOption) {
-        AppGUIModule gui = app.getGUIModule();
-        CSGData d = (CSGData)app.getDataComponent();
-        SiteData data = d.getSiteData();
-        ComboBox c = (ComboBox)gui.getGUINode(SITE_SUBJECT_COMBO_BOX);
-        if(data.isValidComboBoxChoice(c)){
-            data.setSelectedName((String)c.getSelectionModel().getSelectedItem());
-            SITE_EditCourseSubjectComboBox_Transaction e = new SITE_EditCourseSubjectComboBox_Transaction(app, d, data, c, oldOption, newOption);
-            app.processTransaction(e);
-        }
-        
-        app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
-    }
+//    public void processCourseName(String oldOption, String newOption) {
+//        AppGUIModule gui = app.getGUIModule();
+//        CSGData d = (CSGData)app.getDataComponent();
+//        SiteData data = d.getSiteData();
+//        ComboBox c = (ComboBox)gui.getGUINode(SITE_SUBJECT_COMBO_BOX);
+//        if(data.isValidComboBoxChoice(c)){
+////            data.setSelectedName((String)c.getSelectionModel().getSelectedItem());
+////            SITE_EditCourseSubjectComboBox_Transaction e = new SITE_EditCourseSubjectComboBox_Transaction(app, d, data, c, oldOption, newOption);
+////            app.processTransaction(e);
+//        }
+//        
+//        app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
+//    }
 
-    public void processCourseNum(String oldOption, String newOption) {
+    public void processCourseNum() {
         AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
         ComboBox c = (ComboBox)gui.getGUINode(SITE_SUBJECTNUM_COMBO_BOX);
-        if(data.isValidComboBoxChoice(c)){
-            data.setSelectedNum((String)c.getSelectionModel().getSelectedItem());
-            SITE_EditCourseNumberComboBox_Transaction e = new SITE_EditCourseNumberComboBox_Transaction(app, d, data, c, oldOption, newOption);
+        if(!data.getSelectedNum().equals((String)c.getSelectionModel().getSelectedItem()) && data.isValidComboBoxChoice(c)){
+//            data.setSelectedNum((String)c.getSelectionModel().getSelectedItem());
+            SITE_EditCourseNumberComboBox_Transaction e = new SITE_EditCourseNumberComboBox_Transaction(app, d, data, c);
             app.processTransaction(e);
         }
         
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
-    public void processCourseSem(String oldOption, String newOption) {
+    public void processCourseSem() {
         AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
         ComboBox c = (ComboBox)gui.getGUINode(SITE_SEMESTERS_COMBO_BOX);
-        if(data.isValidComboBoxChoice(c)){
-            data.setSelectedSem((String)c.getSelectionModel().getSelectedItem());
-            SITE_EditCourseSemesterComboBox_Transaction e = new SITE_EditCourseSemesterComboBox_Transaction(app, d, data, c, oldOption, newOption);
+        if(!data.getSelectedSem().equals((String)c.getSelectionModel().getSelectedItem()) && data.isValidComboBoxChoice(c)){
+//            data.setSelectedSem((String)c.getSelectionModel().getSelectedItem());
+            SITE_EditCourseSemesterComboBox_Transaction e = new SITE_EditCourseSemesterComboBox_Transaction(app, d, data, c);
             app.processTransaction(e);
         }
         
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
-    public void processCourseYear(String oldOption, String newOption) {
+    public void processCourseYear() {
         AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
         ComboBox c = (ComboBox)gui.getGUINode(SITE_YEARS_COMBO_BOX);
-        if(data.isValidComboBoxChoice(c)){
-            data.setSelectedYear((String)c.getSelectionModel().getSelectedItem());
-            SITE_EditCourseYearComboBox_Transaction e = new SITE_EditCourseYearComboBox_Transaction(app, d, data, c, oldOption, newOption);
+        if(!data.getSelectedYear().equals((String)c.getSelectionModel().getSelectedItem()) && data.isValidComboBoxChoice(c)){
+//            data.setSelectedYear((String)c.getSelectionModel().getSelectedItem());
+            SITE_EditCourseYearComboBox_Transaction e = new SITE_EditCourseYearComboBox_Transaction(app, d, data, c);
             app.processTransaction(e);
         }
         
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
-    public void processCourseTitle(String oldText, String newText) {
+    public void processCourseTitle() {
         AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
         TextField titleTF = (TextField)gui.getGUINode(SITE_TITLE_TEXT_FIELD);
         if(data.isValidTextFieldInput(titleTF)){
             if(titleTF.isFocused()){
-                data.setTitle(titleTF.getText());
-                SITE_EditCourseTitleTF_Transaction e = new SITE_EditCourseTitleTF_Transaction(app, d, data, titleTF,oldText, newText);
+//                data.setTitle(titleTF.getText());
+                SITE_EditCourseTitleTF_Transaction e = new SITE_EditCourseTitleTF_Transaction(app, d, data, titleTF);
+                app.processTransaction(e);
             }
         }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
     public void processExportURL() {
-        AppGUIModule gui = app.getGUIModule();
-        CSGData d = (CSGData)app.getDataComponent();
-        SiteData data = d.getSiteData();
-        Label l = (Label)gui.getGUINode(SITE_EXPORT_LABEL);
-        data.setExp(l.getText());
+//        AppGUIModule gui = app.getGUIModule();
+//        CSGData d = (CSGData)app.getDataComponent();
+//        SiteData data = d.getSiteData();
+//        Label l = (Label)gui.getGUINode(SITE_EXPORT_LABEL);
+//        data.setExp(l.getText());
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
@@ -397,7 +373,7 @@ public class CSGController {
         CheckBox syllabusCB = (CheckBox)gui.getGUINode(SITE_SYLLABUS_CHECK_BOX);
         CheckBox scheduleCB = (CheckBox)gui.getGUINode(SITE_SCHEDULE_CHECK_BOX);
         CheckBox hwCB = (CheckBox)gui.getGUINode(SITE_HW_CHECK_BOX);
-        EditPagesCheckboxes_Transaction e = new EditPagesCheckboxes_Transaction(app, d, data, homeCB, syllabusCB, scheduleCB, hwCB);
+        SITE_EditPagesCheckboxes_Transaction e = new SITE_EditPagesCheckboxes_Transaction(app, d, data, homeCB, syllabusCB, scheduleCB, hwCB);
         app.processTransaction(e);
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
@@ -433,15 +409,15 @@ public class CSGController {
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
-    public void processSiteCSS(String oldText, String newText) {
+    public void processSiteCSS() {
         AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
         ComboBox c = (ComboBox)gui.getGUINode(SITE_CSS_COMBO_BOX);
-        if(data.isValidComboBoxChoice(c)){
+        if(!data.getCSS().substring(data.getCSS().lastIndexOf("/") + 1).equals((String)c.getSelectionModel().getSelectedItem()) && data.isValidComboBoxChoice(c)){
             if(c.isFocused()){
-                data.setCSS((String)c.getSelectionModel().getSelectedItem());
-                SITE_EditCourseCSSComboBox_Transaction e = new SITE_EditCourseCSSComboBox_Transaction(app, d, data, c, oldText, newText);
+//                data.setCSS((String)c.getSelectionModel().getSelectedItem());
+                SITE_EditCourseCSSComboBox_Transaction e = new SITE_EditCourseCSSComboBox_Transaction(app, d, data, c);
                 app.processTransaction(e);
             }
         }
@@ -823,7 +799,7 @@ public class CSGController {
         ScheduleData data = d.getScheduleData();
         try{
             if(date.getDayOfWeek().getValue() == 5){
-                if(data.getStartDate() == null){
+                if(data.getStartDate() != null){
                     SCH_SetEndDate_Transaction e = new SCH_SetEndDate_Transaction(app, d, data, date);
                     app.processTransaction(e);      
                 }

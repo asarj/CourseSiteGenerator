@@ -28,14 +28,22 @@ public class OH_UpdateOHTable_Transaction implements jTPS_Transaction {
     int te;
     int oldts;
     int oldte;
+    ComboBox start;
+    ComboBox end;
     
-    public OH_UpdateOHTable_Transaction(CSGApp initApp, OHData initData, int start, int end, int oldStart, int oldEnd) {
+    public OH_UpdateOHTable_Transaction(CSGApp initApp, OHData initData, ComboBox start, ComboBox end) {
         app = initApp;
         data = initData;
-        ts = start;
-        te = end;
-        oldts = oldStart;
-        oldte = oldEnd;
+        this.start = start;
+        this.end = end;
+        this.ts = start.getSelectionModel().getSelectedIndex();
+        this.te = end.getSelectionModel().getSelectedIndex();
+        this.oldts = data.getStartHour();
+        this.oldte = data.getEndHour();
+//        ts = start;
+//        te = end;
+//        oldts = oldStart;
+//        oldte = oldEnd;
         
     }
 
@@ -43,10 +51,10 @@ public class OH_UpdateOHTable_Transaction implements jTPS_Transaction {
     public void doTransaction() {
         AppGUIModule gui = app.getGUIModule();
         TableView<TimeSlot> officeHoursTableView = (TableView) gui.getGUINode(OH_OFFICE_HOURS_TABLE_VIEW);
-        ComboBox timeStart = (ComboBox)gui.getGUINode(OH_STARTTIME_COMBO_BOX);
-        ComboBox timeEnd = (ComboBox)gui.getGUINode(OH_ENDTIME_COMBO_BOX);
-        timeStart.setValue(timeStart.getItems().get(ts));
-        timeEnd.setValue(timeEnd.getItems().get(te));
+        start.setValue(start.getItems().get(ts));
+        end.setValue(end.getItems().get(te));
+        data.setStartHour(ts);
+        data.setEndHour(te);
         data.resetOHTable(ts, te);
         officeHoursTableView.refresh();
     }
@@ -55,10 +63,10 @@ public class OH_UpdateOHTable_Transaction implements jTPS_Transaction {
     public void undoTransaction() {
         AppGUIModule gui = app.getGUIModule();
         TableView<TimeSlot> officeHoursTableView = (TableView) gui.getGUINode(OH_OFFICE_HOURS_TABLE_VIEW);
-        ComboBox timeStart = (ComboBox)gui.getGUINode(OH_STARTTIME_COMBO_BOX);
-        ComboBox timeEnd = (ComboBox)gui.getGUINode(OH_ENDTIME_COMBO_BOX);
-        timeStart.setValue(timeStart.getItems().get(oldts));
-        timeEnd.setValue(timeEnd.getItems().get(oldte));
+        start.setValue(start.getItems().get(oldts));
+        end.setValue(end.getItems().get(oldte));
+        data.setStartHour(oldts);
+        data.setEndHour(oldte);
         data.resetOHTable(oldts, oldte);
         officeHoursTableView.refresh();
     }

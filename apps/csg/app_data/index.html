@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title></title>
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+
+        <link href="./css/course_homepage_layout.css" rel="stylesheet" type="text/css">
+        <link href="./css/sea_wolf.css" rel="stylesheet" type="text/css">
+
+        <!-- LINK TO OUR JavaScript FILE AND JQuery -->
+        <script src="./js/jquery.min.js"></script>
+        <script src="./js/PageBuilder.js"></script>
+
+        <!-- ONCE THE PAGE FULLY LOADS, COMPLETE BUILDING THE CONTENT -->
+        <script>
+            $(document).ready()
+            {
+                buildPage("Home", ".");
+            }
+        </script>
+    </head>
+
+    <body>
+        <div id="content">
+            <div id="navbar">
+                <a id="navbar_image_link"></a>
+            </div>
+
+            <div id="banner"></div>
+
+            <div id="desc">
+
+                <p>Welcome to the <span id="inlined_course"></span> Web site. If you are enrolled in the course, be sure to periodically check this site for all materials and changes as the semester moves along. Note that all grades will be posted to <a href="http://blackboard.stonybrook.edu">Blackboard</a>.</p>
+                <br /><br /><br /><br /><br /><br /><br />
+                <hr />
+
+                <a id="left_footer_image_link"></a>
+                <a id="right_footer_image_link"></a>
+                <p class="footer">Web page created and maintained<br />
+                    by <span id="author_link"></span></p>
+                <br /><br />
+            </div>
+        </div>
+    </body>
+</html>

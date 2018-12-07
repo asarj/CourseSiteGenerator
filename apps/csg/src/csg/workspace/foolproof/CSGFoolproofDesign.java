@@ -27,6 +27,8 @@ import static csg.CSGPropertyType.SCH_REMOVE_ITEM_BUTTON;
 import static csg.CSGPropertyType.SCH_UPDATE;
 import static csg.CSGPropertyType.SITE_CSS_COMBO_BOX;
 import static csg.CSGPropertyType.SITE_EMAIL_TEXT_FIELD;
+import static csg.CSGPropertyType.SITE_EXPDIR_LABEL;
+import static csg.CSGPropertyType.SITE_EXPORT_LABEL;
 import static csg.CSGPropertyType.SITE_HP_TEXT_FIELD;
 import static csg.CSGPropertyType.SITE_NAME_TEXT_FIELD;
 import static csg.CSGPropertyType.SITE_ROOM_TEXT_FIELD;
@@ -55,6 +57,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Background;
 import properties_manager.PropertiesManager;
@@ -77,6 +80,7 @@ public class CSGFoolproofDesign implements FoolproofDesign {
         updateCourseNumCB();
         updateCourseSemCB();
         updateCourseYearCB();
+        updateExportLabel();
         updateCourseTitleTF();
         updateInstructorNameTF();
         updateInstructorEmailTF();
@@ -275,6 +279,27 @@ public class CSGFoolproofDesign implements FoolproofDesign {
                 c.getStyleClass().add(CLASS_OH_BOX); 
             }
         }
+    }
+    
+    private void updateExportLabel(){
+        AppGUIModule gui = app.getGUIModule();
+        CSGData d = (CSGData)app.getDataComponent();
+        SiteData data = d.getSiteData();
+        ComboBox sub = (ComboBox)gui.getGUINode(SITE_SUBJECT_COMBO_BOX);
+        ComboBox subnum = (ComboBox)gui.getGUINode(SITE_SUBJECTNUM_COMBO_BOX);
+        ComboBox sems = (ComboBox)gui.getGUINode(SITE_SEMESTERS_COMBO_BOX);
+        ComboBox years = (ComboBox)gui.getGUINode(SITE_YEARS_COMBO_BOX);
+        Label export = (Label)gui.getGUINode(SITE_EXPORT_LABEL);
+        export.setText(".\\export\\" + sub.getSelectionModel().getSelectedItem().toString() + 
+                                                "_" + subnum.getSelectionModel().getSelectedItem().toString() +
+                                                "_" + sems.getSelectionModel().getSelectedItem().toString() +
+                                                "_" + years.getSelectionModel().getSelectedItem().toString() 
+                                                 + "\\public.html");
+        data.setExp(".\\export\\" + sub.getSelectionModel().getSelectedItem().toString() + 
+                                                "_" + subnum.getSelectionModel().getSelectedItem().toString() +
+                                                "_" + sems.getSelectionModel().getSelectedItem().toString() +
+                                                "_" + years.getSelectionModel().getSelectedItem().toString() 
+                                                 + "\\public.html");
     }
     
     private void updateCourseTitleTF() {

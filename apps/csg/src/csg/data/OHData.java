@@ -45,8 +45,8 @@ public class OHData{
     // THAT THESE VALUES CAN BE DIFFERENT FOR DIFFERENT FILES, BUT
     // THAT OUR APPLICATION USES THE DEFAULT TIME VALUES AND PROVIDES
     // NO MEANS FOR CHANGING THESE VALUES
-    int startHour;
-    int endHour;
+    private static int startHour;
+    private static int endHour;
     
     // DEFAULT VALUES FOR START AND END HOURS IN MILITARY HOURS
     public static int MIN_START_HOUR = 0;
@@ -101,6 +101,14 @@ public class OHData{
 
     public int getEndHour() {
         return endHour;
+    }
+    
+    public void setStartHour(int s) {
+        startHour = s;
+    }
+
+    public void setEndHour(int s) {
+        endHour = s;
     }
     
     // PRIVATE HELPER METHODS

@@ -223,129 +223,27 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         Label expDirLabel = siteBuilder.buildLabel(SITE_EXPDIR_LABEL, expVBox, 0, 0, 1, 1, CLASS_REG_LABEL, ENABLED);
         Label expDirOutputLabel = siteBuilder.buildLabel(SITE_EXPORT_LABEL, expVBox, 1, 0, 1, 1, CLASS_REG_LABEL, ENABLED);
 //        outsideController.processExportURL();
+        subjectCBox.focusedProperty().addListener(e->{     
+            if(!subjectCBox.isFocused()){
+                outsideController.processCourseName();
+            }
+        });
+        subjectNumsCBox.focusedProperty().addListener(e->{
+            if(!subjectNumsCBox.isFocused()){
+                outsideController.processCourseNum();
+            }
+        });
+        semestersCBox.focusedProperty().addListener(e->{
+            if(!semestersCBox.isFocused()){
+                outsideController.processCourseSem();
+            }
+        });
+        yearsCBox.focusedProperty().addListener(e->{
+            if(!yearsCBox.isFocused()){
+                outsideController.processCourseYear();
+            }
+        });
 
-        subjectCBox.valueProperty().addListener(new ChangeListener<String>() {
-            @Override 
-            public void changed(ObservableValue ov, String t, String t1) {
-//                boolean dupFound = false;
-//                for(Object s: subjects){
-//                    String c = (String)s;
-//                    if(c != null && c.equals(t1)){
-//                        dupFound = true;
-//                        break;
-//                    }
-//                }
-//                if(!dupFound){
-//                    subjects.add(t1);  
-//                    subjectCBox.getSelectionModel().select(t1);
-//                }
-//                subjects.forEach((s) -> {
-//                    String c = (String)s;
-//                    if (c != null && c.trim().equals("")) {
-//                        subjects.remove(s);
-//                    }
-//                });
-                
-                subjectCBox.getSelectionModel().select(t1);
-                try{
-                expDirOutputLabel.setText(".\\export\\" + subjectCBox.getSelectionModel().getSelectedItem().toString() + 
-                                                "_" + subjectNumsCBox.getSelectionModel().getSelectedItem().toString() +
-                                                "_" + semestersCBox.getSelectionModel().getSelectedItem().toString() +
-                                                "_" + yearsCBox.getSelectionModel().getSelectedItem().toString() 
-                                                 + "\\public.html");
-                }
-                catch(NullPointerException n){
-                    expDirOutputLabel.setText(".\\export\\" + t1 + 
-                                                "_" + subjectNumsCBox.getSelectionModel().getSelectedItem().toString() +
-                                                "_" + semestersCBox.getSelectionModel().getSelectedItem().toString() +
-                                                "_" + yearsCBox.getSelectionModel().getSelectedItem().toString() 
-                                                 + "\\public.html");
-                }
-                
-//                for(int i = 0; i < subjects.size(); i++){
-//                    String c = (String)subjects.get(i);
-//                    if(c != null && c.trim().equals("")){
-//                        subjects.remove(i);
-//                    }
-//                }
-//                subjectCBox.setItems(subjects);
-//                subjectCBox.getSelectionModel().select(t1);
-            }    
-        });
-//        subjectCBox.setItems(subjects);
-        subjectNumsCBox.valueProperty().addListener(new ChangeListener<String>() {
-            @Override 
-            public void changed(ObservableValue ov, String t, String t1) {                
-                subjectNumsCBox.getSelectionModel().select(t1);
-                expDirOutputLabel.setText(".\\export\\" + subjectCBox.getSelectionModel().getSelectedItem().toString() + 
-                                                "_" + subjectNumsCBox.getSelectionModel().getSelectedItem().toString() +
-                                                "_" + semestersCBox.getSelectionModel().getSelectedItem().toString() +
-                                                "_" + yearsCBox.getSelectionModel().getSelectedItem().toString() 
-                                                 + "\\public.html");
-            }    
-        });
-//        subjectNumsCBox.setItems(subjectNums);
-        semestersCBox.valueProperty().addListener(new ChangeListener<String>() {
-            @Override 
-            public void changed(ObservableValue ov, String t, String t1) {                
-                boolean dupFound = false;
-                for(Object s: semesters){
-                    String c = (String)s;
-                    if(c != null && c.equals(t1)){
-                        dupFound = true;
-                        break;
-                    }
-                }
-                if(!dupFound){
-                    semesters.add(t1);    
-                }
-                semesters.forEach((s) -> {
-                    String c = (String)s;
-                    if (c.trim().equals("")) {
-                        semesters.remove(s);
-                    }
-                });
-                expDirOutputLabel.setText(".\\export\\" + subjectCBox.getSelectionModel().getSelectedItem().toString() + 
-                                                "_" + subjectNumsCBox.getSelectionModel().getSelectedItem().toString() +
-                                                "_" + semestersCBox.getSelectionModel().getSelectedItem().toString() +
-                                                "_" + yearsCBox.getSelectionModel().getSelectedItem().toString() 
-                                                 + "\\public.html");
-                semestersCBox.setItems(semesters);
-            }    
-        });
-//        semestersCBox.setItems(semesters);
-        yearsCBox.valueProperty().addListener(new ChangeListener<String>() {
-            @Override 
-            public void changed(ObservableValue ov, String t, String t1) {                
-                boolean dupFound = false;
-                for(Object s: years){
-                    String c = (String)s;
-                    if(c != null && c.equals(t1)){
-                        dupFound = true;
-                        break;
-                    }
-                }
-                if(!dupFound){
-                    years.add(t1);    
-                }
-                years.forEach((s) -> {
-                    String c = (String)s;
-                    if (c.trim().equals("")) {
-                        years.remove(s);
-                    }
-                });
-                expDirOutputLabel.setText(".\\export\\" + subjectCBox.getSelectionModel().getSelectedItem().toString() + 
-                                                "_" + subjectNumsCBox.getSelectionModel().getSelectedItem().toString() +
-                                                "_" + semestersCBox.getSelectionModel().getSelectedItem().toString() +
-                                                "_" + yearsCBox.getSelectionModel().getSelectedItem().toString()
-                                                 + "\\public.html");
-                yearsCBox.setItems(years);
-            }  
-            
-        });
-//        yearsCBox.setItems(years);
-
-//        bannerBox.add(expDirOutputLabel, 1, 4);
         bannerBox.setStyle("-fx-background-color: #ebebeb;");
         bannerBox.setPadding(new Insets(10, 10, 10, 10));
         bannerBox.setVgap(5);
@@ -423,7 +321,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         
 
         fviImgView = new ImageView(
-                props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_FAVICON_TEXT)
+                props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_FAVICON_TEXT)
         );
         fviImgView.setFitWidth(25);
         fviImgView.setFitHeight(25);
@@ -432,7 +330,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         fviImgView.setCache(true);
         
         navImgView = new ImageView(
-                props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_NAVBAR_TEXT)
+                props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_NAVBAR_TEXT)
         );
         navImgView.setFitWidth(300);
         navImgView.setFitHeight(25);
@@ -441,7 +339,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         navImgView.setCache(true);
         
         leftImgView = new ImageView(
-                props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_LFIMG_TEXT)
+                props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_LFIMG_TEXT)
         );
         leftImgView.setFitWidth(300);
         leftImgView.setFitHeight(25);
@@ -449,7 +347,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         leftImgView.setSmooth(true);
         leftImgView.setCache(true);
         rightImgView = new ImageView(
-               props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + "styleicons/" + props.getProperty(DEFAULT_RFIMG_TEXT)
+               props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_RFIMG_TEXT)
         );
         rightImgView.setFitWidth(300);
         rightImgView.setFitHeight(25);
@@ -461,7 +359,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             FileChooser imgSelect = new FileChooser();
             FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpeg");
             imgSelect.getExtensionFilters().add(extFilter);
-            imgSelect.setInitialDirectory(new java.io.File("./images/styleicons/"));
+            imgSelect.setInitialDirectory(new java.io.File("./images/"));
             imgSelect.setTitle(props.getProperty(SITE_CHOOSE_IMAGE_TITLE));
             File f = imgSelect.showOpenDialog(styleBox.getScene().getWindow());
             if(f != null){
@@ -485,7 +383,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             FileChooser imgSelect = new FileChooser();
             FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpeg");
             imgSelect.getExtensionFilters().add(extFilter);
-            imgSelect.setInitialDirectory(new java.io.File("./images/styleicons/"));
+            imgSelect.setInitialDirectory(new java.io.File("./images/"));
             imgSelect.setTitle(props.getProperty(SITE_CHOOSE_IMAGE_TITLE));
             File f = imgSelect.showOpenDialog(styleBox.getScene().getWindow());
             if(f != null){
@@ -508,7 +406,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             FileChooser imgSelect = new FileChooser();
             FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpeg");
             imgSelect.getExtensionFilters().add(extFilter);
-            imgSelect.setInitialDirectory(new java.io.File("./images/styleicons/"));
+            imgSelect.setInitialDirectory(new java.io.File("./images/"));
             imgSelect.setTitle(props.getProperty(SITE_CHOOSE_IMAGE_TITLE));
             File f = imgSelect.showOpenDialog(styleBox.getScene().getWindow());
             if(f != null){
@@ -531,7 +429,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             FileChooser imgSelect = new FileChooser();
             FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpeg");
             imgSelect.getExtensionFilters().add(extFilter);
-            imgSelect.setInitialDirectory(new java.io.File("./images/styleicons/"));
+            imgSelect.setInitialDirectory(new java.io.File("./images/"));
             imgSelect.setTitle(props.getProperty(SITE_CHOOSE_IMAGE_TITLE));
             File f = imgSelect.showOpenDialog(styleBox.getScene().getWindow());
             if(f != null){
@@ -553,6 +451,11 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         ComboBox css = siteBuilder.buildComboBox(SITE_CSS_COMBO_BOX, styleBox, 1, 5, 1, 1, CLASS_OH_CB, ENABLED, styleSheets, styleSheets.get(0));
         css.setItems(styleSheets);
         css.getSelectionModel().selectFirst();
+        css.focusedProperty().addListener(e->{
+            if(!css.isFocused()){
+                outsideController.processSiteCSS();
+            }
+        });
         VBox styleContainer = new VBox();
         GridPane warningVBox = siteBuilder.buildGridPane(SITE_EXP_HBOX, styleVBox, CLASS_OH_PANE_EXTRA, ENABLED);
         warningVBox.setStyle("-fx-background-color: #ebebeb;");
@@ -596,7 +499,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         instructorOHJsonArea = new TextArea();
 
         instructorOHJsonArea.setText("["
-                                    + "\n\t{\"Day\": \"\"\t\"Time\": \"\"}"
+                                    + "\n\t{\"Day\": \"\", \t\"Time\": \"\"}"
                                  + "\n]");
         instructorOHJsonArea.setVisible(false);
         instructorOHJsonArea.setManaged(false);
@@ -675,7 +578,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
 
         topicTA = new TextArea();
         topicTA.setText(
-                        "\"\","
+                        "[\n\t\"\"\n]"
                         );
         topicTA.setVisible(false);
         topicTA.setManaged(false);
@@ -737,7 +640,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
 
         outcomesTA = new TextArea();
         outcomesTA.setText(
-                            "\"\","
+                            "[\n\t\"\"\n]"
                           );
         outcomesTA.setVisible(false);
         outcomesTA.setManaged(false);
@@ -768,16 +671,16 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         Label textbookLabel = syllabusBuilder.buildLabel(SYL_TBOOK_LABEL, textbooksDetail, CLASS_OH_HEADER_LABEL, ENABLED);
         
         textbooksTA = new TextArea();
-        textbooksTA.setText("{"
-                             + "\n\t\t\"title\":\"\","
-                             + "\n\t\t\"link\":\"\","
-                             + "\n\t\t\"photo\":\"\","
-                             + "\n\t\t\"authors\":["
-                                + "\n\t\t\t\"\""
-                             + "\n\t\t],"
-                             + "\n\t\t\"publisher\":\"\","
-                             + "\n\t\t\"year\":\"\""
-                        + "\n},");
+        textbooksTA.setText("[\n\t{"
+                             + "\n\t\t\t\"title\":\"\","
+                             + "\n\t\t\t\"link\":\"\","
+                             + "\n\t\t\t\"photo\":\"\","
+                             + "\n\t\t\t\"authors\":["
+                                + "\n\t\t\t\t\"\""
+                             + "\n\t\t\t],"
+                             + "\n\t\t\t\"publisher\":\"\","
+                             + "\n\t\t\t\"year\":\"\""
+                        + "\n\t}\n]");
         textbooksTA.setVisible(false);
         textbooksTA.setManaged(false);
         sylTextbooksExpandButton.setOnAction(e->{
@@ -807,11 +710,11 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         Label gradedComponentsLabel = syllabusBuilder.buildLabel(SYL_GRADED_LABEL, gcDetail, CLASS_OH_HEADER_LABEL, ENABLED);
 //        gradedComponentsLabel.setId("section_header_label");
         gcTA = new TextArea();
-        gcTA.setText("{"
-                            + "\n\t\t\"Name\": \"\""
-                            + "\n\t\t\"Description\": \"\""
-                            + "\n\t\t\"Weight\": \"\""
-                        + "\n},"
+        gcTA.setText("[\n\t{"
+                            + "\n\t\t\t\"Name\": \"\","
+                            + "\n\t\t\t\"Description\": \"\","
+                            + "\n\t\t\t\"Weight\": \"\""
+                        + "\n\t}\n]"
                     );
         gcTA.setVisible(false);
         gcTA.setManaged(false);
@@ -1202,8 +1105,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         
         // FIX THIS PART ///////////////////////
         ohBuilder.buildLabel(OH_STARTTIME_LABEL, officeHoursHeaderBox, CLASS_OH_HEADER_LABEL, ENABLED);
-        ComboBox start = ohBuilder.buildComboBox(OH_STARTTIME_COMBO_BOX, startTimes, startTimes.get(0), officeHoursHeaderBox, CLASS_OH_COMBO_BOX, ENABLED);
-        
+        ComboBox start = ohBuilder.buildComboBox(OH_STARTTIME_COMBO_BOX, startTimes, startTimes.get(0), officeHoursHeaderBox, CLASS_OH_COMBO_BOX, ENABLED);        
         start.setItems(startTimes);
         start.getSelectionModel().selectFirst();
         ohBuilder.buildLabel(OH_ENDTIME_LABEL, officeHoursHeaderBox, CLASS_OH_HEADER_LABEL, ENABLED);
@@ -1267,9 +1169,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             }
         });
         startDate.valueProperty().addListener((ov, oldValue, newValue) ->{
-            CSGController controller = new CSGController((CSGApp) app);
-            AppGUIModule gui = app.getGUIModule();
-            controller.processStartDate(newValue);
+            outsideController.processStartDate(newValue);
         });
         schBoundariesBox.getChildren().add(startDate);
         schBuilder.buildLabel(SCH_ENDING_FRIDAY_LABEL, schBoundariesBox, CLASS_OH_LABEL, ENABLED);
@@ -1287,9 +1187,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             }
         });
         endDate.valueProperty().addListener((ov, oldValue, newValue) ->{
-            CSGController controller = new CSGController((CSGApp) app);
-            AppGUIModule gui = app.getGUIModule();
-            controller.processEndDate(newValue);
+            outsideController.processEndDate(newValue);
         });
         schBoundariesPane.setStyle("-fx-background-color: #ebebeb;");
         schBoundariesPane.setSpacing(5);
@@ -1338,6 +1236,9 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         ComboBox eventBox = schBuilder.buildComboBox(SCH_TYPE_COMBO_BOX, schAddEditPane, 1, 2, 2, 1, CLASS_OH_COMBO_BOX, ENABLED, typesOfEvents, typesOfEvents.get(0));
         eventBox.setItems(typesOfEvents);
         eventBox.getSelectionModel().selectFirst();
+        eventBox.focusedProperty().addListener(e->{
+            
+        });
 //        schBuilder.buildComboBox(end, saBox, BUTTON_TAG_WIDTH, BUTTON_TAG_WIDTH, BUTTON_TAG_WIDTH, BUTTON_TAG_WIDTH, EMPTY_TEXT, ENABLED, mtContent, DEFAULT_NAVBAR_TEXT)
 //        HBox dateBox = schBuilder.buildHBox(SCH_DATE_HBOX, schAddEditPane, 0, 3, 2, 1, CLASS_OH_BOX, ENABLED);
         schBuilder.buildLabel(SCH_DATE_LABEL, schAddEditPane, 0, 3, 2, 1, CLASS_OH_LABEL, ENABLED);
@@ -1500,77 +1401,16 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         
         ComboBox timeStart = (ComboBox)gui.getGUINode(OH_STARTTIME_COMBO_BOX);
         ComboBox timeEnd = (ComboBox)gui.getGUINode(OH_ENDTIME_COMBO_BOX);
-        timeStart.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-              System.out.println(timeStart.getItems().get((Integer) number));
-              System.out.println(timeStart.getItems().get((Integer) number2));
-              controller.processUpdateOHTable(number.intValue(), true);
-            }
+        timeStart.focusedProperty().addListener(e-> {
+            controller.processUpdateOHTable();
+        });  
+        timeEnd.focusedProperty().addListener(e-> {
+            controller.processUpdateOHTable();
         });
-                
-                
-//                .addListener((ObservableValue<Integer> ov, Object t, Object t1) -> {
-//            int oldStart = Integer.parseInt(((String)t).substring(0, ((String)t).indexOf(":")));
-//            if(((String)t).contains("pm")){
-//                oldStart += 11;
-//            }
-//            controller.processUpdateOHTable(oldStart, true);
-//        });
-            
-        timeEnd.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-              System.out.println(timeEnd.getItems().get((Integer) number));
-              System.out.println(timeEnd.getItems().get((Integer) number2));
-              controller.processUpdateOHTable(number.intValue(), false);
-            }
-        });
-                
-                
-//                .addListener((ObservableValue<?> ov, Object t, Object t1) -> {
-//            int oldEnd = Integer.parseInt(((String)t).substring(0, ((String)t).indexOf(":")));
-//            if(((String)t).contains("pm")){
-//                oldEnd += 11;
-//            }
-//            controller.processUpdateOHTable(oldEnd, false);
-//        });
         
-        ComboBox courseName = (ComboBox)gui.getGUINode(SITE_SUBJECT_COMBO_BOX);
-        courseName.valueProperty().addListener((obs, oldVal, newVal)->{
-            controller.processCourseName((String)oldVal, (String)newVal);
-//            controller.processCourseNum();
-//            controller.processCourseSem();
-//            controller.processCourseYear();
-            controller.processExportURL();
-        });
-        ComboBox courseNum = (ComboBox)gui.getGUINode(SITE_SUBJECTNUM_COMBO_BOX);
-        courseNum.valueProperty().addListener((obs, oldVal, newVal)->{
-//            controller.processCourseName();
-            controller.processCourseNum((String)oldVal, (String)newVal);
-//            controller.processCourseSem();
-//            controller.processCourseYear();
-            controller.processExportURL();
-        });
-        ComboBox courseSem = (ComboBox)gui.getGUINode(SITE_SEMESTERS_COMBO_BOX);
-        courseSem.valueProperty().addListener((obs, oldVal, newVal)->{
-//            controller.processCourseName();
-//            controller.processCourseNum();
-            controller.processCourseSem((String)oldVal, (String)newVal);
-//            controller.processCourseYear();
-            controller.processExportURL();
-        });
-        ComboBox courseYear = (ComboBox)gui.getGUINode(SITE_YEARS_COMBO_BOX);
-        courseYear.valueProperty().addListener((obs, oldVal, newVal)->{
-//            controller.processCourseName();
-//            controller.processCourseNum();
-//            controller.processCourseSem();
-            controller.processCourseYear((String)oldVal, (String)newVal);
-            controller.processExportURL();
-        });
         TextField courseTitle =(TextField)gui.getGUINode(SITE_TITLE_TEXT_FIELD);
-        courseTitle.textProperty().addListener((obs, oldText, newText)->{
-            controller.processCourseTitle(oldText, newText);
+        courseTitle.focusedProperty().addListener(e->{
+            controller.processCourseTitle();
         });
         CheckBox courseHomeCB = (CheckBox)gui.getGUINode(SITE_HOME_CHECK_BOX);
         courseHomeCB.setOnAction(e->{
@@ -1589,9 +1429,9 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             controller.processCheckedOptions();
         });
         ComboBox siteCSS = (ComboBox)gui.getGUINode(SITE_CSS_COMBO_BOX);
-        siteCSS.valueProperty().addListener((obs, oldVal, newVal)->{
-            controller.processSiteCSS((String)oldVal, (String)newVal);
-        });
+//        siteCSS.valueProperty().addListener((obs, oldVal, newVal)->{
+//            controller.processSiteCSS((String)oldVal, (String)newVal);
+//        });
         TextField instructorName = (TextField)gui.getGUINode(SITE_NAME_TEXT_FIELD);
         instructorName.textProperty().addListener((obs, oldText, newText)->{
             controller.processInstructorName((String)oldText, (String)newText);
@@ -1629,14 +1469,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             controller.processRemoveLab();
         });
         
-//        DatePicker start = getStartDate();
-//        start.valueProperty().addListener(e->{
-//            controller.processStartDate(start.getValue());
-//        });
-//        DatePicker end = getEndDate();
-//        end.valueProperty().addListener(e->{
-//            controller.processEndDate(end.getValue());
-//        });
+
         ((Button) gui.getGUINode(SCH_CLEAR_BUTTON)).setOnAction(e -> {
             controller.processClearSelection();
         });

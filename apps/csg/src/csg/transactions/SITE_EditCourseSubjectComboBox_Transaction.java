@@ -9,6 +9,7 @@ import csg.CSGApp;
 import csg.data.CSGData;
 import csg.data.SiteData;
 import djf.modules.AppGUIModule;
+import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import jtps.jTPS_Transaction;
 
@@ -24,45 +25,72 @@ public class SITE_EditCourseSubjectComboBox_Transaction implements jTPS_Transact
     String old;
     String n;
     
-    public SITE_EditCourseSubjectComboBox_Transaction(CSGApp initApp, CSGData d, SiteData data, ComboBox c, String old, String n){
+    public SITE_EditCourseSubjectComboBox_Transaction(CSGApp initApp, CSGData d, SiteData data, ComboBox c){
         app = initApp;
         this.d = d;
         this.data = data;
         this.c = c;
-        this.old = old;
-        this.n = n;
+        this.old = data.getSelectedName();
+        this.n = (String)c.getSelectionModel().getSelectedItem();
     }
     
     @Override
     public void doTransaction() {
         AppGUIModule gui = app.getGUIModule();
-        c.getSelectionModel().select(n);
-        data.setSelectedName((String)c.getSelectionModel().getSelectedItem());
-        boolean dupFound = false;
-        for(Object s: c.getItems()){
-            String c = (String)s;
-            if(c != null && c.equals(n)){
-                dupFound = true;
-                break;
-            }
-        }
-        if(!dupFound){
-            c.getItems().add(n);  
+        if(n != null){
+            data.setSelectedName(n); 
+            c.setValue(n);
             c.getSelectionModel().select(n);
+//            this.old = data.getSelectedName()
+        } 
+        else{
+            data.setSelectedName((String)c.getSelectionModel().getSelectedItem());
+            c.getSelectionModel().select((String)c.getSelectionModel().getSelectedItem());
         }
-        c.getItems().forEach((s) -> {
-            String h = (String)s;
-            if (h != null && h.trim().equals("")) {
-                c.getItems().remove(s);
-            }
-        });
+        ObservableList subjects = c.getItems();
+        boolean dupFound = false;
+                for(Object s: subjects){
+                    String c = (String)s;
+                    if(c != null && c.equals(n)){
+                        dupFound = true;
+                        break;
+                    }
+                }
+                if(!dupFound){
+                    subjects.add(n);  
+//                    subjectCBox.getSelectionModel().select(t1);
+                }
+                subjects.forEach((s) -> {
+                    String c = (String)s;
+                    if (c != null && c.trim().equals("")) {
+                        subjects.remove(s);
+                    }
+                });
+//                for(int i = 0; i < subjects.size(); i++){
+//                    String c = (String)subjects.get(i);
+//                    if(c != null && c.trim().equals("")){
+//                        subjects.remove(i);
+//                    }
+//                }
+                c.setItems(subjects);
+                c.getSelectionModel().select(n);
     }
 
     @Override
     public void undoTransaction() {
         AppGUIModule gui = app.getGUIModule();
-        c.getSelectionModel().select(old);
-        data.setSelectedName(this.old);
+        if(old != null && !old.equals("")){
+            data.setSelectedName(this.old);
+            c.setValue(old);
+            c.getSelectionModel().select(old);
+        }
+        else{           
+            c.getSelectionModel().selectFirst();
+            this.old = (String)c.getSelectionModel().getSelectedItem();
+            c.setValue(old);
+            data.setSelectedName(this.old);
+        }
+//        c.getSelectionModel().clearSelection();
 
     }
 }
