@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title></title>
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <link href="./css/course_homepage_layout.css" rel="stylesheet" type="text/css">
+        <link href="./css/sea_wolf.css" rel="stylesheet" type="text/css">
+
+        <!-- LINK TO OUR JavaScript FILE AND JQuery -->
+        <script src="./js/jquery.min.js"></script>
+        <script src="./js/PageBuilder.js"></script>
+        <script src="./js/HWsBuilder.js"></script>
+
+        <!-- ONCE THE PAGE FULLY LOADS INITIALIZE THE SLIDESHOW -->
+        <script>
+            $(document).ready()
+            {
+                buildPage("HWs", ".");
+                buildHWs();
+            }
+        </script>
+    </head>
+
+    <body>
+        <div id="content">
+            <div id="navbar"><a id="navbar_image_link"></a></div>
+
+            <div id="banner"></div>
+
+            <div id="desc">
+                <h3>Homework Assignments</h3>
+
+                <p>Note that the <a href='./schedule.html'>Schedule Page</a> also contains links to assignments.</p>
+
+                <table class="hws">
+                    <tbody id="hws">
+                        <tr class="hws" style="background-color:rgb(235,215,215)">
+                            <th class="hws">Homework</th>
+                            <th class="hws">Due Date</th>
+                            <!--th class="hws">Grading Criteria</th>-->
+                        </tr>
+
+                        <!-- THIS WILL BE FILLED IN BY JAVASCRIPT -->
+                    </tbody>
+                </table>
+                <br />
+                <hr />
+
+                <a id="left_footer_image_link"></a>
+                <a id="right_footer_image_link"></a>
+                <p class="footer">Web page created and maintained<br />
+                    by <span id="author_link"></span></p>
+                <br /><br />
+            </div>
+        </div>
+    </body>
+</html>

@@ -4,8 +4,8 @@
     "number":"216",
     "semester":"Fall",
     "year":"2018",
-    "site_title":"",
-    "export_url":".\\export\\CSE_216_Fall_2018\\public.html",
+    "title":"CSE 216",
+    "export_url":"./export/CSE_216_Fall_2018/public_html",
     "pages":[
         {
             "name":"home",
@@ -26,53 +26,53 @@
     ],
     "logos":[
         {
-            "favicon":"./images/styleicons/sbusheath.jpeg"
+            "favicon":"./images/sbusheath.jpeg"
         },
         {
-            "navbar":"./images/styleicons/sbunavbar.png"
+            "navbar":"./images/sbunavbar.png"
         },
         {
-            "bottom_left":"./images/styleicons/sbuleftfooter.jpeg"
+            "bottom_left":"./images/sbuleftfooter.jpeg"
         },
         {
-            "bottom_right":"./images/styleicons/sburightfooter.png"
+            "bottom_right":"./images/sburightfooter.png"
         }
     ],
     "css":"./work/css/autumn.css",
     "instructor":[
         {
-            "instructor_name":""
+            "name":"me"
         },
         {
-            "instructor_email":""
+            "email":"me@me.com"
         },
         {
-            "instructor_room":""
+            "room":"me room"
         },
         {
-            "instructor_hp":""
+            "link":"me.com"
         },
         [
-            "[\n\t{\"Day\": \"\"\t\"Time\": \"\"}\n]"
+            "[\n\t{\"Day\": \"\", \t\"Time\": \"\"}\n]"
         ]
     ],
-    "description":"",
+    "description":"I don't care",
     "topics":[
-        "\"\","
+        "[\n\t\"topic 1\",\n\t\"topic 2\"\n]"
     ],
-    "prerequisites":"",
+    "prerequisites":"there are none",
     "outcomes":[
-        "\"\","
+        "[\n\t\"outcome 1\",\n\t\"outcome 2\"\n]"
     ],
     "textbooks":[
-        "{\n\t\t\"title\":\"\",\n\t\t\"link\":\"\",\n\t\t\"photo\":\"\",\n\t\t\"authors\":[\n\t\t\t\"\"\n\t\t],\n\t\t\"publisher\":\"\",\n\t\t\"year\":\"\"\n},"
+        "[\n\t{\n\t\t\t\"title\":\"Some title\",\n\t\t\t\"link\":\"title.com\",\n\t\t\t\"photo\":\"insert_photo_here\",\n\t\t\t\"authors\":[\n\t\t\t\t\"Some author\"\n\t\t\t],\n\t\t\t\"publisher\":\"some pub\",\n\t\t\t\"year\":\"2018\"\n\t}\n]"
     ],
     "graded_components":[
-        "{\n\t\t\"Name\": \"\"\n\t\t\"Description\": \"\"\n\t\t\"Weight\": \"\"\n},"
+        "[\n\t{\n\t\t\t\"Name\": \"Final\",\n\t\t\t\"Description\": \"Your final\",\n\t\t\t\"Weight\": \"100\"\n\t}\n]"
     ],
-    "grading_note":"",
-    "academic_dishonesty":"",
-    "special_assistance":"",
+    "grading_note":"don't care",
+    "academic_dishonesty":"don't care",
+    "special_assistance":"Crips for life",
     "lectures":[
     ],
     "recitations":[
@@ -84,38 +84,8 @@
     "grad_tas":[
     ],
     "undergrad_tas":[
-        {
-            "name":"me",
-            "email":"me@me.com",
-            "type":"Undergraduate"
-        }
     ],
     "officeHours":[
-        {
-            "time":"12_00am",
-            "day":"MONDAY",
-            "name":"me"
-        },
-        {
-            "time":"12_00am",
-            "day":"WEDNESDAY",
-            "name":"me"
-        },
-        {
-            "time":"12_00am",
-            "day":"FRIDAY",
-            "name":"me"
-        },
-        {
-            "time":"12_30am",
-            "day":"TUESDAY",
-            "name":"me"
-        },
-        {
-            "time":"12_30am",
-            "day":"THURSDAY",
-            "name":"me"
-        }
     ],
     "startDate":"",
     "endDate":"",
@@ -125,16 +95,10 @@
     "endingFridayMonth":"",
     "endingFridayDay":"",
     "endingFridayYear":"",
-    "sch_holidays":[
+    "holidays":[
     ],
-    "sch_lectures":[
+    "references":[
     ],
-    "sch_recitations":[
-    ],
-    "sch_labs":[
-    ],
-    "sch_references":[
-    ],
-    "sch_hws":[
+    "hws":[
     ]
 }

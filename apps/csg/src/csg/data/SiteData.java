@@ -17,6 +17,8 @@ import static csg.CSGPropertyType.SITE_YEARS_COMBO_BOX;
 import csg.workspace.CSGWorkspace;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -176,8 +178,8 @@ public class SiteData{
     }
     
     public String prepareExportUrlForSave(){
-        setExp(".\\export\\" + this.selectedName + "_" + this.selectedNum + "_" + this.selectedSem + "_" + this.selectedYear + "\\public.html");
-        return ".\\export\\" + this.selectedName + "_" + this.selectedNum + "_" + this.selectedSem + "_" + this.selectedYear + "\\public.html";
+        setExp("./export/" + this.selectedName + "_" + this.selectedNum + "_" + this.selectedSem + "_" + this.selectedYear + "/public_html");
+        return "./export/" + this.selectedName + "_" + this.selectedNum + "_" + this.selectedSem + "_" + this.selectedYear + "/public_html";
     }
 
     public void setSelectedPageOptions(ArrayList<String> selectedPageOptions) {
@@ -213,6 +215,11 @@ public class SiteData{
         CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
         ImageView imgView = workspace.getFviImgView();
         imgView.setImage(new Image("file:" + favUrl));
+        imgView.setFitWidth(25);
+        imgView.setFitHeight(25);
+        imgView.setPreserveRatio(true);
+        imgView.setSmooth(true);
+        imgView.setCache(true);
     }
 
     public String getNavUrl() {
@@ -225,6 +232,11 @@ public class SiteData{
         CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
         ImageView imgView = workspace.getNavImgView();
         imgView.setImage(new Image("file:" + navUrl));
+        imgView.setFitWidth(300);
+        imgView.setFitHeight(25);
+        imgView.setPreserveRatio(true);
+        imgView.setSmooth(true);
+        imgView.setCache(true);
     }
 
     public String getLeftUrl() {
@@ -237,6 +249,11 @@ public class SiteData{
         CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
         ImageView imgView = workspace.getLeftImgView();
         imgView.setImage(new Image("file:" + leftUrl));
+        imgView.setFitWidth(300);
+        imgView.setFitHeight(25);
+        imgView.setPreserveRatio(true);
+        imgView.setSmooth(true);
+        imgView.setCache(true);
     }
 
     public String getRightUrl() {
@@ -249,6 +266,11 @@ public class SiteData{
         CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
         ImageView imgView = workspace.getRightImgView();
         imgView.setImage(new Image("file:" + rightUrl));
+        imgView.setFitWidth(300);
+        imgView.setFitHeight(25);
+        imgView.setPreserveRatio(true);
+        imgView.setSmooth(true);
+        imgView.setCache(true);
     }
 
     public String getInstructorName() {
@@ -309,6 +331,16 @@ public class SiteData{
     
     public boolean isValidTextFieldInput(TextField tf){
         return !tf.getText().trim().equals("");
+    }
+    
+    public boolean isLegalNewEmail(String email) {
+        Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile(
+                "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(email);
+        if (matcher.find()) {
+            return true;
+        }
+        else return false;
     }
     
     public void clearOptions(){

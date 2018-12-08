@@ -28,18 +28,19 @@ public class SYL_EditAcademicDishonestyTA_Transaction implements jTPS_Transactio
     String old;
     String n;
     
-    public SYL_EditAcademicDishonestyTA_Transaction(CSGApp initApp, CSGWorkspace d, SyllabusData data, TextArea c, String old, String n){
+    public SYL_EditAcademicDishonestyTA_Transaction(CSGApp initApp, CSGWorkspace d, SyllabusData data, TextArea c){
         app = initApp;
         this.d = d;
         this.data = data;
         this.c = c;
-        this.old = old;
-        this.n = n;
+        this.old = data.getAdJSON();
+        this.n = c.getText();
     }
     
     @Override
     public void doTransaction() {
         AppGUIModule gui = app.getGUIModule();
+        data.setAdJSON(n);
         c.setText(n);
     }
 
@@ -47,6 +48,6 @@ public class SYL_EditAcademicDishonestyTA_Transaction implements jTPS_Transactio
     public void undoTransaction() {
         AppGUIModule gui = app.getGUIModule();
         c.setText(old);
-
+        data.setAdJSON(old);
     }
 }

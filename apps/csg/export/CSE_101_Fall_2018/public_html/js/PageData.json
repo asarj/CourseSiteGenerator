@@ -23,10 +23,10 @@
         }
     },
     "instructor":{
-        "name":"name2",
-        "link":"hp",
-        "email":"email",
-        "room":"room",
+        "name":"me",
+        "link":"http://www.me.com",
+        "email":"me@me.com",
+        "room":"me room",
         "photo":"insert_photo_here",
         "hours":[
             {
@@ -37,7 +37,7 @@
     },
     "pages":[
         {
-            "name":"home",
+            "name":"Home",
             "link":"index.html"
         },
         {

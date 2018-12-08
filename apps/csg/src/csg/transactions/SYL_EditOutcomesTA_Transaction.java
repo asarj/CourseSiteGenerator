@@ -28,25 +28,32 @@ public class SYL_EditOutcomesTA_Transaction implements jTPS_Transaction{
     String old;
     String n;
     
-    public SYL_EditOutcomesTA_Transaction(CSGApp initApp, CSGWorkspace d, SyllabusData data, TextArea c, String old, String n){
+    public SYL_EditOutcomesTA_Transaction(CSGApp initApp, CSGWorkspace d, SyllabusData data, TextArea c){
         app = initApp;
         this.d = d;
         this.data = data;
         this.c = c;
-        this.old = old;
-        this.n = n;
+        this.old = data.getOutcomesJSON();
+        this.n = c.getText();
     }
     
     @Override
     public void doTransaction() {
         AppGUIModule gui = app.getGUIModule();
+        data.setOutcomesJSON(n);
         c.setText(n);
     }
 
     @Override
     public void undoTransaction() {
         AppGUIModule gui = app.getGUIModule();
-        c.setText(old);
-
+        if(this.old.equals("")){
+            c.setText("[\n\t\"\"\n]");
+        }
+        else{
+            c.setText(old);
+            
+        }
+        data.setOutcomesJSON(old);
     }
 }

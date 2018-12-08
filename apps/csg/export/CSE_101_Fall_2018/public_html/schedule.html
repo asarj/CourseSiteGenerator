@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title></title>
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <link href="./css/course_homepage_layout.css" rel="stylesheet" type="text/css">
+        <link href="./css/sea_wolf.css" rel="stylesheet" type="text/css">
+
+        <!-- LINK TO OUR JavaScript FILE AND JQuery -->
+        <script src="./js/jquery.min.js"></script>
+        <script src="./js/PageBuilder.js"></script>
+        <script src="./js/ScheduleBuilder.js"></script>
+
+        <!-- ONCE THE PAGE FULLY LOADS INITIALIZE THE SLIDESHOW -->
+        <script>
+            $(document).ready()
+            {
+                buildPage("Schedule", ".");
+                buildSchedule();
+            }
+        </script>
+    </head>
+
+    <body>
+        <div id="content">
+            <div id="navbar"><a id="navbar_image_link"></a></div>
+
+            <div id="banner"></div>
+
+
+            <div id="desc">
+
+                <table border="1" cellspacing="0" class="schedule">
+                    <tbody id="schedule_table">
+                        <!-- THIS WILL BE FILLED IN BY JAVASCRIPT -->                        
+                    </tbody>
+                </table>
+
+                <br />
+
+                <hr />
+
+                <a id="left_footer_image_link"></a>
+                <a id="right_footer_image_link"></a>
+                <p class="footer">Web page created and maintained<br />
+                    by <span id="author_link"></span></p>
+                <br /><br />
+            </div>
+        </div>
+    </body>
+</html>

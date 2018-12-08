@@ -27,25 +27,34 @@ public class SITE_EditInstructorOHTA_Transaction implements jTPS_Transaction{
     String old;
     String n;
     
-    public SITE_EditInstructorOHTA_Transaction(CSGApp initApp, CSGWorkspace d, SiteData data, TextArea c, String old, String n){
+    public SITE_EditInstructorOHTA_Transaction(CSGApp initApp, CSGWorkspace d, SiteData data, TextArea c){
         app = initApp;
         this.d = d;
         this.data = data;
         this.c = c;
-        this.old = old;
-        this.n = n;
+        this.old = data.getInstructorHoursJSON();
+        this.n = c.getText();
     }
     
     @Override
     public void doTransaction() {
         AppGUIModule gui = app.getGUIModule();
+        data.setInstructorHoursJSON(n);
         c.setText(n);
     }
 
     @Override
     public void undoTransaction() {
         AppGUIModule gui = app.getGUIModule();
-        c.setText(old);
+        if(this.old.equals("")){
+            c.setText("["
+                                    + "\n\t{\"Day\": \"\", \t\"Time\": \"\"}"
+                                 + "\n]");
+        }
+        else{
+            c.setText(old);
+        }
+        data.setInstructorHoursJSON(old);
 
     }
 }

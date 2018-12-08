@@ -127,10 +127,10 @@ public class CSGFiles implements AppFileComponent {
     static final String JSON_SYL_PREREQUISITES = "prerequisites";
     static final String JSON_SYL_OUTCOMES = "outcomes";
     static final String JSON_SYL_TEXTBOOKS = "textbooks";
-    static final String JSON_SYL_GC = "graded_components";
-    static final String JSON_SYL_GN = "grading_note";
-    static final String JSON_SYL_AD = "academic_dishonesty";
-    static final String JSON_SYL_SA = "special_assistance";
+    static final String JSON_SYL_GC = "gradedComponents";
+    static final String JSON_SYL_GN = "gradingNote";
+    static final String JSON_SYL_AD = "academicDishonesty";
+    static final String JSON_SYL_SA = "specialAssistance";
     
     // MEETING TIMES DATA FIELDS
     static final String JSON_MT_LECTURES = "lectures";
@@ -1414,13 +1414,11 @@ public class CSGFiles implements AppFileComponent {
         ScheduleData schDataManager = d.getScheduleData();
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         
-        String pageDataPath = "./export/js/PageData.json";
-        String ohDataPath = "./export/js/OfficeHoursData.json";
-        String mtDataPath = "./export/js/MeetingTimesData.json";
-        String schDataPath = "./export/js/ScheduleData.json";
-        String sylDataPath = "./export/js/SyllabusData.json";
-        String cssDataPath = "./export/css/";
-        String imagesDataPath = ".export/images/";
+        String pageDataPath = "./public_html/js/PageData.json";
+        String ohDataPath = "./public_html/js/OfficeHoursData.json";
+        String mtDataPath = "./public_html/js/SectionsData.json";
+        String schDataPath = "./public_html/js/ScheduleData.json";
+        String sylDataPath = "./public_html/js/SyllabusData.json";
 //        String bannerImageDirectory = filePath + "images/SBUDarkRedShieldLogo.png";
 //        String leftFooterDirectory = filePath + "images/CSLogo.png";
 //        String rightFooterDirectory = filePath + "images/SBUWhiteShieldLogo.jpg";
@@ -1474,6 +1472,26 @@ public class CSGFiles implements AppFileComponent {
 //            ((Label)gui.getGUINode(SITE_EXPORT_LABEL)).setText(siteDataManager.prepareExportUrlForSave());
         }
         siteDataManager.prepareExportUrlForSave();
+        
+        pageDataPath = siteDataManager.getExp() + pageDataPath.substring(pageDataPath.lastIndexOf("l/") + 1, pageDataPath.lastIndexOf("PageData.json"));
+        ohDataPath = siteDataManager.getExp() + ohDataPath.substring(ohDataPath.lastIndexOf("l/") + 1, ohDataPath.lastIndexOf("OfficeHoursData.json"));
+        mtDataPath = siteDataManager.getExp() + mtDataPath.substring(mtDataPath.lastIndexOf("l/") + 1, mtDataPath.lastIndexOf("SectionsData.json"));
+        schDataPath = siteDataManager.getExp() + schDataPath.substring(schDataPath.lastIndexOf("l/") + 1, schDataPath.lastIndexOf("ScheduleData.json"));
+        sylDataPath = siteDataManager.getExp() + sylDataPath.substring(sylDataPath.lastIndexOf("l/") + 1, sylDataPath.lastIndexOf("SyllabusData.json"));
+        new File(pageDataPath).mkdirs();
+        new File(ohDataPath).mkdirs();
+        new File(mtDataPath).mkdirs();
+        new File(schDataPath).mkdirs();
+        new File(sylDataPath).mkdirs();
+        String cssPath = siteDataManager.getExp() + "/css/";
+        new File(cssPath).mkdirs();
+        String imgPath = siteDataManager.getExp() + "/images/";
+        new File(imgPath).mkdirs();
+        pageDataPath = siteDataManager.getExp() + "/js/PageData.json";
+        ohDataPath = siteDataManager.getExp() + "/js/OfficeHoursData.json";
+        mtDataPath = siteDataManager.getExp() + "/js/SectionsData.json";
+        schDataPath = siteDataManager.getExp() + "/js/ScheduleData.json";
+        sylDataPath = siteDataManager.getExp() + "/js/SyllabusData.json";
         String siteTitle = "";
         if(siteDataManager.getTitle().trim().equals("")){
             siteTitle = (String)((TextField)gui.getGUINode(SITE_TITLE_TEXT_FIELD)).getText();
@@ -1495,25 +1513,25 @@ public class CSGFiles implements AppFileComponent {
             if(i == 0){
                 if(siteDataManager.getSelectedPageOptions().get(i).equals("home")){
                 JsonObject cbOption = Json.createObjectBuilder()
-                        .add(JSON_SITE_PAGES_NAME, siteDataManager.getSelectedPageOptions().get(i))
+                        .add(JSON_SITE_PAGES_NAME, "H" + siteDataManager.getSelectedPageOptions().get(i).substring(1))
                         .add(JSON_SITE_PAGES_LINK, "index.html").build();
                     pagesArrayBuilder.add(cbOption);
                 }
                 else if(siteDataManager.getSelectedPageOptions().get(i).equals("syllabus")){
                     JsonObject cbOption = Json.createObjectBuilder()
-                            .add(JSON_SITE_PAGES_NAME, siteDataManager.getSelectedPageOptions().get(i))
+                            .add(JSON_SITE_PAGES_NAME, "S" + siteDataManager.getSelectedPageOptions().get(i).substring(1))
                             .add(JSON_SITE_PAGES_LINK, "index.html").build();
                     pagesArrayBuilder.add(cbOption);
                 }
                 else if(siteDataManager.getSelectedPageOptions().get(i).equals("schedule")){
                     JsonObject cbOption = Json.createObjectBuilder()
-                            .add(JSON_SITE_PAGES_NAME, siteDataManager.getSelectedPageOptions().get(i))
+                            .add(JSON_SITE_PAGES_NAME, "S" + siteDataManager.getSelectedPageOptions().get(i).substring(1))
                             .add(JSON_SITE_PAGES_LINK, "index.html").build();
                     pagesArrayBuilder.add(cbOption);
                 }
                 else if(siteDataManager.getSelectedPageOptions().get(i).equals("hw")){
                     JsonObject cbOption = Json.createObjectBuilder()
-                            .add(JSON_SITE_PAGES_NAME, siteDataManager.getSelectedPageOptions().get(i))
+                            .add(JSON_SITE_PAGES_NAME, "HWs")
                             .add(JSON_SITE_PAGES_LINK, "index.html").build();
                     pagesArrayBuilder.add(cbOption);
                 }
@@ -2086,6 +2104,7 @@ public class CSGFiles implements AppFileComponent {
                 // Adds the OH Info
 		.add(JSON_OH_START_HOUR, "" + ohDataManager.getStartHour())
 		.add(JSON_OH_END_HOUR, "" + ohDataManager.getEndHour())
+                .add(JSON_SITE_INSTRUCTOR, instructorArray)
                 .add(JSON_OH_GRAD_TAS, gradTAsArray)
                 .add(JSON_OH_UNDERGRAD_TAS, undergradTAsArray)
                 .add(JSON_OH_OFFICE_HOURS, officeHoursArray).build();
@@ -2138,11 +2157,24 @@ public class CSGFiles implements AppFileComponent {
 	schPW.write(schPrettyPrinted);
 	schPW.close();
         
+        
         // Copying the CSS over
         Path cssImport = Paths.get(siteDataManager.getCSS());
-        Path cssExport = Paths.get("./export/css/");
+        Path cssExport = Paths.get(siteDataManager.getExp() + "/css/");
         try{
             Files.copy(cssImport, cssExport.resolve(cssImport.getFileName()));
+            
+        }
+        catch(FileAlreadyExistsException e){
+            
+        }
+        File rename = new File(cssExport + "/" + siteDataManager.getCSS().substring(siteDataManager.getCSS().lastIndexOf("/") + 1));
+        boolean renameResult = rename.renameTo(new File(cssExport + "/sea_wolf.css"));
+//        Files.move(Paths.get(cssExport + siteDataManager.getCSS().substring(siteDataManager.getCSS().lastIndexOf("/") + 1)), Paths.get(cssExport + siteDataManager.getCSS().substring(siteDataManager.getCSS().lastIndexOf("/") + 1)).resolveSibling("sea_wolf.css"));
+        Path cssDefImport = Paths.get("./work/selectedcss/course_homepage_layout.css");
+        Path cssDefExport = Paths.get(siteDataManager.getExp() + "/css/");
+        try{
+            Files.copy(cssDefImport, cssDefExport.resolve(cssDefImport.getFileName()));
         }
         catch(FileAlreadyExistsException e){
             
@@ -2153,7 +2185,7 @@ public class CSGFiles implements AppFileComponent {
         Path navImport = Paths.get(siteDataManager.getNavUrl());
         Path leftImport = Paths.get(siteDataManager.getLeftUrl());
         Path rightImport = Paths.get(siteDataManager.getRightUrl());
-        Path imgExport = Paths.get("./export/images/");
+        Path imgExport = Paths.get(siteDataManager.getExp() + "/images/");
         try{
             Files.copy(favImport, imgExport.resolve(favImport.getFileName())); 
         }
@@ -2181,8 +2213,19 @@ public class CSGFiles implements AppFileComponent {
         
         // Copying everything over
         File exportTo = new File("./app_data/");
-        File importTo = new File("./export/");
+        File importTo = new File(siteDataManager.getExp());
+        File exportToCSS = new File("./app_data/css/");
+        File exportToImg = new File("./app_data/images/");
+        File exportToJS = new File("./app_data/js/");
+        File htmlImport = new File("./work/html/");
+        File htmlExport= new File(siteDataManager.getExp());
+        File jsImport = new File("./work/js/");
+        File jsExport = new File(siteDataManager.getExp() + "/js/");
+        FileUtils.copyDirectory(htmlImport, htmlExport);
+        FileUtils.copyDirectory(jsImport, jsExport);
         FileUtils.copyDirectory(importTo, exportTo);
+        AppWebDialog a = new AppWebDialog(app);
+        a.showWebDialog(siteDataManager.getExp() + "/index.html");
     }
 
     @Override

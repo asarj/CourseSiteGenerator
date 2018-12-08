@@ -370,9 +370,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
                 fviImgView.setSmooth(true);
                 fviImgView.setCache(true);
                 
-                CSGController controller = new CSGController((CSGApp) app);
-                AppGUIModule gui = app.getGUIModule();
-                controller.processFviImgViewFile(f.getPath());
+                outsideController.processFviImgViewFile(f.getPath());
 
             }
             
@@ -396,7 +394,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
                 
                 CSGController controller = new CSGController((CSGApp) app);
                 AppGUIModule gui = app.getGUIModule();
-                controller.processNavImgViewFile(f.getPath());
+                outsideController.processNavImgViewFile(f.getPath());
             }
             
             
@@ -417,9 +415,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
                 leftImgView.setSmooth(true);
                 leftImgView.setCache(true);
                 
-                CSGController controller = new CSGController((CSGApp) app);
-                AppGUIModule gui = app.getGUIModule();
-                controller.processLeftImgViewFile(f.getPath());
+                outsideController.processLeftImgViewFile(f.getPath());
             }
             
             
@@ -440,9 +436,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
                 rightImgView.setSmooth(true);
                 rightImgView.setCache(true);
                 
-                CSGController controller = new CSGController((CSGApp) app);
-                AppGUIModule gui = app.getGUIModule();
-                controller.processRightImgViewFile(f.getPath());
+                outsideController.processRightImgViewFile(f.getPath());
             }
             
             
@@ -510,10 +504,8 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             instructorOHJsonArea.setVisible(siteInstructorOHExpandButton.getText().equals("-")? true: false);
         });
         
-        instructorOHJsonArea.textProperty().addListener((obs, old, n)->{
-            CSGController controller = new CSGController((CSGApp) app);
-            AppGUIModule gui = app.getGUIModule();
-            controller.processInstructorHoursJSON(instructorOHJsonArea.getText(), old, n);
+        instructorOHJsonArea.focusedProperty().addListener(e->{
+            outsideController.processInstructorHoursJSON();
         });
         
 
@@ -554,10 +546,8 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             descTA.setManaged(sylDescExpandButton.getText().equals("-")? true: false);
             descTA.setVisible(sylDescExpandButton.getText().equals("-")? true: false);
         });
-        descTA.textProperty().addListener((obs, old, n)->{
-            CSGController controller = new CSGController((CSGApp) app);
-            AppGUIModule gui = app.getGUIModule();
-            controller.processDescriptionJSON(descTA.getText(), old, n);
+        descTA.focusedProperty().addListener(e->{
+            outsideController.processDescriptionJSON();
         });
 //        descDetail.getChildren().addAll(sylDescExpandButton, sylDesc);
 //        descBox.add(descDetail, 0, 1);
@@ -587,10 +577,8 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             topicTA.setManaged(sylTopicExpandButton.getText().equals("-")? true: false);
             topicTA.setVisible(sylTopicExpandButton.getText().equals("-")? true: false);
         });
-        topicTA.textProperty().addListener((obs, old, n)->{
-            CSGController controller = new CSGController((CSGApp) app);
-            AppGUIModule gui = app.getGUIModule();
-            controller.processTopicsJSON(topicTA.getText(), old, n);
+        topicTA.focusedProperty().addListener(e->{
+            outsideController.processTopicsJSON();
         });
 //        HBox topicDetail = new HBox();
 //        topicDetail.getChildren().addAll(sylTopicExpandButton, sylTopic);
@@ -617,10 +605,8 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             prereqTA.setManaged(sylPrereqExpandButton.getText().equals("-")? true: false);
             prereqTA.setVisible(sylPrereqExpandButton.getText().equals("-")? true: false);
         });
-        prereqTA.textProperty().addListener((obs, old, n)->{
-            CSGController controller = new CSGController((CSGApp) app);
-            AppGUIModule gui = app.getGUIModule();
-            controller.processPrereqsJSON(prereqTA.getText(), old, n);
+        prereqTA.focusedProperty().addListener(e->{
+            outsideController.processPrereqsJSON();
         });
 //        prereqDetail.getChildren().addAll(sylPrereqExpandButton, prereqLabel);
 //        prereqBox.add(prereqDetail, 0, 1);
@@ -649,10 +635,8 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             outcomesTA.setManaged(sylOutcomesExpandButton.getText().equals("-")? true: false);
             outcomesTA.setVisible(sylOutcomesExpandButton.getText().equals("-")? true: false);
         });
-        outcomesTA.textProperty().addListener((obs, old, n)->{
-            CSGController controller = new CSGController((CSGApp) app);
-            AppGUIModule gui = app.getGUIModule();
-            controller.processOutcomesJSON(outcomesTA.getText(), old, n);
+        outcomesTA.focusedProperty().addListener(e->{
+            outsideController.processOutcomesJSON();
         });
 //        outcomesDetail.getChildren().addAll(sylOutcomesExpandButton, outcomesLabel);
 //        outcomesBox.add(outcomesDetail, 0, 1);
@@ -688,10 +672,8 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             textbooksTA.setManaged(sylTextbooksExpandButton.getText().equals("-")? true: false);
             textbooksTA.setVisible(sylTextbooksExpandButton.getText().equals("-")? true: false);
         });
-        textbooksTA.textProperty().addListener((obs, old, n)->{
-            CSGController controller = new CSGController((CSGApp) app);
-            AppGUIModule gui = app.getGUIModule();
-            controller.processTextbooksJSON(textbooksTA.getText(), old, n);
+        textbooksTA.focusedProperty().addListener(e->{
+            outsideController.processTextbooksJSON();
         });
 //        textbooksDetail.getChildren().addAll(sylTextbooksExpandButton, textbookLabel);
 //        textbookBox.add(textbooksDetail, 0, 1);
@@ -711,9 +693,9 @@ public class CSGWorkspace extends AppWorkspaceComponent {
 //        gradedComponentsLabel.setId("section_header_label");
         gcTA = new TextArea();
         gcTA.setText("[\n\t{"
-                            + "\n\t\t\t\"Name\": \"\","
-                            + "\n\t\t\t\"Description\": \"\","
-                            + "\n\t\t\t\"Weight\": \"\""
+                            + "\n\t\t\t\"name\": \"\","
+                            + "\n\t\t\t\"description\": \"\","
+                            + "\n\t\t\t\"weight\": \"\""
                         + "\n\t}\n]"
                     );
         gcTA.setVisible(false);
@@ -723,10 +705,8 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             gcTA.setManaged(sylGCExpandButton.getText().equals("-")? true: false);
             gcTA.setVisible(sylGCExpandButton.getText().equals("-")? true: false);
         });
-        gcTA.textProperty().addListener((obs, old, n)->{
-            CSGController controller = new CSGController((CSGApp) app);
-            AppGUIModule gui = app.getGUIModule();
-            controller.processGCJSON(gcTA.getText(), old, n);
+        gcTA.focusedProperty().addListener(e->{
+            outsideController.processGCJSON();
         });
 //        gcDetail.getChildren().addAll(sylGCExpandButton, gradedComponentsLabel);
 //        gradedComponentsBox.add(gcDetail, 0, 1);
@@ -752,10 +732,8 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             gradingNoteTA.setManaged(sylGradingNoteExpandButton.getText().equals("-")? true: false);
             gradingNoteTA.setVisible(sylGradingNoteExpandButton.getText().equals("-")? true: false);
         });
-        gradingNoteTA.textProperty().addListener((obs, old, n)->{
-            CSGController controller = new CSGController((CSGApp) app);
-            AppGUIModule gui = app.getGUIModule();
-            controller.processGNJSON(gradingNoteTA.getText(), old, n);
+        gradingNoteTA.focusedProperty().addListener(e->{
+            outsideController.processGNJSON();
         });
 //        gradingNoteDetail.getChildren().addAll(sylGradingNoteExpandButton, gradingNoteLabel);
 //        gradingNoteBox.add(gradingNoteDetail, 0, 1);
@@ -781,10 +759,8 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             adTA.setManaged(sylADExpandButton.getText().equals("-")? true: false);
             adTA.setVisible(sylADExpandButton.getText().equals("-")? true: false);
         });
-        adTA.textProperty().addListener((obs, old, n)->{
-            CSGController controller = new CSGController((CSGApp) app);
-            AppGUIModule gui = app.getGUIModule();
-            controller.processADJSON(adTA.getText(), old, n);
+        adTA.focusedProperty().addListener(e->{
+            outsideController.processADJSON();
         });
 //        adDetail.getChildren().addAll(sylADExpandButton, adLabel);
 //        adBox.add(adDetail, 0, 1);
@@ -810,10 +786,8 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             saTA.setManaged(sylSAExpandButton.getText().equals("-")? true: false);
             saTA.setVisible(sylSAExpandButton.getText().equals("-")? true: false);
         });
-        saTA.textProperty().addListener((obs, old, n)->{
-            CSGController controller = new CSGController((CSGApp) app);
-            AppGUIModule gui = app.getGUIModule();
-            controller.processSAJSON(saTA.getText(), old, n);
+        saTA.focusedProperty().addListener(e->{
+            outsideController.processSAJSON();
         });
 //        saDetail.getChildren().addAll(sylSAExpandButton, saLabel);
 //        saBox.add(saDetail, 0, 1);
@@ -1413,40 +1387,40 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             controller.processCourseTitle();
         });
         CheckBox courseHomeCB = (CheckBox)gui.getGUINode(SITE_HOME_CHECK_BOX);
-        courseHomeCB.setOnAction(e->{
-            controller.processCheckedOptions();
+        courseHomeCB.focusedProperty().addListener(e->{
+            controller.processHomeCheckBox();
         });
         CheckBox courseSyllabusCB = (CheckBox)gui.getGUINode(SITE_SYLLABUS_CHECK_BOX);
-        courseSyllabusCB.setOnAction(e->{
-            controller.processCheckedOptions();
+        courseSyllabusCB.focusedProperty().addListener(e->{
+            controller.processSyllabusCheckBox();
         });
         CheckBox courseScheduleCB = (CheckBox)gui.getGUINode(SITE_SCHEDULE_CHECK_BOX);
-        courseScheduleCB.setOnAction(e->{
-            controller.processCheckedOptions();
+        courseScheduleCB.focusedProperty().addListener(e->{
+            controller.processScheduleCheckBox();
         });
         CheckBox courseHWCB = (CheckBox)gui.getGUINode(SITE_HW_CHECK_BOX);
-        courseHWCB.setOnAction(e->{
-            controller.processCheckedOptions();
+        courseHWCB.focusedProperty().addListener(e->{
+            controller.processHWCheckBox();
         });
-        ComboBox siteCSS = (ComboBox)gui.getGUINode(SITE_CSS_COMBO_BOX);
+//        ComboBox siteCSS = (ComboBox)gui.getGUINode(SITE_CSS_COMBO_BOX);
 //        siteCSS.valueProperty().addListener((obs, oldVal, newVal)->{
 //            controller.processSiteCSS((String)oldVal, (String)newVal);
 //        });
         TextField instructorName = (TextField)gui.getGUINode(SITE_NAME_TEXT_FIELD);
-        instructorName.textProperty().addListener((obs, oldText, newText)->{
-            controller.processInstructorName((String)oldText, (String)newText);
+        instructorName.focusedProperty().addListener(e->{
+            controller.processInstructorName();
         });
         TextField instructorEmail = (TextField)gui.getGUINode(SITE_EMAIL_TEXT_FIELD);
-        instructorEmail.textProperty().addListener((obs, oldText, newText)->{
-            controller.processInstructorEmail((String)oldText, (String)newText);
+        instructorEmail.focusedProperty().addListener(e->{
+            controller.processInstructorEmail();
         });
         TextField instructorRoom = (TextField)gui.getGUINode(SITE_ROOM_TEXT_FIELD);
-        instructorRoom.textProperty().addListener((obs, oldText, newText)->{
-            controller.processInstructorRoom((String)oldText, (String)newText);
+        instructorRoom.focusedProperty().addListener(e->{
+            controller.processInstructorRoom();
         });
         TextField instructorHP = (TextField)gui.getGUINode(SITE_HP_TEXT_FIELD);
-        instructorHP.textProperty().addListener((obs, oldText, newText)->{
-            controller.processInstructorHP((String)oldText, (String)newText);
+        instructorHP.focusedProperty().addListener(e->{
+            controller.processInstructorHP();
         });
         
         

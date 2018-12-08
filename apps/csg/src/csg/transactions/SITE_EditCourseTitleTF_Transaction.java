@@ -44,8 +44,8 @@ public class SITE_EditCourseTitleTF_Transaction implements jTPS_Transaction{
     @Override
     public void undoTransaction() {
         AppGUIModule gui = app.getGUIModule();
-        data.setTitle(old);
         c.setText(old);
+        data.setTitle(old);
 
     }
 }

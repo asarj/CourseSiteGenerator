@@ -28,18 +28,19 @@ public class SYL_EditSpecialAssistanceTA_Transaction implements jTPS_Transaction
     String old;
     String n;
     
-    public SYL_EditSpecialAssistanceTA_Transaction(CSGApp initApp, CSGWorkspace d, SyllabusData data, TextArea c, String old, String n){
+    public SYL_EditSpecialAssistanceTA_Transaction(CSGApp initApp, CSGWorkspace d, SyllabusData data, TextArea c){
         app = initApp;
         this.d = d;
         this.data = data;
         this.c = c;
-        this.old = old;
-        this.n = n;
+        this.old = data.getSaJSON();
+        this.n = c.getText();
     }
     
     @Override
     public void doTransaction() {
         AppGUIModule gui = app.getGUIModule();
+        data.setSaJSON(n);
         c.setText(n);
     }
 
@@ -47,6 +48,6 @@ public class SYL_EditSpecialAssistanceTA_Transaction implements jTPS_Transaction
     public void undoTransaction() {
         AppGUIModule gui = app.getGUIModule();
         c.setText(old);
-
+        data.setSaJSON(old);
     }
 }

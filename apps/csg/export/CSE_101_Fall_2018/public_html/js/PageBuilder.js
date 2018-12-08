@@ -1,35 +1,31 @@
-function buildCourse(page, pathHome) {
-    var dataFile = pathHome + "/js/CourseData.json";
-    loadCourseData(dataFile, page, pathHome);
-}
-
-function loadCourseData(jsonFile, page, pathHome) {
+function buildPage(page, pathHome) {
+    var jsonFile = pathHome + "/js/PageData.json";
     $.getJSON(jsonFile, function (json) {
         json.page = page;
-        addCourseBanner(json);
-        addCourseLogos(json, pathHome);
-        addCourseAuthor(json);
-        addCoursePages(json, pathHome);
+        addBanner(json);
+        addLogos(json, pathHome);
+        addAuthor(json);
+        addPages(json, pathHome);
     });
 }
-
-function addCourseBanner(data) {
+function addBanner(data) {
     // SET THE PAGE TITLE
-    document.title = data.code + " - " + data.page;
+    var code = data.subject + " " + data.number;
+    var semester = data.semester + " " + data.year;
+    document.title = code + " - " + data.page;
 
     var inlinedCourseName = $("#inlined_course");
     if (inlinedCourseName) {
-        inlinedCourseName.append(data.code);
+        inlinedCourseName.append(code);
     }
 
     var courseBanner = $("#banner");
     if (courseBanner) {
-        var text = data.code + " - " + data.semester + "<br />" + data.title;
+        var text = code + " - " + semester + "<br />" + data.title;
         courseBanner.append(text);
     }
 }
-
-function addCourseLogos(data, pathHome) {
+function addLogos(data, pathHome) {
     // ADD THE COURSE FAVICON
     var head = $("head");
     var faviconImgText = "<link rel='shortcut icon' href='" + pathHome + "/" + data.logos.favicon.href + "' />";
@@ -38,36 +34,33 @@ function addCourseLogos(data, pathHome) {
     // LOGO IN THE TOP RIGHT OF THE NAVBAR
     var navbarImageLink = $("#navbar_image_link");
     navbarImageLink.attr("href", data.logos.navbar.href);
-    var navbarImgText = "<img class='sbu_navbar' alt='" + data.logos.navbar.alt + "' src='" + pathHome + "/" + data.logos.navbar.src + "' />";
+    var navbarImgText = "<img class='sbu_navbar' alt='" + data.logos.navbar.href + "' src='" + pathHome + "/" + data.logos.navbar.src + "' />";
     navbarImageLink.append(navbarImgText);
     
     // LOGO IN THE BOTTOM LEFT OF THE FOOTER
     var leftFooterImageLink = $("#left_footer_image_link");
     leftFooterImageLink.attr("href", data.logos.bottom_left.href);
-    var leftImgText = "<img alt='" + data.logos.bottom_left.alt + "' src='" + pathHome + "/" + data.logos.bottom_left.src + "' style='float:left' />";
+    var leftImgText = "<img alt='" + data.logos.bottom_left.href + "' src='" + pathHome + "/" + data.logos.bottom_left.src + "' style='float:left' />";
     leftFooterImageLink.append(leftImgText);
 
     // LOGO IN THE BOTTOM RIGHT OF THE FOOTER
     var rightFooterImageLink = $("#right_footer_image_link");
     rightFooterImageLink.attr("href", data.logos.bottom_right.href);
-    var rightImgText = "<img alt='" + data.logos.bottom_right.alt + "' src='" + pathHome + "/" + data.logos.bottom_right.src + "' style='float:right' />";
+    var rightImgText = "<img alt='" + data.logos.bottom_right.href + "' src='" + pathHome + "/" + data.logos.bottom_right.src + "' style='float:right' />";
     rightFooterImageLink.append(rightImgText);
 }
-
-function addCourseAuthor(data) {
-    var authorSpan = $("#instructor_link");
-    var text = "<a href='" + data.author.link + "'>" + data.author.name + "</a>";
+function addAuthor(data) {
+    var authorSpan = $("#author_link");
+    var text = "<a href='" + data.instructor.link + "'>" + data.instructor.name + "</a>";
     authorSpan.append(text);
 }
-
-function addCoursePages(data, pathHome) {
+function addPages(data, pathHome) {
     var navbar = $("#navbar");
     var navbarLinks = {
         "Home": "index.html",
         "Syllabus": "syllabus.html",
         "Schedule": "schedule.html",
-        "HWs": "hws.html",
-        "Projects": "projects.html"
+        "HWs": "hws.html"
     };
     for (var i = 0; i < data.pages.length; i++) {
         var page = data.pages[i];

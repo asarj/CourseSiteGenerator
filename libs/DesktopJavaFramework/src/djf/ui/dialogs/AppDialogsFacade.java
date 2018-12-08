@@ -48,10 +48,13 @@ public class AppDialogsFacade {
     }
 
     public static void showExportDialog(AppTemplate app) throws IOException {
-        AppWebDialog dialog = new AppWebDialog(app);
-        PropertiesManager props = PropertiesManager.getPropertiesManager();
-        String filePath = props.getProperty(APP_EXPORT_PAGE);
-        dialog.showWebDialog("./export/index.html");
+//        AppWebDialog dialog = new AppWebDialog(app);
+//        PropertiesManager props = PropertiesManager.getPropertiesManager();
+//        String filePath = props.getProperty(APP_EXPORT_PAGE);
+//        dialog.showWebDialog(
+////                filePath
+//                "./export/CSE_101_Fall_2018/public_html/index.html"
+//        );
     }
 
     public static void showHelpDialog(AppTemplate app) {

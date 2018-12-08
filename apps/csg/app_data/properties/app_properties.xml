@@ -70,7 +70,7 @@
         <!-- OH BUTTONS TOOLBAR -->
 
         <!-- THIS IS THE FILE WE'LL USE TO MAKE OUR EXPORTED WEB FILE -->
-        
+        <property name="HREF"      value="http://www.cs.stonybrook.edu"></property>
 
         <!-- ENGLISH IS THE DEFAULT -->
         <property name="DEFAULT_LANGUAGE"               value="English"></property>

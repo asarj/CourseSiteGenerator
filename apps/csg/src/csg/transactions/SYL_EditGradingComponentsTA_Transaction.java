@@ -28,25 +28,35 @@ public class SYL_EditGradingComponentsTA_Transaction implements jTPS_Transaction
     String old;
     String n;
     
-    public SYL_EditGradingComponentsTA_Transaction(CSGApp initApp, CSGWorkspace d, SyllabusData data, TextArea c, String old, String n){
+    public SYL_EditGradingComponentsTA_Transaction(CSGApp initApp, CSGWorkspace d, SyllabusData data, TextArea c){
         app = initApp;
         this.d = d;
         this.data = data;
         this.c = c;
-        this.old = old;
-        this.n = n;
+        this.old = data.getGcJSON();
+        this.n = c.getText();
     }
     
     @Override
     public void doTransaction() {
         AppGUIModule gui = app.getGUIModule();
+        data.setGcJSON(n);
         c.setText(n);
     }
 
     @Override
     public void undoTransaction() {
         AppGUIModule gui = app.getGUIModule();
-        c.setText(old);
-
+        if(this.old.equals("")){
+            c.setText("[\n\t{"
+                            + "\n\t\t\t\"name\": \"\","
+                            + "\n\t\t\t\"description\": \"\","
+                            + "\n\t\t\t\"weight\": \"\""
+                        + "\n\t}\n]");
+        }
+        else{
+            c.setText(old);
+        }
+        data.setGcJSON(old);
     }
 }

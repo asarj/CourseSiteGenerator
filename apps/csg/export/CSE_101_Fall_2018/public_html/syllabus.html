@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title></title>
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <link href="./css/course_homepage_layout.css" rel="stylesheet" type="text/css">
+        <link href="./css/sea_wolf.css" rel="stylesheet" type="text/css">
+
+        <!-- LINK TO OUR JavaScript FILE AND JQuery -->
+        <script src="./js/jquery.min.js"></script>
+        <script src="./js/PageBuilder.js"></script>
+        <script src="./js/OfficeHoursBuilder.js"></script>
+        <script src="./js/SectionsBuilder.js"></script>
+        <script src="./js/SyllabusBuilder.js"></script>
+
+        <!-- ONCE THE PAGE FULLY LOADS INITIALIZE THE SLIDESHOW -->
+        <script>
+            $(document).ready()
+            {
+                buildPage("Syllabus", ".");
+                buildOfficeHours();
+                buildSections();
+                buildSyllabus();
+            }
+        </script>
+    </head>
+
+    <body>
+        <div id="content">
+            <div id="navbar"><a id="navbar_image_link"></a></div>
+
+            <div id="banner"></div>
+            <div id="desc">
+
+                <div id="custom_syllabus_content">
+
+                    <h3>COURSE DESCRIPTION</h3>
+                    <p id='syllabus_course_description'></p>
+                    <br />
+
+                    <h3>COURSE TOPICS</h3>
+                    <ul id="syllabus_course_topics">
+                    </ul>
+                    <br />
+
+                    <h3>PREREQUISITES</h3>
+                    <p id="syllabus_prerequisites"></p>
+                    <br />
+
+                    <h3>COURSE OUTCOMES</h3>
+                    <p>At the end of the course you should have the following knowledge and skills:</p>
+                    <ul id="syllabus_course_outcomes">
+                    </ul>
+                    <br />
+
+                    <h3>LECTURES</h3>
+                    <table>
+                        <tbody>
+                            <tr id='lectures_row'>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
+                    <br />
+                    
+                    <h3 id="labs_heading"></h3>
+                    <table>
+                        <tbody id="labs_table">
+                        </tbody>
+                    </table>
+                    <br />
+                    <br />
+                                  
+                    <h3 id="recitations_heading"></h3>
+                    <table>
+                        <tbody id="recitations_table">
+                        </tbody>
+                    </table>
+                    <br />
+                    <br />
+
+                    <h3>INSTRUCTOR</h3>                    
+                    <table>
+                        <tr>
+                            <td id='instructor_data'></td>
+                            <td id='instructor_photo'></td>
+                        </tr>
+                    </table>
+                    <br />
+                    <br />
+
+                    <h3 id="graders">GRAD TEACHING ASSISTANTS (Grading Appointments)</h3>
+
+                    <table>
+                        <tbody id="grad_tas">
+                        </tbody>
+                    </table>
+                    <br />
+                    <br />
+
+                    <h3 id="tas">UNDERGRAD TEACHING ASSISTANTS (Help)</h3>
+
+                    <table>
+                        <tbody id="undergrad_tas">
+                        </tbody>
+                    </table>
+                    <br />
+                    <br />
+
+                    <h3 id="office_hours_grid">OFFICE HOURS (in Old CS 2217)</h3>
+                    <table class="office_hours_schedule" cellspacing="0" border="1">
+                        <tbody id="office_hours_table">
+                            <tr>
+                                <th class="sch" width="150px">Start Time</th>
+                                <th class="sch" width="150px">End Time</th>
+                                <th class="sch" width="200px">MONDAY</th>
+                                <th class="sch" width="200px">TUESDAY</th>
+                                <th class="sch" width="200px">WEDNESDAY</th>
+                                <th class="sch" width="200px">THURSDAY</th>
+                                <th class="sch" width="200px">FRIDAY</th>
+                            </tr>                        
+                        </tbody>
+                    </table>
+                    <br /> 
+                    <br />
+
+                    <h3>TEXTBOOKS</h3>                    
+                    <div id='textbook_data'></div>
+                    <br clear="all" />
+                    <br />
+
+
+                    <h3>GRADED COMPONENTS</h3>                    
+                    <ul id='graded_components'></ul>
+                    <br />
+
+                    <h3>GRADING BREAKDOWN</h3>                    
+                    <table id='grading_breakdown'></table>
+                    <p id='grading_note'></p>
+                    <br />                    
+
+                    <h3>ACADEMIC DISHONESTY</h3>
+                    <div id='academic_dishonesty'></div>
+                    <br />
+
+                    <h3>SPECIAL ASSISTANCE</h3>
+                    <div id='special_assistance'></div>
+                    <br />
+
+                    <hr />
+
+                    <a id="left_footer_image_link"></a>
+                    <a id="right_footer_image_link"></a>
+                    <p class="footer">Web page created and maintained<br />
+                        by <span id="author_link"></span></p>
+                    <br /><br />
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

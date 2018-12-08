@@ -25,18 +25,19 @@ public class SITE_EditInstructorHPTF_Transaction implements jTPS_Transaction{
     String old;
     String n;
     
-    public SITE_EditInstructorHPTF_Transaction(CSGApp initApp, CSGData d, SiteData data, TextField c, String old, String n){
+    public SITE_EditInstructorHPTF_Transaction(CSGApp initApp, CSGData d, SiteData data, TextField c){
         app = initApp;
         this.d = d;
         this.data = data;
         this.c = c;
-        this.old = old;
-        this.n = n;
+        this.old = data.getInstructorHP();
+        this.n = c.getText();
     }
     
     @Override
     public void doTransaction() {
         AppGUIModule gui = app.getGUIModule();
+        data.setInstructorHP(n);
         c.setText(n);
     }
 
@@ -44,6 +45,6 @@ public class SITE_EditInstructorHPTF_Transaction implements jTPS_Transaction{
     public void undoTransaction() {
         AppGUIModule gui = app.getGUIModule();
         c.setText(old);
-
+        data.setInstructorHP(old);
     }
 }

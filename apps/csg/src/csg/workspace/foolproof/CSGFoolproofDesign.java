@@ -294,12 +294,12 @@ public class CSGFoolproofDesign implements FoolproofDesign {
                                                 "_" + subnum.getSelectionModel().getSelectedItem().toString() +
                                                 "_" + sems.getSelectionModel().getSelectedItem().toString() +
                                                 "_" + years.getSelectionModel().getSelectedItem().toString() 
-                                                 + "\\public.html");
+                                                 + "\\public_html");
         data.setExp(".\\export\\" + sub.getSelectionModel().getSelectedItem().toString() + 
                                                 "_" + subnum.getSelectionModel().getSelectedItem().toString() +
                                                 "_" + sems.getSelectionModel().getSelectedItem().toString() +
                                                 "_" + years.getSelectionModel().getSelectedItem().toString() 
-                                                 + "\\public.html");
+                                                 + "\\public_html");
     }
     
     private void updateCourseTitleTF() {
@@ -327,7 +327,7 @@ public class CSGFoolproofDesign implements FoolproofDesign {
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
         TextField c = (TextField)gui.getGUINode(SITE_EMAIL_TEXT_FIELD);
-        boolean valid = data.isValidTextFieldInput(c);
+        boolean valid = data.isLegalNewEmail(c.getText());
 //        c.requestFocus();
         foolproofTextField(c, valid);
     }
