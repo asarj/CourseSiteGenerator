@@ -28,30 +28,26 @@ public class SCH_SetStartDate_Transaction implements jTPS_Transaction{
     ScheduleData data;
     LocalDate old;
     LocalDate date;
+    DatePicker dp;
     
-    public SCH_SetStartDate_Transaction(CSGApp initApp, CSGData d, ScheduleData data, LocalDate date){
+    public SCH_SetStartDate_Transaction(CSGApp initApp, CSGData d, ScheduleData data, DatePicker dp){
         app = initApp;
         this.d = d;
         this.data = data;
-        this.date = date;
-        this.old = data.getStartDate() != null ? data.getStartDate() : null;
+        this.dp = dp;
+        this.old = data.getStartDate();
+        this.date = dp.getValue();
     }
     
     @Override
     public void doTransaction() {
-        AppGUIModule gui = app.getGUIModule();
-        CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
-        DatePicker d = workspace.getStartDate();
-        d.setValue(date);
+        dp.setValue(date);
         data.setStartDate(date); 
     }
 
     @Override
     public void undoTransaction() {
-        AppGUIModule gui = app.getGUIModule();
-        CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
-        DatePicker d = workspace.getStartDate();
-        d.setValue(old);
+        dp.setValue(old);
         data.setStartDate(old);
     }
 }

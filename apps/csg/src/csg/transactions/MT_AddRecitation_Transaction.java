@@ -6,10 +6,8 @@
 package csg.transactions;
 
 import csg.CSGApp;
-import static csg.CSGPropertyType.MT_LECTURE_TABLE_VIEW;
 import static csg.CSGPropertyType.MT_RECITATION_TABLE_VIEW;
 import csg.data.CSGData;
-import csg.data.LecturePrototype;
 import csg.data.MeetingTimesData;
 import csg.data.RecitationPrototype;
 import csg.data.SiteData;
@@ -32,17 +30,18 @@ public class MT_AddRecitation_Transaction implements jTPS_Transaction{
     String n;
     RecitationPrototype addedRecitation;
     
-    public MT_AddRecitation_Transaction(CSGApp initApp, CSGData d, MeetingTimesData data){
+    public MT_AddRecitation_Transaction(CSGApp initApp, CSGData d, MeetingTimesData data, RecitationPrototype r){
         app = initApp;
         this.d = d;
         this.data = data;
+        this.addedRecitation = r;
     }
     
     @Override
     public void doTransaction() {
         AppGUIModule gui = app.getGUIModule();
         TableView recTable = (TableView)gui.getGUINode(MT_RECITATION_TABLE_VIEW);
-        addedRecitation = data.addRecitation();
+        addedRecitation = data.addRecitation(addedRecitation);
         recTable.refresh();
     }
 

@@ -4,7 +4,7 @@
     "endHour":"23",
     "instructor":{
         "name":"me",
-        "link":"http://www.me.com",
+        "link":"me.com",
         "email":"me@me.com",
         "room":"me room",
         "photo":"insert_photo_here",
@@ -16,8 +16,16 @@
         ]
     },
     "grad_tas":[
+        {
+            "name":"me2",
+            "email":"me2@me.com"
+        }
     ],
     "undergrad_tas":[
+        {
+            "name":"me",
+            "email":"me@me.com"
+        }
     ],
     "officeHours":[
     ]

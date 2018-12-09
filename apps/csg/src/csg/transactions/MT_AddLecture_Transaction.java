@@ -28,17 +28,18 @@ public class MT_AddLecture_Transaction implements jTPS_Transaction{
     MeetingTimesData data;
     LecturePrototype addedLecture;
     
-    public MT_AddLecture_Transaction(CSGApp initApp, CSGData d, MeetingTimesData data){
+    public MT_AddLecture_Transaction(CSGApp initApp, CSGData d, MeetingTimesData data, LecturePrototype l){
         app = initApp;
         this.d = d;
         this.data = data;
+        this.addedLecture = l;
     }
     
     @Override
     public void doTransaction() {
         AppGUIModule gui = app.getGUIModule();
         TableView lecTable = (TableView)gui.getGUINode(MT_LECTURE_TABLE_VIEW);
-        addedLecture = data.addLecture();
+        addedLecture = data.addLecture(addedLecture);
         lecTable.refresh();
     }
 

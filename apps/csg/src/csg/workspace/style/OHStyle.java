@@ -31,6 +31,8 @@ public class OHStyle {
     public static final String CLASS_OH_TEXT_FIELD    = "oh_text_field";
     public static final String CLASS_OH_COMBO_BOX    = "oh_combo_box";
     public static final String CLASS_OH_TEXT_FIELD_ERROR = "oh_text_field_error";
+    public static final String CLASS_SCH_DATE_PICKER = "sch_date_picker";
+    public static final String CLASS_SCH_DATE_PICKER_ERROR = "sch_date_picker_error";
     public static final String CLASS_OH_BUTTON        = "oh_button";
     public static final String CLASS_APP_BUTTON        = "app_button";
     public static final String CLASS_OH_RADIO_BOX     = "oh_radio_box";

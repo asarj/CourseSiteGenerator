@@ -1,11 +1,11 @@
 
 {
     "subject":"CSE",
-    "number":"101",
-    "semester":"Fall",
+    "number":"114",
+    "semester":"Spring",
     "year":"2018",
-    "title":"CSE 101",
-    "export_url":"./export/CSE_101_Fall_2018/public_html",
+    "title":"CSE 114",
+    "export_url":"./export/CSE_114_Spring_2018/public_html",
     "pages":[
         {
             "name":"home",
@@ -38,7 +38,7 @@
             "bottom_right":"./images/sburightfooter.png"
         }
     ],
-    "css":"./work/css/autumn.css",
+    "css":"./work/css/sea_wolf.css",
     "instructor":[
         {
             "name":"me"
@@ -50,159 +50,72 @@
             "room":"me room"
         },
         {
-            "link":"http://www.me.com"
+            "link":"me.com"
         },
         [
             "[\n\t{\"Day\": \"\", \t\"Time\": \"\"}\n]"
         ]
     ],
-    "description":"I don't care",
+    "description":"idc",
     "topics":[
-        "[\n\t\"topic 1\",\n\t\"topic 2\"\n]"
+        "[\n\t\"one topic\",\n\t\"two topic\"\n]"
     ],
-    "prerequisites":"there are none",
+    "prerequisites":"idc",
     "outcomes":[
-        "[\n\t\"outcome 1\",\n\t\"outcome 2\"\n]"
+        "[\n\t\"one outcome\",\n\t\"two outcome\"\n]"
     ],
     "textbooks":[
-        "[\n\t{\n\t\t\t\"title\":\"Some title\",\n\t\t\t\"link\":\"title.com\",\n\t\t\t\"photo\":\"insert_photo_here\",\n\t\t\t\"authors\":[\n\t\t\t\t\"Some author\"\n\t\t\t],\n\t\t\t\"publisher\":\"some pub\",\n\t\t\t\"year\":\"2018\"\n\t}\n]"
+        "[\n\t{\n\t\t\t\"title\":\"me book\",\n\t\t\t\"link\":\"mebook.com\",\n\t\t\t\"photo\":\"me_photo\",\n\t\t\t\"authors\":[\n\t\t\t\t\"Me\"\n\t\t\t],\n\t\t\t\"publisher\":\"me publisher\",\n\t\t\t\"year\":\"2018\"\n\t}\n]"
     ],
     "gradedComponents":[
-        "[\n\t{\n\t\t\t\"name\": \"Final\",\n\t\t\t\"description\": \"Your Final\",\n\t\t\t\"weight\": \"50\"\n\t},\n\t{\n\t\t\t\"name\": \"Final2\",\n\t\t\t\"description\": \"Your Final\",\n\t\t\t\"weight\": \"50\"\n\t}\n]"
+        "[\n\t{\n\t\t\t\"name\": \"Final\",\n\t\t\t\"description\": \"Your final\",\n\t\t\t\"weight\": \"100\"\n\t}\n]"
     ],
     "gradingNote":"idc",
     "academicDishonesty":"idc",
     "specialAssistance":"idc",
-    "lectures":[
+    "mt_lectures":[
         {
-            "date":"2018-12-04",
-            "month":"12",
-            "day":"4",
-            "year":"2018",
-            "title":"lecture4",
-            "topic":"my lecture",
-            "link":""
+            "lec_section":"lec1",
+            "lec_days":"Monday &amp; Tuesday",
+            "lec_time":"1-2:20pm",
+            "lec_room":"me room"
         }
     ],
-    "recitations":[
+    "mt_recitations":[
         {
-            "date":"2018-12-07",
-            "month":"12",
-            "day":"7",
-            "year":"2018",
-            "title":"recitation",
-            "topic":"rec",
-            "link":""
+            "rec_section":"rec2",
+            "rec_day_time":"Tuesday &amp; Thursday 1-2:20pm",
+            "rec_location":"me room",
+            "rec_ta_1":"me",
+            "rec_ta_2":"me too"
         }
     ],
-    "labs":[
+    "mt_labs":[
         {
-            "date":"2018-12-05",
-            "month":"12",
-            "day":"5",
-            "year":"2018",
-            "title":"lab",
-            "topic":"my lab",
-            "link":""
+            "lab_section":"lab3",
+            "lab_day_time":"Wednesday &amp; Friday 1-2:20pm",
+            "lab_location":"me room",
+            "lab_ta_1":"me",
+            "lab_ta_2":"me too"
         }
     ],
     "startHour":"0",
     "endHour":"23",
     "grad_tas":[
+        {
+            "name":"me2",
+            "email":"me2@me.com",
+            "type":"Graduate"
+        }
     ],
     "undergrad_tas":[
         {
             "name":"me",
             "email":"me@me.com",
             "type":"Undergraduate"
-        },
-        {
-            "name":"me2",
-            "email":"me2@me.com",
-            "type":"Undergraduate"
-        },
-        {
-            "name":"me3",
-            "email":"me3@me.com",
-            "type":"Undergraduate"
         }
     ],
     "officeHours":[
-        {
-            "time":"12_00am",
-            "day":"MONDAY",
-            "name":"me"
-        },
-        {
-            "time":"12_00am",
-            "day":"TUESDAY",
-            "name":"me"
-        },
-        {
-            "time":"12_00am",
-            "day":"WEDNESDAY",
-            "name":"me"
-        },
-        {
-            "time":"12_00am",
-            "day":"THURSDAY",
-            "name":"me"
-        },
-        {
-            "time":"12_00am",
-            "day":"FRIDAY",
-            "name":"me"
-        },
-        {
-            "time":"12_30am",
-            "day":"MONDAY",
-            "name":"me2"
-        },
-        {
-            "time":"12_30am",
-            "day":"TUESDAY",
-            "name":"me2"
-        },
-        {
-            "time":"12_30am",
-            "day":"WEDNESDAY",
-            "name":"me2"
-        },
-        {
-            "time":"12_30am",
-            "day":"THURSDAY",
-            "name":"me2"
-        },
-        {
-            "time":"12_30am",
-            "day":"FRIDAY",
-            "name":"me2"
-        },
-        {
-            "time":"1_00am",
-            "day":"MONDAY",
-            "name":"me3"
-        },
-        {
-            "time":"1_00am",
-            "day":"TUESDAY",
-            "name":"me3"
-        },
-        {
-            "time":"1_00am",
-            "day":"WEDNESDAY",
-            "name":"me3"
-        },
-        {
-            "time":"1_00am",
-            "day":"THURSDAY",
-            "name":"me3"
-        },
-        {
-            "time":"1_00am",
-            "day":"FRIDAY",
-            "name":"me3"
-        }
     ],
     "startDate":"2018-12-03",
     "endDate":"2018-12-28",
@@ -218,31 +131,64 @@
             "month":"12",
             "day":"3",
             "year":"2018",
-            "title":"holiday1",
-            "topic":"my holiday",
-            "link":""
+            "title":"My holiday",
+            "topic":"no school",
+            "link":"h.com"
+        }
+    ],
+    "lectures":[
+        {
+            "date":"2018-12-04",
+            "month":"12",
+            "day":"4",
+            "year":"2018",
+            "title":"My Lecture",
+            "topic":"no lecture",
+            "link":"l.com"
+        }
+    ],
+    "recitations":[
+        {
+            "date":"2018-12-06",
+            "month":"12",
+            "day":"6",
+            "year":"2018",
+            "title":"My Rec",
+            "topic":"no rec",
+            "link":"rec.com"
+        }
+    ],
+    "labs":[
+        {
+            "date":"2018-12-05",
+            "month":"12",
+            "day":"5",
+            "year":"2018",
+            "title":"My Lab",
+            "topic":"no lab",
+            "link":"lab.com"
         }
     ],
     "references":[
-        {
-            "date":"2018-12-25",
-            "month":"12",
-            "day":"25",
-            "year":"2018",
-            "title":"ref",
-            "topic":"my ref",
-            "link":""
-        }
-    ],
-    "hws":[
         {
             "date":"2018-12-10",
             "month":"12",
             "day":"10",
             "year":"2018",
-            "title":"hw",
-            "topic":"my hw",
-            "link":""
+            "title":"My ref",
+            "topic":"no ref",
+            "link":"ref.com"
+        }
+    ],
+    "hws":[
+        {
+            "date":"2018-12-07",
+            "month":"12",
+            "day":"7",
+            "year":"2018",
+            "title":"My HW",
+            "topic":"no hw",
+            "link":"hw.com"
         }
     ]
 }

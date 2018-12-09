@@ -1,11 +1,11 @@
 
 {
     "subject":"CSE",
-    "number":"216",
+    "number":"101",
     "semester":"Fall",
     "year":"2018",
-    "title":"CSE 216",
-    "export_url":"./export/CSE_216_Fall_2018/public_html",
+    "title":"CSE 101",
+    "export_url":"./export/CSE_101_Fall_2018/public_html",
     "pages":[
         {
             "name":"home",
@@ -56,49 +56,139 @@
             "[\n\t{\"Day\": \"\", \t\"Time\": \"\"}\n]"
         ]
     ],
-    "description":"I don't care",
+    "description":"idc",
     "topics":[
-        "[\n\t\"topic 1\",\n\t\"topic 2\"\n]"
+        "[\n\t\"one topic\",\n\t\"two topic\"\n]"
     ],
-    "prerequisites":"there are none",
+    "prerequisites":"idc",
     "outcomes":[
-        "[\n\t\"outcome 1\",\n\t\"outcome 2\"\n]"
+        "[\n\t\"one outcome\",\n\t\"two outcome\"\n]"
     ],
     "textbooks":[
-        "[\n\t{\n\t\t\t\"title\":\"Some title\",\n\t\t\t\"link\":\"title.com\",\n\t\t\t\"photo\":\"insert_photo_here\",\n\t\t\t\"authors\":[\n\t\t\t\t\"Some author\"\n\t\t\t],\n\t\t\t\"publisher\":\"some pub\",\n\t\t\t\"year\":\"2018\"\n\t}\n]"
+        "[\n\t{\n\t\t\t\"title\":\"me book\",\n\t\t\t\"link\":\"mebook.com\",\n\t\t\t\"photo\":\"me_photo\",\n\t\t\t\"authors\":[\n\t\t\t\t\"Me\"\n\t\t\t],\n\t\t\t\"publisher\":\"me publisher\",\n\t\t\t\"year\":\"2018\"\n\t}\n]"
     ],
-    "graded_components":[
-        "[\n\t{\n\t\t\t\"Name\": \"Final\",\n\t\t\t\"Description\": \"Your final\",\n\t\t\t\"Weight\": \"100\"\n\t}\n]"
+    "gradedComponents":[
+        "[\n\t{\n\t\t\t\"name\": \"Final\",\n\t\t\t\"description\": \"Your final\",\n\t\t\t\"weight\": \"100\"\n\t}\n]"
     ],
-    "grading_note":"don't care",
-    "academic_dishonesty":"don't care",
-    "special_assistance":"Crips for life",
-    "lectures":[
+    "gradingNote":"idc",
+    "academicDishonesty":"idc",
+    "specialAssistance":"idc",
+    "mt_lectures":[
+        {
+            "lec_section":"lec1",
+            "lec_days":"Monday &amp; Tuesday",
+            "lec_time":"1-2:20pm",
+            "lec_room":"me room"
+        }
     ],
-    "recitations":[
+    "mt_recitations":[
+        {
+            "rec_section":"rec2",
+            "rec_day_time":"Tuesday &amp; Thursday 1-2:20pm",
+            "rec_location":"me room",
+            "rec_ta_1":"me",
+            "rec_ta_2":"me too"
+        }
     ],
-    "labs":[
+    "mt_labs":[
+        {
+            "lab_section":"lab3",
+            "lab_day_time":"Wednesday &amp; Friday 1-2:20pm",
+            "lab_location":"me room",
+            "lab_ta_1":"me",
+            "lab_ta_2":"me too"
+        }
     ],
     "startHour":"0",
     "endHour":"23",
     "grad_tas":[
+        {
+            "name":"me2",
+            "email":"me2@me.com",
+            "type":"Graduate"
+        }
     ],
     "undergrad_tas":[
+        {
+            "name":"me",
+            "email":"me@me.com",
+            "type":"Undergraduate"
+        }
     ],
     "officeHours":[
     ],
-    "startDate":"",
-    "endDate":"",
-    "startingMondayMonth":"",
-    "startingMondayDay":"",
-    "startingMondayYear":"",
-    "endingFridayMonth":"",
-    "endingFridayDay":"",
-    "endingFridayYear":"",
+    "startDate":"2018-12-03",
+    "endDate":"2018-12-28",
+    "startingMondayMonth":"12",
+    "startingMondayDay":"3",
+    "startingMondayYear":"2018",
+    "endingFridayMonth":"12",
+    "endingFridayDay":"28",
+    "endingFridayYear":"2018",
     "holidays":[
+        {
+            "date":"2018-12-03",
+            "month":"12",
+            "day":"3",
+            "year":"2018",
+            "title":"My holiday",
+            "topic":"no school",
+            "link":"h.com"
+        }
+    ],
+    "lectures":[
+        {
+            "date":"2018-12-04",
+            "month":"12",
+            "day":"4",
+            "year":"2018",
+            "title":"My Lecture",
+            "topic":"no lecture",
+            "link":"l.com"
+        }
+    ],
+    "recitations":[
+        {
+            "date":"2018-12-06",
+            "month":"12",
+            "day":"6",
+            "year":"2018",
+            "title":"My Rec",
+            "topic":"no rec",
+            "link":"rec.com"
+        }
+    ],
+    "labs":[
+        {
+            "date":"2018-12-05",
+            "month":"12",
+            "day":"5",
+            "year":"2018",
+            "title":"My Lab",
+            "topic":"no lab",
+            "link":"lab.com"
+        }
     ],
     "references":[
+        {
+            "date":"2018-12-10",
+            "month":"12",
+            "day":"10",
+            "year":"2018",
+            "title":"My ref",
+            "topic":"no ref",
+            "link":"ref.com"
+        }
     ],
     "hws":[
+        {
+            "date":"2018-12-07",
+            "month":"12",
+            "day":"7",
+            "year":"2018",
+            "title":"My HW",
+            "topic":"no hw",
+            "link":"hw.com"
+        }
     ]
 }

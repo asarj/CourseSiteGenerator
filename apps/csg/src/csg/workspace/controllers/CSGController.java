@@ -666,97 +666,71 @@ public class CSGController {
     public void processAddLecture() {
         CSGData d = (CSGData)app.getDataComponent();
         MeetingTimesData data = d.getMeetingTimesData();
-        MT_AddLecture_Transaction e = new MT_AddLecture_Transaction(app, d, data);
+        LecturePrototype l = new LecturePrototype("?", "?", "?", "?");
+        MT_AddLecture_Transaction e = new MT_AddLecture_Transaction(app, d, data, l);
         app.processTransaction(e);
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
     
-    public void processLectureTableSectionEdit(String oldValue, String newValue) {
-        CSGData d = (CSGData)app.getDataComponent();
-        MeetingTimesData data = d.getMeetingTimesData();
-        MT_LecEditSectionColumn_Transaction e = new MT_LecEditSectionColumn_Transaction(app, d, data, oldValue, newValue);
-        app.processTransaction(e);
-        app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
-    }
-    
-    public void processLectureTableDayEdit(String oldValue, String newValue) {
-        CSGData d = (CSGData)app.getDataComponent();
-        MeetingTimesData data = d.getMeetingTimesData();
-        MT_LecEditDayColumn_Transaction e = new MT_LecEditDayColumn_Transaction(app, d, data, oldValue, newValue);
-        app.processTransaction(e);
-        app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
-    }
-
-    public void processLectureTableTimeEdit(String oldValue, String newValue) {
-        CSGData d = (CSGData)app.getDataComponent();
-        MeetingTimesData data = d.getMeetingTimesData();
-        MT_LecEditTimeColumn_Transaction e = new MT_LecEditTimeColumn_Transaction(app, d, data, oldValue, newValue);
-        app.processTransaction(e);
-        app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
-    }
-
-    public void processLectureTableRoomEdit(String oldValue, String newValue) {
-        CSGData d = (CSGData)app.getDataComponent();
-        MeetingTimesData data = d.getMeetingTimesData();
-        MT_LecEditRoomColumn_Transaction e = new MT_LecEditRoomColumn_Transaction(app, d, data, oldValue, newValue);
-        app.processTransaction(e);
-        app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
-    }
-    
-    public void processRecitationTableSectionEdit(String oldValue, String newValue) {
-        CSGData d = (CSGData)app.getDataComponent();
-        MeetingTimesData data = d.getMeetingTimesData();
-        MT_RecEditSectionColumn_Transaction e = new MT_RecEditSectionColumn_Transaction(app, d, data, oldValue, newValue);
-        app.processTransaction(e);
-        app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
-    }
-
-    public void processRecitationTableDayTimeEdit(String oldValue, String newValue) {
-        CSGData d = (CSGData)app.getDataComponent();
-        MeetingTimesData data = d.getMeetingTimesData();
-        MT_RecEditDayTimeColumn_Transaction e = new MT_RecEditDayTimeColumn_Transaction(app, d, data, oldValue, newValue);
-        app.processTransaction(e);
-        app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
-    }
-
-    public void processRecitationTableRoomEdit(String oldValue, String newValue) {
-        CSGData d = (CSGData)app.getDataComponent();
-        MeetingTimesData data = d.getMeetingTimesData();
-        MT_RecEditRoomColumn_Transaction e = new MT_RecEditRoomColumn_Transaction(app, d, data, oldValue, newValue);
-        app.processTransaction(e);
-        app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
-    }
-
-    public void processRecitationTableTA1Edit(String oldValue, String newValue) {
-        CSGData d = (CSGData)app.getDataComponent();
-        MeetingTimesData data = d.getMeetingTimesData();
-        MT_RecEditTA1Column_Transaction e = new MT_RecEditTA1Column_Transaction(app, d, data, oldValue, newValue);
-        app.processTransaction(e);
-        app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
-    }
-
-    public void processRecitationTableTA2Edit(String oldValue, String newValue) {
-        CSGData d = (CSGData)app.getDataComponent();
-        MeetingTimesData data = d.getMeetingTimesData();
-        MT_RecEditTA2Column_Transaction e = new MT_RecEditTA2Column_Transaction(app, d, data, oldValue, newValue);
-        app.processTransaction(e);
-        app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
-    }
-
     public void processRemoveLecture() {
         CSGData d = (CSGData)app.getDataComponent();
         MeetingTimesData data = d.getMeetingTimesData();
         if(((TableView)app.getGUIModule().getGUINode(MT_LECTURE_TABLE_VIEW)).getSelectionModel().getSelectedItem() != null){
             MT_RemoveLecture_Transaction e = new MT_RemoveLecture_Transaction(app, d, data, (LecturePrototype)((TableView)app.getGUIModule().getGUINode(MT_LECTURE_TABLE_VIEW)).getSelectionModel().getSelectedItem());
             app.processTransaction(e);
-            app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
         }
+        app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
+    }
+    
+    public void processLectureTableSectionEdit(String oldValue, String newValue) {
+        AppGUIModule gui = app.getGUIModule();
+        CSGData d = (CSGData)app.getDataComponent();
+        MeetingTimesData data = d.getMeetingTimesData();
+        TableView lecTable = (TableView)gui.getGUINode(MT_LECTURE_TABLE_VIEW);
+        LecturePrototype l = (LecturePrototype)lecTable.getSelectionModel().getSelectedItem();
+        MT_LecEditSectionColumn_Transaction e = new MT_LecEditSectionColumn_Transaction(app, d, data, l, oldValue, newValue);
+        app.processTransaction(e);
+        app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
+    }
+    
+    public void processLectureTableDayEdit(String oldValue, String newValue) {
+        AppGUIModule gui = app.getGUIModule();
+        CSGData d = (CSGData)app.getDataComponent();
+        MeetingTimesData data = d.getMeetingTimesData();
+        TableView lecTable = (TableView)gui.getGUINode(MT_LECTURE_TABLE_VIEW);
+        LecturePrototype l = (LecturePrototype)lecTable.getSelectionModel().getSelectedItem();
+        MT_LecEditDayColumn_Transaction e = new MT_LecEditDayColumn_Transaction(app, d, data, l, oldValue, newValue);
+        app.processTransaction(e);
+        app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
+    public void processLectureTableTimeEdit(String oldValue, String newValue) {
+        AppGUIModule gui = app.getGUIModule();
+        CSGData d = (CSGData)app.getDataComponent();
+        MeetingTimesData data = d.getMeetingTimesData();
+        TableView lecTable = (TableView)gui.getGUINode(MT_LECTURE_TABLE_VIEW);
+        LecturePrototype l = (LecturePrototype)lecTable.getSelectionModel().getSelectedItem();
+        MT_LecEditTimeColumn_Transaction e = new MT_LecEditTimeColumn_Transaction(app, d, data, l, oldValue, newValue);
+        app.processTransaction(e);
+        app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
+    }
+
+    public void processLectureTableRoomEdit(String oldValue, String newValue) {
+        AppGUIModule gui = app.getGUIModule();
+        CSGData d = (CSGData)app.getDataComponent();
+        MeetingTimesData data = d.getMeetingTimesData();
+        TableView lecTable = (TableView)gui.getGUINode(MT_LECTURE_TABLE_VIEW);
+        LecturePrototype l = (LecturePrototype)lecTable.getSelectionModel().getSelectedItem();
+        MT_LecEditRoomColumn_Transaction e = new MT_LecEditRoomColumn_Transaction(app, d, data, l, oldValue, newValue);
+        app.processTransaction(e);
+        app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
+    }
+    
     public void processAddRecitation() {
         CSGData d = (CSGData)app.getDataComponent();
         MeetingTimesData data = d.getMeetingTimesData();
-        MT_AddRecitation_Transaction e = new MT_AddRecitation_Transaction(app, d, data);
+        RecitationPrototype r = new RecitationPrototype("?", "?", "?", "?", "?");
+        MT_AddRecitation_Transaction e = new MT_AddRecitation_Transaction(app, d, data, r);
         app.processTransaction(e);
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
@@ -767,54 +741,70 @@ public class CSGController {
         if(((TableView)app.getGUIModule().getGUINode(MT_RECITATION_TABLE_VIEW)).getSelectionModel().getSelectedItem() != null){
             MT_RemoveRecitation_Transaction e = new MT_RemoveRecitation_Transaction(app, d, data, (RecitationPrototype)((TableView)app.getGUIModule().getGUINode(MT_RECITATION_TABLE_VIEW)).getSelectionModel().getSelectedItem());
             app.processTransaction(e);
-            app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
         }
+        app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
     
-    public void processLabTableSectionEdit(String oldValue, String newValue) {
+    public void processRecitationTableSectionEdit(String oldValue, String newValue) {
+        AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         MeetingTimesData data = d.getMeetingTimesData();
-        MT_LabEditSectionColumn_Transaction e = new MT_LabEditSectionColumn_Transaction(app, d, data, oldValue, newValue);
+        TableView recTable = (TableView)gui.getGUINode(MT_RECITATION_TABLE_VIEW);
+        RecitationPrototype r = (RecitationPrototype)recTable.getSelectionModel().getSelectedItem();
+        MT_RecEditSectionColumn_Transaction e = new MT_RecEditSectionColumn_Transaction(app, d, data, r, oldValue, newValue);
         app.processTransaction(e);
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
-    public void processLabTableDayTimeEdit(String oldValue, String newValue) {
+    public void processRecitationTableDayTimeEdit(String oldValue, String newValue) {
+        AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         MeetingTimesData data = d.getMeetingTimesData();
-        MT_LabEditDayTimeColumn_Transaction e = new MT_LabEditDayTimeColumn_Transaction(app, d, data, oldValue, newValue);
+        TableView recTable = (TableView)gui.getGUINode(MT_RECITATION_TABLE_VIEW);
+        RecitationPrototype r = (RecitationPrototype)recTable.getSelectionModel().getSelectedItem();
+        MT_RecEditDayTimeColumn_Transaction e = new MT_RecEditDayTimeColumn_Transaction(app, d, data, r, oldValue, newValue);
         app.processTransaction(e);
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
-    public void processLabTableRoomEdit(String oldValue, String newValue) {
+    public void processRecitationTableRoomEdit(String oldValue, String newValue) {
+        AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         MeetingTimesData data = d.getMeetingTimesData();
-        MT_LabEditRoomColumn_Transaction e = new MT_LabEditRoomColumn_Transaction(app, d, data, oldValue, newValue);
+        TableView recTable = (TableView)gui.getGUINode(MT_RECITATION_TABLE_VIEW);
+        RecitationPrototype r = (RecitationPrototype)recTable.getSelectionModel().getSelectedItem();
+        MT_RecEditRoomColumn_Transaction e = new MT_RecEditRoomColumn_Transaction(app, d, data, r, oldValue, newValue);
         app.processTransaction(e);
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
-    public void processLabTableTA1Edit(String oldValue, String newValue) {
+    public void processRecitationTableTA1Edit(String oldValue, String newValue) {
+        AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         MeetingTimesData data = d.getMeetingTimesData();
-        MT_LabEditTA1Column_Transaction e = new MT_LabEditTA1Column_Transaction(app, d, data, oldValue, newValue);
+        TableView recTable = (TableView)gui.getGUINode(MT_RECITATION_TABLE_VIEW);
+        RecitationPrototype r = (RecitationPrototype)recTable.getSelectionModel().getSelectedItem();
+        MT_RecEditTA1Column_Transaction e = new MT_RecEditTA1Column_Transaction(app, d, data, r, oldValue, newValue);
         app.processTransaction(e);
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
-    public void processLabTableTA2Edit(String oldValue, String newValue) {
+    public void processRecitationTableTA2Edit(String oldValue, String newValue) {
+        AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         MeetingTimesData data = d.getMeetingTimesData();
-        MT_LabEditTA2Column_Transaction e = new MT_LabEditTA2Column_Transaction(app, d, data, oldValue, newValue);
+        TableView recTable = (TableView)gui.getGUINode(MT_RECITATION_TABLE_VIEW);
+        RecitationPrototype r = (RecitationPrototype)recTable.getSelectionModel().getSelectedItem();
+        MT_RecEditTA2Column_Transaction e = new MT_RecEditTA2Column_Transaction(app, d, data, r, oldValue, newValue);
         app.processTransaction(e);
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
-
+    
     public void processAddLab() {
         CSGData d = (CSGData)app.getDataComponent();
         MeetingTimesData data = d.getMeetingTimesData();
-        MT_AddLab_Transaction e = new MT_AddLab_Transaction(app, d, data);
+        LabPrototype l = new LabPrototype("?", "?", "?", "?", "?");
+        MT_AddLab_Transaction e = new MT_AddLab_Transaction(app, d, data, l);
         app.processTransaction(e);
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
@@ -825,34 +815,76 @@ public class CSGController {
         if(((TableView)app.getGUIModule().getGUINode(MT_LAB_TABLE_VIEW)).getSelectionModel().getSelectedItem() != null){
             MT_RemoveLab_Transaction e = new MT_RemoveLab_Transaction(app, d, data, (LabPrototype)((TableView)app.getGUIModule().getGUINode(MT_LAB_TABLE_VIEW)).getSelectionModel().getSelectedItem());
             app.processTransaction(e);
-            app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
         }
+        app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
+    }
+    
+    public void processLabTableSectionEdit(String oldValue, String newValue) {
+        AppGUIModule gui = app.getGUIModule();
+        CSGData d = (CSGData)app.getDataComponent();
+        MeetingTimesData data = d.getMeetingTimesData();
+        TableView labTable = (TableView)gui.getGUINode(MT_LAB_TABLE_VIEW);
+        LabPrototype l = (LabPrototype)labTable.getSelectionModel().getSelectedItem();
+        MT_LabEditSectionColumn_Transaction e = new MT_LabEditSectionColumn_Transaction(app, d, data, l, oldValue, newValue);
+        app.processTransaction(e);
+        app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
-    public void processStartDate(LocalDate date) {
+    public void processLabTableDayTimeEdit(String oldValue, String newValue) {
+        AppGUIModule gui = app.getGUIModule();
+        CSGData d = (CSGData)app.getDataComponent();
+        MeetingTimesData data = d.getMeetingTimesData();
+        TableView labTable = (TableView)gui.getGUINode(MT_LAB_TABLE_VIEW);
+        LabPrototype l = (LabPrototype)labTable.getSelectionModel().getSelectedItem();
+        MT_LabEditDayTimeColumn_Transaction e = new MT_LabEditDayTimeColumn_Transaction(app, d, data, l, oldValue, newValue);
+        app.processTransaction(e);
+        app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
+    }
+
+    public void processLabTableRoomEdit(String oldValue, String newValue) {
+        AppGUIModule gui = app.getGUIModule();
+        CSGData d = (CSGData)app.getDataComponent();
+        MeetingTimesData data = d.getMeetingTimesData();
+        TableView labTable = (TableView)gui.getGUINode(MT_LAB_TABLE_VIEW);
+        LabPrototype l = (LabPrototype)labTable.getSelectionModel().getSelectedItem();
+        MT_LabEditRoomColumn_Transaction e = new MT_LabEditRoomColumn_Transaction(app, d, data, l, oldValue, newValue);
+        app.processTransaction(e);
+        app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
+    }
+
+    public void processLabTableTA1Edit(String oldValue, String newValue) {
+        AppGUIModule gui = app.getGUIModule();
+        CSGData d = (CSGData)app.getDataComponent();
+        MeetingTimesData data = d.getMeetingTimesData();
+        TableView labTable = (TableView)gui.getGUINode(MT_LAB_TABLE_VIEW);
+        LabPrototype l = (LabPrototype)labTable.getSelectionModel().getSelectedItem();
+        MT_LabEditTA1Column_Transaction e = new MT_LabEditTA1Column_Transaction(app, d, data, l, oldValue, newValue);
+        app.processTransaction(e);
+        app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
+    }
+
+    public void processLabTableTA2Edit(String oldValue, String newValue) {
+        AppGUIModule gui = app.getGUIModule();
+        CSGData d = (CSGData)app.getDataComponent();
+        MeetingTimesData data = d.getMeetingTimesData();
+        TableView labTable = (TableView)gui.getGUINode(MT_LAB_TABLE_VIEW);
+        LabPrototype l = (LabPrototype)labTable.getSelectionModel().getSelectedItem();
+        MT_LabEditTA2Column_Transaction e = new MT_LabEditTA2Column_Transaction(app, d, data, l, oldValue, newValue);
+        app.processTransaction(e);
+        app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
+    }
+
+    public void processStartDate() {
         CSGData d = (CSGData)app.getDataComponent();
         ScheduleData data = d.getScheduleData();
+        CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
+        DatePicker start = workspace.getStartDate();
         try{
-            if(date.getDayOfWeek().getValue() == 1){
-                if(data.getEndDate() == null){
-                    SCH_SetStartDate_Transaction e = new SCH_SetStartDate_Transaction(app, d, data, date);
-                    app.processTransaction(e); 
+            if(!start.isFocused()){
+                SCH_SetStartDate_Transaction e = new SCH_SetStartDate_Transaction(app, d, data, start);
+                app.processTransaction(e);   
+            }
                     
-                }
-                else{
-                    if(date.isAfter(data.getEndDate())){
-                        Alert alert = new Alert(AlertType.ERROR, "Start date must occur before end date!", ButtonType.OK);
-                        alert.showAndWait();
-
-                        if (alert.getResult() == ButtonType.OK) {
-                            alert.close();
-                        }
-                    }
-                }
-            }
-            else{
-
-            }
         }
         catch(NullPointerException n){
             data.setStartDate(null);
@@ -860,30 +892,16 @@ public class CSGController {
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 
-    public void processEndDate(LocalDate date) {
+    public void processEndDate() {
         CSGData d = (CSGData)app.getDataComponent();
         ScheduleData data = d.getScheduleData();
+        CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
+        DatePicker end = workspace.getEndDate();
         try{
-            if(date.getDayOfWeek().getValue() == 5){
-                if(data.getStartDate() != null){
-                    SCH_SetEndDate_Transaction e = new SCH_SetEndDate_Transaction(app, d, data, date);
-                    app.processTransaction(e);      
-                }
+            if(!end.isFocused()){
+                SCH_SetEndDate_Transaction e = new SCH_SetEndDate_Transaction(app, d, data, end);
+                app.processTransaction(e);
             }
-            else{
-//                if(date.isBefore(data.getStartDate())){
-//                    Alert alert = new Alert(AlertType.ERROR, "Start date must occur before end date!", ButtonType.OK);
-//                    alert.showAndWait();
-//
-//                    if (alert.getResult() == ButtonType.OK) {
-//                        alert.close();
-//                    }
-//                }
-//                else{
-//                    
-//                }
-            }
-            
         }
         catch(NullPointerException n){
             data.setEndDate(null);

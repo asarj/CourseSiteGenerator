@@ -28,30 +28,26 @@ public class SCH_SetEndDate_Transaction implements jTPS_Transaction{
     ScheduleData data;
     LocalDate old;
     LocalDate date;
+    DatePicker dp;
     
-    public SCH_SetEndDate_Transaction(CSGApp initApp, CSGData d, ScheduleData data, LocalDate date){
+    public SCH_SetEndDate_Transaction(CSGApp initApp, CSGData d, ScheduleData data, DatePicker dp){
         app = initApp;
         this.d = d;
         this.data = data;
-        this.date = date;
-        this.old = data.getEndDate() != null ? data.getEndDate() : null;
+        this.dp = dp;
+        this.old = data.getEndDate();
+        this.date = dp.getValue();
     }
     
     @Override
     public void doTransaction() {
-        AppGUIModule gui = app.getGUIModule();
-        CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
-        DatePicker d = workspace.getEndDate();
-        d.setValue(date);
+        dp.setValue(date);
         data.setEndDate(date); 
     }
 
     @Override
     public void undoTransaction() {
-        AppGUIModule gui = app.getGUIModule();
-        CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
-        DatePicker d = workspace.getEndDate();
-        d.setValue(old);
+        dp.setValue(old);
         data.setEndDate(old);
     }
 }

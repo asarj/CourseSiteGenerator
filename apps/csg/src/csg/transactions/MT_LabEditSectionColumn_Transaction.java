@@ -33,10 +33,11 @@ public class MT_LabEditSectionColumn_Transaction implements jTPS_Transaction{
     String n;
     LabPrototype newLab;
     
-    public MT_LabEditSectionColumn_Transaction(CSGApp initApp, CSGData d, MeetingTimesData data, String old, String n){
+    public MT_LabEditSectionColumn_Transaction(CSGApp initApp, CSGData d, MeetingTimesData data, LabPrototype l, String old, String n){
         app = initApp;
         this.d = d;
         this.data = data;
+        this.newLab = l;
         this.old = old;
         this.n = n;
     }
@@ -45,8 +46,7 @@ public class MT_LabEditSectionColumn_Transaction implements jTPS_Transaction{
     public void doTransaction() {
         AppGUIModule gui = app.getGUIModule();
         TableView labTable = (TableView)gui.getGUINode(MT_LAB_TABLE_VIEW);
-        LabPrototype l = (LabPrototype)labTable.getSelectionModel().getSelectedItem();
-        newLab = data.editLab(l, "SECTION", n);
+        newLab = data.editLab(newLab, "SECTION", n);
         labTable.refresh();
     }
 
@@ -54,7 +54,6 @@ public class MT_LabEditSectionColumn_Transaction implements jTPS_Transaction{
     public void undoTransaction() {
         AppGUIModule gui = app.getGUIModule();
         TableView labTable = (TableView)gui.getGUINode(MT_LAB_TABLE_VIEW);
-        LabPrototype l = (LabPrototype)labTable.getSelectionModel().getSelectedItem(); 
         data.editLab(newLab, "SECTION", old);
         labTable.refresh();
 

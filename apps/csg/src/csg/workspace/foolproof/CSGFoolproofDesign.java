@@ -48,15 +48,19 @@ import csg.data.ScheduleItemPrototype;
 import csg.data.SiteData;
 import csg.data.TeachingAssistantPrototype;
 import csg.data.TimeSlot;
+import csg.workspace.CSGWorkspace;
 import static csg.workspace.style.OHStyle.CLASS_OH_BOX;
 import static csg.workspace.style.OHStyle.CLASS_OH_TEXT_FIELD;
 import static csg.workspace.style.OHStyle.CLASS_OH_TEXT_FIELD_ERROR;
+import static csg.workspace.style.OHStyle.CLASS_SCH_DATE_PICKER;
+import static csg.workspace.style.OHStyle.CLASS_SCH_DATE_PICKER_ERROR;
 import static csg.workspace.style.OHStyle.CLASS_SITE_BOX_ERROR;
 import java.awt.Color;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Background;
@@ -75,21 +79,22 @@ public class CSGFoolproofDesign implements FoolproofDesign {
         updateAddTAFoolproofDesign();
         updateEditTAFoolproofDesign();
         updateRemoveTAFoolproofDesign();
-        updateOHTable();
-        updateCourseNameCB();
-        updateCourseNumCB();
-        updateCourseSemCB();
-        updateCourseYearCB();
-        updateExportLabel();
-        updateCourseTitleTF();
-        updateInstructorNameTF();
-        updateInstructorEmailTF();
-        updateInstructorRoomTF();
-        updateInstructorHPTF();
-        updateCourseCSSCB();
+        updateOHTableFoolproofDesign();
+        updateCourseNameCBFoolproofDesign();
+        updateCourseNumCBFoolproofDesign();
+        updateCourseSemCBFoolproofDesign();
+        updateCourseYearCBFoolproofDesign();
+        updateExportLabelFoolproofDesign();
+        updateCourseTitleTFFoolproofDesign();
+        updateInstructorNameTFFoolproofDesign();
+        updateInstructorEmailTFFoolproofDesign();
+        updateInstructorRoomTFFoolproofDesign();
+        updateInstructorHPTFFoolproofDesign();
+        updateCourseCSSCBFoolproofDesign();
         updateRemoveLectureFoolproofDesign();
         updateRemoveRecitationFoolproofDesign();
         updateRemoveLabFoolproofDesign();
+        updateDatePickerFoolproofDesign();
         updateClearSelectionFoolproofDesign();
         updateAddEditButtonTextFoolproofDesign();
         updateRemoveScheduleItemFoolproofDesign();
@@ -184,7 +189,7 @@ public class CSGFoolproofDesign implements FoolproofDesign {
         }
     }
 
-    private void updateOHTable() {
+    private void updateOHTableFoolproofDesign() {
         AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         OHData data = d.getOfficeHoursData();
@@ -201,7 +206,7 @@ public class CSGFoolproofDesign implements FoolproofDesign {
             }
         }
     }
-    private void updateCourseNameCB() {
+    private void updateCourseNameCBFoolproofDesign() {
         AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
@@ -221,7 +226,7 @@ public class CSGFoolproofDesign implements FoolproofDesign {
         }
     }
     
-    private void updateCourseNumCB() {
+    private void updateCourseNumCBFoolproofDesign() {
         AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
@@ -241,7 +246,7 @@ public class CSGFoolproofDesign implements FoolproofDesign {
         }
     }
     
-    private void updateCourseSemCB() {
+    private void updateCourseSemCBFoolproofDesign() {
         AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
@@ -261,7 +266,7 @@ public class CSGFoolproofDesign implements FoolproofDesign {
         }
     }
     
-    private void updateCourseYearCB() {
+    private void updateCourseYearCBFoolproofDesign() {
         AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
@@ -281,7 +286,7 @@ public class CSGFoolproofDesign implements FoolproofDesign {
         }
     }
     
-    private void updateExportLabel(){
+    private void updateExportLabelFoolproofDesign(){
         AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
@@ -302,7 +307,7 @@ public class CSGFoolproofDesign implements FoolproofDesign {
                                                  + "\\public_html");
     }
     
-    private void updateCourseTitleTF() {
+    private void updateCourseTitleTFFoolproofDesign() {
         AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
@@ -312,7 +317,7 @@ public class CSGFoolproofDesign implements FoolproofDesign {
         foolproofTextField(c, valid);
     }
     
-    private void updateInstructorNameTF() {
+    private void updateInstructorNameTFFoolproofDesign() {
         AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
@@ -322,7 +327,7 @@ public class CSGFoolproofDesign implements FoolproofDesign {
         foolproofTextField(c, valid);
     }
     
-    private void updateInstructorEmailTF() {
+    private void updateInstructorEmailTFFoolproofDesign() {
         AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
@@ -332,7 +337,7 @@ public class CSGFoolproofDesign implements FoolproofDesign {
         foolproofTextField(c, valid);
     }
     
-    private void updateInstructorRoomTF() {
+    private void updateInstructorRoomTFFoolproofDesign() {
         AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
@@ -342,7 +347,7 @@ public class CSGFoolproofDesign implements FoolproofDesign {
         foolproofTextField(c, valid);
     }
     
-    private void updateInstructorHPTF() {
+    private void updateInstructorHPTFFoolproofDesign() {
         AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
@@ -352,7 +357,7 @@ public class CSGFoolproofDesign implements FoolproofDesign {
         foolproofTextField(c, valid);
     }
     
-    private void updateCourseCSSCB() {
+    private void updateCourseCSSCBFoolproofDesign() {
         AppGUIModule gui = app.getGUIModule();
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
@@ -414,6 +419,50 @@ public class CSGFoolproofDesign implements FoolproofDesign {
         }
         else{
             remove.setDisable(false);
+        }
+    }
+    
+    private void updateDatePickerFoolproofDesign(){
+        AppGUIModule gui = app.getGUIModule();
+        CSGData d = (CSGData)app.getDataComponent();
+        CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
+        ScheduleData data = d.getScheduleData();
+        DatePicker start = workspace.getStartDate();
+        DatePicker end = workspace.getEndDate();
+        boolean isStartNotEmpty = start.getValue() != null;
+        boolean isEndNotEmpty = end.getValue() != null;
+        
+        if(isStartNotEmpty && isEndNotEmpty){
+            if(start.getValue().isBefore(end.getValue())){
+                foolproofDatePicker(start, isStartNotEmpty);
+                foolproofDatePicker(end, isEndNotEmpty);
+            }
+            else{
+                foolproofDatePicker(start, !isStartNotEmpty);
+                foolproofDatePicker(end, !isEndNotEmpty);
+            }
+        }
+        else{
+            if(!isStartNotEmpty){
+                foolproofDatePicker(start, !isStartNotEmpty);
+            }
+            if(!isEndNotEmpty){
+                foolproofDatePicker(end, !isEndNotEmpty);
+            }
+        }
+    }
+    
+    public void foolproofDatePicker(DatePicker dp, boolean hasLegalData) {
+        if (hasLegalData) {
+            dp.getStyleClass().remove(CLASS_SCH_DATE_PICKER_ERROR);
+            if (!dp.getStyleClass().contains(CLASS_SCH_DATE_PICKER)) {
+                dp.getStyleClass().add(CLASS_SCH_DATE_PICKER);
+            }
+        } else {
+            dp.getStyleClass().remove(CLASS_SCH_DATE_PICKER);
+            if (!dp.getStyleClass().contains(CLASS_SCH_DATE_PICKER_ERROR)) {
+                dp.getStyleClass().add(CLASS_SCH_DATE_PICKER_ERROR);
+            }
         }
     }
     

@@ -8,7 +8,6 @@ package csg.transactions;
 import csg.CSGApp;
 import static csg.CSGPropertyType.MT_RECITATION_TABLE_VIEW;
 import csg.data.CSGData;
-import csg.data.LecturePrototype;
 import csg.data.MeetingTimesData;
 import csg.data.RecitationPrototype;
 import csg.data.SiteData;
@@ -31,10 +30,11 @@ public class MT_RecEditRoomColumn_Transaction implements jTPS_Transaction{
     String n;
     RecitationPrototype newRecitation;
     
-    public MT_RecEditRoomColumn_Transaction(CSGApp initApp, CSGData d, MeetingTimesData data, String old, String n){
+    public MT_RecEditRoomColumn_Transaction(CSGApp initApp, CSGData d, MeetingTimesData data, RecitationPrototype r, String old, String n){
         app = initApp;
         this.d = d;
         this.data = data;
+        newRecitation = r;
         this.old = old;
         this.n = n;
     }
@@ -43,8 +43,7 @@ public class MT_RecEditRoomColumn_Transaction implements jTPS_Transaction{
     public void doTransaction() {
         AppGUIModule gui = app.getGUIModule();
         TableView recTable = (TableView)gui.getGUINode(MT_RECITATION_TABLE_VIEW);
-        RecitationPrototype r = (RecitationPrototype)recTable.getSelectionModel().getSelectedItem();
-        newRecitation = data.editRecitation(r, "ROOM", n);
+        newRecitation = data.editRecitation(newRecitation, "ROOM", n);
         recTable.refresh();
     }
 
@@ -52,7 +51,6 @@ public class MT_RecEditRoomColumn_Transaction implements jTPS_Transaction{
     public void undoTransaction() {
         AppGUIModule gui = app.getGUIModule();
         TableView recTable = (TableView)gui.getGUINode(MT_RECITATION_TABLE_VIEW);
-        RecitationPrototype r = (RecitationPrototype)recTable.getSelectionModel().getSelectedItem(); 
         data.editRecitation(newRecitation, "ROOM", old);
         recTable.refresh();
 

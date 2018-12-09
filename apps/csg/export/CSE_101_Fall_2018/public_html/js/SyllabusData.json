@@ -1,37 +1,32 @@
 
 {
-    "description":"I don't care",
+    "description":"idc",
     "topics":[
-        "topic 1",
-        "topic 2"
+        "one topic",
+        "two topic"
     ],
-    "prerequisites":"there are none",
+    "prerequisites":"idc",
     "outcomes":[
-        "outcome 1",
-        "outcome 2"
+        "one outcome",
+        "two outcome"
     ],
     "textbooks":[
         {
-            "title":"Some title",
-            "link":"title.com",
-            "photo":"insert_photo_here",
+            "title":"me book",
+            "link":"mebook.com",
+            "photo":"me_photo",
             "authors":[
-                "Some author"
+                "Me"
             ],
-            "publisher":"some pub",
+            "publisher":"me publisher",
             "year":"2018"
         }
     ],
     "gradedComponents":[
         {
             "name":"Final",
-            "description":"Your Final",
-            "weight":"50"
-        },
-        {
-            "name":"Final2",
-            "description":"Your Final",
-            "weight":"50"
+            "description":"Your final",
+            "weight":"100"
         }
     ],
     "gradingNote":"idc",

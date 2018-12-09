@@ -134,22 +134,39 @@ public class CSGFiles implements AppFileComponent {
     
     // MEETING TIMES DATA FIELDS
     static final String JSON_MT_LECTURES = "lectures";
+    static final String JSON_MT_LECTURES_SAVE = "mt_lectures";
     static final String JSON_MT_LECTURES_SECTION = "section";
+    static final String JSON_MT_LECTURES_SECTION_SAVE = "lec_section";
     static final String JSON_MT_LECTURES_DAYS = "days";
+    static final String JSON_MT_LECTURES_DAYS_SAVE = "lec_days";
     static final String JSON_MT_LECTURES_TIME = "time";
+    static final String JSON_MT_LECTURES_TIME_SAVE = "lec_time";
     static final String JSON_MT_LECTURES_ROOM = "room";
+    static final String JSON_MT_LECTURES_ROOM_SAVE = "lec_room";
     static final String JSON_MT_RECITATIONS = "recitations";
+    static final String JSON_MT_RECITATIONS_SAVE = "mt_recitations";
     static final String JSON_MT_RECITATIONS_SECTION = "section";
+    static final String JSON_MT_RECITATIONS_SECTION_SAVE = "rec_section";
     static final String JSON_MT_RECITATIONS_DAY_TIME = "day_time";
+    static final String JSON_MT_RECITATIONS_DAY_TIME_SAVE = "rec_day_time";
     static final String JSON_MT_RECITATIONS_LOCATION = "location";
+    static final String JSON_MT_RECITATIONS_LOCATION_SAVE = "rec_location";
     static final String JSON_MT_RECITATIONS_TA1 = "ta_1";
+    static final String JSON_MT_RECITATIONS_TA1_SAVE = "rec_ta_1";
     static final String JSON_MT_RECITATIONS_TA2 = "ta_2";
+    static final String JSON_MT_RECITATIONS_TA2_SAVE = "rec_ta_2";
     static final String JSON_MT_LABS = "labs";
+    static final String JSON_MT_LABS_SAVE = "mt_labs";
     static final String JSON_MT_LABS_SECTION = "section";
+    static final String JSON_MT_LABS_SECTION_SAVE = "lab_section";
     static final String JSON_MT_LABS_DAY_TIME = "day_time";
+    static final String JSON_MT_LABS_DAY_TIME_SAVE = "lab_day_time";
     static final String JSON_MT_LABS_LOCATION = "location";
+    static final String JSON_MT_LABS_LOCATION_SAVE = "lab_location";
     static final String JSON_MT_LABS_TA1 = "ta_1";
+    static final String JSON_MT_LABS_TA1_SAVE = "lab_ta_1";
     static final String JSON_MT_LABS_TA2 = "ta_2";
+    static final String JSON_MT_LABS_TA2_SAVE = "lab_ta_2";
     
     // OH DATA FIELDS
     static final String JSON_OH_GRAD_TAS = "grad_tas";
@@ -474,9 +491,9 @@ public class CSGFiles implements AppFileComponent {
         
         /**************LOADS THE MEETING TIMES DATA****************/
         mtDataManager.reset();
-        loadLectures(mtDataManager, json, JSON_MT_LECTURES);
-        loadRecitations(mtDataManager, json, JSON_MT_RECITATIONS);
-        loadLabs(mtDataManager, json, JSON_MT_LABS);
+        loadLectures(mtDataManager, json, JSON_MT_LECTURES_SAVE);
+        loadRecitations(mtDataManager, json, JSON_MT_RECITATIONS_SAVE);
+        loadLabs(mtDataManager, json, JSON_MT_LABS_SAVE);
         /**********************************************************/
         
         
@@ -642,10 +659,10 @@ public class CSGFiles implements AppFileComponent {
         JsonArray jsonLecArray = json.getJsonArray(lecs);
         for (int i = 0; i < jsonLecArray.size(); i++) {
             JsonObject jsonTA = jsonLecArray.getJsonObject(i);
-            String section = jsonTA.getString(JSON_MT_LECTURES_SECTION);
-            String day = jsonTA.getString(JSON_MT_LECTURES_DAYS);
-            String time = jsonTA.getString(JSON_MT_LECTURES_TIME);
-            String room = jsonTA.getString(JSON_MT_LECTURES_ROOM);
+            String section = jsonTA.getString(JSON_MT_LECTURES_SECTION_SAVE);
+            String day = jsonTA.getString(JSON_MT_LECTURES_DAYS_SAVE);
+            String time = jsonTA.getString(JSON_MT_LECTURES_TIME_SAVE);
+            String room = jsonTA.getString(JSON_MT_LECTURES_ROOM_SAVE);
             LecturePrototype l = new LecturePrototype(section, day, time, room);
             data.addLecture(l);
         } 
@@ -655,11 +672,11 @@ public class CSGFiles implements AppFileComponent {
         JsonArray jsonRecArray = json.getJsonArray(recs);
         for (int i = 0; i < jsonRecArray.size(); i++) {
             JsonObject jsonTA = jsonRecArray.getJsonObject(i);
-            String section = jsonTA.getString(JSON_MT_RECITATIONS_SECTION);
-            String dayTime = jsonTA.getString(JSON_MT_RECITATIONS_DAY_TIME);
-            String room = jsonTA.getString(JSON_MT_RECITATIONS_LOCATION);
-            String ta1 = jsonTA.getString(JSON_MT_RECITATIONS_TA1);
-            String ta2 = jsonTA.getString(JSON_MT_RECITATIONS_TA2);
+            String section = jsonTA.getString(JSON_MT_RECITATIONS_SECTION_SAVE);
+            String dayTime = jsonTA.getString(JSON_MT_RECITATIONS_DAY_TIME_SAVE);
+            String room = jsonTA.getString(JSON_MT_RECITATIONS_LOCATION_SAVE);
+            String ta1 = jsonTA.getString(JSON_MT_RECITATIONS_TA1_SAVE);
+            String ta2 = jsonTA.getString(JSON_MT_RECITATIONS_TA2_SAVE);
             RecitationPrototype r = new RecitationPrototype(section, dayTime, room, ta1, ta2);
             data.addRecitation(r);
         } 
@@ -669,11 +686,11 @@ public class CSGFiles implements AppFileComponent {
         JsonArray jsonLabsArray = json.getJsonArray(labs);
         for (int i = 0; i < jsonLabsArray.size(); i++) {
             JsonObject jsonTA = jsonLabsArray.getJsonObject(i);
-            String section = jsonTA.getString(JSON_MT_LABS_SECTION);
-            String dayTime = jsonTA.getString(JSON_MT_LABS_DAY_TIME);
-            String room = jsonTA.getString(JSON_MT_LABS_LOCATION);
-            String ta1 = jsonTA.getString(JSON_MT_LABS_TA1);
-            String ta2 = jsonTA.getString(JSON_MT_LABS_TA2);
+            String section = jsonTA.getString(JSON_MT_LABS_SECTION_SAVE);
+            String dayTime = jsonTA.getString(JSON_MT_LABS_DAY_TIME_SAVE);
+            String room = jsonTA.getString(JSON_MT_LABS_LOCATION_SAVE);
+            String ta1 = jsonTA.getString(JSON_MT_LABS_TA1_SAVE);
+            String ta2 = jsonTA.getString(JSON_MT_LABS_TA2_SAVE);
             LabPrototype l = new LabPrototype(section, dayTime, room, ta1, ta2);
             data.addLab(l);
         } 
@@ -893,10 +910,10 @@ public class CSGFiles implements AppFileComponent {
         while(lecIterator.hasNext()){
             LecturePrototype l = lecIterator.next();
             JsonObject lecJson = Json.createObjectBuilder()
-                    .add(JSON_MT_LECTURES_SECTION, l.getSection())
-                    .add(JSON_MT_LECTURES_DAYS, l.getDay())
-                    .add(JSON_MT_LECTURES_TIME, l.getRoom())
-                    .add(JSON_MT_LECTURES_ROOM, l.getRoom()).build();
+                    .add(JSON_MT_LECTURES_SECTION_SAVE, l.getSection())
+                    .add(JSON_MT_LECTURES_DAYS_SAVE, l.getDay())
+                    .add(JSON_MT_LECTURES_TIME_SAVE, l.getTime())
+                    .add(JSON_MT_LECTURES_ROOM_SAVE, l.getRoom()).build();
             lecArrayBuilder.add(lecJson);
         }
         JsonArray lectureArray = lecArrayBuilder.build();
@@ -906,11 +923,11 @@ public class CSGFiles implements AppFileComponent {
         while(recIterator.hasNext()){
             RecitationPrototype l = recIterator.next();
             JsonObject lecJson = Json.createObjectBuilder()
-                    .add(JSON_MT_RECITATIONS_SECTION, l.getSection())
-                    .add(JSON_MT_RECITATIONS_DAY_TIME, l.getRoom())
-                    .add(JSON_MT_RECITATIONS_LOCATION, l.getRoom())
-                    .add(JSON_MT_RECITATIONS_TA1, l.getTA1())
-                    .add(JSON_MT_RECITATIONS_TA2, l.getTA2()).build();
+                    .add(JSON_MT_RECITATIONS_SECTION_SAVE, l.getSection())
+                    .add(JSON_MT_RECITATIONS_DAY_TIME_SAVE, l.getDayAndTime())
+                    .add(JSON_MT_RECITATIONS_LOCATION_SAVE, l.getRoom())
+                    .add(JSON_MT_RECITATIONS_TA1_SAVE, l.getTA1())
+                    .add(JSON_MT_RECITATIONS_TA2_SAVE, l.getTA2()).build();
             recArrayBuilder.add(lecJson);
         }
         JsonArray recitationArray = recArrayBuilder.build();
@@ -920,11 +937,11 @@ public class CSGFiles implements AppFileComponent {
         while(labsIterator.hasNext()){
             LabPrototype l = labsIterator.next();
             JsonObject lecJson = Json.createObjectBuilder()
-                    .add(JSON_MT_LABS_SECTION, l.getSection())
-                    .add(JSON_MT_LABS_DAY_TIME, l.getRoom())
-                    .add(JSON_MT_LABS_LOCATION, l.getRoom())
-                    .add(JSON_MT_LABS_TA1, l.getTA1())
-                    .add(JSON_MT_LABS_TA2, l.getTA2()).build();
+                    .add(JSON_MT_LABS_SECTION_SAVE, l.getSection())
+                    .add(JSON_MT_LABS_DAY_TIME_SAVE, l.getDayAndTime())
+                    .add(JSON_MT_LABS_LOCATION_SAVE, l.getRoom())
+                    .add(JSON_MT_LABS_TA1_SAVE, l.getTA1())
+                    .add(JSON_MT_LABS_TA2_SAVE, l.getTA2()).build();
             labsArrayBuilder.add(lecJson);
         }
         JsonArray labsArray = labsArrayBuilder.build();
@@ -1281,9 +1298,9 @@ public class CSGFiles implements AppFileComponent {
                 .add(JSON_SYL_AD, sylAD)
                 .add(JSON_SYL_SA, sylSA)
                 // Adds the Meeting Times info
-                .add(JSON_MT_LECTURES, lectureArray)
-                .add(JSON_MT_RECITATIONS, recitationArray)
-                .add(JSON_MT_LABS, labsArray)
+                .add(JSON_MT_LECTURES_SAVE, lectureArray)
+                .add(JSON_MT_RECITATIONS_SAVE, recitationArray)
+                .add(JSON_MT_LABS_SAVE, labsArray)
                 // Adds the OH Info
 		.add(JSON_OH_START_HOUR, "" + ohDataManager.getStartHour())
 		.add(JSON_OH_END_HOUR, "" + ohDataManager.getEndHour())

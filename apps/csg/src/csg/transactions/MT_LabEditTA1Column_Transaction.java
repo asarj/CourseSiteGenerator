@@ -27,10 +27,11 @@ public class MT_LabEditTA1Column_Transaction implements jTPS_Transaction{
     String n;
     LabPrototype newLab;
     
-    public MT_LabEditTA1Column_Transaction(CSGApp initApp, CSGData d, MeetingTimesData data, String old, String n){
+    public MT_LabEditTA1Column_Transaction(CSGApp initApp, CSGData d, MeetingTimesData data, LabPrototype l, String old, String n){
         app = initApp;
         this.d = d;
         this.data = data;
+        this.newLab = l;
         this.old = old;
         this.n = n;
     }
@@ -39,8 +40,7 @@ public class MT_LabEditTA1Column_Transaction implements jTPS_Transaction{
     public void doTransaction() {
         AppGUIModule gui = app.getGUIModule();
         TableView labTable = (TableView)gui.getGUINode(MT_LAB_TABLE_VIEW);
-        LabPrototype l = (LabPrototype)labTable.getSelectionModel().getSelectedItem();
-        newLab = data.editLab(l, "TA1", n);
+        newLab = data.editLab(newLab, "TA1", n);
         labTable.refresh();
     }
 
@@ -48,7 +48,6 @@ public class MT_LabEditTA1Column_Transaction implements jTPS_Transaction{
     public void undoTransaction() {
         AppGUIModule gui = app.getGUIModule();
         TableView labTable = (TableView)gui.getGUINode(MT_LAB_TABLE_VIEW);
-        LabPrototype r = (LabPrototype)labTable.getSelectionModel().getSelectedItem(); 
         data.editLab(newLab, "TA1", old);
         labTable.refresh();
 

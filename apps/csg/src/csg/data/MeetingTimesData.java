@@ -59,9 +59,27 @@ public class MeetingTimesData {
         selectLectures();
         return l;
     }
-    public void addLecture(LecturePrototype l){
+    public LecturePrototype addLecture(LecturePrototype l){
         lectureItems.add(l);
         selectLectures();
+        return l;
+    }
+    
+    public LecturePrototype removeLecture(LecturePrototype l){
+        AppGUIModule gui = app.getGUIModule();
+        TableView<LecturePrototype> lecTable = (TableView)gui.getGUINode(MT_LECTURE_TABLE_VIEW);
+        lectureItems.remove(l);
+        selectLectures();
+        return l;
+    }
+    
+    public LecturePrototype getLecture(LecturePrototype l){
+        for(LecturePrototype x: lectureItems){
+            if(x.equals(l)){
+                return x;
+            }
+        }
+        return null;
     }
     
     public LecturePrototype editLecture(LecturePrototype l, String TYPE, String change){
@@ -164,13 +182,6 @@ public class MeetingTimesData {
         return l;
     }
     
-    public void removeLecture(LecturePrototype l){
-        AppGUIModule gui = app.getGUIModule();
-        TableView<LecturePrototype> lecTable = (TableView)gui.getGUINode(MT_LECTURE_TABLE_VIEW);
-        lectureItems.remove(l);
-        selectLectures();
-    }
-    
     public RecitationPrototype addRecitation(){
         RecitationPrototype r = new RecitationPrototype("?", "?", "?", "?", "?");
         recitationItems.add(r);
@@ -178,16 +189,18 @@ public class MeetingTimesData {
         return r;
     }
     
-    public void addRecitation(RecitationPrototype r){
+    public RecitationPrototype addRecitation(RecitationPrototype r){
         recitationItems.add(r);
         selectRecitations();
+        return r;
     }
     
-    public void removeRecitation(RecitationPrototype r){
+    public RecitationPrototype removeRecitation(RecitationPrototype r){
         AppGUIModule gui = app.getGUIModule();
         TableView<LecturePrototype> recTable = (TableView)gui.getGUINode(MT_RECITATION_TABLE_VIEW);
         recitationItems.remove(r);
         selectRecitations();
+        return r;
     }
     
     public LabPrototype editLab(LabPrototype l, String TYPE, String change){
@@ -251,16 +264,18 @@ public class MeetingTimesData {
         return l;
     }
     
-    public void addLab(LabPrototype l){
+    public LabPrototype addLab(LabPrototype l){
         labItems.add(l);
         selectLabs();
+        return l;
     }
     
-    public void removeLab(LabPrototype l){
+    public LabPrototype removeLab(LabPrototype l){
         AppGUIModule gui = app.getGUIModule();
         TableView<LecturePrototype> labTable = (TableView)gui.getGUINode(MT_LAB_TABLE_VIEW);
         labItems.remove(l);
         selectLabs();
+        return l;
     }
     
     public void selectLectures() {

@@ -26,15 +26,15 @@ public class MT_LecEditDayColumn_Transaction implements jTPS_Transaction{
     CSGApp app;
     CSGData d;
     MeetingTimesData data;
-    TextField c;
     String old;
     String n;
     LecturePrototype newLecture;
     
-    public MT_LecEditDayColumn_Transaction(CSGApp initApp, CSGData d, MeetingTimesData data, String old, String n){
+    public MT_LecEditDayColumn_Transaction(CSGApp initApp, CSGData d, MeetingTimesData data, LecturePrototype l, String old, String n){
         app = initApp;
         this.d = d;
         this.data = data;
+        newLecture = l;
         this.old = old;
         this.n = n;
     }
@@ -43,8 +43,7 @@ public class MT_LecEditDayColumn_Transaction implements jTPS_Transaction{
     public void doTransaction() {
         AppGUIModule gui = app.getGUIModule();
         TableView lecTable = (TableView)gui.getGUINode(MT_LECTURE_TABLE_VIEW);
-        LecturePrototype l = (LecturePrototype)lecTable.getSelectionModel().getSelectedItem();
-        newLecture = data.editLecture(l, "DAY", n);
+        newLecture = data.editLecture(newLecture, "DAY", n);
         lecTable.refresh();
     }
 
@@ -52,7 +51,6 @@ public class MT_LecEditDayColumn_Transaction implements jTPS_Transaction{
     public void undoTransaction() {
         AppGUIModule gui = app.getGUIModule();
         TableView lecTable = (TableView)gui.getGUINode(MT_LECTURE_TABLE_VIEW);
-        LecturePrototype l = (LecturePrototype)lecTable.getSelectionModel().getSelectedItem();
         data.editLecture(newLecture, "DAY", old);
         lecTable.refresh();
 

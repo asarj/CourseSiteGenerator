@@ -826,10 +826,6 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         lectureDayColumn.setCellValueFactory(new PropertyValueFactory<String, String>("day"));
         lectureTimeColumn.setCellValueFactory(new PropertyValueFactory<String, String>("time"));
         lectureRoomColumn.setCellValueFactory(new PropertyValueFactory<String, String>("room"));
-//        lectureSectionColumn.setEditable(true);
-//        lectureDayColumn.setEditable(true);
-//        lectureTimeColumn.setEditable(true);
-//        lectureRoomColumn.setEditable(true);
         
         lectureSectionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         lectureSectionColumn.setOnEditCommit((CellEditEvent<String, String> t) -> {
@@ -1121,18 +1117,11 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         HBox schBoundariesBox = schBuilder.buildHBox(SCH_BOUNDARIES_OPTIONS_HEADER_BOX, schBoundariesPane, CLASS_OH_BOX, ENABLED);
         schBuilder.buildLabel(SCH_STARTING_MONDAY_LABEL, schBoundariesBox, CLASS_OH_LABEL, ENABLED);
         startDate = new DatePicker();
+        startDate.setEditable(false);
         startDate.setDayCellFactory(picker -> new DateCell() {
             @Override
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
-                LocalDate end;
-                LocalDate setEndVal = LocalDate.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth() + 4);
-                if(endDate != null){
-                    end = endDate.getValue();
-                }
-                else{
-                    end = setEndVal;
-                }
                 setDisable(empty || date.getDayOfWeek() == DayOfWeek.SATURDAY || 
                         date.getDayOfWeek() == DayOfWeek.SUNDAY || 
                         date.getDayOfWeek() == DayOfWeek.TUESDAY ||
@@ -1142,12 +1131,13 @@ public class CSGWorkspace extends AppWorkspaceComponent {
                 );
             }
         });
-        startDate.valueProperty().addListener((ov, oldValue, newValue) ->{
-            outsideController.processStartDate(newValue);
+        startDate.focusedProperty().addListener(e->{
+            outsideController.processStartDate();
         });
         schBoundariesBox.getChildren().add(startDate);
         schBuilder.buildLabel(SCH_ENDING_FRIDAY_LABEL, schBoundariesBox, CLASS_OH_LABEL, ENABLED);
         endDate = new DatePicker();
+        endDate.setEditable(false);
         endDate.setDayCellFactory(picker -> new DateCell() {
             @Override
             public void updateItem(LocalDate date, boolean empty) {
@@ -1160,8 +1150,8 @@ public class CSGWorkspace extends AppWorkspaceComponent {
                         date.getDayOfWeek() == DayOfWeek.THURSDAY);
             }
         });
-        endDate.valueProperty().addListener((ov, oldValue, newValue) ->{
-            outsideController.processEndDate(newValue);
+        endDate.focusedProperty().addListener(e->{
+            outsideController.processEndDate();
         });
         schBoundariesPane.setStyle("-fx-background-color: #ebebeb;");
         schBoundariesPane.setSpacing(5);
@@ -1221,7 +1211,11 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
                 try{
-                    setDisable(empty || date.compareTo(startDate.getValue()) < 0 || date.compareTo(endDate.getValue()) > 0);
+                    setDisable(empty || date.compareTo(startDate.getValue()) < 0 || 
+                            date.compareTo(endDate.getValue()) > 0 || 
+                            date.getDayOfWeek() == DayOfWeek.SATURDAY || 
+                            date.getDayOfWeek() == DayOfWeek.SUNDAY
+                    );
                 }
                 catch(NullPointerException n){
 //                    Alert alert = new Alert(Alert.AlertType.ERROR, "Set the start and end dates first!", ButtonType.OK);

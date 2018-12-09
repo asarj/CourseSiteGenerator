@@ -261,5 +261,11 @@
 .oh_cb{
     
 }
-/*THIS IS WHERE I PUT THE CUSTOM CSS STYLING*/
 
+/*THIS IS WHERE I PUT THE CUSTOM CSS STYLING*/
+.sch_date_picker_error{
+    -fx-background-color: red;
+}
+.sch_date_picker{
+
+}

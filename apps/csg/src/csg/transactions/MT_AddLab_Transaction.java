@@ -33,17 +33,18 @@ public class MT_AddLab_Transaction implements jTPS_Transaction{
     String n;
     LabPrototype addedLab;
     
-    public MT_AddLab_Transaction(CSGApp initApp, CSGData d, MeetingTimesData data){
+    public MT_AddLab_Transaction(CSGApp initApp, CSGData d, MeetingTimesData data, LabPrototype l){
         app = initApp;
         this.d = d;
         this.data = data;
+        this.addedLab = l;
     }
     
     @Override
     public void doTransaction() {
         AppGUIModule gui = app.getGUIModule();
         TableView labTable = (TableView)gui.getGUINode(MT_LAB_TABLE_VIEW);
-        addedLab = data.addLab();
+        addedLab = data.addLab(addedLab);
         labTable.refresh();
     }
 

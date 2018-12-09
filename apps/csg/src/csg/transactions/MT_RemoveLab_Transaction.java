@@ -28,7 +28,6 @@ public class MT_RemoveLab_Transaction implements jTPS_Transaction{
     CSGApp app;
     CSGData d;
     MeetingTimesData data;
-    TextField c;
     String old;
     String n;
     LabPrototype removedLab;
