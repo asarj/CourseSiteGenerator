@@ -63,6 +63,7 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -2183,7 +2184,8 @@ public class CSGFiles implements AppFileComponent {
             
         }
         catch(FileAlreadyExistsException e){
-            
+            cssExport.resolve(cssImport.getFileName()).toFile().delete();
+            Files.copy(cssImport, cssExport.resolve(cssImport.getFileName()));
         }
         File rename = new File(cssExport + "/" + siteDataManager.getCSS().substring(siteDataManager.getCSS().lastIndexOf("/") + 1));
         boolean renameResult = rename.renameTo(new File(cssExport + "/sea_wolf.css"));
@@ -2207,25 +2209,29 @@ public class CSGFiles implements AppFileComponent {
             Files.copy(favImport, imgExport.resolve(favImport.getFileName())); 
         }
         catch(FileAlreadyExistsException e){
-            
+            imgExport.resolve(favImport.getFileName()).toFile().delete();
+            Files.copy(favImport, imgExport.resolve(favImport.getFileName())); 
         }
         try{
             Files.copy(navImport, imgExport.resolve(navImport.getFileName()));         
         }
         catch(FileAlreadyExistsException e){
-            
+            imgExport.resolve(navImport.getFileName()).toFile().delete();
+            Files.copy(navImport, imgExport.resolve(navImport.getFileName()));
         }
         try{
             Files.copy(leftImport, imgExport.resolve(leftImport.getFileName())); 
         }
         catch(FileAlreadyExistsException e){
-            
+            imgExport.resolve(leftImport.getFileName()).toFile().delete();
+            Files.copy(leftImport, imgExport.resolve(leftImport.getFileName())); 
         }
         try{
             Files.copy(rightImport, imgExport.resolve(rightImport.getFileName()));  
         }
         catch(FileAlreadyExistsException e){
-            
+            imgExport.resolve(rightImport.getFileName()).toFile().delete();
+            Files.copy(rightImport, imgExport.resolve(rightImport.getFileName()));
         }
         
         // Copying everything over
@@ -2238,9 +2244,36 @@ public class CSGFiles implements AppFileComponent {
         File htmlExport= new File(siteDataManager.getExp());
         File jsImport = new File("./work/js/");
         File jsExport = new File(siteDataManager.getExp() + "/js/");
-        FileUtils.copyDirectory(htmlImport, htmlExport);
-        FileUtils.copyDirectory(jsImport, jsExport);
+//        FileUtils.copyDirectory(htmlImport, htmlExport);
+        for(File f: htmlExport.listFiles()){
+            try{
+                Files.copy(f.toPath(), htmlExport.toPath().resolve(f.toPath().getFileName()));
+            }
+            catch(FileAlreadyExistsException e){
+                htmlExport.toPath().resolve(f.toPath().getFileName()).toFile().delete();
+                Files.copy(f.toPath(), htmlExport.toPath().resolve(f.toPath().getFileName()));
+            }
+        }
+//        FileUtils.copyDirectory(jsImport, jsExport);
+        for(File f: jsExport.listFiles()){
+            try{
+                Files.copy(f.toPath(), jsExport.toPath().resolve(f.toPath().getFileName()));
+            }
+            catch(FileAlreadyExistsException e){
+                jsExport.toPath().resolve(f.toPath().getFileName()).toFile().delete();
+                Files.copy(f.toPath(), jsExport.toPath().resolve(f.toPath().getFileName()));
+            }
+        }
         FileUtils.copyDirectory(importTo, exportTo);
+        for(File f : exportTo.listFiles()){
+            try{
+                Files.copy(f.toPath(), exportTo.toPath().resolve(f.toPath().getFileName()));
+            }
+            catch(FileAlreadyExistsException e){
+                exportTo.toPath().resolve(f.toPath().getFileName()).toFile().delete();
+                Files.copy(f.toPath(), exportTo.toPath().resolve(f.toPath().getFileName()));
+            }
+        }
         AppWebDialog a = new AppWebDialog(app);
         a.showWebDialog(siteDataManager.getExp() + "/index.html");
     }

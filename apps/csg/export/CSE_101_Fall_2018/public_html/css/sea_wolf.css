@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 body {
-    background-color:rgb(255, 143, 23);
+    background-color:rgb(118,143,165);
     font-family: 'Arial', sans-serif;
 }
 
@@ -15,39 +15,39 @@ p,li,td,th {
 }
 
 h1,h2,h3,h4,h5,h6 {
-    color:#e35a2c
+    color:#003399
 }
 
 #navbar {
-    background-color:#60120b;
+    background-color:#660000;
     margin-top:5px;
 }
 
 #banner {
     font-size:24pt;
     color:#ffffff;
-    background-color:#993e1d;
+    background-color:#990000;
 }
 
 #desc {
-    background-color:#ffcb9d;
+    background-color:#ffffff;
     color:#000000;
 }
 
 a.nav {
-    color:#ffc046;
+    color:#ffffff;
     font-size:12pt;
     font-weight:normal;
 }
 
 a.open_nav {
-    color:#fff2f2;
+    color:#ffffff;
     font-size:18pt;
     font-weight:bold;
 }
 
 hr {
-    color:#ffefed;
+    color:#111155;
 }
 
 a.open_nav:hover {
@@ -55,7 +55,7 @@ a.open_nav:hover {
 }
 
 a.nav:hover{
-    color:rgb(255, 94, 70);
+    color:rgb(118,143,165);
 }
 
 a:hover {
@@ -64,17 +64,17 @@ a:hover {
 
 a {
     text-decoration:none;
-    color:#ff191e;
+    color:#006633;
     font-weight:bold;
 }
 
 span {
-    color:#ff0a05;
+    color:#8888ff;
     font-weight:bold;
 }
 
 span.reading {
-    color:#959199;
+    color:#990099;
     font-weight:normal;
 }
 
@@ -89,16 +89,16 @@ span.hw {
 }
 
 span.grading {
-    color:#776f77;
+    color:#771177;
     font-weight:bold;
 }
 
 td.highlight {
-    background-color:#ff534a;
+    background-color:#00ffff;
 }
 
 table.hws {
-    border: 2px solid rgb(255, 65, 8);
+    border: 2px solid black;
     border-collapse:collapse;
 }
 
@@ -115,20 +115,20 @@ td.hws {
     height:50px;
     text-align:center;
     font-weight:bold;
-    background-color:rgb(235, 192, 52);
+    background-color:rgb(227,230,235);
 }
 td.time
 {
-    background-color:rgb(98, 189, 80);
+    background-color:rgb(174,189,99);
     color:black;
 }
 td.open
 {
-    background-color:rgb(220, 212, 205);
+    background-color:rgb(220,100,100);
 }
 td.lecture
 {
-    background-color:rgb(223, 169, 46);
+    background-color:rgb(103,124,151);
 }
 td.recitation
 {

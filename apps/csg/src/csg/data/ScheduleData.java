@@ -73,9 +73,19 @@ public class ScheduleData {
         this.end = end;
     }
     
-    public void addScheduleItem(ScheduleItemPrototype s){
+    public ScheduleItemPrototype addScheduleItem(ScheduleItemPrototype s){
         scheduleItems.add(s);
         selectSchedule();
+        return s;
+    }
+    
+    public ScheduleItemPrototype getScheduleItem(ScheduleItemPrototype s){
+        for(ScheduleItemPrototype x : scheduleItems){
+            if(x.equals(s)){
+                return x;
+            }
+        }
+        return null;
     }
     
     public ScheduleItemPrototype editScheduleItem(ScheduleItemPrototype old, ScheduleItemPrototype s){

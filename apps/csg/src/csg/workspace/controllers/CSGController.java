@@ -955,7 +955,7 @@ public class CSGController {
             topicOption = topic.getText();
             linkOption = link.getText();
 
-            ScheduleItemPrototype s = new ScheduleItemPrototype(typeOption.trim(), editPicker.getValue(), topicOption.trim(), titleOption.trim(), linkOption.trim());
+            ScheduleItemPrototype s = new ScheduleItemPrototype(typeOption, editPicker.getValue(), topicOption, titleOption, linkOption);
             SCH_AddItem_Transaction e = new SCH_AddItem_Transaction(app, d, data, s);
             app.processTransaction(e);
             
@@ -964,7 +964,6 @@ public class CSGController {
             title.clear();
             topic.clear();
             link.clear();
-            schTable.refresh();
             
         }
         else{
@@ -973,8 +972,8 @@ public class CSGController {
             topicOption = topic.getText();
             linkOption = link.getText();
 
-            ScheduleItemPrototype s = new ScheduleItemPrototype(typeOption, editPicker.getValue(), topicOption.trim(), titleOption.trim(), linkOption.trim());
-            SCH_EditItem_Transaction e = new SCH_EditItem_Transaction(app, d, data, schTable.getSelectionModel().getSelectedItem(), s);
+            ScheduleItemPrototype old = (ScheduleItemPrototype)schTable.getSelectionModel().getSelectedItem();
+            SCH_EditItem_Transaction e = new SCH_EditItem_Transaction(app, d, data, old, typeOption, editPicker.getValue(), topicOption, titleOption, linkOption);
             app.processTransaction(e);
             
             type.getSelectionModel().selectFirst();
@@ -982,7 +981,7 @@ public class CSGController {
             title.clear();
             topic.clear();
             link.clear();
-            schTable.refresh();
+
 
         }
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
@@ -999,7 +998,7 @@ public class CSGController {
         TextField title = (TextField)gui.getGUINode(SCH_TITLE_TEXT_FIELD);
         TextField topic = (TextField)gui.getGUINode(SCH_TOPIC_TEXT_FIELD);
         TextField link = (TextField)gui.getGUINode(SCH_LINK_TEXT_FIELD);
-        
+        ScheduleItemPrototype s = (ScheduleItemPrototype)schTable.getSelectionModel().getSelectedItem();
         for(int i = 0; i < type.getItems().size(); i++){
             try{
                 if(type.getItems().get(i).equals(schTable.getSelectionModel().getSelectedItem().getType())){
@@ -1013,15 +1012,15 @@ public class CSGController {
         }
 //        type.getSelectionModel().select(schTable.getSelectionModel().getSelectedItem().getType());
         try{
-            String oldType = schTable.getSelectionModel().getSelectedItem().getType();
-            title.setText(schTable.getSelectionModel().getSelectedItem().getTitle());
-            String oldTitle = schTable.getSelectionModel().getSelectedItem().getTitle();
-            topic.setText(schTable.getSelectionModel().getSelectedItem().getTopic());
-            String oldTopic = schTable.getSelectionModel().getSelectedItem().getTopic();
-            link.setText(schTable.getSelectionModel().getSelectedItem().getLink());
-            String oldLink = schTable.getSelectionModel().getSelectedItem().getLink();
-            editPicker.setValue(schTable.getSelectionModel().getSelectedItem().getLocalDate());
-            LocalDate oldDate = schTable.getSelectionModel().getSelectedItem().getLocalDate();
+            String oldType = s.getType();
+            title.setText(s.getTitle());
+            String oldTitle = s.getTitle();
+            topic.setText(s.getTopic());
+            String oldTopic = s.getTopic();
+            link.setText(s.getLink());
+            String oldLink = s.getLink();
+            editPicker.setValue(s.getLocalDate());
+            LocalDate oldDate = s.getLocalDate();
         }
         catch(NullPointerException n){
             

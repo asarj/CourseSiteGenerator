@@ -76,6 +76,7 @@ public class ScheduleItemPrototype<E extends Comparable<E>> implements Comparabl
 
     public void setLocalDate(LocalDate localDate) {
         this.localDate = localDate;
+        setDate(Integer.toString(localDate.getMonthValue()) + "/" + Integer.toString(localDate.getDayOfMonth()) + "/" + Integer.toString(localDate.getYear()));
     }
 
     @Override

@@ -38,7 +38,7 @@
             "bottom_right":"./images/sburightfooter.png"
         }
     ],
-    "css":"./work/css/autumn.css",
+    "css":"./work/css/sea_wolf.css",
     "instructor":[
         {
             "name":"me"
@@ -56,7 +56,7 @@
             "[\n\t{\"Day\": \"\", \t\"Time\": \"\"}\n]"
         ]
     ],
-    "description":"idc",
+    "description":"idc even more",
     "topics":[
         "[\n\t\"one topic\",\n\t\"two topic\"\n]"
     ],
@@ -116,6 +116,106 @@
         }
     ],
     "officeHours":[
+        {
+            "time":"8_00am",
+            "day":"MONDAY",
+            "name":"me"
+        },
+        {
+            "time":"8_00am",
+            "day":"TUESDAY",
+            "name":"me"
+        },
+        {
+            "time":"8_00am",
+            "day":"WEDNESDAY",
+            "name":"me"
+        },
+        {
+            "time":"8_00am",
+            "day":"THURSDAY",
+            "name":"me"
+        },
+        {
+            "time":"8_00am",
+            "day":"FRIDAY",
+            "name":"me"
+        },
+        {
+            "time":"8_30am",
+            "day":"MONDAY",
+            "name":"me"
+        },
+        {
+            "time":"8_30am",
+            "day":"TUESDAY",
+            "name":"me"
+        },
+        {
+            "time":"8_30am",
+            "day":"WEDNESDAY",
+            "name":"me"
+        },
+        {
+            "time":"8_30am",
+            "day":"THURSDAY",
+            "name":"me"
+        },
+        {
+            "time":"8_30am",
+            "day":"FRIDAY",
+            "name":"me"
+        },
+        {
+            "time":"9_00am",
+            "day":"MONDAY",
+            "name":"me2"
+        },
+        {
+            "time":"9_00am",
+            "day":"TUESDAY",
+            "name":"me2"
+        },
+        {
+            "time":"9_00am",
+            "day":"WEDNESDAY",
+            "name":"me2"
+        },
+        {
+            "time":"9_00am",
+            "day":"THURSDAY",
+            "name":"me2"
+        },
+        {
+            "time":"9_00am",
+            "day":"FRIDAY",
+            "name":"me2"
+        },
+        {
+            "time":"9_30am",
+            "day":"MONDAY",
+            "name":"me2"
+        },
+        {
+            "time":"9_30am",
+            "day":"TUESDAY",
+            "name":"me2"
+        },
+        {
+            "time":"9_30am",
+            "day":"WEDNESDAY",
+            "name":"me2"
+        },
+        {
+            "time":"9_30am",
+            "day":"THURSDAY",
+            "name":"me2"
+        },
+        {
+            "time":"9_30am",
+            "day":"FRIDAY",
+            "name":"me2"
+        }
     ],
     "startDate":"2018-12-03",
     "endDate":"2018-12-28",

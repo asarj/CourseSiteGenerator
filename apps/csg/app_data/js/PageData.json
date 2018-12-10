@@ -1,10 +1,10 @@
 
 {
     "subject":"CSE",
-    "number":"114",
-    "semester":"Spring",
+    "number":"101",
+    "semester":"Fall",
     "year":"2018",
-    "title":"CSE 114",
+    "title":"CSE 101",
     "logos":{
         "favicon":{
             "href":"./images/sbusheath.jpeg"

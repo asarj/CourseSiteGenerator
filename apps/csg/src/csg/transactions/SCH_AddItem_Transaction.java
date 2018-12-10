@@ -6,6 +6,7 @@
 package csg.transactions;
 
 import csg.CSGApp;
+import static csg.CSGPropertyType.SCH_ITEMS_TABLE_VIEW;
 import csg.data.CSGData;
 import csg.data.ScheduleData;
 import csg.data.ScheduleItemPrototype;
@@ -39,13 +40,17 @@ public class SCH_AddItem_Transaction implements jTPS_Transaction{
     @Override
     public void doTransaction() {
         AppGUIModule gui = app.getGUIModule();
-        data.addScheduleItem(s);
+        TableView<ScheduleItemPrototype> schTable = (TableView)gui.getGUINode(SCH_ITEMS_TABLE_VIEW);
+        s = data.addScheduleItem(s);
+        schTable.refresh();
     }
 
     @Override
     public void undoTransaction() {
         AppGUIModule gui = app.getGUIModule();
+        TableView<ScheduleItemPrototype> schTable = (TableView)gui.getGUINode(SCH_ITEMS_TABLE_VIEW);
         data.removeScheduleItem(s);
+        schTable.refresh();
         
     }
 }
