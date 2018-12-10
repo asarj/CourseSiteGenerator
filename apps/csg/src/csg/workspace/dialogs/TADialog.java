@@ -20,6 +20,7 @@ import csg.data.TAType;
 import csg.data.TeachingAssistantPrototype;
 import static csg.workspace.style.OHStyle.*;
 import static csg.CSGPropertyType.*;
+import csg.data.CSGData;
 import csg.transactions.OH_EditTA_Transaction;
 import csg.workspace.foolproof.CSGFoolproofDesign;
 
@@ -136,7 +137,8 @@ public class TADialog extends Stage {
         // OTHERWISE WE'LL HAVE TO FOOLPROOF DESIGN THIS STUFF
         // BASED ON WHETHER IT'S A LEGAL EDIT OR NOT
         else {
-            OHData data = (OHData)app.getDataComponent();
+            CSGData d = (CSGData)app.getDataComponent();
+            OHData data = d.getOfficeHoursData();
             boolean isValidNameEdit = data.isValidNameEdit(taToEdit, name);
             fP.foolproofTextField(nameTextField, isValidNameEdit);
             boolean isValidEmailEdit = data.isValidEmailEdit(taToEdit, email);
@@ -169,22 +171,24 @@ public class TADialog extends Stage {
             return;
         }
 
+        
+        // MAKE SURE THE TABLES ARE USING THE CORRECT TYPES
+        CSGData d = (CSGData)app.getDataComponent();
+        OHData data = d.getOfficeHoursData();
+//        TeachingAssistantPrototype oldTA = data.getSelectedTA();
+//        data.updateTAsFromDialog(oldta, name, email, type.toString());
+        
         // WE NOW KNOW SOMETHING HAS CHANGED
         // WE NEED A TRANSACTION FOR THE EDIT
         OH_EditTA_Transaction transaction = new OH_EditTA_Transaction(app, taToEdit, name, email, type.toString());
         app.processTransaction(transaction);
-        
-        // MAKE SURE THE TABLES ARE USING THE CORRECT TYPES
-        OHData data = (OHData)app.getDataComponent();
-//        TeachingAssistantPrototype oldTA = data.getSelectedTA();
-        data.updateTAsFromDialog(oldta, name, email, type.toString());
-        
         // CLOSE THE DIALOG
         this.hide();
     }
 
     public void showEditDialog(TeachingAssistantPrototype initTAToEdit) {
-        OHData data = (OHData)app.getDataComponent();
+        CSGData d = (CSGData)app.getDataComponent();
+        OHData data = d.getOfficeHoursData();
         // WE'LL NEED THIS FOR VALIDATION
         taToEdit = initTAToEdit;
         oldta = new TeachingAssistantPrototype(initTAToEdit.getName(), initTAToEdit.getEmail(), initTAToEdit.getType().equals(TAType.Undergraduate.toString())?TAType.Undergraduate : TAType.Graduate);

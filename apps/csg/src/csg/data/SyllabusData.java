@@ -37,6 +37,18 @@ public class SyllabusData {
         this.saJSON = "";
     }
     
+    public void reset(){
+        this.descriptionJSON = "";
+        this.topicsJSON = "";
+        this.prereqJSON = "";
+        this.outcomesJSON = "";
+        this.textbooksJSON = "";
+        this.gcJSON = "";
+        this.gnJSON = "";
+        this.adJSON = "";
+        this.saJSON = "";
+    }
+    
     public String getDescriptionJSON() {
         return descriptionJSON;
     }

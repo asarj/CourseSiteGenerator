@@ -4,9 +4,9 @@
     "endHour":"23",
     "instructor":{
         "name":"me",
-        "link":"me.com",
-        "email":"me@me.com",
-        "room":"me room",
+        "link":"",
+        "email":"",
+        "room":"",
         "photo":"insert_photo_here",
         "hours":[
             {

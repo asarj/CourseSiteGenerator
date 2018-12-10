@@ -99,6 +99,11 @@ public class CSGWorkspace extends AppWorkspaceComponent {
     DatePicker endDate;
     DatePicker editDatePicker;
     
+    public String OS = System.getProperty("os.name").toLowerCase();
+    public boolean getIsMac(){
+        return OS.indexOf("mac") >= 0;
+    }
+    
     public CSGWorkspace(CSGApp app) {
         super(app);
 
@@ -121,7 +126,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
     }
 
     // THIS HELPER METHOD INITIALIZES ALL THE CONTROLS IN THE WORKSPACE
-    private void initLayout() {
+    public void initLayout() {
         // FIRST LOAD THE FONT FAMILIES FOR THE COMBO BOX
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         CSGController outsideController = new CSGController((CSGApp) app);
@@ -303,7 +308,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         for(File file: files){
             if(file.getPath().contains(".css")){
                 String fileTemp = file.toString();
-                fileTemp = fileTemp.substring(fileTemp.lastIndexOf("/") + 1);
+                fileTemp = fileTemp.substring(fileTemp.lastIndexOf("\\") + 1);
                 fns.add(fileTemp);
                 x++;
             }
@@ -359,7 +364,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             FileChooser imgSelect = new FileChooser();
             FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpeg");
             imgSelect.getExtensionFilters().add(extFilter);
-            imgSelect.setInitialDirectory(new java.io.File("./images/"));
+            imgSelect.setInitialDirectory(new java.io.File(".\\images\\"));
             imgSelect.setTitle(props.getProperty(SITE_CHOOSE_IMAGE_TITLE));
             File f = imgSelect.showOpenDialog(styleBox.getScene().getWindow());
             if(f != null){
@@ -381,7 +386,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             FileChooser imgSelect = new FileChooser();
             FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpeg");
             imgSelect.getExtensionFilters().add(extFilter);
-            imgSelect.setInitialDirectory(new java.io.File("./images/"));
+            imgSelect.setInitialDirectory(new java.io.File(".\\images\\"));
             imgSelect.setTitle(props.getProperty(SITE_CHOOSE_IMAGE_TITLE));
             File f = imgSelect.showOpenDialog(styleBox.getScene().getWindow());
             if(f != null){
@@ -404,7 +409,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             FileChooser imgSelect = new FileChooser();
             FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpeg");
             imgSelect.getExtensionFilters().add(extFilter);
-            imgSelect.setInitialDirectory(new java.io.File("./images/"));
+            imgSelect.setInitialDirectory(new java.io.File(".\\images\\"));
             imgSelect.setTitle(props.getProperty(SITE_CHOOSE_IMAGE_TITLE));
             File f = imgSelect.showOpenDialog(styleBox.getScene().getWindow());
             if(f != null){
@@ -425,7 +430,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             FileChooser imgSelect = new FileChooser();
             FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpeg");
             imgSelect.getExtensionFilters().add(extFilter);
-            imgSelect.setInitialDirectory(new java.io.File("./images/"));
+            imgSelect.setInitialDirectory(new java.io.File(".\\images\\"));
             imgSelect.setTitle(props.getProperty(SITE_CHOOSE_IMAGE_TITLE));
             File f = imgSelect.showOpenDialog(styleBox.getScene().getWindow());
             if(f != null){
@@ -493,7 +498,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         instructorOHJsonArea = new TextArea();
 
         instructorOHJsonArea.setText("["
-                                    + "\n\t{\"Day\": \"\", \t\"Time\": \"\"}"
+                                    + "\n\t{\"day\": \"\", \t\"time\": \"\"}"
                                  + "\n]");
         instructorOHJsonArea.setVisible(false);
         instructorOHJsonArea.setManaged(false);
@@ -826,6 +831,10 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         lectureDayColumn.setCellValueFactory(new PropertyValueFactory<String, String>("day"));
         lectureTimeColumn.setCellValueFactory(new PropertyValueFactory<String, String>("time"));
         lectureRoomColumn.setCellValueFactory(new PropertyValueFactory<String, String>("room"));
+        lectureSectionColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0/4.0));
+        lectureDayColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.4/4.0));
+        lectureTimeColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0/4.0));
+        lectureRoomColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(1.0/4.0));
         
         lectureSectionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         lectureSectionColumn.setOnEditCommit((CellEditEvent<String, String> t) -> {
@@ -843,16 +852,9 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         lectureRoomColumn.setOnEditCommit((CellEditEvent<String, String> t) -> {
             outsideController.processLectureTableRoomEdit(t.getOldValue(), t.getNewValue());
         });
-
         
-        lectureSectionColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(.2));
-        lectureDayColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(.4));
-        lectureTimeColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(.2));
-        lectureRoomColumn.prefWidthProperty().bind(lectureTable.widthProperty().multiply(.2));
         lecturePane.setSpacing(5);
         lecturePane.setStyle("-fx-background-color: #ebebeb;");
-        
-        
         lecturePane.setPadding(new Insets(10, 10, 10, 10));
         HBox blank12 = new HBox();
         blank12.setStyle("-fx-background-color: #ffc581;");
@@ -878,6 +880,11 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         recitationRoomColumn.setCellValueFactory(new PropertyValueFactory<String, String>("room"));
         recitationTA1Column.setCellValueFactory(new PropertyValueFactory<String, String>("TA1"));
         recitationTA2Column.setCellValueFactory(new PropertyValueFactory<String, String>("TA2"));
+        recitationSectionColumn.prefWidthProperty().bind(recitationTable.widthProperty().multiply(.15));
+        recitationDayTimeColumn.prefWidthProperty().bind(recitationTable.widthProperty().multiply(.5));
+        lectureRoomColumn.prefWidthProperty().bind(recitationTable.widthProperty().multiply(.15));
+        recitationTA1Column.prefWidthProperty().bind(recitationTable.widthProperty().multiply(.15));
+        recitationTA2Column.prefWidthProperty().bind(recitationTable.widthProperty().multiply(.15));
         
         recitationSectionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         recitationSectionColumn.setOnEditCommit((CellEditEvent<String, String> t) -> {
@@ -900,11 +907,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             outsideController.processRecitationTableTA2Edit(t.getOldValue(), t.getNewValue());
         });
         
-        recitationSectionColumn.prefWidthProperty().bind(recitationTable.widthProperty().multiply(.15));
-        recitationDayTimeColumn.prefWidthProperty().bind(recitationTable.widthProperty().multiply(.4));
-        lectureRoomColumn.prefWidthProperty().bind(recitationTable.widthProperty().multiply(.15));
-        recitationTA1Column.prefWidthProperty().bind(recitationTable.widthProperty().multiply(.15));
-        recitationTA2Column.prefWidthProperty().bind(recitationTable.widthProperty().multiply(.15));
+        
         recitationPane.setStyle("-fx-background-color: #ebebeb;");
         recitationPane.setPadding(new Insets(10, 10, 10, 10));
         HBox blank13 = new HBox();
@@ -932,6 +935,11 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         labRoomColumn.setCellValueFactory(new PropertyValueFactory<String, String>("room"));
         labTA1Column.setCellValueFactory(new PropertyValueFactory<String, String>("TA1"));
         labTA2Column.setCellValueFactory(new PropertyValueFactory<String, String>("TA2"));
+        labSectionColumn.prefWidthProperty().bind(labTable.widthProperty().multiply(.15));
+        labDayTimeColumn.prefWidthProperty().bind(labTable.widthProperty().multiply(.5));
+        lectureRoomColumn.prefWidthProperty().bind(labTable.widthProperty().multiply(.15));
+        labTA1Column.prefWidthProperty().bind(labTable.widthProperty().multiply(.15));
+        labTA2Column.prefWidthProperty().bind(labTable.widthProperty().multiply(.15));
         
         labSectionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         labSectionColumn.setOnEditCommit((CellEditEvent<String, String> t) -> {
@@ -954,11 +962,7 @@ public class CSGWorkspace extends AppWorkspaceComponent {
             outsideController.processLabTableTA2Edit(t.getOldValue(), t.getNewValue());
         });
         
-        labSectionColumn.prefWidthProperty().bind(labTable.widthProperty().multiply(.15));
-        labDayTimeColumn.prefWidthProperty().bind(labTable.widthProperty().multiply(.4));
-        lectureRoomColumn.prefWidthProperty().bind(labTable.widthProperty().multiply(.15));
-        labTA1Column.prefWidthProperty().bind(labTable.widthProperty().multiply(.15));
-        labTA2Column.prefWidthProperty().bind(labTable.widthProperty().multiply(.15));
+        
         labPane.setStyle("-fx-background-color: #ebebeb;");
         labPane.setPadding(new Insets(10, 10, 10, 10));
         labPane.setSpacing(5);
@@ -1638,5 +1642,86 @@ public class CSGWorkspace extends AppWorkspaceComponent {
         this.years = years;
     }
     
-    
+    public void reset(){
+        AppGUIModule gui = app.getGUIModule();
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        ((ComboBox)gui.getGUINode(SITE_SUBJECT_COMBO_BOX)).getSelectionModel().selectFirst();
+        ((ComboBox)gui.getGUINode(SITE_SUBJECTNUM_COMBO_BOX)).getSelectionModel().selectFirst();
+        ((ComboBox)gui.getGUINode(SITE_SEMESTERS_COMBO_BOX)).getSelectionModel().selectFirst();
+        ((ComboBox)gui.getGUINode(SITE_YEARS_COMBO_BOX)).getSelectionModel().selectFirst();
+        ((TextField)gui.getGUINode(SITE_TITLE_TEXT_FIELD)).clear();
+        ((CheckBox)gui.getGUINode(SITE_HOME_CHECK_BOX)).setSelected(false);
+        ((CheckBox)gui.getGUINode(SITE_SYLLABUS_CHECK_BOX)).setSelected(false);
+        ((CheckBox)gui.getGUINode(SITE_SCHEDULE_CHECK_BOX)).setSelected(false);
+        ((CheckBox)gui.getGUINode(SITE_HW_CHECK_BOX)).setSelected(false);
+        fviImgView = new ImageView(
+                props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_FAVICON_TEXT)
+        );
+        fviImgView.setFitWidth(25);
+        fviImgView.setFitHeight(25);
+        fviImgView.setPreserveRatio(true);
+        fviImgView.setSmooth(true);
+        fviImgView.setCache(true);
+        navImgView = new ImageView(
+                props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_NAVBAR_TEXT)
+        );
+        navImgView.setFitWidth(300);
+        navImgView.setFitHeight(25);
+        navImgView.setPreserveRatio(true);
+        navImgView.setSmooth(true);
+        navImgView.setCache(true);
+        leftImgView = new ImageView(
+                props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_LFIMG_TEXT)
+        );
+        leftImgView.setFitWidth(300);
+        leftImgView.setFitHeight(25);
+        leftImgView.setPreserveRatio(true);
+        leftImgView.setSmooth(true);
+        leftImgView.setCache(true);
+        rightImgView = new ImageView(
+               props.getProperty(APP_FILE_PROTOCOL) + props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_RFIMG_TEXT)
+        );
+        rightImgView.setFitWidth(300);
+        rightImgView.setFitHeight(25);
+        rightImgView.setPreserveRatio(true);
+        rightImgView.setSmooth(true);
+        rightImgView.setCache(true);
+        ((ComboBox)gui.getGUINode(SITE_CSS_COMBO_BOX)).getSelectionModel().selectFirst();
+        ((TextField)gui.getGUINode(SITE_NAME_TEXT_FIELD)).clear();
+        ((TextField)gui.getGUINode(SITE_EMAIL_TEXT_FIELD)).clear();
+        ((TextField)gui.getGUINode(SITE_ROOM_TEXT_FIELD)).clear();
+        ((TextField)gui.getGUINode(SITE_HP_TEXT_FIELD)).clear();
+        instructorOHJsonArea.setText("["
+                                    + "\n\t{\"day\": \"\", \t\"time\": \"\"}"
+                                 + "\n]");
+        descTA.clear();
+        topicTA.setText(
+                        "[\n\t\"\"\n]"
+                        );   
+        prereqTA.clear();
+        outcomesTA.setText(
+                            "[\n\t\"\"\n]"
+                          );
+        textbooksTA.setText("[\n\t{"
+                             + "\n\t\t\t\"title\":\"\","
+                             + "\n\t\t\t\"link\":\"\","
+                             + "\n\t\t\t\"photo\":\"\","
+                             + "\n\t\t\t\"authors\":["
+                                + "\n\t\t\t\t\"\""
+                             + "\n\t\t\t],"
+                             + "\n\t\t\t\"publisher\":\"\","
+                             + "\n\t\t\t\"year\":\"\""
+                        + "\n\t}\n]");
+        gcTA.setText("[\n\t{"
+                            + "\n\t\t\t\"name\": \"\","
+                            + "\n\t\t\t\"description\": \"\","
+                            + "\n\t\t\t\"weight\": \"\""
+                        + "\n\t}\n]"
+                    );
+        gradingNoteTA.clear();
+        adTA.clear();
+        saTA.clear();
+        startDate.setValue(null);
+        endDate.setValue(null);
+    }
 }

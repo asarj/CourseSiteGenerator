@@ -33,7 +33,7 @@ public class SITE_EditCourseCSSComboBox_Transaction implements jTPS_Transaction 
         this.d = d;
         this.data = data;
         this.c = c;
-        this.old = data.getCSS().substring(data.getCSS().lastIndexOf("/") + 1);
+        this.old = data.getCSS().substring(data.getCSS().lastIndexOf("\\") + 1);
         this.n = (String)c.getSelectionModel().getSelectedItem();
     }
     
@@ -48,13 +48,13 @@ public class SITE_EditCourseCSSComboBox_Transaction implements jTPS_Transaction 
 
             ObservableList styleSheets = FXCollections.observableArrayList();
 
-            File[] files = new File("./work/css/").listFiles();
+            File[] files = new File(".\\work\\css\\").listFiles();
             ArrayList<String> fns = new ArrayList<>();
             int x = 0;
             for(File file: files){
                 if(file.getPath().contains(".css")){
                     String fileTemp = file.toString();
-                    fileTemp = fileTemp.substring(fileTemp.lastIndexOf("/") + 1);
+                    fileTemp = fileTemp.substring(fileTemp.lastIndexOf("\\") + 1);
                     fns.add(fileTemp);
                     x++;
                 }

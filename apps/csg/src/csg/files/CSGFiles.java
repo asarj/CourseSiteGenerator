@@ -26,6 +26,8 @@ import static csg.CSGPropertyType.DEFAULT_LFIMG_TEXT;
 import static csg.CSGPropertyType.DEFAULT_NAVBAR_TEXT;
 import static csg.CSGPropertyType.DEFAULT_RFIMG_TEXT;
 import static csg.CSGPropertyType.HREF;
+import static csg.CSGPropertyType.OH_ENDTIME_COMBO_BOX;
+import static csg.CSGPropertyType.OH_STARTTIME_COMBO_BOX;
 import static csg.CSGPropertyType.SITE_CSS_COMBO_BOX;
 import static csg.CSGPropertyType.SITE_EMAIL_TEXT_FIELD;
 import static csg.CSGPropertyType.SITE_EXPORT_LABEL;
@@ -58,17 +60,28 @@ import djf.modules.AppGUIModule;
 import djf.ui.dialogs.AppWebDialog;
 import java.io.File;
 import java.io.StringReader;
-import java.math.BigDecimal;
+import java.net.URI;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedHashSet;
+import java.util.Locale;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
@@ -79,6 +92,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javax.json.JsonObjectBuilder;
+import javax.json.JsonValue;
 import properties_manager.PropertiesManager;
 import org.apache.commons.io.FileUtils;
 
@@ -225,14 +239,12 @@ public class CSGFiles implements AppFileComponent {
         OHData ohDataManager = d.getOfficeHoursData();
         ScheduleData schDataManager = d.getScheduleData();
         
-        mtDataManager.reset();
-        ohDataManager.reset();
-        schDataManager.reset();
+        d.reset();
         
 
 	// LOAD THE JSON FILE WITH ALL THE DATA
 	JsonObject json = loadJSONFile(filePath);
-        JsonObject jsonCB = loadJSONFileForCB("./work/jsondata/cboptions.json");
+        JsonObject jsonCB = loadJSONFileForCB(".\\work\\jsondata\\cboptions.json");
         /******************LOADS THE SITE DATA*********************/
 //        try{
         ObservableList subjectsCB = FXCollections.observableArrayList();
@@ -406,8 +418,8 @@ public class CSGFiles implements AppFileComponent {
         
         String courseCSS = json.getString(JSON_SITE_SELECTED_CSS);
         if(!courseCSS.trim().equals("")){
-            ((ComboBox)gui.getGUINode(SITE_CSS_COMBO_BOX)).getSelectionModel().select(courseCSS.substring(courseCSS.lastIndexOf("/") + 1));
-            siteDataManager.setCSS(courseCSS.substring(courseCSS.lastIndexOf("/") + 1));
+            ((ComboBox)gui.getGUINode(SITE_CSS_COMBO_BOX)).getSelectionModel().select(courseCSS.substring(courseCSS.lastIndexOf("\\") + 1));
+            siteDataManager.setCSS(courseCSS.substring(courseCSS.lastIndexOf("\\") + 1));
         }
         
         JsonArray jsonInstructorArray = json.getJsonArray(JSON_SITE_INSTRUCTOR);
@@ -424,7 +436,9 @@ public class CSGFiles implements AppFileComponent {
         siteDataManager.setInstructorHP(instHP);
         ((TextField)gui.getGUINode(SITE_HP_TEXT_FIELD)).setText(instHP);
         try{
-            siteDataManager.setInstructorHoursJSON(jsonInstructorArray.getJsonObject(4).getString(JSON_SITE_INSTRUCTOR_HOURS));
+            String instHours = jsonInstructorArray.getJsonObject(4).getString(JSON_SITE_INSTRUCTOR_HOURS);
+            siteDataManager.setInstructorHoursJSON(instHours);
+            workspace.getInstructorOHJsonArea().setText(instHours);
         }
         catch(Exception e){
             
@@ -503,7 +517,11 @@ public class CSGFiles implements AppFileComponent {
         ohDataManager.reset();
 	String startHour = json.getString(JSON_OH_START_HOUR);
         String endHour = json.getString(JSON_OH_END_HOUR);
-        ohDataManager.resetOfficeHours(Integer.parseInt(startHour), Integer.parseInt(endHour));
+        ((ComboBox)gui.getGUINode(OH_STARTTIME_COMBO_BOX)).getSelectionModel().select(Integer.parseInt(startHour));
+        ((ComboBox)gui.getGUINode(OH_ENDTIME_COMBO_BOX)).getSelectionModel().select(Integer.parseInt(endHour));
+//        ohDataManager.resetOfficeHours(Integer.parseInt(startHour), Integer.parseInt(endHour));
+//        ohDataManager.initHours((startHour),(endHour));
+        ohDataManager.resetOHTable(Integer.parseInt(startHour), Integer.parseInt(endHour));
         
         // LOAD ALL THE GRAD TAs
         loadTAs(ohDataManager, json, JSON_OH_GRAD_TAS, TAType.Graduate);
@@ -800,8 +818,9 @@ public class CSGFiles implements AppFileComponent {
         JsonArray pagesArray = pagesArrayBuilder.build();
         
         JsonArrayBuilder logos = Json.createArrayBuilder();
-        if(!siteDataManager.getFavUrl().trim().equals("")){
-            JsonObject favUrl = Json.createObjectBuilder().add(JSON_SITE_FAVICON, siteDataManager.getFavUrl()).build();
+        if(!siteDataManager.getFavUrl().trim().equals("") && !siteDataManager.getFavUrl().equals(props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_FAVICON_TEXT))){
+            String favUrlRel = "./" + relativize(siteDataManager.getFavUrl(), siteDataManager.getFavUrl().substring(0, siteDataManager.getFavUrl().indexOf("\\csg\\") + 5));
+            JsonObject favUrl = Json.createObjectBuilder().add(JSON_SITE_FAVICON, favUrlRel).build();
             logos.add(favUrl);
         }
         else{
@@ -809,8 +828,9 @@ public class CSGFiles implements AppFileComponent {
             JsonObject favUrl = Json.createObjectBuilder().add(JSON_SITE_FAVICON, props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_FAVICON_TEXT)).build();
             logos.add(favUrl);
         }
-        if(!siteDataManager.getNavUrl().trim().equals("")){
-            JsonObject navUrl = Json.createObjectBuilder().add(JSON_SITE_NAVBAR, siteDataManager.getNavUrl()).build();
+        if(!siteDataManager.getNavUrl().trim().equals("") && !siteDataManager.getNavUrl().equals(props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_NAVBAR_TEXT))){
+            String navUrlRel = "./" + relativize(siteDataManager.getNavUrl(), siteDataManager.getNavUrl().substring(0, siteDataManager.getNavUrl().indexOf("\\csg\\") + 5));
+            JsonObject navUrl = Json.createObjectBuilder().add(JSON_SITE_NAVBAR, navUrlRel).build();
             logos.add(navUrl);
         }
         else{
@@ -818,8 +838,9 @@ public class CSGFiles implements AppFileComponent {
             JsonObject navUrl = Json.createObjectBuilder().add(JSON_SITE_NAVBAR, props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_NAVBAR_TEXT)).build();
             logos.add(navUrl);
         }
-        if(!siteDataManager.getLeftUrl().trim().equals("")){
-            JsonObject leftUrl = Json.createObjectBuilder().add(JSON_SITE_BOTTOM_LEFT, siteDataManager.getLeftUrl()).build();
+        if(!siteDataManager.getLeftUrl().trim().equals("") && !siteDataManager.getLeftUrl().equals(props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_LFIMG_TEXT))){
+            String leftUrlRel = "./" + relativize(siteDataManager.getLeftUrl(), siteDataManager.getLeftUrl().substring(0, siteDataManager.getLeftUrl().indexOf("\\csg\\") + 5));
+            JsonObject leftUrl = Json.createObjectBuilder().add(JSON_SITE_BOTTOM_LEFT, leftUrlRel).build();
             logos.add(leftUrl);
         }
         else{
@@ -827,8 +848,9 @@ public class CSGFiles implements AppFileComponent {
             JsonObject leftUrl = Json.createObjectBuilder().add(JSON_SITE_BOTTOM_LEFT, props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_LFIMG_TEXT)).build();
             logos.add(leftUrl);
         }
-        if(!siteDataManager.getRightUrl().trim().equals("")){
-            JsonObject rightUrl = Json.createObjectBuilder().add(JSON_SITE_BOTTOM_RIGHT, siteDataManager.getRightUrl()).build();
+        if(!siteDataManager.getRightUrl().trim().equals("") && !siteDataManager.getRightUrl().equals(props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_RFIMG_TEXT))){
+            String rightUrlRel = "./" + relativize(siteDataManager.getRightUrl(), siteDataManager.getRightUrl().substring(0, siteDataManager.getRightUrl().indexOf("\\csg\\") + 5));
+            JsonObject rightUrl = Json.createObjectBuilder().add(JSON_SITE_BOTTOM_RIGHT, rightUrlRel).build();
             logos.add(rightUrl);
         }
         else{
@@ -849,11 +871,11 @@ public class CSGFiles implements AppFileComponent {
         inst.add(instHP);
         if(siteDataManager.getInstructorHoursJSON().trim().equals("")){
             String hoursJson = ((TextArea)workspace.getInstructorOHJsonArea()).getText();
-            JsonArrayBuilder instHours = Json.createArrayBuilder().add(hoursJson);
+            JsonObject instHours = Json.createObjectBuilder().add(JSON_SITE_INSTRUCTOR_HOURS, hoursJson).build();
             inst.add(instHours);
         }
         else{
-            JsonArrayBuilder instHours = Json.createArrayBuilder().add(siteDataManager.getInstructorHoursJSON());
+            JsonObject instHours = Json.createObjectBuilder().add(JSON_SITE_INSTRUCTOR_HOURS, siteDataManager.getInstructorHoursJSON()).build();
             inst.add(instHours);    
         }
         JsonArray instructorArray = inst.build();
@@ -1226,10 +1248,10 @@ public class CSGFiles implements AppFileComponent {
         String siteCSS = "";
         if(siteDataManager.getCSS().trim().equals("")){
             siteCSS = (String)((ComboBox)gui.getGUINode(SITE_CSS_COMBO_BOX)).getSelectionModel().getSelectedItem();
-            siteDataManager.setCSS(siteCSS);
+            siteDataManager.setCSS(siteCSS.substring(siteDataManager.getCSS().indexOf("\\") + 1));
         }
         else{
-            siteCSS = siteDataManager.getCSS();
+            siteCSS = siteDataManager.getCSS().substring(siteDataManager.getCSS().indexOf("\\") + 1);
         }
         String sylDescription = "";
         if(syllabusDataManager.getDescriptionJSON().trim().equals("")){
@@ -1402,11 +1424,11 @@ public class CSGFiles implements AppFileComponent {
 	jsonWriterCB.close();
 
 	// INIT THE WRITER
-	OutputStream osCB = new FileOutputStream("./work/jsondata/cboptions.json");
+	OutputStream osCB = new FileOutputStream(".\\work\\jsondata\\cboptions.json");
 	JsonWriter jsonFileWriterCB = Json.createWriter(osCB);
 	jsonFileWriterCB.writeObject(cbJSO);
 	String prettyPrintedCB = swCB.toString();
-	PrintWriter pwCB = new PrintWriter("./work/jsondata/cboptions.json");
+	PrintWriter pwCB = new PrintWriter(".\\work\\jsondata\\cboptions.json");
 	pwCB.write(prettyPrintedCB);
 	pwCB.close();
     }
@@ -1432,11 +1454,11 @@ public class CSGFiles implements AppFileComponent {
         ScheduleData schDataManager = d.getScheduleData();
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         
-        String pageDataPath = "./public_html/js/PageData.json";
-        String ohDataPath = "./public_html/js/OfficeHoursData.json";
-        String mtDataPath = "./public_html/js/SectionsData.json";
-        String schDataPath = "./public_html/js/ScheduleData.json";
-        String sylDataPath = "./public_html/js/SyllabusData.json";
+        String pageDataPath = ".\\public_html\\js\\PageData.json";
+        String ohDataPath = ".\\public_html\\js\\OfficeHoursData.json";
+        String mtDataPath = ".\\public_html\\js\\SectionsData.json";
+        String schDataPath = ".\\public_html\\js\\ScheduleData.json";
+        String sylDataPath = ".\\public_html\\js\\SyllabusData.json";
 //        String bannerImageDirectory = filePath + "images/SBUDarkRedShieldLogo.png";
 //        String leftFooterDirectory = filePath + "images/CSLogo.png";
 //        String rightFooterDirectory = filePath + "images/SBUWhiteShieldLogo.jpg";
@@ -1491,25 +1513,25 @@ public class CSGFiles implements AppFileComponent {
         }
         siteDataManager.prepareExportUrlForSave();
         
-        pageDataPath = siteDataManager.getExp() + pageDataPath.substring(pageDataPath.lastIndexOf("l/") + 1, pageDataPath.lastIndexOf("PageData.json"));
-        ohDataPath = siteDataManager.getExp() + ohDataPath.substring(ohDataPath.lastIndexOf("l/") + 1, ohDataPath.lastIndexOf("OfficeHoursData.json"));
-        mtDataPath = siteDataManager.getExp() + mtDataPath.substring(mtDataPath.lastIndexOf("l/") + 1, mtDataPath.lastIndexOf("SectionsData.json"));
-        schDataPath = siteDataManager.getExp() + schDataPath.substring(schDataPath.lastIndexOf("l/") + 1, schDataPath.lastIndexOf("ScheduleData.json"));
-        sylDataPath = siteDataManager.getExp() + sylDataPath.substring(sylDataPath.lastIndexOf("l/") + 1, sylDataPath.lastIndexOf("SyllabusData.json"));
+        pageDataPath = siteDataManager.getExp() + pageDataPath.substring(pageDataPath.lastIndexOf("l\\") + 1, pageDataPath.lastIndexOf("PageData.json"));
+        ohDataPath = siteDataManager.getExp() + ohDataPath.substring(ohDataPath.lastIndexOf("l\\") + 1, ohDataPath.lastIndexOf("OfficeHoursData.json"));
+        mtDataPath = siteDataManager.getExp() + mtDataPath.substring(mtDataPath.lastIndexOf("l\\") + 1, mtDataPath.lastIndexOf("SectionsData.json"));
+        schDataPath = siteDataManager.getExp() + schDataPath.substring(schDataPath.lastIndexOf("l\\") + 1, schDataPath.lastIndexOf("ScheduleData.json"));
+        sylDataPath = siteDataManager.getExp() + sylDataPath.substring(sylDataPath.lastIndexOf("l\\") + 1, sylDataPath.lastIndexOf("SyllabusData.json"));
         new File(pageDataPath).mkdirs();
         new File(ohDataPath).mkdirs();
         new File(mtDataPath).mkdirs();
         new File(schDataPath).mkdirs();
         new File(sylDataPath).mkdirs();
-        String cssPath = siteDataManager.getExp() + "/css/";
+        String cssPath = siteDataManager.getExp() + "\\css\\";
         new File(cssPath).mkdirs();
-        String imgPath = siteDataManager.getExp() + "/images/";
+        String imgPath = siteDataManager.getExp() + "\\images\\";
         new File(imgPath).mkdirs();
-        pageDataPath = siteDataManager.getExp() + "/js/PageData.json";
-        ohDataPath = siteDataManager.getExp() + "/js/OfficeHoursData.json";
-        mtDataPath = siteDataManager.getExp() + "/js/SectionsData.json";
-        schDataPath = siteDataManager.getExp() + "/js/ScheduleData.json";
-        sylDataPath = siteDataManager.getExp() + "/js/SyllabusData.json";
+        pageDataPath = siteDataManager.getExp() + "\\js\\PageData.json";
+        ohDataPath = siteDataManager.getExp() + "\\js\\OfficeHoursData.json";
+        mtDataPath = siteDataManager.getExp() + "\\js\\SectionsData.json";
+        schDataPath = siteDataManager.getExp() + "\\js\\ScheduleData.json";
+        sylDataPath = siteDataManager.getExp() + "\\js\\SyllabusData.json";
         String siteTitle = "";
         if(siteDataManager.getTitle().trim().equals("")){
             siteTitle = (String)((TextField)gui.getGUINode(SITE_TITLE_TEXT_FIELD)).getText();
@@ -1524,7 +1546,7 @@ public class CSGFiles implements AppFileComponent {
             siteDataManager.setCSS(siteCSS);
         }
         else{
-            siteCSS = siteDataManager.getCSS();
+            siteCSS = siteDataManager.getCSS().substring(siteDataManager.getCSS().indexOf("\\") + 1);
         }
         JsonArrayBuilder pagesArrayBuilder = Json.createArrayBuilder();
         for(int i = 0; i < siteDataManager.getSelectedPageOptions().size(); i++){
@@ -1585,9 +1607,49 @@ public class CSGFiles implements AppFileComponent {
         JsonArray pagesArray = pagesArrayBuilder.build();
         
         JsonObjectBuilder logos = Json.createObjectBuilder();
-        if(!siteDataManager.getFavUrl().trim().equals("")){
+//        if(!siteDataManager.getFavUrl().trim().equals("") && !siteDataManager.getFavUrl().equals(props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_FAVICON_TEXT))){
+//            String favUrlRel = "./" + relativize(siteDataManager.getFavUrl(), siteDataManager.getFavUrl().substring(0, siteDataManager.getFavUrl().indexOf("\\csg\\") + 5));
+//            JsonObject favUrl = Json.createObjectBuilder().add(JSON_SITE_FAVICON, favUrlRel).build();
+//            logos.add(favUrl);
+//        }
+//        else{
+//            siteDataManager.setFavUrl(props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_FAVICON_TEXT));
+//            JsonObject favUrl = Json.createObjectBuilder().add(JSON_SITE_FAVICON, props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_FAVICON_TEXT)).build();
+//            logos.add(favUrl);
+//        }
+//        if(!siteDataManager.getNavUrl().trim().equals("") && !siteDataManager.getNavUrl().equals(props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_NAVBAR_TEXT))){
+//            String navUrlRel = "./" + relativize(siteDataManager.getNavUrl(), siteDataManager.getNavUrl().substring(0, siteDataManager.getNavUrl().indexOf("\\csg\\") + 5));
+//            JsonObject navUrl = Json.createObjectBuilder().add(JSON_SITE_NAVBAR, navUrlRel).build();
+//            logos.add(navUrl);
+//        }
+//        else{
+//            siteDataManager.setNavUrl(props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_NAVBAR_TEXT));
+//            JsonObject navUrl = Json.createObjectBuilder().add(JSON_SITE_NAVBAR, props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_NAVBAR_TEXT)).build();
+//            logos.add(navUrl);
+//        }
+//        if(!siteDataManager.getLeftUrl().trim().equals("") && !siteDataManager.getLeftUrl().equals(props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_LFIMG_TEXT))){
+//            String leftUrlRel = "./" + relativize(siteDataManager.getLeftUrl(), siteDataManager.getLeftUrl().substring(0, siteDataManager.getLeftUrl().indexOf("\\csg\\") + 5));
+//            JsonObject leftUrl = Json.createObjectBuilder().add(JSON_SITE_BOTTOM_LEFT, leftUrlRel).build();
+//            logos.add(leftUrl);
+//        }
+//        else{
+//            siteDataManager.setLeftUrl(props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_LFIMG_TEXT));
+//            JsonObject leftUrl = Json.createObjectBuilder().add(JSON_SITE_BOTTOM_LEFT, props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_LFIMG_TEXT)).build();
+//            logos.add(leftUrl);
+//        }
+//        if(!siteDataManager.getRightUrl().trim().equals("") && !siteDataManager.equals(props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_RFIMG_TEXT))){
+//            String rightUrlRel = "./" + relativize(siteDataManager.getRightUrl(), siteDataManager.getRightUrl().substring(0, siteDataManager.getRightUrl().indexOf("\\csg\\") + 5));
+//            JsonObject rightUrl = Json.createObjectBuilder().add(JSON_SITE_BOTTOM_RIGHT, rightUrlRel).build();
+//            logos.add(rightUrl);
+//        }
+//        else{
+//            siteDataManager.setRightUrl(props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_RFIMG_TEXT));
+//            JsonObject rightUrl = Json.createObjectBuilder().add(JSON_SITE_BOTTOM_RIGHT, props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_RFIMG_TEXT)).build();
+//            logos.add(rightUrl);
+//        }
+        if(!siteDataManager.getFavUrl().trim().equals("") && !siteDataManager.getFavUrl().equals(props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_FAVICON_TEXT))){
             JsonObject favUrl = Json.createObjectBuilder()
-                    .add(JSON_SITE_HREF, siteDataManager.getFavUrl()).build();
+                    .add(JSON_SITE_HREF, "./" + relativize(siteDataManager.getFavUrl(), siteDataManager.getFavUrl().substring(0, siteDataManager.getFavUrl().indexOf("\\csg\\") + 5))).build();
             logos.add(JSON_SITE_FAVICON, favUrl);
 //            siteDataManager.prepareExportUrlForSave();
         }
@@ -1598,10 +1660,10 @@ public class CSGFiles implements AppFileComponent {
             logos.add(JSON_SITE_FAVICON, favUrl);
 //            siteDataManager.prepareExportUrlForSave();
         }
-        if(!siteDataManager.getNavUrl().trim().equals("")){
+        if(!siteDataManager.getNavUrl().trim().equals("") && !siteDataManager.getNavUrl().equals(props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_NAVBAR_TEXT))){
             JsonObject navUrl = Json.createObjectBuilder()
                     .add(JSON_SITE_HREF, props.getProperty(HREF))
-                    .add(JSON_SITE_SRC, siteDataManager.getNavUrl()).build();
+                    .add(JSON_SITE_SRC, "./" + relativize(siteDataManager.getNavUrl(), siteDataManager.getNavUrl().substring(0, siteDataManager.getNavUrl().indexOf("\\csg\\") + 5))).build();
             logos.add(JSON_SITE_NAVBAR, navUrl);
 //            siteDataManager.prepareExportUrlForSave();
         }
@@ -1613,10 +1675,10 @@ public class CSGFiles implements AppFileComponent {
             logos.add(JSON_SITE_NAVBAR, navUrl);
 //            siteDataManager.prepareExportUrlForSave();
         }
-        if(!siteDataManager.getLeftUrl().trim().equals("")){
+        if(!siteDataManager.getLeftUrl().trim().equals("") && !siteDataManager.getLeftUrl().equals(props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_LFIMG_TEXT))){
             JsonObject leftUrl = Json.createObjectBuilder()
                     .add(JSON_SITE_HREF, props.getProperty(HREF))
-                    .add(JSON_SITE_SRC, siteDataManager.getLeftUrl()).build();
+                    .add(JSON_SITE_SRC, "./" + relativize(siteDataManager.getLeftUrl(), siteDataManager.getLeftUrl().substring(0, siteDataManager.getLeftUrl().indexOf("\\csg\\") + 5))).build();
             logos.add(JSON_SITE_BOTTOM_LEFT, leftUrl);
 //            siteDataManager.prepareExportUrlForSave();
         }
@@ -1628,10 +1690,10 @@ public class CSGFiles implements AppFileComponent {
             logos.add(JSON_SITE_BOTTOM_LEFT, leftUrl);
 //            siteDataManager.prepareExportUrlForSave();
         }
-        if(!siteDataManager.getRightUrl().trim().equals("")){
+        if(!siteDataManager.getRightUrl().trim().equals("") && !siteDataManager.getRightUrl().equals(props.getProperty(APP_PATH_IMAGES) + props.getProperty(DEFAULT_RFIMG_TEXT))){
             JsonObject rightUrl = Json.createObjectBuilder()
                     .add(JSON_SITE_HREF, props.getProperty(HREF))
-                    .add(JSON_SITE_SRC, siteDataManager.getRightUrl()).build();
+                    .add(JSON_SITE_SRC, "./" + relativize(siteDataManager.getRightUrl(), siteDataManager.getRightUrl().substring(0, siteDataManager.getRightUrl().indexOf("\\csg\\") + 5))).build();
             logos.add(JSON_SITE_BOTTOM_RIGHT, rightUrl);
 //            siteDataManager.prepareExportUrlForSave();
         }
@@ -1796,7 +1858,7 @@ public class CSGFiles implements AppFileComponent {
             JsonObject lecJson = Json.createObjectBuilder()
                     .add(JSON_MT_LECTURES_SECTION, l.getSection())
                     .add(JSON_MT_LECTURES_DAYS, l.getDay())
-                    .add(JSON_MT_LECTURES_TIME, l.getRoom())
+                    .add(JSON_MT_LECTURES_TIME, l.getTime())
                     .add(JSON_MT_LECTURES_ROOM, l.getRoom()).build();
             lecArrayBuilder.add(lecJson);
         }
@@ -1808,7 +1870,7 @@ public class CSGFiles implements AppFileComponent {
             RecitationPrototype l = recIterator.next();
             JsonObject lecJson = Json.createObjectBuilder()
                     .add(JSON_MT_RECITATIONS_SECTION, l.getSection())
-                    .add(JSON_MT_RECITATIONS_DAY_TIME, l.getRoom())
+                    .add(JSON_MT_RECITATIONS_DAY_TIME, l.getDayAndTime())
                     .add(JSON_MT_RECITATIONS_LOCATION, l.getRoom())
                     .add(JSON_MT_RECITATIONS_TA1, l.getTA1())
                     .add(JSON_MT_RECITATIONS_TA2, l.getTA2()).build();
@@ -1822,7 +1884,7 @@ public class CSGFiles implements AppFileComponent {
             LabPrototype l = labsIterator.next();
             JsonObject lecJson = Json.createObjectBuilder()
                     .add(JSON_MT_LABS_SECTION, l.getSection())
-                    .add(JSON_MT_LABS_DAY_TIME, l.getRoom())
+                    .add(JSON_MT_LABS_DAY_TIME, l.getDayAndTime())
                     .add(JSON_MT_LABS_LOCATION, l.getRoom())
                     .add(JSON_MT_LABS_TA1, l.getTA1())
                     .add(JSON_MT_LABS_TA2, l.getTA2()).build();
@@ -1918,6 +1980,39 @@ public class CSGFiles implements AppFileComponent {
             }
 
 //            }
+        }
+        for(Object j: instructorArray.getJsonArray(JSON_SITE_INSTRUCTOR_HOURS).toArray()){
+            String[] removeBrackets = ((JsonValue)j).toString().replace("{", "").replace("}", "").replace("\"", "").replace("time:","").replace("day:", "").split(",");
+//            for(String s: removeBrackets){
+//                System.out.println(s);
+//            }
+            for(int i = 0; i < removeBrackets.length; i+=2){
+                String dayOfWeek = removeBrackets[i].toUpperCase();
+                String[] validHours = getValidTimeSlots(removeBrackets[i + 1]);
+                for(String x: validHours){
+                    JsonObject js = Json.createObjectBuilder()
+                            .add(JSON_OH_START_TIME, x)
+                            .add(JSON_OH_DAY_OF_WEEK, dayOfWeek)
+                            .add(JSON_OH_NAME, instructorArray.getJsonString(JSON_SITE_INSTRUCTOR_NAME).toString().replace("\"", "")).build();
+                    updateOHBuilder.add(js);
+                }
+            }
+        }
+        for(int i = 0; i < lectureArray.size(); i++){
+            JsonObject a = (JsonObject)lectureArray.getJsonObject(i);
+            String[] day = getValidDays(a.getString(JSON_MT_LECTURES_DAYS).toUpperCase());
+            System.out.println(day);
+            for(String b: day){
+                String[] times = getValidTimeSlots(a.getString(JSON_MT_LECTURES_TIME));
+                for(String t: times){
+                    JsonObject js = Json.createObjectBuilder()
+                            .add(JSON_OH_START_TIME, t)
+                            .add(JSON_OH_DAY_OF_WEEK, b)
+                            .add(JSON_OH_NAME, "Lecture").build();
+                    updateOHBuilder.add(js);
+                }               
+            }
+            
         }
         JsonArray officeHoursArray = updateOHBuilder.build();
         /*****************************************************************************************************/
@@ -2178,7 +2273,7 @@ public class CSGFiles implements AppFileComponent {
         
         // Copying the CSS over
         Path cssImport = Paths.get(siteDataManager.getCSS());
-        Path cssExport = Paths.get(siteDataManager.getExp() + "/css/");
+        Path cssExport = Paths.get(siteDataManager.getExp() + "\\css\\");
         try{
             Files.copy(cssImport, cssExport.resolve(cssImport.getFileName()));
             
@@ -2187,11 +2282,16 @@ public class CSGFiles implements AppFileComponent {
             cssExport.resolve(cssImport.getFileName()).toFile().delete();
             Files.copy(cssImport, cssExport.resolve(cssImport.getFileName()));
         }
-        File rename = new File(cssExport + "/" + siteDataManager.getCSS().substring(siteDataManager.getCSS().lastIndexOf("/") + 1));
-        boolean renameResult = rename.renameTo(new File(cssExport + "/sea_wolf.css"));
+        File rename = new File(cssExport + "\\" + siteDataManager.getCSS().substring(siteDataManager.getCSS().lastIndexOf("\\") + 1));
+//        boolean renameResult = rename.renameTo(new File(cssExport + "\\sea_wolf.css"));
+        try {
+            Files.move(rename.toPath(), new File(cssExport + "\\sea_wolf.css").toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException ex) {
+//            Logger.getLogger(SomeClass.class.getName()).log(Level.SEVERE, null, ex);
+        }
 //        Files.move(Paths.get(cssExport + siteDataManager.getCSS().substring(siteDataManager.getCSS().lastIndexOf("/") + 1)), Paths.get(cssExport + siteDataManager.getCSS().substring(siteDataManager.getCSS().lastIndexOf("/") + 1)).resolveSibling("sea_wolf.css"));
-        Path cssDefImport = Paths.get("./work/selectedcss/course_homepage_layout.css");
-        Path cssDefExport = Paths.get(siteDataManager.getExp() + "/css/");
+        Path cssDefImport = Paths.get(".\\work\\selectedcss\\course_homepage_layout.css");
+        Path cssDefExport = Paths.get(siteDataManager.getExp() + "\\css\\");
         try{
             Files.copy(cssDefImport, cssDefExport.resolve(cssDefImport.getFileName()));
         }
@@ -2204,7 +2304,7 @@ public class CSGFiles implements AppFileComponent {
         Path navImport = Paths.get(siteDataManager.getNavUrl());
         Path leftImport = Paths.get(siteDataManager.getLeftUrl());
         Path rightImport = Paths.get(siteDataManager.getRightUrl());
-        Path imgExport = Paths.get(siteDataManager.getExp() + "/images/");
+        Path imgExport = Paths.get(siteDataManager.getExp() + "\\images\\");
         try{
             Files.copy(favImport, imgExport.resolve(favImport.getFileName())); 
         }
@@ -2235,17 +2335,18 @@ public class CSGFiles implements AppFileComponent {
         }
         
         // Copying everything over
-        File exportTo = new File("./app_data/");
+        File exportTo = new File(".\\app_data\\");
         File importTo = new File(siteDataManager.getExp());
-        File exportToCSS = new File("./app_data/css/");
-        File exportToImg = new File("./app_data/images/");
-        File exportToJS = new File("./app_data/js/");
-        File htmlImport = new File("./work/html/");
+        File exportToCSS = new File(".\\app_data\\css\\");
+        File importToImg = new File(".\\work\\images\\");
+        File exportToImg = new File(".\\app_data\\images\\");
+        File exportToJS = new File(".\\app_data\\js\\");
+        File htmlImport = new File(".\\work\\html\\");
         File htmlExport= new File(siteDataManager.getExp());
-        File jsImport = new File("./work/js/");
-        File jsExport = new File(siteDataManager.getExp() + "/js/");
+        File jsImport = new File(".\\work\\js\\");
+        File jsExport = new File(siteDataManager.getExp() + "\\js\\");
 //        FileUtils.copyDirectory(htmlImport, htmlExport);
-        for(File f: htmlExport.listFiles()){
+        for(File f: htmlImport.listFiles()){
             try{
                 Files.copy(f.toPath(), htmlExport.toPath().resolve(f.toPath().getFileName()));
             }
@@ -2255,7 +2356,7 @@ public class CSGFiles implements AppFileComponent {
             }
         }
 //        FileUtils.copyDirectory(jsImport, jsExport);
-        for(File f: jsExport.listFiles()){
+        for(File f: jsImport.listFiles()){
             try{
                 Files.copy(f.toPath(), jsExport.toPath().resolve(f.toPath().getFileName()));
             }
@@ -2264,8 +2365,8 @@ public class CSGFiles implements AppFileComponent {
                 Files.copy(f.toPath(), jsExport.toPath().resolve(f.toPath().getFileName()));
             }
         }
-        FileUtils.copyDirectory(importTo, exportTo);
-        for(File f : exportTo.listFiles()){
+//        FileUtils.copyDirectory(importTo, exportTo);
+        for(File f : importTo.listFiles()){
             try{
                 Files.copy(f.toPath(), exportTo.toPath().resolve(f.toPath().getFileName()));
             }
@@ -2275,12 +2376,105 @@ public class CSGFiles implements AppFileComponent {
             }
         }
         AppWebDialog a = new AppWebDialog(app);
-        a.showWebDialog(siteDataManager.getExp() + "/index.html");
+        a.showWebDialog(siteDataManager.getExp() + "\\index.html");
     }
 
     @Override
     public void importData(AppDataComponent data, String filePath) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public String relativize(String longPath, String shortPath){
+        URI l = new File(longPath).toURI();
+        URI s = new File(shortPath).toURI();
+        String rel = s.relativize(l).getPath();
+        return rel;
+    }
+    
+    public String[] getValidDays(String s){
+        HashMap<String, String> dayOfWeek = new HashMap<>();
+        dayOfWeek.put("M", "Monday".toUpperCase());
+        dayOfWeek.put("TU", "Tuesday".toUpperCase());
+        dayOfWeek.put("W", "Wednesday".toUpperCase());
+        dayOfWeek.put("TH", "Thursday".toUpperCase());
+        dayOfWeek.put("F", "Friday".toUpperCase());
+        dayOfWeek.put("MONDAYS", "Monday".toUpperCase());
+        dayOfWeek.put("TUESDAYS", "Tuesday".toUpperCase());
+        dayOfWeek.put("WEDNESDAYS", "Wednesday".toUpperCase());
+        dayOfWeek.put("THURSDAYS", "Thursday".toUpperCase());
+        dayOfWeek.put("FRIDAYS", "Friday".toUpperCase());
+        
+        String[] d = s.split(" &AMP; ");
+        String[] days = new String[d.length];
+        int i = 0;
+        for(String x : d){
+            days[i] = dayOfWeek.get(x);
+            i++;
+        }
+        return days;
+    }
+    
+    public String[] getValidTimeSlots(String s){
+        String[] range = s.split("-");
+        String correctedStart = "";
+        String correctedEnd = "";
+        LocalTime startTime = null;
+        LocalTime endTime = null;
+        ArrayList<String> validTs = new ArrayList<>();
+        DateTimeFormatter dtf
+            = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)
+                    .withLocale(Locale.ENGLISH);
+        if(!range[0].contains(":") && range[0].contains("am")){
+            correctedStart = range[0].replace("am", ":00 AM");
+            startTime = LocalTime.parse(correctedStart, dtf);
+        }
+        else if(!range[0].contains(":") && range[0].contains("pm")){
+            correctedStart = range[0].replace("pm", ":00 PM");
+            startTime = LocalTime.parse(correctedStart, dtf);
+            
+        }
+        else if(range[0].contains(":") && range[0].contains("am")){
+            correctedStart = range[0].replace("am", " AM");
+            startTime = LocalTime.parse(correctedStart, dtf);
+        }
+        else if(range[0].contains(":") && range[0].contains("pm")){
+            correctedStart = range[0].replace("pm", " PM");
+            startTime = LocalTime.parse(correctedStart, dtf);
+        }
+        
+        if(!range[1].contains(":") && range[1].contains("am")){
+            correctedEnd = range[1].replace("am", ":00 AM");
+            endTime = LocalTime.parse(correctedEnd, dtf);
+        }
+        else if(!range[1].contains(":") && range[1].contains("pm")){
+            correctedEnd = range[1].replace("pm", ":00 PM");
+            endTime = LocalTime.parse(correctedEnd, dtf);
+            
+        }
+        else if(range[1].contains(":") && range[1].contains("am")){
+            correctedEnd = range[1].replace("am", " AM");
+            endTime = LocalTime.parse(correctedEnd, dtf);
+        }
+        else if(range[1].contains(":") && range[1].contains("pm")){
+            correctedEnd = range[1].replace("pm", " PM");
+            endTime = LocalTime.parse(correctedEnd, dtf);
+        }
+        while(startTime.isBefore(endTime)){
+            String hour = "" + (startTime.getHour() == 0 || startTime.getHour() == 12 ? "12": (startTime.getHour() >= 12 ? "" + (startTime.getHour() - 12) : "" + startTime.getHour()));
+            String min = "" + (startTime.getMinute() == 0? "00": startTime.getMinute());
+            String ampm = "" + (startTime.getHour() >= 12 ? "pm" : "am");
+            String a = hour + "_" + min + ampm;
+            validTs.add(a);
+            startTime = startTime.plusMinutes(30);
+        }
+        
+        String[] v = new String[validTs.size()];
+        int i = 0;
+        for(String x : validTs){
+            v[i] = x;
+            i++;
+        }
+        return v;
     }
 
 }

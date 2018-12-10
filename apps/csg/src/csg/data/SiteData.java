@@ -178,8 +178,8 @@ public class SiteData{
     }
     
     public String prepareExportUrlForSave(){
-        setExp("./export/" + this.selectedName + "_" + this.selectedNum + "_" + this.selectedSem + "_" + this.selectedYear + "/public_html");
-        return "./export/" + this.selectedName + "_" + this.selectedNum + "_" + this.selectedSem + "_" + this.selectedYear + "/public_html";
+        setExp(".\\export\\" + this.selectedName + "_" + this.selectedNum + "_" + this.selectedSem + "_" + this.selectedYear + "\\public_html");
+        return ".\\export\\" + this.selectedName + "_" + this.selectedNum + "_" + this.selectedSem + "_" + this.selectedYear + "\\public_html";
     }
 
     public void setSelectedPageOptions(ArrayList<String> selectedPageOptions) {
@@ -314,11 +314,15 @@ public class SiteData{
     }   
     
     public String getCSS() {
+        if(this.css.contains("\\"))
+            return this.css.substring(css.indexOf("\\") + 1);
+        else if(this.css.contains("/"))
+            return this.css.substring(css.indexOf("/") + 1);
         return this.css;
     }
 
     public void setCSS(String css) {
-        this.css = "./work/css/" + css;
+        this.css = ".\\work\\css\\" + css;
     }
     
     public boolean isValidComboBoxChoice(ComboBox c){
@@ -361,6 +365,29 @@ public class SiteData{
         if(h.isSelected()){
             this.selectedPageOptions.add("hw");
         }
+    }
+    
+    public void reset(){
+        this.selectedName = "";
+        this.selectedNum = "";
+        this.selectedSem = "";
+        this.selectedYear = "";
+        this.title = "";
+        this.exp = "";
+        
+        this.selectedPageOptions.clear();
+        
+        this.favUrl = "";
+        this.navUrl = "";
+        this.leftUrl = "";
+        this.rightUrl = "";
+        this.css = "";
+        
+        this.instructorName = "";
+        this.instructorEmail = "";
+        this.instructorRoom = "";
+        this.instructorHP = "";
+        this.instructorHoursJSON = "";
     }
     
 }

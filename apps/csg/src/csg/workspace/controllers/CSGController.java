@@ -470,7 +470,7 @@ public class CSGController {
         CSGData d = (CSGData)app.getDataComponent();
         SiteData data = d.getSiteData();
         ComboBox c = (ComboBox)gui.getGUINode(SITE_CSS_COMBO_BOX);
-        if(!data.getCSS().substring(data.getCSS().lastIndexOf("/") + 1).equals((String)c.getSelectionModel().getSelectedItem()) && data.isValidComboBoxChoice(c)){
+        if(!data.getCSS().substring(data.getCSS().lastIndexOf("\\") + 1).equals((String)c.getSelectionModel().getSelectedItem()) && data.isValidComboBoxChoice(c)){
             if(c.isFocused()){
 //                data.setCSS((String)c.getSelectionModel().getSelectedItem());
                 SITE_EditCourseCSSComboBox_Transaction e = new SITE_EditCourseCSSComboBox_Transaction(app, d, data, c);
@@ -984,6 +984,7 @@ public class CSGController {
 
 
         }
+        schTable.refresh();
         app.getFoolproofModule().updateControls(OH_FOOLPROOF_SETTINGS);
     }
 

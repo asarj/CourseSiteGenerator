@@ -1,0 +1,23 @@
+
+{
+    "startDate":"2018-12-03",
+    "endDate":"2018-12-28",
+    "startingMondayMonth":"12",
+    "startingMondayDay":"3",
+    "startingMondayYear":"2018",
+    "endingFridayMonth":"12",
+    "endingFridayDay":"28",
+    "endingFridayYear":"2018",
+    "holidays":[
+    ],
+    "lectures":[
+    ],
+    "recitations":[
+    ],
+    "labs":[
+    ],
+    "references":[
+    ],
+    "hws":[
+    ]
+}

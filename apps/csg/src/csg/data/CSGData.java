@@ -6,6 +6,7 @@
 package csg.data;
 
 import csg.CSGApp;
+import csg.workspace.CSGWorkspace;
 import djf.components.AppDataComponent;
 
 /**
@@ -31,7 +32,15 @@ public class CSGData implements AppDataComponent{
         scheduleData = new ScheduleData(app);
     }
     
+    @Override
     public void reset(){
+        CSGWorkspace workspace = (CSGWorkspace)app.getWorkspaceComponent();
+        siteData.reset();
+        syllabusData.reset();
+        meetingTimesData.reset();
+        officeHoursData.reset();
+        scheduleData.reset();
+        workspace.reset();
         
     }
     

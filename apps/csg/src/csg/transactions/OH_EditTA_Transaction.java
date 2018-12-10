@@ -1,7 +1,9 @@
 package csg.transactions;
 
 import csg.CSGApp;
+import static csg.CSGPropertyType.OH_OFFICE_HOURS_TABLE_VIEW;
 import static csg.CSGPropertyType.OH_TAS_TABLE_VIEW;
+import csg.data.CSGData;
 import csg.data.OHData;
 import java.time.LocalDate;
 import jtps.jTPS_Transaction;
@@ -27,7 +29,7 @@ public class OH_EditTA_Transaction implements jTPS_Transaction {
         oldName = initTAToEdit.getName();
         oldEmail = initTAToEdit.getEmail();
         oldType = initTAToEdit.getType();
-        oldTA = initTAToEdit;
+//        oldTA = initTAToEdit;
         newName = name;
         newEmail = email;
         newType = type;
@@ -37,23 +39,30 @@ public class OH_EditTA_Transaction implements jTPS_Transaction {
 
     @Override
     public void doTransaction() {
-        OHData data = (OHData)app.getDataComponent();
+        CSGData d = (CSGData)app.getDataComponent();
+        OHData data = d.getOfficeHoursData();
         taToEdit.setName(newName);
         taToEdit.setEmail(newEmail);
         taToEdit.setType(newType);
 //        TableView<TeachingAssistantPrototype> taTableView = (TableView)gui.getGUINode(OH_TAS_TABLE_VIEW);
-        if(!newType.equals(oldType)){
-            data.updateTAsFromDialog(oldTA, newName, newEmail, newType);    
-        }
-        ((TableView)app.getGUIModule().getGUINode(OH_TAS_TABLE_VIEW)).refresh();
+//        if(!newType.equals(oldType)){
+//            data.updateTAsFromDialog(oldTA, newName, newEmail, newType);    
+//        }
+        data.updateTAs();
+//        ((TableView)app.getGUIModule().getGUINode(OH_TAS_TABLE_VIEW)).refresh();
+        ((TableView)app.getGUIModule().getGUINode(OH_OFFICE_HOURS_TABLE_VIEW)).refresh();
     }
 
     @Override
     public void undoTransaction() {
-        OHData data = (OHData)app.getDataComponent();
+        CSGData d = (CSGData)app.getDataComponent();
+        OHData data = d.getOfficeHoursData();
         taToEdit.setName(oldName);
         taToEdit.setEmail(oldEmail);
         taToEdit.setType(oldType);
-        ((TableView)app.getGUIModule().getGUINode(OH_TAS_TABLE_VIEW)).refresh();
+//        data.updateTAsFromDialog(taToEdit, oldName, oldEmail, oldType); 
+        data.updateTAs();
+//        ((TableView)app.getGUIModule().getGUINode(OH_TAS_TABLE_VIEW)).refresh();
+        ((TableView)app.getGUIModule().getGUINode(OH_OFFICE_HOURS_TABLE_VIEW)).refresh();
     }
 }

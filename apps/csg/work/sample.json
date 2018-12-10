@@ -1,11 +1,11 @@
 
 {
-    "subject":"CSE",
-    "number":"101",
-    "semester":"Fall",
-    "year":"2018",
-    "title":"CSE 101",
-    "export_url":"./export/CSE_101_Fall_2018/public_html",
+    "subject":"AMS",
+    "number":"114",
+    "semester":"Spring",
+    "year":"2019",
+    "title":"AMS 114",
+    "export_url":"./export/AMS_114_Spring_2019/public_html",
     "pages":[
         {
             "name":"home",
@@ -18,10 +18,6 @@
         {
             "name":"schedule",
             "link":"schedule.html"
-        },
-        {
-            "name":"hw",
-            "link":"hw.html"
         }
     ],
     "logos":[
@@ -35,22 +31,22 @@
             "bottom_left":"./images/sbuleftfooter.jpeg"
         },
         {
-            "bottom_right":"./images/sburightfooter.png"
+            "bottom_right":"/Users/jujubear/Documents/SBU/CourseSiteGenerator/apps/csg/images/CSGWelcomeBanner.png"
         }
     ],
-    "css":"./work/css/sea_wolf.css",
+    "css":"./work/css/autumn.css",
     "instructor":[
         {
             "name":"me"
         },
         {
-            "email":"me@me.com"
+            "email":""
         },
         {
-            "room":"me room"
+            "room":""
         },
         {
-            "link":"me.com"
+            "link":""
         },
         [
             "[\n\t{\"Day\": \"\", \t\"Time\": \"\"}\n]"
@@ -74,30 +70,10 @@
     "academicDishonesty":"idc",
     "specialAssistance":"idc",
     "mt_lectures":[
-        {
-            "lec_section":"lec1",
-            "lec_days":"Monday &amp; Tuesday",
-            "lec_time":"1-2:20pm",
-            "lec_room":"me room"
-        }
     ],
     "mt_recitations":[
-        {
-            "rec_section":"rec2",
-            "rec_day_time":"Tuesday &amp; Thursday 1-2:20pm",
-            "rec_location":"me room",
-            "rec_ta_1":"me",
-            "rec_ta_2":"me too"
-        }
     ],
     "mt_labs":[
-        {
-            "lab_section":"lab3",
-            "lab_day_time":"Wednesday &amp; Friday 1-2:20pm",
-            "lab_location":"me room",
-            "lab_ta_1":"me",
-            "lab_ta_2":"me too"
-        }
     ],
     "startHour":"0",
     "endHour":"23",
@@ -116,106 +92,6 @@
         }
     ],
     "officeHours":[
-        {
-            "time":"8_00am",
-            "day":"MONDAY",
-            "name":"me"
-        },
-        {
-            "time":"8_00am",
-            "day":"TUESDAY",
-            "name":"me"
-        },
-        {
-            "time":"8_00am",
-            "day":"WEDNESDAY",
-            "name":"me"
-        },
-        {
-            "time":"8_00am",
-            "day":"THURSDAY",
-            "name":"me"
-        },
-        {
-            "time":"8_00am",
-            "day":"FRIDAY",
-            "name":"me"
-        },
-        {
-            "time":"8_30am",
-            "day":"MONDAY",
-            "name":"me"
-        },
-        {
-            "time":"8_30am",
-            "day":"TUESDAY",
-            "name":"me"
-        },
-        {
-            "time":"8_30am",
-            "day":"WEDNESDAY",
-            "name":"me"
-        },
-        {
-            "time":"8_30am",
-            "day":"THURSDAY",
-            "name":"me"
-        },
-        {
-            "time":"8_30am",
-            "day":"FRIDAY",
-            "name":"me"
-        },
-        {
-            "time":"9_00am",
-            "day":"MONDAY",
-            "name":"me2"
-        },
-        {
-            "time":"9_00am",
-            "day":"TUESDAY",
-            "name":"me2"
-        },
-        {
-            "time":"9_00am",
-            "day":"WEDNESDAY",
-            "name":"me2"
-        },
-        {
-            "time":"9_00am",
-            "day":"THURSDAY",
-            "name":"me2"
-        },
-        {
-            "time":"9_00am",
-            "day":"FRIDAY",
-            "name":"me2"
-        },
-        {
-            "time":"9_30am",
-            "day":"MONDAY",
-            "name":"me2"
-        },
-        {
-            "time":"9_30am",
-            "day":"TUESDAY",
-            "name":"me2"
-        },
-        {
-            "time":"9_30am",
-            "day":"WEDNESDAY",
-            "name":"me2"
-        },
-        {
-            "time":"9_30am",
-            "day":"THURSDAY",
-            "name":"me2"
-        },
-        {
-            "time":"9_30am",
-            "day":"FRIDAY",
-            "name":"me2"
-        }
     ],
     "startDate":"2018-12-03",
     "endDate":"2018-12-28",
@@ -226,69 +102,15 @@
     "endingFridayDay":"28",
     "endingFridayYear":"2018",
     "holidays":[
-        {
-            "date":"2018-12-03",
-            "month":"12",
-            "day":"3",
-            "year":"2018",
-            "title":"My holiday",
-            "topic":"no school",
-            "link":"h.com"
-        }
     ],
     "lectures":[
-        {
-            "date":"2018-12-04",
-            "month":"12",
-            "day":"4",
-            "year":"2018",
-            "title":"My Lecture",
-            "topic":"no lecture",
-            "link":"l.com"
-        }
     ],
     "recitations":[
-        {
-            "date":"2018-12-06",
-            "month":"12",
-            "day":"6",
-            "year":"2018",
-            "title":"My Rec",
-            "topic":"no rec",
-            "link":"rec.com"
-        }
     ],
     "labs":[
-        {
-            "date":"2018-12-05",
-            "month":"12",
-            "day":"5",
-            "year":"2018",
-            "title":"My Lab",
-            "topic":"no lab",
-            "link":"lab.com"
-        }
     ],
     "references":[
-        {
-            "date":"2018-12-10",
-            "month":"12",
-            "day":"10",
-            "year":"2018",
-            "title":"My ref",
-            "topic":"no ref",
-            "link":"ref.com"
-        }
     ],
     "hws":[
-        {
-            "date":"2018-12-07",
-            "month":"12",
-            "day":"7",
-            "year":"2018",
-            "title":"My HW",
-            "topic":"no hw",
-            "link":"hw.com"
-        }
     ]
 }

@@ -81,7 +81,7 @@ public class ScheduleItemPrototype<E extends Comparable<E>> implements Comparabl
 
     @Override
     public int compareTo(E o) {
-        return getDate().compareTo(((ScheduleItemPrototype)o).getDate());
+        return getLocalDate().compareTo(((ScheduleItemPrototype)o).getLocalDate());
     }
     
     public boolean equals(ScheduleItemPrototype s){

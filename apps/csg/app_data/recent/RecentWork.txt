@@ -1,2 +1,0 @@
-sample-work/sample.json
-sample2-work/sample2.json

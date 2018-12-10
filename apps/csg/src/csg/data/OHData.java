@@ -78,8 +78,8 @@ public class OHData{
         // THESE ARE THE DEFAULT OFFICE HOURS
         startHour = MIN_START_HOUR;
         endHour = MAX_END_HOUR;
-        initHours(Integer.toString(startHour), Integer.toString(endHour));
-//        resetOfficeHours(startHour, endHour);
+//        initHours(Integer.toString(startHour), Integer.toString(endHour));
+        resetOfficeHours(startHour, endHour);
 //        resetOHTable(startHour, endHour);
         
          
@@ -433,11 +433,11 @@ public class OHData{
     }    
 
     public void updateTAs() {
-        AppGUIModule gui = app.getGUIModule();
-        TableView tasTable = (TableView)gui.getGUINode(OH_TAS_TABLE_VIEW);
+//        AppGUIModule gui = app.getGUIModule();
+//        TableView tasTable = (TableView)gui.getGUINode(OH_TAS_TABLE_VIEW);
         TAType type = getSelectedType();
         selectTAs(type);
-        tasTable.refresh();
+//        tasTable.refresh();
     }
     
     public void updateTAsFromDialog(TeachingAssistantPrototype oldta, String name, String email, String type) {

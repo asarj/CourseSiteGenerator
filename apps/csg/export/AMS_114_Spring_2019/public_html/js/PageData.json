@@ -1,10 +1,10 @@
 
 {
-    "subject":"CSE",
-    "number":"101",
-    "semester":"Fall",
-    "year":"2018",
-    "title":"CSE 101",
+    "subject":"AMS",
+    "number":"114",
+    "semester":"Spring",
+    "year":"2019",
+    "title":"AMS 114",
     "logos":{
         "favicon":{
             "href":"./images/sbusheath.jpeg"
@@ -19,14 +19,14 @@
         },
         "bottom_right":{
             "href":"http://www.cs.stonybrook.edu",
-            "src":"./images/sburightfooter.png"
+            "src":"/Users/jujubear/Documents/SBU/CourseSiteGenerator/apps/csg/images/CSGWelcomeBanner.png"
         }
     },
     "instructor":{
         "name":"me",
-        "link":"me.com",
-        "email":"me@me.com",
-        "room":"me room",
+        "link":"",
+        "email":"",
+        "room":"",
         "photo":"insert_photo_here",
         "hours":[
             {
@@ -47,10 +47,6 @@
         {
             "name":"Schedule",
             "link":"schedule.html"
-        },
-        {
-            "name":"HWs",
-            "link":"hws.html"
         }
     ]
 }
