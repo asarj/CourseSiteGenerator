@@ -591,6 +591,7 @@ public class CSGFiles implements AppFileComponent {
     }
     
     private void loadScheduleHolidays(ScheduleData data, JsonObject json, String h) {
+        try{
         JsonArray jsonLecArray = json.getJsonArray(h);
         for (int i = 0; i < jsonLecArray.size(); i++) {
             JsonObject jsonTA = jsonLecArray.getJsonObject(i);
@@ -602,9 +603,12 @@ public class CSGFiles implements AppFileComponent {
             ScheduleItemPrototype s = new ScheduleItemPrototype("Holiday", date, topic, title, link);
             data.addScheduleItem(s);
         } 
+        }
+        catch(Exception e){}
     }
 
     private void loadScheduleHWs(ScheduleData data, JsonObject json, String h) {
+        try{
         JsonArray jsonLecArray = json.getJsonArray(h);
         for (int i = 0; i < jsonLecArray.size(); i++) {
             JsonObject jsonTA = jsonLecArray.getJsonObject(i);
@@ -616,9 +620,12 @@ public class CSGFiles implements AppFileComponent {
             ScheduleItemPrototype s = new ScheduleItemPrototype("HW", date, topic, title, link);
             data.addScheduleItem(s);
         } 
+        }
+        catch(Exception e){}
     }
 
     private void loadScheduleRefs(ScheduleData data, JsonObject json, String r) {
+        try{
         JsonArray jsonLecArray = json.getJsonArray(r);
         for (int i = 0; i < jsonLecArray.size(); i++) {
             JsonObject jsonTA = jsonLecArray.getJsonObject(i);
@@ -630,9 +637,12 @@ public class CSGFiles implements AppFileComponent {
             ScheduleItemPrototype s = new ScheduleItemPrototype("Reference", date, topic, title, link);
             data.addScheduleItem(s);
         } 
+        }
+        catch(Exception e){}
     }
 
     private void loadScheduleLectures(ScheduleData data, JsonObject json, String l) {
+        try{
         JsonArray jsonLecArray = json.getJsonArray(l);
         for (int i = 0; i < jsonLecArray.size(); i++) {
             JsonObject jsonTA = jsonLecArray.getJsonObject(i);
@@ -644,9 +654,12 @@ public class CSGFiles implements AppFileComponent {
             ScheduleItemPrototype s = new ScheduleItemPrototype("Lecture", date, topic, title, link);
             data.addScheduleItem(s);
         } 
+        }
+        catch(Exception e){}
     }
 
     private void loadScheduleRecitations(ScheduleData data, JsonObject json, String r) {
+        try{
         JsonArray jsonLecArray = json.getJsonArray(r);
         for (int i = 0; i < jsonLecArray.size(); i++) {
             JsonObject jsonTA = jsonLecArray.getJsonObject(i);
@@ -657,10 +670,12 @@ public class CSGFiles implements AppFileComponent {
             String link = jsonTA.getString(JSON_SCH_EVENT_LINK);
             ScheduleItemPrototype s = new ScheduleItemPrototype("Recitation", date, topic, title, link);
             data.addScheduleItem(s);
-        } 
+        } }
+        catch(Exception e){}
     }
 
     private void loadScheduleLabs(ScheduleData data, JsonObject json, String l) {
+        try{
         JsonArray jsonLecArray = json.getJsonArray(l);
         for (int i = 0; i < jsonLecArray.size(); i++) {
             JsonObject jsonTA = jsonLecArray.getJsonObject(i);
@@ -672,9 +687,12 @@ public class CSGFiles implements AppFileComponent {
             ScheduleItemPrototype s = new ScheduleItemPrototype("Lab", date, topic, title, link);
             data.addScheduleItem(s);
         } 
+        }
+        catch(Exception e){}
     }
     
     private void loadLectures(MeetingTimesData data, JsonObject json, String lecs) {
+        try{
         JsonArray jsonLecArray = json.getJsonArray(lecs);
         for (int i = 0; i < jsonLecArray.size(); i++) {
             JsonObject jsonTA = jsonLecArray.getJsonObject(i);
@@ -685,9 +703,11 @@ public class CSGFiles implements AppFileComponent {
             LecturePrototype l = new LecturePrototype(section, day, time, room);
             data.addLecture(l);
         } 
+        } catch(Exception e){}
     }
     
     private void loadRecitations(MeetingTimesData data, JsonObject json, String recs) {
+        try{
         JsonArray jsonRecArray = json.getJsonArray(recs);
         for (int i = 0; i < jsonRecArray.size(); i++) {
             JsonObject jsonTA = jsonRecArray.getJsonObject(i);
@@ -699,9 +719,14 @@ public class CSGFiles implements AppFileComponent {
             RecitationPrototype r = new RecitationPrototype(section, dayTime, room, ta1, ta2);
             data.addRecitation(r);
         } 
+        }
+        catch(Exception e){
+            
+        }
     }
     
     private void loadLabs(MeetingTimesData data, JsonObject json, String labs) {
+        try{
         JsonArray jsonLabsArray = json.getJsonArray(labs);
         for (int i = 0; i < jsonLabsArray.size(); i++) {
             JsonObject jsonTA = jsonLabsArray.getJsonObject(i);
@@ -712,7 +737,9 @@ public class CSGFiles implements AppFileComponent {
             String ta2 = jsonTA.getString(JSON_MT_LABS_TA2_SAVE);
             LabPrototype l = new LabPrototype(section, dayTime, room, ta1, ta2);
             data.addLab(l);
-        } 
+        }
+        }
+        catch(Exception e){}
     }
     
     private void loadTAs(OHData data, JsonObject json, String tas, TAType type) {
