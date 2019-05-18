@@ -1,3 +1,9 @@
 # Course Site Generator
 
-This is my final project for the last offering of CSE 219 with Richard McKenna
+University courses are required to provide course materials at the start of a term that help students understand course requirements and plan their semesters. These come in the form of a course syllabus and schedule that list information like course policies and dates for exams and assignments. Many times instructors find the most convenient means to disseminate this information is by way of a course website. Course websites are typically published at the start of a semester and are updated as it progresses. Such a site keeps the students up to date on deadlines and provides a place for instructors to distribute things like lecture slides and assignments.  
+
+Places like Stony Brook University’s Computer Science Department have long required a course website for each taught course, and so every semester, the instructors teaching these courses generate and update this content. This process can be time consuming and tedious. In addition, many times instructors have more important things to do than build beautiful sites, and the result is each course Web site looks different, making it difficult for students to find the content they are after as they navigate differently arranged structures.  
+
+But why use course websites at all? Why not just use a tool like Blackboard for organizing course content? Well, sites like that have their own difficulties. They require time consuming login and navigation processes, they do many things, and so many things interfere with the quick retrieval for what a student is looking for, and they are general purpose sites, and so are cluttered with many things a course isn’t even using. For an instructor, building and maintaining a custom course webpage still provides the best service to its students.  
+
+The Course Site Generator application intends to automate the process of building and updating a course Web site in one easy to use tool. The sites produced by this application will look good and will be customizable in many different ways but will exist within a common site and page structure.
